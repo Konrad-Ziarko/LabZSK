@@ -1,24 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace LabZKT
 {
     public class ModeManager
     {
-
-        public ModeManager()
+        private Dictionary<string, NumericTextBox> registers;
+        private ToolStripMenuItem toolStripMenu_Edit, toolStripMenu_Clear;
+        private DataGridView dataGridView_Info;
+        private Label label_Status;
+        private Button button_Makro, button_Micro, button_Next_Tact;
+        private bool[,] cells;
+        public ModeManager(ref Dictionary<string, NumericTextBox> regs, ref ToolStripMenuItem tsmie, ref ToolStripMenuItem tsmic,
+            ref Label lStatus, ref Button bMakro, ref Button bMicro , ref bool[,] cel,
+            ref DataGridView dgvInfo, ref Button bNext_Tact)
         {
-
-
+            button_Next_Tact = bNext_Tact;
+            dataGridView_Info = dgvInfo;
+            registers = regs;
+            toolStripMenu_Edit = tsmie;
+            toolStripMenu_Clear = tsmic;
+            label_Status = lStatus;
+            button_Makro = bMakro;
+            button_Micro = bMicro;
+            cells = cel;
         }
 
         public void stopSim()
         {
             toolStripMenu_Edit.Enabled = true;
-            isRunning = false;
+            RunSim.isRunning = false;
             button_Makro.Visible = true;
             button_Micro.Visible = true;
             toolStripMenu_Clear.Enabled = true;
@@ -28,7 +44,7 @@ namespace LabZKT
         public void startSim()
         {
             toolStripMenu_Edit.Enabled = false;
-            isRunning = true;
+            RunSim.isRunning = true;
             button_Makro.Visible = false;
             button_Micro.Visible = false;
             toolStripMenu_Clear.Enabled = false;
@@ -42,17 +58,17 @@ namespace LabZKT
         }
         public void nextTact()
         {
-            if (inMicroMode)
+            if (RunSim.inMicroMode)
             {
                 button_Next_Tact.Visible = true;
-                while (!buttonNextTactClicked)
+                while (!RunSim.buttonNextTactClicked)
                     Application.DoEvents();
-                buttonNextTactClicked = false;
+                RunSim.buttonNextTactClicked = false;
             }
             else
             {
-                currentTact = (currentTact + 1) % 8;
-                dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
+                RunSim.currentTact = (RunSim.currentTact + 1) % 8;
+                dataGridView_Info.Rows[2].Cells[0].Value = RunSim.currentTact;
             }
         }
         public void EnDisableButtons()

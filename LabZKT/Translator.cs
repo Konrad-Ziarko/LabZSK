@@ -139,6 +139,54 @@ namespace LabZKT
             {"ONE","ALU = 1"},
             {"ZERO","ALU = 0"},
         };
+        private Dictionary<string, long> instCodeS1 = new Dictionary<string, long>()
+        {
+            {"", 0 },{"IXRE", 2 },{"OLR", 4 },{"ORR", 6 },{"ORAE", 8 },{"IALU", 0xA },{"OXE", 0xC },{"OX", 0xE }
+        };
+        private Dictionary<string, long> instCodeD1 = new Dictionary<string, long>()
+        {
+            {"", 0 },{"ILK", 8 },{"IRAP", 0x10 },{"OXE", 0x18 }
+        };
+        private Dictionary<string, long> instCodeS2 = new Dictionary<string, long>()
+        {
+            {"", 0 },{"IRAE", 0x8 },{"ORR", 0x10 },{"ORI", 0x18 },{"ORAE", 0x20 },{"OA", 0x28 },{"OMQ", 0x30 },{"OX", 0x38 },
+            {"OBE", 0x40 },{"IXRE", 0x48 },{"IALU", 0x50 },{"OXE", 0x58 }
+        };
+        private Dictionary<string, long> instCodeD2 = new Dictionary<string, long>()
+        {
+            {"", 0 },{"ILR", 0x8 },{"IX", 0x10 },{"IBE", 0x18 },{"IRI", 0x20 },{"IBI", 0x28 },{"IA", 0x30 },{"IMQ", 0x38 },
+            {"OXE", 0x40 },{"NSI", 0x48 },{"IAS", 0x50 },{"SGN", 0x58 },
+            {"ALA", 0x8 },{"ARA", 0x10 },{"LRQ", 0x18 },{"LLQ", 0x20 },{"LLA", 0x28 },{"LRA", 0x30 },{"LCA", 0x38 }
+        };
+        private Dictionary<string, long> instCodeS3 = new Dictionary<string, long>()
+        {
+            {"", 0 },{"ORI", 1 },{"OLR", 2 },{"OA", 3 },{"ORAE", 4 },{"OMQ", 5 },{"ORB", 6 },{"OXE",7 }
+        };
+        private Dictionary<string, long> instCodeD3 = new Dictionary<string, long>()
+        {
+            {"", 0 },{"ILR", 0x1 },{"IX", 0x2 },{"IBE", 0x3 },{"IRI", 0x4 },{"IBI", 0x5 },{"IA", 0x6 },{"IMQ", 0x7 },
+            {"OXE", 0x8 },{"NSI", 0x9 },{"IAS", 0xA },{"SGN", 0xB },{"IRR", 0xC },{"IRBP", 0xD },{"SRBP", 0xE }
+        };
+        private Dictionary<string, long> instCodeC1 = new Dictionary<string, long>()
+        {
+            {"", 0 },{"CWC", 2 },{"RRC", 4 },{"MUL", 6 },{"DIV", 8 },{"SHT", 10 },{"IWC", 12 },{"END", 14 }
+        };
+        private Dictionary<string, long> instCodeC2 = new Dictionary<string, long>()
+        {
+            {"", 0 },{"DLK", 2 },{"SOFF", 4 },{"ROFF", 6 },{"SXRO", 8 },{"RXRO", 10 },{"DRI", 12 },{"RA", 14 },
+            { "RMQ", 16 }, {"AQ16", 18 },{"RINT", 20 },{"OPC", 22 },{"CEA", 24 },{"ENI", 26 }
+        };
+        private Dictionary<string, long> instCodeTest = new Dictionary<string, long>()
+        {
+            {"", 0 },{"UNB", 0x1 },{"TINT", 0x2 },{"TIND", 0x3 },{"TAS", 0x4 },{"TXS", 0x5 },{"TQ15", 0x6 },{"TCR", 0x7 },
+            {"TSD", 0x8 },{"TAO", 0x9 },{"TXP", 0xA },{"TXZ", 0xB },{"TXRO", 0xC },{"TAP", 0xD },{"TAZ", 0xE }
+        };
+        private Dictionary<string, long> instCodeALU = new Dictionary<string, long>()
+        {
+            {"", 0 },{"ADS", 0x1 },{"SUS", 0x2 },{"CMX", 0x3 },{"CMA", 0x4 },{"OR", 0x5 },{"AND", 0x6 },{"EOR", 0x7 },
+            {"NOTL", 0x8 },{"NOTR", 0x9 },{"L", 0xA },{"R", 0xB },{"INCL", 0xC },{"INLK", 0xD },{"DECL", 0xE },
+            {"DELK", 0xF },{"INE", 0x10 },{"ZERO", 0x11 }
+        };
         public static string GetMicroOpDescription(string microOpMnemo)
         {
             string description = "";

@@ -132,7 +132,6 @@
     <Compile Include="Forms\PMSubmit.Designer.cs">
       <DependentUpon>PMSubmit.cs</DependentUpon>
     </Compile>
-    <Compile Include="RefBool.cs" />
     <Compile Include="SimLogic.cs" />
     <Compile Include="Translator.cs" />
     <EmbeddedResource Include="Forms\ErrorMessage.resx">

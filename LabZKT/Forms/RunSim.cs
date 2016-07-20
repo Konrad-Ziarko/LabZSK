@@ -17,6 +17,9 @@ namespace LabZKT
         private List<MemoryRecord> List_Memory { get; set; }
         private List<MicroOperation> List_MicroOp { get; set; }
         private MemoryRecord lastRecordFromRRC;
+
+        private ModeManager modeManager;
+
         private Drawings draw;
         private string logFile = "";
         public bool resetBus { get; private set; }
@@ -26,12 +29,12 @@ namespace LabZKT
         public static Size hitTest;
         private string log = String.Empty;
         private string microOpMnemo = "";
-        public RefBool isRunning = false;
-        public RefBool inEditMode = false;
-        public RefBool inMicroMode = false;
-        public RefBool buttonOKClicked = false;
-        public RefBool buttonNextTactClicked = false;
-        private int currentTact = 0;
+        public static bool isRunning = false;
+        public bool inEditMode = false;
+        public static bool inMicroMode = false;
+        public bool buttonOKClicked = false;
+        public static bool buttonNextTactClicked = false;
+        public static int currentTact = 0;
         private short raps = 0;
         private short na = 0;
         private bool isTestPositive = false;
@@ -41,56 +44,8 @@ namespace LabZKT
         DataGridViewCellStyle dgvcs1;
         private Dictionary<string, NumericTextBox> registers;
         private Dictionary<string, BitTextBox> flags;
-        private Dictionary<string, long> instCodeS1 = new Dictionary<string, long>()
-        {
-            {"", 0 },{"IXRE", 2 },{"OLR", 4 },{"ORR", 6 },{"ORAE", 8 },{"IALU", 0xA },{"OXE", 0xC },{"OX", 0xE }
-        };
-        private Dictionary<string, long> instCodeD1 = new Dictionary<string, long>()
-        {
-            {"", 0 },{"ILK", 8 },{"IRAP", 0x10 },{"OXE", 0x18 }
-        };
-        private Dictionary<string, long> instCodeS2 = new Dictionary<string, long>()
-        {
-            {"", 0 },{"IRAE", 0x8 },{"ORR", 0x10 },{"ORI", 0x18 },{"ORAE", 0x20 },{"OA", 0x28 },{"OMQ", 0x30 },{"OX", 0x38 },
-            {"OBE", 0x40 },{"IXRE", 0x48 },{"IALU", 0x50 },{"OXE", 0x58 }
-        };
-        private Dictionary<string, long> instCodeD2 = new Dictionary<string, long>()
-        {
-            {"", 0 },{"ILR", 0x8 },{"IX", 0x10 },{"IBE", 0x18 },{"IRI", 0x20 },{"IBI", 0x28 },{"IA", 0x30 },{"IMQ", 0x38 },
-            {"OXE", 0x40 },{"NSI", 0x48 },{"IAS", 0x50 },{"SGN", 0x58 },
-            {"ALA", 0x8 },{"ARA", 0x10 },{"LRQ", 0x18 },{"LLQ", 0x20 },{"LLA", 0x28 },{"LRA", 0x30 },{"LCA", 0x38 }
-        };
-        private Dictionary<string, long> instCodeS3 = new Dictionary<string, long>()
-        {
-            {"", 0 },{"ORI", 1 },{"OLR", 2 },{"OA", 3 },{"ORAE", 4 },{"OMQ", 5 },{"ORB", 6 },{"OXE",7 }
-        };
-        private Dictionary<string, long> instCodeD3 = new Dictionary<string, long>()
-        {
-            {"", 0 },{"ILR", 0x1 },{"IX", 0x2 },{"IBE", 0x3 },{"IRI", 0x4 },{"IBI", 0x5 },{"IA", 0x6 },{"IMQ", 0x7 },
-            {"OXE", 0x8 },{"NSI", 0x9 },{"IAS", 0xA },{"SGN", 0xB },{"IRR", 0xC },{"IRBP", 0xD },{"SRBP", 0xE }
-        };
-        private Dictionary<string, long> instCodeC1 = new Dictionary<string, long>()
-        {
-            {"", 0 },{"CWC", 2 },{"RRC", 4 },{"MUL", 6 },{"DIV", 8 },{"SHT", 10 },{"IWC", 12 },{"END", 14 }
-        };
-        private Dictionary<string, long> instCodeC2 = new Dictionary<string, long>()
-        {
-            {"", 0 },{"DLK", 2 },{"SOFF", 4 },{"ROFF", 6 },{"SXRO", 8 },{"RXRO", 10 },{"DRI", 12 },{"RA", 14 },
-            { "RMQ", 16 }, {"AQ16", 18 },{"RINT", 20 },{"OPC", 22 },{"CEA", 24 },{"ENI", 26 }
-        };
-        private Dictionary<string, long> instCodeTest = new Dictionary<string, long>()
-        {
-            {"", 0 },{"UNB", 0x1 },{"TINT", 0x2 },{"TIND", 0x3 },{"TAS", 0x4 },{"TXS", 0x5 },{"TQ15", 0x6 },{"TCR", 0x7 },
-            {"TSD", 0x8 },{"TAO", 0x9 },{"TXP", 0xA },{"TXZ", 0xB },{"TXRO", 0xC },{"TAP", 0xD },{"TAZ", 0xE }
-        };
-        private Dictionary<string, long> instCodeALU = new Dictionary<string, long>()
-        {
-            {"", 0 },{"ADS", 0x1 },{"SUS", 0x2 },{"CMX", 0x3 },{"CMA", 0x4 },{"OR", 0x5 },{"AND", 0x6 },{"EOR", 0x7 },
-            {"NOTL", 0x8 },{"NOTR", 0x9 },{"L", 0xA },{"R", 0xB },{"INCL", 0xC },{"INLK", 0xD },{"DECL", 0xE },
-            {"DELK", 0xF },{"INE", 0x10 },{"ZERO", 0x11 }
-        };
         private TextBox RBPS;
-        //Use the same instance of list (changes shared with other simulator parts)
+        //Use the same instance of list (changes shared with other parts)
         public RunSim(ref List<MemoryRecord> mem, ref List<MicroOperation> op, ref Dictionary<string, NumericTextBox> reg,
             ref Dictionary<string, BitTextBox> sig, ref TextBox rbps, ref MemoryRecord lrfr)
         {
@@ -110,18 +65,25 @@ namespace LabZKT
         private void RunSim_Load(object sender, EventArgs e)
         {
             draw = new Drawings(ref panel_Sim_Control, ref registers, ref flags, ref RBPS);
+            modeManager = new ModeManager(ref registers, ref toolStripMenu_Edit, ref toolStripMenu_Clear, ref label_Status, 
+                ref button_Makro, ref button_Micro, ref cells, ref dataGridView_Info, ref button_Next_Tact);
+
             Size = new Size(1024, 768);
+            inMemoryLog = new MemoryStream();
+
+            initAll(sender, e);
+        }
+        private void initAll(object sender, EventArgs e)
+        {
             RunSim_ResizeEnd(sender, e);
             nowyLogToolStripMenuItem.Enabled = false;
             CenterToScreen();
             fillGridsWithData();
             grid_PO_SelectionChanged(sender, e);
             initUserInfoArea();
-            inMemoryLog = new MemoryStream();
             initLogInformation();
             Focus();
         }
-
         private void initLogInformation()
         {
             DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory + @"\Log\");
@@ -391,7 +353,6 @@ namespace LabZKT
         private void button_Makro_Click(object sender, EventArgs e)
         {
             inMicroMode = false;
-            //simulateCPU();
             simulateCPUCallBack cb = new simulateCPUCallBack(simulateCPU);
             new Thread(() => Invoke(cb, new object[] { })).Start();
         }
@@ -456,10 +417,10 @@ namespace LabZKT
             //zapamietac liczbe bledow i ocene, oraz cykl
         }
 
-        
+
         private void simulateCPU()
         {
-            switchSimMode_startSim();
+            modeManager.startSim();
             if (currentTact == 0)
                 instructionFetch();
             while (isRunning)
@@ -472,17 +433,17 @@ namespace LabZKT
             while (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1]))
                 exeTact1();
             if (currentTact == 1)
-                switchSimMode_nextTact();
+                modeManager.nextTact();
             while (currentTact == 2 && cells[10, 2])
                 exeTact2();
             if (currentTact == 2)
-                switchSimMode_nextTact();
+                modeManager.nextTact();
             while (currentTact >= 3 && currentTact <= 5)
-                switchSimMode_nextTact();
+                modeManager.nextTact();
             while (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
                 exeTact6();
             if (currentTact == 6)
-                switchSimMode_nextTact();
+                modeManager.nextTact();
             while (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7]))
                 exeTact7();
             if (currentTact == 7 && cells[9, 7])
@@ -497,21 +458,21 @@ namespace LabZKT
                 registers["RAPS"].setNeedCheck(out registerToCheck);
                 grid_PM.CurrentCell = grid_PM[11, registers["RAPS"].getInnerValue()];
                 button_OK.Visible = true;
-                switchSimMode_EnDisableButtons();
+                modeManager.EnDisableButtons();
                 registers[registerToCheck].Focus();
                 while (buttonOKClicked == false)
                     Application.DoEvents();
-                switchSimMode_EnDisableButtons();
+                modeManager.EnDisableButtons();
                 currentTact = 0;
                 dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
-                switchSimMode_stopSim();
+                modeManager.stopSim();
                 buttonOKClicked = false;
             }
             else if (currentTact == 9)
             {
                 currentTact = 0;
                 dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
-                switchSimMode_stopSim();
+                modeManager.stopSim();
             }
             if (currentTact == 7)
                 currentTact = 8;
@@ -536,14 +497,14 @@ namespace LabZKT
                     registers["RAP"].setActualValue(255);
                     registers["RAP"].setNeedCheck(out registerToCheck);
                     button_OK.Visible = true;
-                    switchSimMode_EnDisableButtons();
+                    modeManager.EnDisableButtons();
                     registers[registerToCheck].Focus();
                     while (buttonOKClicked == false)
                     {
                         Application.DoEvents();
                     }
                     buttonOKClicked = false;
-                    switchSimMode_EnDisableButtons();
+                    modeManager.EnDisableButtons();
                     registers["RAPS"].setActualValue(254);
                 }
             }
@@ -642,14 +603,14 @@ namespace LabZKT
             button_OK.Visible = true;
             if (registerToCheck != "")
             {
-                switchSimMode_EnDisableButtons();
+                modeManager.EnDisableButtons();
                 registers[registerToCheck].Focus();
             }
             while (buttonOKClicked == false)
                 Application.DoEvents();
             buttonOKClicked = false;
             if (registerToCheck != "")
-                switchSimMode_EnDisableButtons();
+                modeManager.EnDisableButtons();
             currentTact = 9;
         }
 
@@ -826,14 +787,14 @@ namespace LabZKT
             button_OK.Visible = true;
             if (registerToCheck != "")
             {
-                switchSimMode_EnDisableButtons();
+                modeManager.EnDisableButtons();
                 registers[registerToCheck].Focus();
             }
             while (buttonOKClicked == false)
                 Application.DoEvents();
             buttonOKClicked = false;
             if (registerToCheck != "")
-                switchSimMode_EnDisableButtons();
+                modeManager.EnDisableButtons();
         }
 
         private void exeTact6()
@@ -1011,7 +972,7 @@ namespace LabZKT
             button_OK.Visible = true;
             if (registerToCheck != "")
             {
-                switchSimMode_EnDisableButtons();
+                modeManager.EnDisableButtons();
                 registers[registerToCheck].Focus();
             }
             while (buttonOKClicked == false)
@@ -1023,7 +984,7 @@ namespace LabZKT
             }
             buttonOKClicked = false;
             if (registerToCheck != "")
-                switchSimMode_EnDisableButtons();
+                modeManager.EnDisableButtons();
         }
 
         private void exeTact2()
@@ -1191,13 +1152,13 @@ namespace LabZKT
             button_OK.Visible = true;
             if (registerToCheck != "")
             {
-                switchSimMode_EnDisableButtons();
+                modeManager.EnDisableButtons();
                 registers[registerToCheck].Focus();
             }
             while (buttonOKClicked == false)
                 Application.DoEvents();
             if (registerToCheck != "")
-                switchSimMode_EnDisableButtons();
+                modeManager.EnDisableButtons();
             if ((registers["ALU"].getActualValue() & 0x8000) == 0x8000)
                 flags["ZNAK"].setInnerValue(1);
             else
@@ -1315,11 +1276,11 @@ namespace LabZKT
                     registers["A"].setNeedCheck(out registerToCheck);
 
                     button_OK.Visible = true;
-                    switchSimMode_EnDisableButtons();
+                    modeManager.EnDisableButtons();
                     registers[registerToCheck].Focus();
                     while (buttonOKClicked == false)
                         Application.DoEvents();
-                    switchSimMode_EnDisableButtons();
+                    modeManager.EnDisableButtons();
                     buttonOKClicked = false;
                     if (LastBit)
                     {
@@ -1342,11 +1303,11 @@ namespace LabZKT
                     registers["A"].setNeedCheck(out registerToCheck);
 
                     button_OK.Visible = true;
-                    switchSimMode_EnDisableButtons();
+                    modeManager.EnDisableButtons();
                     registers[registerToCheck].Focus();
                     while (buttonOKClicked == false)
                         Application.DoEvents();
-                    switchSimMode_EnDisableButtons();
+                    modeManager.EnDisableButtons();
                     buttonOKClicked = false;
 
                     registers["MQ"].setActualValue((short)(registers["MQ"].getInnerValue() << 1));
@@ -1421,13 +1382,13 @@ namespace LabZKT
             button_OK.Visible = true;
             if (registerToCheck != "")
             {
-                switchSimMode_EnDisableButtons();
+                modeManager.EnDisableButtons();
                 registers[registerToCheck].Focus();
             }
             while (buttonOKClicked == false)
                 Application.DoEvents();
             if (registerToCheck != "")
-                switchSimMode_EnDisableButtons();
+                modeManager.EnDisableButtons();
             if (resetBus)
             {
                 registers["BUS"].setInnerAndActual(0);
@@ -1573,7 +1534,7 @@ namespace LabZKT
                     cells[10, j] = false;
                 cells[10, 2] = true;
             }
-            switchSimMode_nextTact();
+            modeManager.nextTact();
         }
 
         private void grid_PO_KeyDown(object sender, KeyEventArgs e)
