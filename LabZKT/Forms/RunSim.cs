@@ -23,28 +23,20 @@ namespace LabZKT
         private Drawings draw;
         private string logFile = "";
         public bool resetBus { get; private set; }
-        private bool wasMaximized = false;
         private MemoryStream inMemoryLog;
         public static short dragValue;
         public static Size hitTest;
-        private string log = String.Empty;
-        private string microOpMnemo = "";
-        public static bool isRunning = false;
-        public bool inEditMode = false;
-        public static bool inMicroMode = false;
-        public bool buttonOKClicked = false;
-        public static bool buttonNextTactClicked = false;
+        private string log = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty;
+        public bool inEditMode = false, buttonOKClicked = false;
+        public static bool inMicroMode = false, isRunning = false, buttonNextTactClicked = false;
         public static int currentTact = 0;
-        private short raps = 0;
-        private short na = 0;
-        private bool isTestPositive = false;
-        private bool isOverflow = false;
-        private bool[,] cells = new bool[11, 8];
-        private string registerToCheck = "";
-        DataGridViewCellStyle dgvcs1;
+        private short raps = 0, na = 0;
+        private bool isTestPositive = false, isOverflow = false, wasMaximized = false;
+        public static bool[,] cells = new bool[11, 8];
         private Dictionary<string, NumericTextBox> registers;
         private Dictionary<string, BitTextBox> flags;
         private TextBox RBPS;
+        private DataGridViewCellStyle dgvcs1;
         //Use the same instance of list (changes shared with other parts)
         public RunSim(ref List<MemoryRecord> mem, ref List<MicroOperation> op, ref Dictionary<string, NumericTextBox> reg,
             ref Dictionary<string, BitTextBox> sig, ref TextBox rbps, ref MemoryRecord lrfr)
@@ -66,7 +58,7 @@ namespace LabZKT
         {
             draw = new Drawings(ref panel_Sim_Control, ref registers, ref flags, ref RBPS);
             modeManager = new ModeManager(ref registers, ref toolStripMenu_Edit, ref toolStripMenu_Clear, ref label_Status, 
-                ref button_Makro, ref button_Micro, ref cells, ref dataGridView_Info, ref button_Next_Tact);
+                ref button_Makro, ref button_Micro, ref dataGridView_Info, ref button_Next_Tact);
 
             Size = new Size(1024, 768);
             inMemoryLog = new MemoryStream();
@@ -349,14 +341,13 @@ namespace LabZKT
                 //bw.Write(inMemoryLog.GetBuffer());
             }
         }
-
+        delegate void simulateCPUCallBack();
         private void button_Makro_Click(object sender, EventArgs e)
         {
             inMicroMode = false;
             simulateCPUCallBack cb = new simulateCPUCallBack(simulateCPU);
             new Thread(() => Invoke(cb, new object[] { })).Start();
         }
-        delegate void simulateCPUCallBack();
         private void button_Micro_Click(object sender, EventArgs e)
         {
             inMicroMode = true;
@@ -384,7 +375,10 @@ namespace LabZKT
                 else if (MainWindow.mistakes >= 6 && MainWindow.mistakes <= 9)
                     MainWindow.mark = 3;
                 else if (MainWindow.mistakes >= 10)
+                {
+                    dgvcs1.ForeColor = Color.Red;
                     MainWindow.mark = 2;
+                }
                 dataGridView_Info[0, 0].Value = MainWindow.mark;
             }
         }
@@ -452,8 +446,8 @@ namespace LabZKT
                 currentTact = 8;
             else if (currentTact == 8)
             {
-                registers["LALU"].setInnerValue(0);
-                registers["RALU"].setInnerValue(0);
+                registers["LALU"].setInnerAndActual(0);
+                registers["RALU"].setInnerAndActual(0);
                 registers["RAPS"].setActualValue((short)(registers["RAPS"].getInnerValue() + 1));
                 registers["RAPS"].setNeedCheck(out registerToCheck);
                 grid_PM.CurrentCell = grid_PM[11, registers["RAPS"].getInnerValue()];
@@ -793,6 +787,11 @@ namespace LabZKT
             while (buttonOKClicked == false)
                 Application.DoEvents();
             buttonOKClicked = false;
+            if (resetBus)
+            {
+                registers["BUS"].setInnerAndActual(0);
+                resetBus = false;
+            }
             if (registerToCheck != "")
                 modeManager.EnDisableButtons();
         }
@@ -1542,8 +1541,7 @@ namespace LabZKT
 
         private void RunSim_ResizeEnd(object sender, EventArgs e)
         {
-            float horizontalRatio = 0.2f;
-            float verticalRatio = 0.15f;
+            float horizontalRatio = 0.2f, verticalRatio = 0.15f;
 
             int tempPoWidth = Convert.ToInt32(Width * horizontalRatio);
             panel_PO.Height = Convert.ToInt32(Height * 1.0);

@@ -15,10 +15,8 @@ namespace LabZKT
         private DataGridView dataGridView_Info;
         private Label label_Status;
         private Button button_Makro, button_Micro, button_Next_Tact;
-        private bool[,] cells;
         public ModeManager(ref Dictionary<string, NumericTextBox> regs, ref ToolStripMenuItem tsmie, ref ToolStripMenuItem tsmic,
-            ref Label lStatus, ref Button bMakro, ref Button bMicro , ref bool[,] cel,
-            ref DataGridView dgvInfo, ref Button bNext_Tact)
+            ref Label lStatus, ref Button bMakro, ref Button bMicro, ref DataGridView dgvInfo, ref Button bNext_Tact)
         {
             button_Next_Tact = bNext_Tact;
             dataGridView_Info = dgvInfo;
@@ -28,7 +26,6 @@ namespace LabZKT
             label_Status = lStatus;
             button_Makro = bMakro;
             button_Micro = bMicro;
-            cells = cel;
         }
 
         public void stopSim()
@@ -52,7 +49,7 @@ namespace LabZKT
             label_Status.ForeColor = Color.Red;
             for (int i = 0; i < 11; i++)
                 for (int j = 0; j < 8; j++)
-                    cells[i, j] = true;
+                    RunSim.cells[i, j] = true;
             foreach (var reg in registers)
                 reg.Value.setActualValue(reg.Value.getInnerValue());
         }

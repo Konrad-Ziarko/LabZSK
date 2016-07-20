@@ -106,10 +106,6 @@ namespace LabZKT
         protected override void OnLostFocus(EventArgs e)
         {
             base.OnLostFocus(e);
-            if (Text == "")
-            {
-                innerValue = 0;
-            }
             try
             {
                 if (Text.Length > 0 && Text[Text.Length - 1] == 'h')
