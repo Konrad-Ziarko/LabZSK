@@ -62,18 +62,17 @@ namespace LabZKT
 
             Size = new Size(1024, 768);
             inMemoryLog = new MemoryStream();
-
             initAll(sender, e);
         }
         private void initAll(object sender, EventArgs e)
         {
-            RunSim_ResizeEnd(sender, e);
             nowyLogToolStripMenuItem.Enabled = false;
             CenterToScreen();
             fillGridsWithData();
             grid_PO_SelectionChanged(sender, e);
             initUserInfoArea();
             initLogInformation();
+            RunSim_ResizeEnd(sender, e);
             Focus();
         }
         private void initLogInformation()
@@ -190,7 +189,8 @@ namespace LabZKT
                 registers["SUMA"].Visible = registers["L"].Visible = registers["R"].Visible = true;
                 RBPS.Visible = registers["RAPS"].Visible = registers["RAE"].Visible = false;
             }
-            panel_Sim_Control.BackgroundImage = draw.drawBackground();
+            Graphics g = panel_Sim_Control.CreateGraphics();
+            draw.drawBackground(g);
         }
         private void RunSim_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -794,6 +794,12 @@ namespace LabZKT
             }
             if (registerToCheck != "")
                 modeManager.EnDisableButtons();
+        }
+
+        private void RunSim_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = panel_Sim_Control.CreateGraphics();
+            draw.drawBackground(g);
         }
 
         private void exeTact6()
@@ -1564,7 +1570,8 @@ namespace LabZKT
             panel_Sim.Height = Convert.ToInt32(panel_Left.Height - panel_PM.Height);
 
             rearrangeTextBoxes();
-            panel_Sim_Control.BackgroundImage = draw.drawBackground();
+            Graphics g = panel_Sim_Control.CreateGraphics();
+            draw.drawBackground(g);
         }
 
         private void RunSim_SizeChanged(object sender, EventArgs e)
