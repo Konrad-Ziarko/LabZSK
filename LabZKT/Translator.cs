@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace LabZKT
 {
@@ -45,148 +46,89 @@ namespace LabZKT
             {"NOP","Nic nie rób" }
         };
         static Dictionary<string, string> MicroOpDescriptions = new Dictionary<string, string>() {
-            {"IXRE", "RI -> LALU" },
-            {"ILK", "BUS -> LK" },
-            {"IRAP", "BUS -> RAP" },
-            {"IRAE","SUMA -> RAE" },
-            {"IALU", "A -> LALU"},
-            {"ILR","BUS -> LR" },
-            {"IX","BUS -> X" },
-            {"IBE","BUS -> RALU" },
-            {"IRI","BUS -> RI" },
-            {"IBI","BUS -> RAE" },
-            {"IA","BUS -> A" },
-            {"IMQ","BUS -> MQ" },
-            {"IAS","A0 -> ZNAK" },
-            {"IRR","BUS -> RR" },
-            {"IRBP","BUS -> RBP" },
-            {"SRBP","BUS -> RBP"},
-
-            {"OXE", "X -> RALU"},
-            {"OLR", "LR -> BUS" },
-            {"ORR", "RR -> BUS"},
-            {"ORAE", "RAE -> BUS"},
-            {"OX", "X -> BUS"},
-            {"ORI","RI -> BUS" },
-            {"OA","A -> BUS" },
-            {"OMQ","MQ -> BUS" },
-            {"OBE","ALU -> BUS" },
-            {"ORB","RBP -> BUS" },
-
-            {"NSI","LR+1 -> LR" },
-            {"SGN","X0 -> ZNAK" },
-
-            {"ALA","arytmetyczne A w lewo"},
-            {"ARA","arytmetyczne A w prawo"},
-            {"LRQ","logiczne A || MQ w prawo"},
-            {"LLQ","logiczne A || MQ w lewo"},
-            {"LLA","logiczne A w lewo"},
-            {"LRA","logiczne A w prawo"},
-            {"LCA","cykliczne A w lewo"},
-
-            {"CWC","Rozpoczęcie CWC"},
-            {"RRC","Rozpoczęcie RRC"},
-            {"MUL","16 -> LK"},
-            {"DIV","15 -> LK"},
-            {"SHT","Operacja przesunięcia"},
-            {"IWC","Rozpoczęcie IWC"},
-            {"END","Koniec mikroprogramu"},
-
-            {"DLK","LK = [LK]-1"},
-            {"SOFF","OFF = 1"},
-            {"ROFF","OFF = 0"},
-            {"SXRO","XRO = 1"},
-            {"RXRO","XRO = 0"},
-            {"DRI","RI = RI-1"},
-            {"RA","A = 0"},
-            {"RMQ","MQ = 0"},
-            {"AQ16","NOT A0 -> MQ16"},
-            {"RINT","INT = 0"},
-            {"OPC","OP lub AOP+32 -> RAPS"},
-            {"CEA","Oblicz adres efektywny"},
-            {"ENI","Odblokuj przerwania"},
-
-            {"UNB","Zawsze pozytywny"},
-            {"TINT","Brak przerwania"},
-            {"TIND","Adresowanie pośrednie"},
-            {"TAS","A >= 0"},
-            {"TXS","RI >= 0"},
-            {"TQ15","MQ15 = 0"},
-            {"TCR","LK=0 jeśli SHT LK!=0"},
-            {"TSD","ZNAK = 0"},
-            {"TAO","OFF = 0"},
-            {"TXP","RI < 0"},
-            {"TXZ","BXZ i RI <> 0 lub TLD i RI = 0"},
-            {"TXRO","XRO = 0"},
-            {"TAP","A < 0"},
-            {"TAZ","A = 0"},
-
-            {"ADS","ALU = LALU + RALU"},
-            {"SUS","ALU = LALU - RALU"},
-            {"CMX","ALU = (NOT RALU)+1"},
-            {"CMA","ALU = (NOT LALU)+1"},
-            {"OR","ALU = LALU OR RALU"},
-            {"AND","ALU = LALU AND RALU"},
-            {"EOR","ALU = LALU XOR RALU"},
-            {"NOTL","ALU = NOT LALU"},
-            {"NOTR","ALU = NOT RALU"},
-            {"L","ALU = LALU"},
-            {"R","ALU = RALU"},
-            {"INCL","ALU = LALU + 1"},
-            {"INLK","ALU = RALU + 1"},
-            {"DECL","ALU = LALU - 1"},
-            {"DELK","ALU = RALU - 1"},
-            {"ONE","ALU = 1"},
-            {"ZERO","ALU = 0"},
+            {"IXRE", "RI -> LALU" },{"ILK", "BUS -> LK" },{"IRAP", "BUS -> RAP" },{"IRAE","SUMA -> RAE" },
+            {"IALU", "A -> LALU"},{"ILR","BUS -> LR" },{"IX","BUS -> X" },{"IBE","BUS -> RALU" },
+            {"IRI","BUS -> RI" },{"IBI","BUS -> RAE" },{"IA","BUS -> A" },{"IMQ","BUS -> MQ" },
+            {"IAS","A0 -> ZNAK" },{"IRR","BUS -> RR" },{"IRBP","BUS -> RBP" },{"SRBP","BUS -> RBP"},
+            {"OXE", "X -> RALU"},{"OLR", "LR -> BUS" },{"ORR", "RR -> BUS"},{"ORAE", "RAE -> BUS"},
+            {"OX", "X -> BUS"},{"ORI","RI -> BUS" },{"OA","A -> BUS" },{"OMQ","MQ -> BUS" },
+            {"OBE","ALU -> BUS" },{"ORB","RBP -> BUS" },{"NSI","LR+1 -> LR" },{"SGN","X0 -> ZNAK" },
+            {"ALA","arytmetyczne A w lewo"},{"ARA","arytmetyczne A w prawo"},
+            {"LRQ","logiczne A || MQ w prawo"},{"LLQ","logiczne A || MQ w lewo"},
+            {"LLA","logiczne A w lewo"},{"LRA","logiczne A w prawo"},
+            {"LCA","cykliczne A w lewo"},{"CWC","Rozpoczęcie CWC"},{"RRC","Rozpoczęcie RRC"},
+            {"MUL","16 -> LK"},{"DIV","15 -> LK"},
+            {"SHT","Operacja przesunięcia"},{"IWC","Rozpoczęcie IWC"},{"END","Koniec mikroprogramu"},{"DLK","LK = [LK]-1"},
+            {"SOFF","OFF = 1"},{"ROFF","OFF = 0"},{"SXRO","XRO = 1"},{"RXRO","XRO = 0"},
+            {"DRI","RI = RI-1"},{"RA","A = 0"},{"RMQ","MQ = 0"},{"AQ16","NOT A0 -> MQ16"},
+            {"RINT","INT = 0"},{"OPC","OP lub AOP+32 -> RAPS"},{"CEA","Oblicz adres efektywny"},{"ENI","Odblokuj przerwania"},
+            {"UNB","Zawsze pozytywny"},{"TINT","Brak przerwania"},{"TIND","Adresowanie pośrednie"},{"TAS","A >= 0"},
+            {"TXS","RI >= 0"},{"TQ15","MQ15 = 0"},{"TCR","LK=0 jeśli SHT LK!=0"},{"TSD","ZNAK = 0"},
+            {"TAO","OFF = 0"},{"TXP","RI < 0"},{"TXZ","BXZ i RI <> 0 lub TLD i RI = 0"},{"TXRO","XRO = 0"},
+            {"TAP","A < 0"},{"TAZ","A = 0"},{"ADS","ALU = LALU + RALU"},{"SUS","ALU = LALU - RALU"},
+            {"CMX","ALU = (NOT RALU)+1"},{"CMA","ALU = (NOT LALU)+1"},{"OR","ALU = LALU OR RALU"},{"AND","ALU = LALU AND RALU"},
+            {"EOR","ALU = LALU XOR RALU"},{"NOTL","ALU = NOT LALU"},{"NOTR","ALU = NOT RALU"},{"L","ALU = LALU"},
+            {"R","ALU = RALU"},{"INCL","ALU = LALU + 1"},{"INLK","ALU = RALU + 1"},{"DECL","ALU = LALU - 1"},
+            {"DELK","ALU = RALU - 1"},{"ONE","ALU = 1"},{"ZERO","ALU = 0"},
         };
-        private Dictionary<string, long> instCodeS1 = new Dictionary<string, long>()
+        private static Dictionary<string, long> instCodeS1 = new Dictionary<string, long>()
         {
             {"", 0 },{"IXRE", 2 },{"OLR", 4 },{"ORR", 6 },{"ORAE", 8 },{"IALU", 0xA },{"OXE", 0xC },{"OX", 0xE }
         };
-        private Dictionary<string, long> instCodeD1 = new Dictionary<string, long>()
+        private static Dictionary<string, long> instCodeD1 = new Dictionary<string, long>()
         {
             {"", 0 },{"ILK", 8 },{"IRAP", 0x10 },{"OXE", 0x18 }
         };
-        private Dictionary<string, long> instCodeS2 = new Dictionary<string, long>()
+        private static Dictionary<string, long> instCodeS2 = new Dictionary<string, long>()
         {
             {"", 0 },{"IRAE", 0x8 },{"ORR", 0x10 },{"ORI", 0x18 },{"ORAE", 0x20 },{"OA", 0x28 },{"OMQ", 0x30 },{"OX", 0x38 },
             {"OBE", 0x40 },{"IXRE", 0x48 },{"IALU", 0x50 },{"OXE", 0x58 }
         };
-        private Dictionary<string, long> instCodeD2 = new Dictionary<string, long>()
+        private static Dictionary<string, long> instCodeD2 = new Dictionary<string, long>()
         {
             {"", 0 },{"ILR", 0x8 },{"IX", 0x10 },{"IBE", 0x18 },{"IRI", 0x20 },{"IBI", 0x28 },{"IA", 0x30 },{"IMQ", 0x38 },
             {"OXE", 0x40 },{"NSI", 0x48 },{"IAS", 0x50 },{"SGN", 0x58 },
             {"ALA", 0x8 },{"ARA", 0x10 },{"LRQ", 0x18 },{"LLQ", 0x20 },{"LLA", 0x28 },{"LRA", 0x30 },{"LCA", 0x38 }
         };
-        private Dictionary<string, long> instCodeS3 = new Dictionary<string, long>()
+        private static Dictionary<string, long> instCodeS3 = new Dictionary<string, long>()
         {
             {"", 0 },{"ORI", 1 },{"OLR", 2 },{"OA", 3 },{"ORAE", 4 },{"OMQ", 5 },{"ORB", 6 },{"OXE",7 }
         };
-        private Dictionary<string, long> instCodeD3 = new Dictionary<string, long>()
+        private static Dictionary<string, long> instCodeD3 = new Dictionary<string, long>()
         {
             {"", 0 },{"ILR", 0x1 },{"IX", 0x2 },{"IBE", 0x3 },{"IRI", 0x4 },{"IBI", 0x5 },{"IA", 0x6 },{"IMQ", 0x7 },
             {"OXE", 0x8 },{"NSI", 0x9 },{"IAS", 0xA },{"SGN", 0xB },{"IRR", 0xC },{"IRBP", 0xD },{"SRBP", 0xE }
         };
-        private Dictionary<string, long> instCodeC1 = new Dictionary<string, long>()
+        private static Dictionary<string, long> instCodeC1 = new Dictionary<string, long>()
         {
             {"", 0 },{"CWC", 2 },{"RRC", 4 },{"MUL", 6 },{"DIV", 8 },{"SHT", 10 },{"IWC", 12 },{"END", 14 }
         };
-        private Dictionary<string, long> instCodeC2 = new Dictionary<string, long>()
+        private static Dictionary<string, long> instCodeC2 = new Dictionary<string, long>()
         {
             {"", 0 },{"DLK", 2 },{"SOFF", 4 },{"ROFF", 6 },{"SXRO", 8 },{"RXRO", 10 },{"DRI", 12 },{"RA", 14 },
             { "RMQ", 16 }, {"AQ16", 18 },{"RINT", 20 },{"OPC", 22 },{"CEA", 24 },{"ENI", 26 }
         };
-        private Dictionary<string, long> instCodeTest = new Dictionary<string, long>()
+        private static Dictionary<string, long> instCodeTest = new Dictionary<string, long>()
         {
             {"", 0 },{"UNB", 0x1 },{"TINT", 0x2 },{"TIND", 0x3 },{"TAS", 0x4 },{"TXS", 0x5 },{"TQ15", 0x6 },{"TCR", 0x7 },
             {"TSD", 0x8 },{"TAO", 0x9 },{"TXP", 0xA },{"TXZ", 0xB },{"TXRO", 0xC },{"TAP", 0xD },{"TAZ", 0xE }
         };
-        private Dictionary<string, long> instCodeALU = new Dictionary<string, long>()
+        private static Dictionary<string, long> instCodeALU = new Dictionary<string, long>()
         {
             {"", 0 },{"ADS", 0x1 },{"SUS", 0x2 },{"CMX", 0x3 },{"CMA", 0x4 },{"OR", 0x5 },{"AND", 0x6 },{"EOR", 0x7 },
             {"NOTL", 0x8 },{"NOTR", 0x9 },{"L", 0xA },{"R", 0xB },{"INCL", 0xC },{"INLK", 0xD },{"DECL", 0xE },
             {"DELK", 0xF },{"INE", 0x10 },{"ZERO", 0x11 }
         };
+        public static long GetRbpsValue(DataGridViewRow row)
+        {
+            long rbps = (instCodeS1[row.Cells[1].Value.ToString()] << 44) + (instCodeD1[row.Cells[2].Value.ToString()] << 40)
+                + (instCodeS2[row.Cells[3].Value.ToString()] << 36) + (instCodeD2[row.Cells[4].Value.ToString()] << 32)
+                + (instCodeS3[row.Cells[5].Value.ToString()] << 32) + (instCodeD3[row.Cells[6].Value.ToString()] << 28)
+                + (instCodeC1[row.Cells[7].Value.ToString()] << 24) + (instCodeC2[row.Cells[8].Value.ToString()] << 20)
+                + (instCodeTest[row.Cells[9].Value.ToString()] << 16) + (instCodeALU[row.Cells[10].Value.ToString()] << 8);
+
+                return rbps;
+        }
         public static string GetMicroOpDescription(string microOpMnemo)
         {
             string description = "";

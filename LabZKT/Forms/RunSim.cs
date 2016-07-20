@@ -1421,12 +1421,7 @@ namespace LabZKT
                 {
                     na = 0;
                 }
-            long rbps = (instCodeS1[row.Cells[1].Value.ToString()] << 44) + (instCodeD1[row.Cells[2].Value.ToString()] << 40)
-                + (instCodeS2[row.Cells[3].Value.ToString()] << 36) + (instCodeD2[row.Cells[4].Value.ToString()] << 32)
-                + (instCodeS3[row.Cells[5].Value.ToString()] << 32) + (instCodeD3[row.Cells[6].Value.ToString()] << 28)
-                + (instCodeC1[row.Cells[7].Value.ToString()] << 24) + (instCodeC2[row.Cells[8].Value.ToString()] << 20)
-                + (instCodeTest[row.Cells[9].Value.ToString()] << 16) + (instCodeALU[row.Cells[10].Value.ToString()] << 8)
-                + na;
+            long rbps = Translator.GetRbpsValue(grid_PM.Rows[raps]) + na;
             RBPS.Text = rbps.ToString("X").PadLeft(12, '0');
 
             for (int i = 1; i < 11; i++)
