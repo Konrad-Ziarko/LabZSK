@@ -26,11 +26,11 @@ namespace LabZKT
         public static Size hitTest;
         private string log = String.Empty;
         private string microOpMnemo = "";
-        private bool isRunning = false;
-        private bool inEditMode = false;
-        private bool inMicroMode = false;
-        private bool buttonOKClicked = false;
-        private bool buttonNextTactClicked = false;
+        public RefBool isRunning = false;
+        public RefBool inEditMode = false;
+        public RefBool inMicroMode = false;
+        public RefBool buttonOKClicked = false;
+        public RefBool buttonNextTactClicked = false;
         private int currentTact = 0;
         private short raps = 0;
         private short na = 0;
@@ -456,51 +456,7 @@ namespace LabZKT
             //zapamietac liczbe bledow i ocene, oraz cykl
         }
 
-        private void switchSimMode_stopSim()
-        {
-            toolStripMenu_Edit.Enabled = true;
-            isRunning = false;
-            button_Makro.Visible = true;
-            button_Micro.Visible = true;
-            toolStripMenu_Clear.Enabled = true;
-            label_Status.Text = "Stop";
-            label_Status.ForeColor = Color.Green;
-        }
-        private void switchSimMode_startSim()
-        {
-            toolStripMenu_Edit.Enabled = false;
-            isRunning = true;
-            button_Makro.Visible = false;
-            button_Micro.Visible = false;
-            toolStripMenu_Clear.Enabled = false;
-            label_Status.Text = "Start";
-            label_Status.ForeColor = Color.Red;
-            for (int i = 0; i < 11; i++)
-                for (int j = 0; j < 8; j++)
-                    cells[i, j] = true;
-            foreach (var reg in registers)
-                reg.Value.setActualValue(reg.Value.getInnerValue());
-        }
-        private void switchSimMode_nextTact()
-        {
-            if (inMicroMode)
-            {
-                button_Next_Tact.Visible = true;
-                while (!buttonNextTactClicked)
-                    Application.DoEvents();
-                buttonNextTactClicked = false;
-            }
-            else
-            {
-                currentTact = (currentTact + 1) % 8;
-                dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
-            }
-        }
-        private void switchSimMode_EnDisableButtons()
-        {
-            foreach (var reg in registers)
-                reg.Value.Enabled = !reg.Value.Enabled;
-        }
+        
         private void simulateCPU()
         {
             switchSimMode_startSim();
