@@ -503,7 +503,7 @@ namespace LabZKT
         }
         private void PO_SizeChanged(object sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Maximized && !wasMaximized)
+            if (WindowState == FormWindowState.Maximized && !wasMaximized)
             {
                 wasMaximized = true;
                 PO_ResizeEnd(sender, e);

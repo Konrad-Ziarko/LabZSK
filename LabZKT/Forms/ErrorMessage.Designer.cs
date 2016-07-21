@@ -52,7 +52,11 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ups!";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Deactivate += new System.EventHandler(this.ErrorMessage_Deactivate);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ErrorMessage_FormClosing);
             this.Load += new System.EventHandler(this.ErrorMessage_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ErrorMessage_KeyDown);
+            this.Leave += new System.EventHandler(this.ErrorMessage_Leave);
             this.ResumeLayout(false);
 
         }

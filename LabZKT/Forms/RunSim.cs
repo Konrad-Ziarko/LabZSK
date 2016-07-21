@@ -36,7 +36,6 @@ namespace LabZKT
         private Dictionary<string, BitTextBox> flags;
         private TextBox RBPS;
         private DataGridViewCellStyle dgvcs1;
-        //Use the same instance of list (changes shared with other parts)
         public RunSim(ref List<MemoryRecord> mem, ref List<MicroOperation> op, ref Dictionary<string, NumericTextBox> reg,
             ref Dictionary<string, BitTextBox> sig, ref TextBox rbps, ref MemoryRecord lrfr)
         {
@@ -102,7 +101,7 @@ namespace LabZKT
             inMemoryLog.Write(Translator.GetBytes("Uruchomienie symulatora o " + DateTime.Now.ToString("HH:MM:ss:")
                 + "\nKomputer w domenie: \"" + Environment.UserDomainName + "\"\nStacja \"" +
                 Environment.MachineName + "\" " + sysType + " " + Environment.OSVersion + " OS\nZalogowano jako: \"" +
-                Environment.UserName + "\"\n" + "Dostępne interfejsy sieciowe: " + ipAddrList + "\n", out len), 0, len);
+                Environment.UserName + "\"\n" + "Dostępne interfejsy sieciowe: " + ipAddrList + "\n\n\n", out len), 0, len);
         }
 
         private void fillGridsWithData()
@@ -364,8 +363,10 @@ namespace LabZKT
                     logFile = dialog.FileName;
                     logTimer.Enabled = true;
                     int len = 0;
+                    inMemoryLog.Write(Translator.GetBytes("========Start symulacji========\n======Zawartość rejestrów======\n", out len), 0, len);
                     foreach (var reg in registers.Values)
-                        inMemoryLog.Write(Translator.GetBytes(reg.registerName + "=" + reg.getInnerValue() + "\n", out len), 0, len);
+                        inMemoryLog.Write(Translator.GetBytes(reg.registerName + "=" + reg.Text + "\n", out len), 0, len);
+                    inMemoryLog.Write(Translator.GetBytes("===============================\n\n\n", out len), 0, len);
                 }
             }
             simulateCPUCallBack cb = new simulateCPUCallBack(simulateCPU);
@@ -1439,7 +1440,8 @@ namespace LabZKT
                 }
             long rbps = Translator.GetRbpsValue(grid_PM.Rows[raps]) + na;
             RBPS.Text = rbps.ToString("X").PadLeft(12, '0');
-
+            int len = 0;
+            inMemoryLog.Write(Translator.GetBytes("RBPS="+RBPS.Text+"\n", out len), 0, len);
             for (int i = 1; i < 11; i++)
                 for (int j = 1; j < 8; j++)
                     cells[i, j] = row.Cells[i].Value.ToString() == "" ? false : true;
@@ -1591,7 +1593,7 @@ namespace LabZKT
 
         private void RunSim_SizeChanged(object sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Maximized && !wasMaximized)
+            if (WindowState == FormWindowState.Maximized && !wasMaximized)
             {
                 wasMaximized = true;
                 RunSim_ResizeEnd(sender, e);

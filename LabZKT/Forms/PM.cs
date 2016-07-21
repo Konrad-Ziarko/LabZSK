@@ -398,7 +398,7 @@ namespace LabZKT
 
         private void PM_SizeChanged(object sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Maximized && !wasMaximized)
+            if (WindowState == FormWindowState.Maximized && !wasMaximized)
             {
                 wasMaximized = true;
                 PM_ResizeEnd(sender, e);

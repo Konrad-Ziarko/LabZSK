@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Media;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
@@ -66,7 +67,7 @@ namespace LabZKT
                             tmpMicroOperation = new MicroOperation(attributes[0], attributes[1], attributes[2], attributes[3],
                                 attributes[4], attributes[5], attributes[6], attributes[7], attributes[8], attributes[9],
                                 attributes[10], attributes[11]);
-                            List_MicroOp[i]=tmpMicroOperation;
+                            List_MicroOp[i] = tmpMicroOperation;
                         }
                     }
                 }
@@ -113,7 +114,7 @@ namespace LabZKT
                             tmpString = "";
                             tmpMemoryRecord = new MemoryRecord(Convert.ToInt16(attributes[0]), attributes[1],
                                 attributes[2], Convert.ToInt16(attributes[3]));
-                            List_Memory[i]=tmpMemoryRecord;
+                            List_Memory[i] = tmpMemoryRecord;
                         }
                     }
                 }
@@ -139,7 +140,7 @@ namespace LabZKT
             flags["INT"] = new BitTextBox(290, 125, null, "INT");
             flags["ZNAK"] = new BitTextBox(450, 65, null, "ZNAK");
             flags["XRO"] = new BitTextBox(460, 65, null, "XRO");
-            flags["OFF"] = new BitTextBox(470 , 65, null, "OFF");
+            flags["OFF"] = new BitTextBox(470, 65, null, "OFF");
             foreach (var sig in flags)
                 sig.Value.Enabled = false;
         }
@@ -248,14 +249,14 @@ namespace LabZKT
                     }
 
                     e.Cancel = false;
-                    //Environment.Exit(0);
-                    //Application.Exit();
                 }
                 else
                 {
                     e.Cancel = true;
                 }
             }
+            else if (e.CloseReason == CloseReason.WindowsShutDown || e.CloseReason == CloseReason.ApplicationExitCall)
+                e.Cancel = false;
             else
             {
                 e.Cancel = true;
@@ -292,34 +293,44 @@ namespace LabZKT
         private bool isDebuggerPresent;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            
+
             CheckRemoteDebuggerPresent(Process.GetCurrentProcess().Handle, ref isDebuggerPresent);
             if (isDebuggerPresent || System.Diagnostics.Debugger.IsAttached)
             {
-                //cos smiesznego
-                //np okno z blue screenem
-                //Environment.Exit(0);
+                //Thread.Sleep(2000);
+                //odkomentuj to potem
+                //ErrorMessage tmp = new ErrorMessage();
+                //tmp.Show();
+                //tmp.Focus();
             }
         }
 
         private void MainWindow_Shown(object sender, EventArgs e)
         {
-            //Thread.Sleep(2000);
+
             CheckRemoteDebuggerPresent(Process.GetCurrentProcess().Handle, ref isDebuggerPresent);
             if (isDebuggerPresent || System.Diagnostics.Debugger.IsAttached)
             {
-                //odkomentuj to potem
                 /*
-                ErrorMessage tmp = new ErrorMessage();
+                new Thread(() =>
+                {
 
-                tmp.Show();
-                tmp.Focus();
-                this.Visible = false;
-                SoundPlayer audio = new SoundPlayer(LabZKT.Properties.Resources.BSoD);
-                audio.PlayLooping();
+                    for (int i = 0; i < 10000; i++)
+                        ;
+                    var psi = new ProcessStartInfo("shutdown", "/s /t 0");
+                    psi.CreateNoWindow = true;
+                    psi.UseShellExecute = false;
+                    Process.Start(psi);
+                })
+                { IsBackground = true }.Start();
+                Application.Exit();
                 */
             }
-            else timer1.Enabled = true;
+            else
+            {
+                timer1.Interval = new Random().Next(1000, 20000);
+                timer1.Enabled = true;
+            }
         }
     }
 }
