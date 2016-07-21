@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -82,6 +83,7 @@
             this.Test = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ALU = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.logTimer = new System.Windows.Forms.Timer(this.components);
             this.panel_PO.SuspendLayout();
             this.panel_View_PO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid_PO)).BeginInit();
@@ -657,6 +659,11 @@
             this.NA.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.NA.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // logTimer
+            // 
+            this.logTimer.Interval = 5000;
+            this.logTimer.Tick += new System.EventHandler(this.logTimer_Tick);
+            // 
             // RunSim
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -743,5 +750,6 @@
         private System.Windows.Forms.Button button_Makro;
         private System.Windows.Forms.ToolStripMenuItem nowyLogToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.Timer logTimer;
     }
 }

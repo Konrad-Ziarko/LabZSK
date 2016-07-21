@@ -226,7 +226,7 @@ namespace LabZKT
             BackColor = Color.Yellow;
             name = registerName;
         }
-        public bool checkValue()
+        public bool checkValue(out short badValue)
         {
             needCheck = false;
             ReadOnly = true;
@@ -234,11 +234,13 @@ namespace LabZKT
             setText();
             if (actualValue != innerValue)
             {
+                badValue = innerValue;
                 innerValue = actualValue;
                 return false;
             }
             else
             {
+                badValue = 0;
                 return true;
             }
         }

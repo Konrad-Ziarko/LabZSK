@@ -23,7 +23,7 @@ namespace LabZKT
             flags = flgs;
             RBPS = rbps;
         }
-        public void drawBackground(Graphics g)
+        public void drawBackground(ref Graphics g)
         {
             g.Clear(Color.FromArgb(255, 27, 96, 51));
             GraphicsPath path = new GraphicsPath();

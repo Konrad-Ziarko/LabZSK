@@ -32,6 +32,7 @@ namespace LabZKT
         {
             toolStripMenu_Edit.Enabled = true;
             RunSim.isRunning = false;
+            RunSim.inMicroMode = false;
             button_Makro.Visible = true;
             button_Micro.Visible = true;
             toolStripMenu_Clear.Enabled = true;

@@ -14,6 +14,7 @@ namespace LabZKT
 {
     public partial class RunSim : Form
     {
+        //mem przekazac do watku symulacji bo cwc bedzie zapisywac do pamieci
         private List<MemoryRecord> List_Memory { get; set; }
         private List<MicroOperation> List_MicroOp { get; set; }
         private MemoryRecord lastRecordFromRRC;
@@ -21,12 +22,11 @@ namespace LabZKT
         private ModeManager modeManager;
 
         private Drawings draw;
-        private string logFile = "";
         public bool resetBus { get; private set; }
         private MemoryStream inMemoryLog;
         public static short dragValue;
         public static Size hitTest;
-        private string log = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty;
+        private string logFile = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty;
         public bool inEditMode = false, buttonOKClicked = false;
         public static bool inMicroMode = false, isRunning = false, buttonNextTactClicked = false;
         public static int currentTact = 0;
@@ -57,7 +57,7 @@ namespace LabZKT
         private void RunSim_Load(object sender, EventArgs e)
         {
             draw = new Drawings(ref panel_Sim_Control, ref registers, ref flags, ref RBPS);
-            modeManager = new ModeManager(ref registers, ref toolStripMenu_Edit, ref toolStripMenu_Clear, ref label_Status, 
+            modeManager = new ModeManager(ref registers, ref toolStripMenu_Edit, ref toolStripMenu_Clear, ref label_Status,
                 ref button_Makro, ref button_Micro, ref dataGridView_Info, ref button_Next_Tact);
 
             Size = new Size(1024, 768);
@@ -189,8 +189,11 @@ namespace LabZKT
                 registers["SUMA"].Visible = registers["L"].Visible = registers["R"].Visible = true;
                 RBPS.Visible = registers["RAPS"].Visible = registers["RAE"].Visible = false;
             }
-            Graphics g = panel_Sim_Control.CreateGraphics();
-            draw.drawBackground(g);
+            new Thread(() =>
+            {
+                Graphics g = panel_Sim_Control.CreateGraphics();
+                draw.drawBackground(ref g);
+            }).Start();
         }
         private void RunSim_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -270,6 +273,7 @@ namespace LabZKT
                 reg.Value.resetValue();
             foreach (var flg in flags)
                 flg.Value.resetValue();
+            dgvcs1.ForeColor = Color.Green;
             MainWindow.mark = 5;
             MainWindow.mistakes = MainWindow.currnetCycle = 0;
             dataGridView_Info.Rows[0].Cells[0].Value = 5;
@@ -335,26 +339,39 @@ namespace LabZKT
             richTextBox_Log.ScrollToCaret();
             //poprawić format logu
             int len = 0;
-            inMemoryLog.Write(Translator.GetBytes(tact + " " + mnemo + " " + description, out len), 0, len);
-            using (BinaryWriter bw = new BinaryWriter(File.Create(Environment.CurrentDirectory + @"\Log\Log_" + DateTime.Now.ToString("HH_mm_ss"))))
-            {
-                //bw.Write(inMemoryLog.GetBuffer());
-            }
+            inMemoryLog.Write(Translator.GetBytes(tact + " " + mnemo + " " + description + "\n", out len), 0, len);
         }
         delegate void simulateCPUCallBack();
         private void button_Makro_Click(object sender, EventArgs e)
         {
-            inMicroMode = false;
-            simulateCPUCallBack cb = new simulateCPUCallBack(simulateCPU);
-            new Thread(() => Invoke(cb, new object[] { })).Start();
+            prepareSimulation(false);
         }
         private void button_Micro_Click(object sender, EventArgs e)
         {
-            inMicroMode = true;
-            simulateCPUCallBack cb = new simulateCPUCallBack(simulateCPU);
-            new Thread(() => Invoke(cb, new object[] { })).Start();
+            prepareSimulation(true);
         }
-
+        private void prepareSimulation(bool b)
+        {
+            inMicroMode = b;
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.InitialDirectory = Environment.CurrentDirectory;
+            while (logFile == "")
+            {
+                dialog.Filter = "Log symulatora|*.log|Wszystko|*.*";
+                dialog.Title = "Utwórz log";
+                DialogResult saveFileDialogResult = dialog.ShowDialog();
+                if (saveFileDialogResult == DialogResult.OK && dialog.FileName != "")
+                {
+                    logFile = dialog.FileName;
+                    logTimer.Enabled = true;
+                    int len = 0;
+                    foreach (var reg in registers.Values)
+                        inMemoryLog.Write(Translator.GetBytes(reg.registerName + "=" + reg.getInnerValue() + "\n", out len), 0, len);
+                }
+            }
+            simulateCPUCallBack cb = new simulateCPUCallBack(simulateCPU);
+            new Thread(() => Invoke(cb)).Start();
+        }
         private void button_Next_Tact_Click(object sender, EventArgs e)
         {
             button_Next_Tact.Visible = false;
@@ -364,10 +381,15 @@ namespace LabZKT
         }
         private void checkRegisters()
         {
-            if (!registers[registerToCheck].checkValue())
+            short badValue;
+
+            if (!registers[registerToCheck].checkValue(out badValue))
             {
                 new Thread(SystemSounds.Beep.Play).Start();
                 //zapisac bledna i poprawna wartosc do logu
+                int len = 0;
+                inMemoryLog.Write(Translator.GetBytes("Błąd(" + (MainWindow.mistakes + 1) + "): " + registerToCheck + "=" + badValue + "(" + registerToCheck + "=" + registers[registerToCheck].getInnerValue() + ")\n", out len), 0, len);
+
                 MainWindow.mistakes++;
                 dataGridView_Info[0, 1].Value = MainWindow.mistakes;
                 if (MainWindow.mistakes >= 2 && MainWindow.mistakes <= 5)
@@ -380,6 +402,11 @@ namespace LabZKT
                     MainWindow.mark = 2;
                 }
                 dataGridView_Info[0, 0].Value = MainWindow.mark;
+            }
+            else
+            {
+                int len = 0;
+                inMemoryLog.Write(Translator.GetBytes(registerToCheck + "=" + registers[registerToCheck].getInnerValue() + "\n", out len), 0, len);
             }
         }
         private void button_OK_Click(object sender, EventArgs e)
@@ -404,22 +431,13 @@ namespace LabZKT
             }
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            //dla pliku logu tworzyc ukryty plik z crc
-            //jesli symulacja ruszyla okno tylko ukrywac lub zapisywac gdzies stany rejesstrow
-            //zapamietac liczbe bledow i ocene, oraz cykl
-        }
-
-
         private void simulateCPU()
         {
             modeManager.startSim();
             if (currentTact == 0)
                 instructionFetch();
-            while (isRunning)
-                if (currentTact > 0)
-                    executeInstruction();
+            while (isRunning && currentTact > 0)
+                executeInstruction();
         }
 
         private void executeInstruction()
@@ -446,8 +464,6 @@ namespace LabZKT
                 currentTact = 8;
             else if (currentTact == 8)
             {
-                registers["LALU"].setInnerAndActual(0);
-                registers["RALU"].setInnerAndActual(0);
                 registers["RAPS"].setActualValue((short)(registers["RAPS"].getInnerValue() + 1));
                 registers["RAPS"].setNeedCheck(out registerToCheck);
                 grid_PM.CurrentCell = grid_PM[11, registers["RAPS"].getInnerValue()];
@@ -464,6 +480,8 @@ namespace LabZKT
             }
             else if (currentTact == 9)
             {
+                registers["LALU"].setInnerAndActual(0);
+                registers["RALU"].setInnerAndActual(0);
                 currentTact = 0;
                 dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
                 modeManager.stopSim();
@@ -794,12 +812,6 @@ namespace LabZKT
             }
             if (registerToCheck != "")
                 modeManager.EnDisableButtons();
-        }
-
-        private void RunSim_Paint(object sender, PaintEventArgs e)
-        {
-            Graphics g = panel_Sim_Control.CreateGraphics();
-            draw.drawBackground(g);
         }
 
         private void exeTact6()
@@ -1570,8 +1582,12 @@ namespace LabZKT
             panel_Sim.Height = Convert.ToInt32(panel_Left.Height - panel_PM.Height);
 
             rearrangeTextBoxes();
-            Graphics g = panel_Sim_Control.CreateGraphics();
-            draw.drawBackground(g);
+            new Thread(() =>
+            {
+                Graphics g = panel_Sim_Control.CreateGraphics();
+                draw.drawBackground(ref g);
+            }).Start();
+
         }
 
         private void RunSim_SizeChanged(object sender, EventArgs e)
@@ -1589,8 +1605,31 @@ namespace LabZKT
         }
         private void nowyLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            logFile = "";
+            logFile = string.Empty;
             //zerowanie rejestrów
+        }
+
+        private void RunSim_Paint(object sender, PaintEventArgs e)
+        {
+            new Thread(() =>
+            {
+                Graphics g = panel_Sim_Control.CreateGraphics();
+                draw.drawBackground(ref g);
+            }).Start();
+        }
+
+        private void logTimer_Tick(object sender, EventArgs e)
+        {
+            //dla pliku logu tworzyc ukryty plik z crc
+            //jesli symulacja ruszyla okno tylko ukrywac lub zapisywac gdzies stany rejesstrow
+            //zapamietac liczbe bledow i ocene, oraz cykl
+            new Thread(() =>
+            {
+                using (BinaryWriter bw = new BinaryWriter(File.Create(Environment.CurrentDirectory + @"\Log\Log_" + DateTime.Now.ToString("HH_mm_ss"))))
+                {
+                    bw.Write(inMemoryLog.GetBuffer());
+                }
+            }).Start();
         }
     }
 }
