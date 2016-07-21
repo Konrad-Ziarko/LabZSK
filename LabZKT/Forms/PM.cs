@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LabZKT
@@ -26,7 +21,6 @@ namespace LabZKT
             foreach (MicroOperation row in List_MicroOp)
                 Grid_PM.Rows.Add(row.addr, row.S1, row.D1, row.S2, row.D2, row.S3, row.D3, row.C1, row.C2, row.Test, row.ALU, row.NA);
         }
-
 
         private void PM_Load(object sender, EventArgs e)
         {
@@ -169,7 +163,7 @@ namespace LabZKT
                         }
                     }
                 }
-                UInt32 crc = CRC.ComputeChecksum(File.ReadAllBytes(save_File_Dialog.FileName));
+                uint crc = CRC.ComputeChecksum(File.ReadAllBytes(save_File_Dialog.FileName));
                 using (BinaryWriter bw = new BinaryWriter(File.Open(save_File_Dialog.FileName, FileMode.Append)))
                 {
                     bw.Write(crc);
@@ -392,7 +386,7 @@ namespace LabZKT
                             }
                         }
                     }
-                    UInt32 crc = CRC.ComputeChecksum(File.ReadAllBytes(Environment.CurrentDirectory + fileForPM));
+                    uint crc = CRC.ComputeChecksum(File.ReadAllBytes(Environment.CurrentDirectory + fileForPM));
                     using (BinaryWriter bw = new BinaryWriter(File.Open(Environment.CurrentDirectory + fileForPM, FileMode.Append)))
                     {
                         bw.Write(crc);

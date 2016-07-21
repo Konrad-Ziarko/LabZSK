@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LabZKT
@@ -80,7 +75,7 @@ namespace LabZKT
                             }
                         }
                     }
-                    UInt32 crc = CRC.ComputeChecksum(File.ReadAllBytes(Environment.CurrentDirectory + fileForPO));
+                    uint crc = CRC.ComputeChecksum(File.ReadAllBytes(Environment.CurrentDirectory + fileForPO));
                     using (BinaryWriter bw = new BinaryWriter(File.Open(Environment.CurrentDirectory + fileForPO, FileMode.Append)))
                     {
                         bw.Write(crc);
@@ -162,7 +157,7 @@ namespace LabZKT
                         }
                     }
                 }
-                UInt32 crc = CRC.ComputeChecksum(File.ReadAllBytes(save_File_Dialog.FileName));
+                uint crc = CRC.ComputeChecksum(File.ReadAllBytes(save_File_Dialog.FileName));
                 using (BinaryWriter bw = new BinaryWriter(File.Open(save_File_Dialog.FileName, FileMode.Append)))
                 {
                     bw.Write(crc);
