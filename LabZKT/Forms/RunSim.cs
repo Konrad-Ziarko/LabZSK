@@ -18,7 +18,7 @@ namespace LabZKT
         private List<MemoryRecord> List_Memory { get; set; }
         private List<MicroOperation> List_MicroOp { get; set; }
         private MemoryRecord lastRecordFromRRC;
-
+        Dictionary<string, short> oldRegs;
         private ModeManager modeManager;
         private LogManager logManager;
         private Drawings draw;
@@ -244,15 +244,18 @@ namespace LabZKT
 
                 }
             }
-            //
-            //switchLayOut();
         }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //zapamietac rejestry a po zakonczeniu edycji sprawdzic co zmieniono i do logu dopisac
             if (inEditMode)
             {
+                foreach (var oldReg in oldRegs)
+                {
+                    if (registers[oldReg.Key].getInnerValue() != oldReg.Value)
+                        logManager.addToMemory("Zmiana zawartości rejestru:"+oldReg.Key+" "+ 
+                            oldReg.Value+"=>"+ registers[oldReg.Key].getInnerValue()+"\n", logFile);
+                }
                 foreach (var reg in registers)
                     reg.Value.Enabled = false;
                 foreach (var sig in flags)
@@ -268,6 +271,12 @@ namespace LabZKT
             }
             else
             {
+                oldRegs = new Dictionary<string, short>();
+                foreach (var reg in registers)
+                {
+                    oldRegs.Add(reg.Key, reg.Value.getInnerValue());
+                }
+                //oldRegs = registers;
                 foreach (var reg in registers)
                 {
                     if (reg.Value.registerName == "BUS" || reg.Value.registerName == "LALU" || reg.Value.registerName == "RALU" ||
@@ -361,7 +370,7 @@ namespace LabZKT
             richTextBox_Log.Select(end, 0);
             richTextBox_Log.ScrollToCaret();
             //poprawić format logu
-            logManager.addToMemory(tact + " " + mnemo + " " + description + "\n", logFile);
+            logManager.addToMemory("\t"+tact + " " + mnemo + " " + description + "\n", logFile);
         }
         delegate void simulateCPUCallBack();
         private void button_Makro_Click(object sender, EventArgs e)
@@ -390,7 +399,6 @@ namespace LabZKT
                     logManager.addToMemory("========Start symulacji========\n======Zawartość rejestrów======\n", logFile);
                     foreach (var reg in registers.Values)
                         logManager.addToMemory(reg.registerName + "=" + reg.Text + "\n", logFile);
-                    logManager.addToMemory("===============================\n\n\n", logFile);
                 }
             }
             simulateCPUCallBack cb = new simulateCPUCallBack(simulateCPU);
@@ -412,7 +420,7 @@ namespace LabZKT
                 new Thread(SystemSounds.Beep.Play).Start();
                 //zapisac bledna i poprawna wartosc do logu
                 int len = 0;
-                logManager.addToMemory("Błąd(" + (MainWindow.mistakes + 1) + "): " + registerToCheck + "=" + badValue +
+                logManager.addToMemory("\tBłąd(" + (MainWindow.mistakes + 1) + "): " + registerToCheck + "=" + badValue +
                     "(" + registerToCheck + "=" + registers[registerToCheck].getInnerValue() + ")\n", logFile);
 
                 MainWindow.mistakes++;
@@ -431,7 +439,7 @@ namespace LabZKT
             else
             {
                 int len = 0;
-                logManager.addToMemory(registerToCheck + "=" + registers[registerToCheck].getInnerValue() + "\n", logFile);
+                logManager.addToMemory("\t"+registerToCheck + "=" + registers[registerToCheck].getInnerValue() + "\n", logFile);
             }
         }
         private void button_OK_Click(object sender, EventArgs e)
@@ -467,20 +475,26 @@ namespace LabZKT
 
         private void executeInstruction()
         {
+            if (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1]))
+                logManager.addToMemory("Takt1:\n", logFile);
             while (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1]))
                 exeTact1();
             if (currentTact == 1)
                 modeManager.nextTact();
+            if (currentTact == 2 && cells[10, 2])
+                logManager.addToMemory("Takt2:\n", logFile);
             while (currentTact == 2 && cells[10, 2])
                 exeTact2();
-            if (currentTact == 2)
+            while (currentTact >= 2 && currentTact <= 5)
                 modeManager.nextTact();
-            while (currentTact >= 3 && currentTact <= 5)
-                modeManager.nextTact();
+            if (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
+                logManager.addToMemory("Takt6:\n", logFile);
             while (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
                 exeTact6();
             if (currentTact == 6)
                 modeManager.nextTact();
+            if (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7] || cells[9, 7]))
+                logManager.addToMemory("Takt7:\n", logFile);
             while (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7]))
                 exeTact7();
             if (currentTact == 7 && cells[9, 7])
@@ -1466,7 +1480,7 @@ namespace LabZKT
             long rbps = Translator.GetRbpsValue(grid_PM.Rows[raps]) + na;
             RBPS.Text = rbps.ToString("X").PadLeft(12, '0');
             int len = 0;
-            logManager.addToMemory("RBPS=" + RBPS.Text + "\n", logFile);
+            logManager.addToMemory("===============================\n\nTakt0: RBPS=" + RBPS.Text + "\n", logFile);
             for (int i = 1; i < 11; i++)
                 for (int j = 1; j < 8; j++)
                     cells[i, j] = row.Cells[i].Value.ToString() == "" ? false : true;
