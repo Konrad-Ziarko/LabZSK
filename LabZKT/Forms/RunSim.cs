@@ -6,6 +6,7 @@ using System.Linq;
 using System.Media;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -19,10 +20,9 @@ namespace LabZKT
         private MemoryRecord lastRecordFromRRC;
 
         private ModeManager modeManager;
-
+        private LogManager logManager;
         private Drawings draw;
         public bool resetBus { get; private set; }
-        private MemoryStream inMemoryLog;
         public static short dragValue;
         public static Size hitTest;
         private string logFile = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty;
@@ -57,9 +57,8 @@ namespace LabZKT
             draw = new Drawings(ref panel_Sim_Control, ref registers, ref flags, ref RBPS);
             modeManager = new ModeManager(ref registers, ref toolStripMenu_Edit, ref toolStripMenu_Clear, ref label_Status,
                 ref button_Makro, ref button_Micro, ref dataGridView_Info, ref button_Next_Tact);
-
+            logManager = new LogManager();
             Size = new Size(1024, 768);
-            inMemoryLog = new MemoryStream();
             initAll(sender, e);
         }
         private void initAll(object sender, EventArgs e)
@@ -69,7 +68,6 @@ namespace LabZKT
             fillGridsWithData();
             grid_PO_SelectionChanged(sender, e);
             initUserInfoArea();
-            initLogInformation();
             RunSim_ResizeEnd(sender, e);
             Focus();
         }
@@ -97,11 +95,11 @@ namespace LabZKT
                                 ipAddrList += ip.Address.ToString();
                             else
                                 ipAddrList += "\n".PadRight(31, ' ') + ip.Address.ToString();
-
-            inMemoryLog.Write(Translator.GetBytes("Uruchomienie symulatora o " + DateTime.Now.ToString("HH:MM:ss:")
-                + "\nKomputer w domenie: \"" + Environment.UserDomainName + "\"\nStacja \"" +
-                Environment.MachineName + "\" " + sysType + " " + Environment.OSVersion + " OS\nZalogowano jako: \"" +
-                Environment.UserName + "\"\n" + "Dostępne interfejsy sieciowe: " + ipAddrList + "\n\n\n", out len), 0, len);
+            logManager.createNewLog(logFile);
+            logManager.addToMemory("Uruchomienie symulatora o " + DateTime.Now.ToString("HH:MM:ss:")
+            + "\nKomputer w domenie: \"" + Environment.UserDomainName + "\"\nStacja \"" +
+            Environment.MachineName + "\" " + sysType + " " + Environment.OSVersion + " OS\nZalogowano jako: \"" +
+            Environment.UserName + "\"\n" + "Dostępne interfejsy sieciowe: " + ipAddrList + "\n\n\n", logFile);
         }
 
         private void fillGridsWithData()
@@ -336,8 +334,7 @@ namespace LabZKT
             richTextBox_Log.Select(end, 0);
             richTextBox_Log.ScrollToCaret();
             //poprawić format logu
-            int len = 0;
-            inMemoryLog.Write(Translator.GetBytes(tact + " " + mnemo + " " + description + "\n", out len), 0, len);
+            logManager.addToMemory(tact + " " + mnemo + " " + description + "\n", logFile);
         }
         delegate void simulateCPUCallBack();
         private void button_Makro_Click(object sender, EventArgs e)
@@ -362,11 +359,11 @@ namespace LabZKT
                 {
                     logFile = dialog.FileName;
                     logTimer.Enabled = true;
-                    int len = 0;
-                    inMemoryLog.Write(Translator.GetBytes("========Start symulacji========\n======Zawartość rejestrów======\n", out len), 0, len);
+                    initLogInformation();
+                    logManager.addToMemory("========Start symulacji========\n======Zawartość rejestrów======\n", logFile);
                     foreach (var reg in registers.Values)
-                        inMemoryLog.Write(Translator.GetBytes(reg.registerName + "=" + reg.Text + "\n", out len), 0, len);
-                    inMemoryLog.Write(Translator.GetBytes("===============================\n\n\n", out len), 0, len);
+                        logManager.addToMemory(reg.registerName + "=" + reg.Text + "\n", logFile);
+                    logManager.addToMemory("===============================\n\n\n", logFile);
                 }
             }
             simulateCPUCallBack cb = new simulateCPUCallBack(simulateCPU);
@@ -388,7 +385,8 @@ namespace LabZKT
                 new Thread(SystemSounds.Beep.Play).Start();
                 //zapisac bledna i poprawna wartosc do logu
                 int len = 0;
-                inMemoryLog.Write(Translator.GetBytes("Błąd(" + (MainWindow.mistakes + 1) + "): " + registerToCheck + "=" + badValue + "(" + registerToCheck + "=" + registers[registerToCheck].getInnerValue() + ")\n", out len), 0, len);
+                logManager.addToMemory("Błąd(" + (MainWindow.mistakes + 1) + "): " + registerToCheck + "=" + badValue +
+                    "(" + registerToCheck + "=" + registers[registerToCheck].getInnerValue() + ")\n", logFile);
 
                 MainWindow.mistakes++;
                 dataGridView_Info[0, 1].Value = MainWindow.mistakes;
@@ -406,7 +404,7 @@ namespace LabZKT
             else
             {
                 int len = 0;
-                inMemoryLog.Write(Translator.GetBytes(registerToCheck + "=" + registers[registerToCheck].getInnerValue() + "\n", out len), 0, len);
+                logManager.addToMemory(registerToCheck + "=" + registers[registerToCheck].getInnerValue() + "\n", logFile);
             }
         }
         private void button_OK_Click(object sender, EventArgs e)
@@ -1441,7 +1439,7 @@ namespace LabZKT
             long rbps = Translator.GetRbpsValue(grid_PM.Rows[raps]) + na;
             RBPS.Text = rbps.ToString("X").PadLeft(12, '0');
             int len = 0;
-            inMemoryLog.Write(Translator.GetBytes("RBPS="+RBPS.Text+"\n", out len), 0, len);
+            logManager.addToMemory("RBPS=" + RBPS.Text + "\n", logFile);
             for (int i = 1; i < 11; i++)
                 for (int j = 1; j < 8; j++)
                     cells[i, j] = row.Cells[i].Value.ToString() == "" ? false : true;
@@ -1606,6 +1604,8 @@ namespace LabZKT
         }
         private void nowyLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            logManager.addToMemory("\n"+ DateTime.Now.ToString("HH:MM:ss:") + "========Stop  symulacji========\n", logFile);
+            logManager.clearInMemoryLog();
             logFile = string.Empty;
             //zerowanie rejestrów
         }
@@ -1628,7 +1628,7 @@ namespace LabZKT
             {
                 using (BinaryWriter bw = new BinaryWriter(File.Create(Environment.CurrentDirectory + @"\Log\Log_" + DateTime.Now.ToString("HH_mm_ss"))))
                 {
-                    bw.Write(inMemoryLog.GetBuffer());
+                    bw.Write(logManager.GetBuffer());
                 }
             }).Start();
         }
