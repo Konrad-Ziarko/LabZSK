@@ -84,6 +84,7 @@
             this.ALU = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.logTimer = new System.Windows.Forms.Timer(this.components);
+            this.open_File_Dialog = new System.Windows.Forms.OpenFileDialog();
             this.panel_PO.SuspendLayout();
             this.panel_View_PO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid_PO)).BeginInit();
@@ -751,5 +752,6 @@
         private System.Windows.Forms.ToolStripMenuItem nowyLogToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.Timer logTimer;
+        private System.Windows.Forms.OpenFileDialog open_File_Dialog;
     }
 }

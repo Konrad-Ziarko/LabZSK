@@ -217,8 +217,35 @@ namespace LabZKT
 
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            open_File_Dialog.Filter = "Logi symulatora|*.log|Wszystko|*.*";
+            open_File_Dialog.Title = "Wczytaj log";
+            open_File_Dialog.InitialDirectory = Environment.CurrentDirectory;
+
+            DialogResult openFileDialogResult = open_File_Dialog.ShowDialog();
+            if (openFileDialogResult == DialogResult.OK && open_File_Dialog.FileName != "")
+            {
+                try
+                {
+                    FileInfo fileInfo = new FileInfo(open_File_Dialog.FileName + "crc");
+                    fileInfo.Attributes = FileAttributes.Normal;
+                    uint crcFromFile;
+                    using (BinaryReader br = new BinaryReader(File.Open(open_File_Dialog.FileName + "crc", FileMode.Open)))
+                    {
+                        crcFromFile = br.ReadUInt16();
+                    }
+                    fileInfo.Attributes = FileAttributes.Hidden;
+                    if (crcFromFile == CRC.ComputeChecksum(File.ReadAllBytes(open_File_Dialog.FileName)))
+                    {
+                        //pokazac log programu
+                    }
+                }
+                catch (FileNotFoundException)
+                {
+
+                }
+            }
             //
-            switchLayOut();
+            //switchLayOut();
         }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)

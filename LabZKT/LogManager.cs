@@ -22,12 +22,20 @@ namespace LabZKT
                 bw.Write(bytes);
             }
             uint crc = CRC.ComputeChecksum(File.ReadAllBytes(logFile));
-            //using (BinaryWriter bw = new BinaryWriter(File.Open(logFile + ".crc", FileMode.CreateNew)))
-            //{
-            //    bw.Write(crc);
-            //}
-            //FileInfo fileInfo = new FileInfo(logFile + ".crc");
-            //fileInfo.Attributes = FileAttributes.Hidden;
+            try
+            {
+                using (BinaryWriter bw = new BinaryWriter(File.Open(logFile + "crc", FileMode.Create)))
+                {
+                    bw.Write(crc);
+                }
+
+            }
+            catch (UnauthorizedAccessException)
+            {
+
+            }
+            FileInfo fileInfo = new FileInfo(logFile + "crc");
+            fileInfo.Attributes = FileAttributes.Hidden;
         }
 
         internal byte[] GetBuffer()
