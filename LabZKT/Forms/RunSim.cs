@@ -252,8 +252,10 @@ namespace LabZKT
                             SizeF f = g.MeasureString(line, rtb.Font);
                             width = (int)(f.Width) > width ? (int)(f.Width) : width;
                         }
-                        rtb.Width = width;
+                        rtb.Width = width+10;
                         rtb.Height = 600;
+                        log.MaximizeBox = false;
+                        log.SizeGripStyle = SizeGripStyle.Hide;
                         log.ShowDialog();
                     }
                     else
