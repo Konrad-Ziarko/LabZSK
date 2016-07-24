@@ -12,7 +12,7 @@ namespace LabZKT
 {
     //może tryb nocny?
     //może zapisać godzine utworzenia logu i ją sprawdzać ?
-    //może plik ini z jakimiś danymi ?
+    //może plik ini z jakimiś ustawieniami ?
 
     public partial class MainWindow : Form
     {

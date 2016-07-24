@@ -442,6 +442,7 @@
             // 
             // button_Clear_Table
             // 
+            this.button_Clear_Table.BackColor = System.Drawing.Color.Red;
             this.button_Clear_Table.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button_Clear_Table.Location = new System.Drawing.Point(15, 123);
             this.button_Clear_Table.Margin = new System.Windows.Forms.Padding(15, 9, 15, 9);
@@ -449,7 +450,7 @@
             this.button_Clear_Table.Size = new System.Drawing.Size(167, 78);
             this.button_Clear_Table.TabIndex = 6;
             this.button_Clear_Table.Text = "Wyczyść tabelę";
-            this.button_Clear_Table.UseVisualStyleBackColor = true;
+            this.button_Clear_Table.UseVisualStyleBackColor = false;
             this.button_Clear_Table.Click += new System.EventHandler(this.button_Clear_Table_Click);
             // 
             // button_Clear_Row

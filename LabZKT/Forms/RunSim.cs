@@ -73,13 +73,6 @@ namespace LabZKT
         }
         private void initLogInformation()
         {
-            DirectoryInfo di = new DirectoryInfo(MainWindow.envPath + @"\Log\");
-            if (Directory.Exists(MainWindow.envPath + @"\Log\"))
-                foreach (FileInfo file in di.GetFiles())
-                    file.Delete();
-            else
-                Directory.CreateDirectory(MainWindow.envPath + @"\Log\");
-
             int len;
             string sysType;
             if (Environment.Is64BitOperatingSystem)
@@ -1690,13 +1683,15 @@ namespace LabZKT
             //dla pliku logu tworzyc ukryty plik z crc
             //jesli symulacja ruszyla okno tylko ukrywac lub zapisywac gdzies stany rejesstrow
             //zapamietac liczbe bledow i ocene, oraz cykl
+            /*
             new Thread(() =>
             {
-                using (BinaryWriter bw = new BinaryWriter(File.Create(MainWindow.envPath + @"\Log\Log_" + DateTime.Now.ToString("HH_mm_ss"))))
+                Directory.CreateDirectory(MainWindow.envPath + @"\Env");
+                using (BinaryWriter bw = new BinaryWriter(File.Create(MainWindow.envPath + @"\Env\Log_" + DateTime.Now.ToString("HH_mm_ss"))))
                 {
                     bw.Write(logManager.GetBuffer());
                 }
-            }).Start();
+            }).Start();*/
         }
     }
 }

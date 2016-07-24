@@ -31,7 +31,7 @@ namespace LabZKT
                     fileInfo = new FileInfo(logFile + "crc");
                     fileInfo.Attributes = FileAttributes.Normal;
                 }
-                catch (IOException e)
+                catch (IOException)
                 {
                     return;
                 }
