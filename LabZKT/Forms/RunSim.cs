@@ -237,8 +237,24 @@ namespace LabZKT
                     uint crc = CRC.ComputeChecksum(File.ReadAllBytes(open_File_Dialog.FileName));
                     if (crcFromFile == crc)
                     {
-                        //pokazac log programu
-                        
+                        Form log = new Form();
+                        RichTextBox rtb = new RichTextBox();
+                        log.Controls.Add(rtb);
+                        rtb.ReadOnly = true;
+                        rtb.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+                        rtb.Text = File.ReadAllText(open_File_Dialog.FileName, Encoding.Unicode);
+                        log.AutoSize = true;
+                        log.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+                        int width = 200;
+                        Graphics g = Graphics.FromHwnd(rtb.Handle);
+                        foreach (var line in rtb.Lines)
+                        {
+                            SizeF f = g.MeasureString(line, rtb.Font);
+                            width = (int)(f.Width) > width ? (int)(f.Width) : width;
+                        }
+                        rtb.Width = width;
+                        rtb.Height = 600;
+                        log.ShowDialog();
                     }
                     else
                     {
