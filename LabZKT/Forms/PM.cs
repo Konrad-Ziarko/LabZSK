@@ -143,9 +143,9 @@ namespace LabZKT
         {
             save_File_Dialog.Filter = "Pamięć mikroprogramu|*.pm|Wszystko|*.*";
             save_File_Dialog.Title = "Zapisz mikroprogram";
-            if (!Directory.Exists(Environment.CurrentDirectory + @"\PM\"))
-                Directory.CreateDirectory(Environment.CurrentDirectory + @"\PM\");
-            save_File_Dialog.InitialDirectory = Environment.CurrentDirectory + @"\PM\";
+            if (!Directory.Exists(MainWindow.envPath + @"\PM\"))
+                Directory.CreateDirectory(MainWindow.envPath + @"\PM\");
+            save_File_Dialog.InitialDirectory = MainWindow.envPath + @"\PM\";
             DialogResult saveFileDialogResult = save_File_Dialog.ShowDialog();
             if (saveFileDialogResult == DialogResult.OK && save_File_Dialog.FileName != "")
             {
@@ -192,10 +192,10 @@ namespace LabZKT
             {
                 open_File_Dialog.Filter = "Pamięć Mikroprogramu|*.pm|Wszystko|*.*";
                 open_File_Dialog.Title = "Wczytaj mikroprogram";
-                if (Directory.Exists(Environment.CurrentDirectory + @"\PM\"))
-                    open_File_Dialog.InitialDirectory = Environment.CurrentDirectory + @"\PM\";
+                if (Directory.Exists(MainWindow.envPath + @"\PM\"))
+                    open_File_Dialog.InitialDirectory = MainWindow.envPath + @"\PM\";
                 else
-                    open_File_Dialog.InitialDirectory = Environment.CurrentDirectory;
+                    open_File_Dialog.InitialDirectory = MainWindow.envPath;
 
                 DialogResult openFileDialogResult = open_File_Dialog.ShowDialog();
                 if (openFileDialogResult == DialogResult.OK && open_File_Dialog.FileName != "")
@@ -358,21 +358,21 @@ namespace LabZKT
         {
             new Thread(() =>
             {
-                FileInfo fileInfo = new FileInfo(Environment.CurrentDirectory + fileForPM);
+                FileInfo fileInfo = new FileInfo(MainWindow.envPath + fileForPM);
                 try
                 {
-                    if (File.Exists(Environment.CurrentDirectory + fileForPM))
+                    if (File.Exists(MainWindow.envPath + fileForPM))
                         fileInfo.Attributes = FileAttributes.Normal;
                     fileInfo.Directory.Create();
                 }
                 catch (Exception)
                 {
                     fileInfo.Directory.Create();
-                    File.Delete(Environment.CurrentDirectory + fileForPM);
+                    File.Delete(MainWindow.envPath + fileForPM);
                 }
                 finally
                 {
-                    using (BinaryWriter bw = new BinaryWriter(File.Open(Environment.CurrentDirectory + fileForPM, FileMode.Create)))
+                    using (BinaryWriter bw = new BinaryWriter(File.Open(MainWindow.envPath + fileForPM, FileMode.Create)))
                     {
                         bw.Write(Grid_PM.Columns.Count);
                         bw.Write(Grid_PM.Rows.Count);
@@ -386,8 +386,8 @@ namespace LabZKT
                             }
                         }
                     }
-                    uint crc = CRC.ComputeChecksum(File.ReadAllBytes(Environment.CurrentDirectory + fileForPM));
-                    using (BinaryWriter bw = new BinaryWriter(File.Open(Environment.CurrentDirectory + fileForPM, FileMode.Append)))
+                    uint crc = CRC.ComputeChecksum(File.ReadAllBytes(MainWindow.envPath + fileForPM));
+                    using (BinaryWriter bw = new BinaryWriter(File.Open(MainWindow.envPath + fileForPM, FileMode.Append)))
                     {
                         bw.Write(crc);
                     }

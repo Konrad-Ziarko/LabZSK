@@ -16,6 +16,7 @@ namespace LabZKT
 
     public partial class MainWindow : Form
     {
+        public static string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
         private string fileForPM = @"\Env\~micro.zkt";
         private string fileForPO = @"\Env\~mem.zkt";
         private Author frmAuthor;
@@ -44,13 +45,13 @@ namespace LabZKT
         }
         private void loadLastPMState()
         {
-            FileInfo fileInfo = new FileInfo(Environment.CurrentDirectory + fileForPM);
+            FileInfo fileInfo = new FileInfo(envPath + fileForPM);
             fileInfo.Attributes = FileAttributes.Normal;
-            if (CRC.ComputeChecksum(File.ReadAllBytes(Environment.CurrentDirectory + fileForPM)) == 0)
+            if (CRC.ComputeChecksum(File.ReadAllBytes(envPath + fileForPM)) == 0)
             {
                 try
                 {
-                    using (BinaryReader br = new BinaryReader(File.Open(Environment.CurrentDirectory + fileForPM, FileMode.Open)))
+                    using (BinaryReader br = new BinaryReader(File.Open(envPath + fileForPM, FileMode.Open)))
                     {
                         int n = br.ReadInt32();
                         int m = br.ReadInt32();
@@ -88,17 +89,17 @@ namespace LabZKT
                 }
                 MessageBox.Show("Plik z ostatnim zapisem pamięci mikroprogramu jest niespójny!", "LabZKT", MessageBoxButtons.OK);
             }
-            File.Delete(Environment.CurrentDirectory + fileForPM);
+            File.Delete(envPath + fileForPM);
         }
         private void loadLastPOState()
         {
-            FileInfo fileInfo = new FileInfo(Environment.CurrentDirectory + fileForPO);
+            FileInfo fileInfo = new FileInfo(envPath + fileForPO);
             fileInfo.Attributes = FileAttributes.Normal;
-            if (CRC.ComputeChecksum(File.ReadAllBytes(Environment.CurrentDirectory + fileForPO)) == 0)
+            if (CRC.ComputeChecksum(File.ReadAllBytes(envPath + fileForPO)) == 0)
             {
                 try
                 {
-                    using (BinaryReader br = new BinaryReader(File.Open(Environment.CurrentDirectory + fileForPO, FileMode.Open)))
+                    using (BinaryReader br = new BinaryReader(File.Open(envPath + fileForPO, FileMode.Open)))
                     {
                         int n = br.ReadInt32();
                         int m = br.ReadInt32();
@@ -135,7 +136,7 @@ namespace LabZKT
                 }
                 MessageBox.Show("Plik z ostatnim zapisem pamięci operacyjnej jest niespójny!", "LabZKT", MessageBoxButtons.OK);
             }
-            File.Delete(Environment.CurrentDirectory + fileForPO);
+            File.Delete(envPath + fileForPO);
         }
         private void initFlags()
         {
@@ -185,19 +186,23 @@ namespace LabZKT
         }
         private void checkIntegrity()
         {
+            Directory.CreateDirectory(envPath + "\\Env");
+            Directory.CreateDirectory(envPath + "\\Log");
+            Directory.CreateDirectory(envPath + "\\PO");
+            Directory.CreateDirectory(envPath + "\\PM");
             for (int i = 0; i < 256; i++)
                 List_MicroOp.Add(new MicroOperation(i, "", "", "", "", "", "", "", "", "", "", ""));
             for (int i = 0; i < 256; i++)
                 List_Memory.Add(new MemoryRecord(i, "", "", 0));
             //wykrycie niepoprawnego zamkniecia programu, pytac o wczytanie poprzenich mem i micro
-            if (File.Exists(Environment.CurrentDirectory + fileForPM) || File.Exists(Environment.CurrentDirectory + fileForPO))
+            if (File.Exists(envPath + fileForPM) || File.Exists(envPath + fileForPO))
                 MessageBox.Show("Wykryto niepoprawne zakończenie pracy symulatora.\nDo pamięci został wczytany ostatni dostępny stan.", "LabZKT", MessageBoxButtons.OK);
             //Load last available MicroOp list
-            if (File.Exists(Environment.CurrentDirectory + fileForPM))
+            if (File.Exists(envPath + fileForPM))
                 new Thread(() => { loadLastPMState(); }).Start();
 
             //Load last available MemoryRecords list
-            if (File.Exists(Environment.CurrentDirectory + fileForPO))
+            if (File.Exists(envPath + fileForPO))
                 new Thread(() => { loadLastPOState(); }).Start();
         }
         private void MainWindow_Load(object sender, EventArgs e)
@@ -205,6 +210,7 @@ namespace LabZKT
             checkIntegrity();
             initRegisterTextBoxes();
             initFlags();
+
         }
 
         /// Invoke close event when butto is clicked
@@ -225,14 +231,14 @@ namespace LabZKT
                 if (result == DialogResult.Yes)
                 {
                     //Delete temporary files
-                    FileInfo fileInfoPM = new FileInfo(Environment.CurrentDirectory + fileForPM);
-                    FileInfo fileInfoPO = new FileInfo(Environment.CurrentDirectory + fileForPO);
+                    FileInfo fileInfoPM = new FileInfo(envPath + fileForPM);
+                    FileInfo fileInfoPO = new FileInfo(envPath + fileForPO);
                     try
                     {
-                        if (File.Exists(Environment.CurrentDirectory + fileForPM))
+                        if (File.Exists(envPath + fileForPM))
                         {
                             fileInfoPM.Attributes = FileAttributes.Normal;
-                            File.Delete(Environment.CurrentDirectory + fileForPM);
+                            File.Delete(envPath + fileForPM);
                         }
                     }
                     catch (DirectoryNotFoundException)
@@ -241,10 +247,10 @@ namespace LabZKT
                     }
                     try
                     {
-                        if (File.Exists(Environment.CurrentDirectory + fileForPO))
+                        if (File.Exists(envPath + fileForPO))
                         {
                             fileInfoPO.Attributes = FileAttributes.Normal;
-                            File.Delete(Environment.CurrentDirectory + fileForPO);
+                            File.Delete(envPath + fileForPO);
                         }
                     }
                     catch (DirectoryNotFoundException)

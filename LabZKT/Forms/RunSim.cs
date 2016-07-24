@@ -73,12 +73,12 @@ namespace LabZKT
         }
         private void initLogInformation()
         {
-            DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory + @"\Log\");
-            if (Directory.Exists(Environment.CurrentDirectory + @"\Log\"))
+            DirectoryInfo di = new DirectoryInfo(MainWindow.envPath + @"\Log\");
+            if (Directory.Exists(MainWindow.envPath + @"\Log\"))
                 foreach (FileInfo file in di.GetFiles())
                     file.Delete();
             else
-                Directory.CreateDirectory(Environment.CurrentDirectory + @"\Log\");
+                Directory.CreateDirectory(MainWindow.envPath + @"\Log\");
 
             int len;
             string sysType;
@@ -219,7 +219,7 @@ namespace LabZKT
         {
             open_File_Dialog.Filter = "Logi symulatora|*.log|Wszystko|*.*";
             open_File_Dialog.Title = "Wczytaj log";
-            open_File_Dialog.InitialDirectory = Environment.CurrentDirectory;
+            open_File_Dialog.InitialDirectory = MainWindow.envPath;
 
             DialogResult openFileDialogResult = open_File_Dialog.ShowDialog();
             if (openFileDialogResult == DialogResult.OK && open_File_Dialog.FileName != "")
@@ -409,7 +409,7 @@ namespace LabZKT
         {
             inMicroMode = b;
             SaveFileDialog dialog = new SaveFileDialog();
-            dialog.InitialDirectory = Environment.CurrentDirectory;
+            dialog.InitialDirectory = MainWindow.envPath;
             while (logFile == "")
             {
                 dialog.Filter = "Log symulatora|*.log|Wszystko|*.*";
@@ -1673,6 +1673,7 @@ namespace LabZKT
             logManager.clearInMemoryLog();
             logFile = string.Empty;
             //zerowanie rejestrów
+
         }
 
         private void RunSim_Paint(object sender, PaintEventArgs e)
@@ -1691,7 +1692,7 @@ namespace LabZKT
             //zapamietac liczbe bledow i ocene, oraz cykl
             new Thread(() =>
             {
-                using (BinaryWriter bw = new BinaryWriter(File.Create(Environment.CurrentDirectory + @"\Log\Log_" + DateTime.Now.ToString("HH_mm_ss"))))
+                using (BinaryWriter bw = new BinaryWriter(File.Create(MainWindow.envPath + @"\Log\Log_" + DateTime.Now.ToString("HH_mm_ss"))))
                 {
                     bw.Write(logManager.GetBuffer());
                 }

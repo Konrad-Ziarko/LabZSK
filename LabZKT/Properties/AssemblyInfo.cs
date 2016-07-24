@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("LabZKT")]
+[assembly: AssemblyTitle("LabZkt")]
 [assembly: AssemblyDescription("Symulator Komputera Sterowanego Mikroprogramowo LabZKT")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyConfiguration("Ziarko Konrad")]
 [assembly: AssemblyCompany("Ziarko Konrad Tomasz @ Wojskowa Akademia Techniczna")]
-[assembly: AssemblyProduct("Ziarko Konrad Tomasz")]
+[assembly: AssemblyProduct("LABZKT")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

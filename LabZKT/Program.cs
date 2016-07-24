@@ -10,7 +10,7 @@ namespace LabZKT
         /// The main entry point for the application.
         /// </summary>
 
-        static System.Threading.Mutex singleton = new Mutex(true, "LabZKT");
+        static System.Threading.Mutex singleton = new Mutex(true, "LABZKT");
 
         [STAThread]
         static void Main()

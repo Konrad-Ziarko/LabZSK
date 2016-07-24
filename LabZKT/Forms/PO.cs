@@ -44,21 +44,21 @@ namespace LabZKT
         {
             new Thread(() =>
             {
-                FileInfo fileInfo = new FileInfo(Environment.CurrentDirectory + fileForPO);
+                FileInfo fileInfo = new FileInfo(MainWindow.envPath + fileForPO);
                 try
                 {
-                    if (File.Exists(Environment.CurrentDirectory + fileForPO))
+                    if (File.Exists(MainWindow.envPath + fileForPO))
                         fileInfo.Attributes = FileAttributes.Normal;
                     fileInfo.Directory.Create();
                 }
                 catch (Exception)
                 {
                     fileInfo.Directory.Create();
-                    File.Delete(Environment.CurrentDirectory + fileForPO);
+                    File.Delete(MainWindow.envPath + fileForPO);
                 }
                 finally
                 {
-                    using (BinaryWriter bw = new BinaryWriter(File.Open(Environment.CurrentDirectory + fileForPO, FileMode.Create)))
+                    using (BinaryWriter bw = new BinaryWriter(File.Open(MainWindow.envPath + fileForPO, FileMode.Create)))
                     {
                         bw.Write(Grid_PO.Columns.Count);
                         bw.Write(Grid_PO.Rows.Count);
@@ -75,8 +75,8 @@ namespace LabZKT
                             }
                         }
                     }
-                    uint crc = CRC.ComputeChecksum(File.ReadAllBytes(Environment.CurrentDirectory + fileForPO));
-                    using (BinaryWriter bw = new BinaryWriter(File.Open(Environment.CurrentDirectory + fileForPO, FileMode.Append)))
+                    uint crc = CRC.ComputeChecksum(File.ReadAllBytes(MainWindow.envPath + fileForPO));
+                    using (BinaryWriter bw = new BinaryWriter(File.Open(MainWindow.envPath + fileForPO, FileMode.Append)))
                     {
                         bw.Write(crc);
                     }
@@ -134,9 +134,9 @@ namespace LabZKT
         {
             save_File_Dialog.Filter = "Pamięć operacyjna|*.po|Wszystko|*.*";
             save_File_Dialog.Title = "Zapisz zawartość pamięci";
-            if (!Directory.Exists(Environment.CurrentDirectory + @"\PO\"))
-                Directory.CreateDirectory(Environment.CurrentDirectory + @"\PO\");
-            save_File_Dialog.InitialDirectory = Environment.CurrentDirectory + @"\PO\";
+            if (!Directory.Exists(MainWindow.envPath + @"\PO\"))
+                Directory.CreateDirectory(MainWindow.envPath + @"\PO\");
+            save_File_Dialog.InitialDirectory = MainWindow.envPath + @"\PO\";
             DialogResult saveFileDialogResult = save_File_Dialog.ShowDialog();
             if (saveFileDialogResult == DialogResult.OK && save_File_Dialog.FileName != "")
             {
@@ -182,10 +182,10 @@ namespace LabZKT
             {
                 open_File_Dialog.Filter = "Pamięć operacyjna|*.po|Wszystko|*.*";
                 open_File_Dialog.Title = "Wczytaj zawartość pamięci operacyjnej";
-                if (Directory.Exists(Environment.CurrentDirectory + @"\PO\"))
-                    open_File_Dialog.InitialDirectory = Environment.CurrentDirectory + @"\PO\";
+                if (Directory.Exists(MainWindow.envPath + @"\PO\"))
+                    open_File_Dialog.InitialDirectory = MainWindow.envPath + @"\PO\";
                 else
-                    open_File_Dialog.InitialDirectory = Environment.CurrentDirectory;
+                    open_File_Dialog.InitialDirectory = MainWindow.envPath;
 
                 DialogResult openFileDialogResult = open_File_Dialog.ShowDialog();
                 if (openFileDialogResult == DialogResult.OK && open_File_Dialog.FileName != "")
