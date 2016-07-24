@@ -231,12 +231,18 @@ namespace LabZKT
                     uint crcFromFile;
                     using (BinaryReader br = new BinaryReader(File.Open(open_File_Dialog.FileName + "crc", FileMode.Open)))
                     {
-                        crcFromFile = br.ReadUInt16();
+                        crcFromFile = br.ReadUInt32();
                     }
                     fileInfo.Attributes = FileAttributes.Hidden;
-                    if (crcFromFile == CRC.ComputeChecksum(File.ReadAllBytes(open_File_Dialog.FileName)))
+                    uint crc = CRC.ComputeChecksum(File.ReadAllBytes(open_File_Dialog.FileName));
+                    if (crcFromFile == crc)
                     {
                         //pokazac log programu
+                        
+                    }
+                    else
+                    {
+                        //ktoś modyfikował log albo skasował sumę kontrolną logu
                     }
                 }
                 catch (FileNotFoundException)

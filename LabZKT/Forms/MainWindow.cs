@@ -9,7 +9,11 @@ using System.Threading;
 using System.Windows.Forms;
 
 namespace LabZKT
-{//może tryb nocny?
+{
+    //może tryb nocny?
+    //może zapisać godzine utworzenia logu i ją sprawdzać ?
+    //może plik ini z jakimiś danymi ?
+
     public partial class MainWindow : Form
     {
         private string fileForPM = @"\Env\~micro.zkt";

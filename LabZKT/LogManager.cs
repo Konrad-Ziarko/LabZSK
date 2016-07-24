@@ -15,6 +15,7 @@ namespace LabZKT
         {
             if(logFile != string.Empty)
             {
+                FileInfo fileInfo;
                 int len = 0;
                 byte[] bytes = Translator.GetBytes(v, out len);
                 inMemoryLog.Write(bytes, 0, len);
@@ -24,19 +25,21 @@ namespace LabZKT
                     bw.Write(bytes);
                 }
                 uint crc = CRC.ComputeChecksum(File.ReadAllBytes(logFile));
+
                 try
                 {
-                    using (BinaryWriter bw = new BinaryWriter(File.Open(logFile + "crc", FileMode.Create)))
-                    {
-                        bw.Write(crc);
-                    }
-
+                    fileInfo = new FileInfo(logFile + "crc");
+                    fileInfo.Attributes = FileAttributes.Normal;
                 }
-                catch (UnauthorizedAccessException)
+                catch (IOException e)
                 {
-
+                    return;
                 }
-                FileInfo fileInfo = new FileInfo(logFile + "crc");
+                using (BinaryWriter bw = new BinaryWriter(File.Open(logFile + "crc", FileMode.Create)))
+                {
+                    bw.Write(crc);
+                }
+                fileInfo = new FileInfo(logFile + "crc");
                 fileInfo.Attributes = FileAttributes.Hidden;
             }
         }
