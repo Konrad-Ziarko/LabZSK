@@ -73,89 +73,88 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BitTextBox.cs">
+    <Compile Include="Main\Simulation\BitTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CRC.cs" />
-    <Compile Include="Drawings.cs" />
-    <Compile Include="Forms\ErrorMessage.cs">
+    <Compile Include="Main\CRC.cs" />
+    <Compile Include="Main\Simulation\Drawings.cs" />
+    <Compile Include="Main\ErrorMessage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ErrorMessage.Designer.cs">
+    <Compile Include="Main\ErrorMessage.Designer.cs">
       <DependentUpon>ErrorMessage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Author.cs">
+    <Compile Include="Main\Author.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Author.Designer.cs">
+    <Compile Include="Main\Author.Designer.cs">
       <DependentUpon>Author.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MainWindow.cs">
+    <Compile Include="Main\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MainWindow.Designer.cs">
+    <Compile Include="Main\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PM.cs">
+    <Compile Include="Main\MicroOp\PM.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\PM.Designer.cs">
+    <Compile Include="Main\MicroOp\PM.Designer.cs">
       <DependentUpon>PM.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PO.cs">
+    <Compile Include="Main\PAO\PO.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\PO.Designer.cs">
+    <Compile Include="Main\PAO\PO.Designer.cs">
       <DependentUpon>PO.cs</DependentUpon>
     </Compile>
-    <Compile Include="LogManager.cs" />
-    <Compile Include="MemoryRecord.cs" />
-    <Compile Include="MicroOperation.cs" />
-    <Compile Include="Forms\POSubmit.cs">
+    <Compile Include="Main\Simulation\LogManager.cs" />
+    <Compile Include="Main\PAO\MemoryRecord.cs" />
+    <Compile Include="Main\MicroOp\MicroOperation.cs" />
+    <Compile Include="Main\PAO\POSubmit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\POSubmit.Designer.cs">
+    <Compile Include="Main\PAO\POSubmit.Designer.cs">
       <DependentUpon>POSubmit.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModeManager.cs" />
-    <Compile Include="NumericTextBox.cs">
+    <Compile Include="Main\Simulation\ModeManager.cs" />
+    <Compile Include="Main\Simulation\NumericTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Main\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Forms\RunSim.cs">
+    <Compile Include="Main\Simulation\RunSim.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\RunSim.Designer.cs">
+    <Compile Include="Main\Simulation\RunSim.Designer.cs">
       <DependentUpon>RunSim.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PMSubmit.cs">
+    <Compile Include="Main\MicroOp\PMSubmit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\PMSubmit.Designer.cs">
+    <Compile Include="Main\MicroOp\PMSubmit.Designer.cs">
       <DependentUpon>PMSubmit.cs</DependentUpon>
     </Compile>
-    <Compile Include="SimLogic.cs" />
-    <Compile Include="Translator.cs" />
-    <EmbeddedResource Include="Forms\ErrorMessage.resx">
+    <Compile Include="Main\Translator.cs" />
+    <EmbeddedResource Include="Main\ErrorMessage.resx">
       <DependentUpon>ErrorMessage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Author.resx">
+    <EmbeddedResource Include="Main\Author.resx">
       <DependentUpon>Author.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MainWindow.resx">
+    <EmbeddedResource Include="Main\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PM.resx">
+    <EmbeddedResource Include="Main\MicroOp\PM.resx">
       <DependentUpon>PM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PO.resx">
+    <EmbeddedResource Include="Main\PAO\PO.resx">
       <DependentUpon>PO.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RunSim.resx">
+    <EmbeddedResource Include="Main\Simulation\RunSim.resx">
       <DependentUpon>RunSim.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\POSubmit.resx">
+    <EmbeddedResource Include="Main\PAO\POSubmit.resx">
       <DependentUpon>POSubmit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -168,7 +167,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Forms\PMSubmit.resx">
+    <EmbeddedResource Include="Main\MicroOp\PMSubmit.resx">
       <DependentUpon>PMSubmit.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest" />
