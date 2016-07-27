@@ -10,9 +10,9 @@ namespace LabZKT
         private enum Type { Data, Simple, Complex }
         private enum DataType { Hex, Binary, Decimal }
         private DataType chosenDataType = DataType.Decimal;
-        public string binaryData { get; set; }
-        public string hexData { get; set; }
-        public int dataType { get; set; }
+        public string binaryData { get; private set; }
+        public string hexData { get; private set; }
+        public int dataType { get; private set; }
         private void turnOffTabSwitchFocus(Control parent)
         {
             foreach (Control c in parent.Controls)

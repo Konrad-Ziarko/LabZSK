@@ -2,17 +2,15 @@
 {
     public class MemoryRecord
     {
-        public string addr { get; set; }
-        public string value { get; set; }
-        public string hex { get; set; }
-        public int typ { get; set; }
-
-        public string OP { get; set; }
-        public string AOP { get; set; }
-        public string DA { get; set; }
-        public string N { get; set; }
-        public string XSI { get; set; }
-        public string Mnemo { get; set; }
+        public string addr { get; private set; }
+        public string value { get; private set; }
+        public string hex { get; private set; }
+        public int typ { get; private set; }
+        public string OP { get; private set; }
+        public string AOP { get; private set; }
+        public string DA { get; private set; }
+        public string N { get; private set; }
+        public string XSI { get; private set; }
         public MemoryRecord(int a, string v, string h, int t)
         {
             addr = a.ToString();

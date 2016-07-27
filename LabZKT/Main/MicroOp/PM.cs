@@ -9,11 +9,10 @@ namespace LabZKT
 {
     public partial class PM : Form
     {
-        private string fileForPM = @"\Env\~micro.zkt";
-
         //used to determin whether program should ask about saving changes or not
         public static bool isChanged = false;
-        public List<MicroOperation> List_MicroOp { get; set; }
+        private string fileForPM = @"\Env\~micro.zkt";
+        public List<MicroOperation> List_MicroOp;
         public PM(ref List<MicroOperation> micro)
         {
             List_MicroOp = micro;
@@ -45,7 +44,7 @@ namespace LabZKT
                     var result = form_Radio.ShowDialog();
                     if (result == DialogResult.OK)
                     {
-                        newMicroInstruction = form_Radio.selectedInstruction;
+                        newMicroInstruction = form_Radio.SelectedInstruction;
                         if (currentMicroInstruction == "SHT" && newMicroInstruction != "SHT")
                             Grid_PM[4, Grid_PM.CurrentCell.RowIndex].Value = "";
                     }
@@ -73,7 +72,7 @@ namespace LabZKT
                     {
                         var result = form_Radio.ShowDialog();
                         if (result == DialogResult.OK)
-                            newMicroInstruction = form_Radio.selectedInstruction;
+                            newMicroInstruction = form_Radio.SelectedInstruction;
                         else
                             newMicroInstruction = currentMicroInstruction;
                         Grid_PM[4, idxRow].Value = newMicroInstruction;
@@ -299,7 +298,7 @@ namespace LabZKT
                         {
                             var result = form_Radio.ShowDialog();
                             if (result == DialogResult.OK)
-                                Grid_PM[4, hitTestInfo.RowIndex].Value = form_Radio.selectedInstruction;
+                                Grid_PM[4, hitTestInfo.RowIndex].Value = form_Radio.SelectedInstruction;
                         }
                     }
                     else if ((hitTestInfo.ColumnIndex == 3 || hitTestInfo.ColumnIndex == 5 || hitTestInfo.ColumnIndex == 6

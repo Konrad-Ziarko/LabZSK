@@ -8,9 +8,21 @@ namespace LabZKT
     public partial class PMSubmit : Form
     {
         private int columnIdx;
-        private string chosenInstruction;
-        private string c1Column;
-        public string selectedInstruction { get; set; }
+        private string chosenInstruction, c1Column, selectedInstruction;
+
+        public string SelectedInstruction
+        {
+            get
+            {
+                return selectedInstruction;
+            }
+
+            set
+            {
+                selectedInstruction = value;
+            }
+        }
+
         public PMSubmit(int typ, string txt, string c1)
         {
             columnIdx = typ;
@@ -93,11 +105,11 @@ namespace LabZKT
             if (groupBox1.Visible)
             {
                 var checkedButton = groupBox1.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
-                selectedInstruction = checkedButton.Text.Split()[0];
+                SelectedInstruction = checkedButton.Text.Split()[0];
             }
             else
             {
-                selectedInstruction = Convert.ToInt32(numUpDown.Value).ToString();
+                SelectedInstruction = Convert.ToInt32(numUpDown.Value).ToString();
             }
             DialogResult = DialogResult.OK;
             PM.isChanged = true;
