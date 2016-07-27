@@ -185,8 +185,7 @@ namespace LabZKT
         {
             if (isRunning)
             {
-                //poprawić sposób zamykania
-                //może dodać przycisk do nowej symulacji?
+                //poprawić sposób zamykania, dopisac obsluge przycisku nowa symulacja
                 DialogResult result = MessageBox.Show("Jeśli przerwiesz pracę teraz stracisz cały postęp.\nNa pewno chcesz zakończyć symulację?", "Symulacja została już uruchomiona", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                     foreach (var reg in registers)
@@ -586,7 +585,6 @@ namespace LabZKT
 
         private void logTimer_Tick(object sender, EventArgs e)
         {
-            //dla pliku logu tworzyc ukryty plik z crc
             //jesli symulacja ruszyla okno tylko ukrywac lub zapisywac gdzies stany rejesstrow
             //zapamietac liczbe bledow i ocene, oraz cykl
             /*

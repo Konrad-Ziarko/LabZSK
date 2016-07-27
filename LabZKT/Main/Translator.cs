@@ -116,6 +116,7 @@ namespace LabZKT
             {"NOTL", 0x8 },{"NOTR", 0x9 },{"L", 0xA },{"R", 0xB },{"INCL", 0xC },{"INLK", 0xD },{"DECL", 0xE },
             {"DELK", 0xF },{"INE", 0x10 },{"ZERO", 0x11 }
         };
+
         public static long GetRbpsValue(DataGridViewRow row)
         {
             long rbps = (instCodeS1[row.Cells[1].Value.ToString()] << 44) + (instCodeD1[row.Cells[2].Value.ToString()] << 40)

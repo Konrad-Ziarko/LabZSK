@@ -15,7 +15,6 @@ namespace LabZKT
             if (!registers[registerToCheck].checkValue(out badValue))
             {
                 new Thread(SystemSounds.Beep.Play).Start();
-                //zapisac bledna i poprawna wartosc do logu
                 logManager.addToMemory("\tBłąd(" + (MainWindow.mistakes + 1) + "): " + registerToCheck + "=" + badValue +
                     "(" + registerToCheck + "=" + registers[registerToCheck].getInnerValue() + ")\n", logFile);
 
