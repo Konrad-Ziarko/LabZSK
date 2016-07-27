@@ -53,9 +53,9 @@ namespace LabZKT
         private void RunSim_Load(object sender, EventArgs e)
         {
             draw = new Drawings(ref panel_Sim_Control, ref registers, ref flags, ref RBPS);
-            modeManager = new ModeManager(ref registers, ref toolStripMenu_Edit, ref toolStripMenu_Clear, ref label_Status,
+            modeManager = ModeManager.getInstace(ref registers, ref toolStripMenu_Edit, ref toolStripMenu_Clear, ref label_Status,
                 ref button_Makro, ref button_Micro, ref dataGridView_Info, ref button_Next_Tact);
-            logManager = new LogManager();
+            logManager = LogManager.Instance;
             Size = new Size(1024, 768);
             initAll(sender, e);
         }

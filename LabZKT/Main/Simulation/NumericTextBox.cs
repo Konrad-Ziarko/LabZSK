@@ -8,10 +8,9 @@ namespace LabZKT
 {
     public class NumericTextBox : TextBox
     {
-        private short innerValue = 0;
-        private short actualValue = 0;
-        public bool needCheck { get; set; }
+        private short innerValue = 0, actualValue = 0;
         public string registerName { get; private set; }
+        public bool needCheck { get; set; }
 
         public NumericTextBox(string name, int x, int y, Control c)
         {

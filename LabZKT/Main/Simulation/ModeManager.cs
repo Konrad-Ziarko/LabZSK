@@ -11,7 +11,23 @@ namespace LabZKT
         private DataGridView dataGridView_Info;
         private Label label_Status;
         private Button button_Makro, button_Micro, button_Next_Tact;
-        public ModeManager(ref Dictionary<string, NumericTextBox> regs, ref ToolStripMenuItem tsmie, ref ToolStripMenuItem tsmic,
+        private static ModeManager instance;
+        public static ModeManager Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
+        public static ModeManager getInstace(ref Dictionary<string, NumericTextBox> regs, ref ToolStripMenuItem tsmie, ref ToolStripMenuItem tsmic,
+            ref Label lStatus, ref Button bMakro, ref Button bMicro, ref DataGridView dgvInfo, ref Button bNext_Tact)
+        {
+            if (instance == null)
+                return instance = new ModeManager(ref regs, ref tsmie, ref tsmic, ref lStatus, ref bMakro, ref bMicro, ref dgvInfo, ref bNext_Tact);
+            else
+                return instance;
+        }
+        private ModeManager(ref Dictionary<string, NumericTextBox> regs, ref ToolStripMenuItem tsmie, ref ToolStripMenuItem tsmic,
             ref Label lStatus, ref Button bMakro, ref Button bMicro, ref DataGridView dgvInfo, ref Button bNext_Tact)
         {
             button_Next_Tact = bNext_Tact;

@@ -11,8 +11,8 @@ namespace LabZKT
         private Dictionary<string, NumericTextBox> registers;
         private Dictionary<string, BitTextBox> flags;
         private TextBox RBPS;
-        public Drawings(ref Panel panel, ref Dictionary<string, NumericTextBox> regs, ref Dictionary<string, BitTextBox> flgs
-            , ref TextBox rbps)
+        public Drawings(ref Panel panel, ref Dictionary<string, NumericTextBox> regs, 
+            ref Dictionary<string, BitTextBox> flgs, ref TextBox rbps)
         {
             panel_Sim_Control = panel;
             registers = regs;

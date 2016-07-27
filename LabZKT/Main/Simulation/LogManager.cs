@@ -7,13 +7,22 @@ namespace LabZKT
     public class LogManager
     {
         private MemoryStream inMemoryLog = new MemoryStream();
-        public LogManager()
+        private static readonly LogManager instance;
+        public static LogManager Instance
         {
+            get
+            {
+                return instance;
+            }
         }
-
+        private LogManager() { }
+        static LogManager()
+        {
+            instance = new LogManager();
+        }
         internal void addToMemory(string v, string logFile)
         {
-            if(logFile != string.Empty)
+            if (logFile != string.Empty)
             {
                 FileInfo fileInfo;
                 int len = 0;
@@ -31,9 +40,9 @@ namespace LabZKT
                     fileInfo = new FileInfo(logFile + "crc");
                     fileInfo.Attributes = FileAttributes.Normal;
                 }
-                catch (IOException)
+                catch (Exception)
                 {
-                    return;
+                    //No crc file
                 }
                 using (BinaryWriter bw = new BinaryWriter(File.Open(logFile + "crc", FileMode.Create)))
                 {
@@ -64,7 +73,7 @@ namespace LabZKT
         }
         internal void clearInMemoryLog()
         {
-            inMemoryLog= new MemoryStream();
+            inMemoryLog = new MemoryStream();
         }
     }
 }

@@ -17,8 +17,8 @@ namespace LabZKT
     public partial class MainWindow : Form
     {
         public static string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
-        private string fileForPM = @"\Env\~micro.zkt";
-        private string fileForPO = @"\Env\~mem.zkt";
+        public static int currnetCycle = 0, mark = 5, mistakes = 0;
+        private string fileForPM = @"\Env\~micro.zkt", fileForPO = @"\Env\~mem.zkt";
         private Author frmAuthor;
         private RunSim frmSimulation;
         private PM frmPM;
@@ -35,10 +35,6 @@ namespace LabZKT
         {
             {"MAV", null }, {"IA",null }, {"INT", null }, {"ZNAK",null }, {"XRO", null }, {"OFF", null }
         };
-
-        public static int currnetCycle = 0;
-        public static int mark = 5;
-        public static int mistakes = 0;
         public MainWindow()
         {
             InitializeComponent();
