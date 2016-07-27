@@ -37,11 +37,12 @@ namespace LabZKT
             label_Status.Text = "Stop";
             label_Status.ForeColor = Color.Green;
         }
-        public void startSim(out bool oIsRunning)
+        public void startSim(out bool OutIsRunning, bool[,] InCells, out bool[,] OutCells)
         {
+            OutCells = InCells;
             toolStripMenu_Edit.Enabled = false;
             //RunSim.isRunning = true;
-            oIsRunning = true;
+            OutIsRunning = true;
             button_Makro.Visible = false;
             button_Micro.Visible = false;
             toolStripMenu_Clear.Enabled = false;
@@ -49,13 +50,14 @@ namespace LabZKT
             label_Status.ForeColor = Color.Red;
             for (int i = 0; i < 11; i++)
                 for (int j = 0; j < 8; j++)
-                    RunSim.cells[i, j] = true;
+                    OutCells[i, j] = true;
             foreach (var reg in registers)
                 reg.Value.setActualValue(reg.Value.getInnerValue());
         }
-        public void nextTact(bool inMicroMode)
+        public void nextTact(bool inMicroMode, int InCurrentTack, out int OutCurrentTack)
         {
-            if (RunSim.inMicroMode)
+            OutCurrentTack = InCurrentTack;
+            if (inMicroMode)//RunSim.inMicroMode)
             {
                 button_Next_Tact.Visible = true;
                 while (!RunSim.buttonNextTactClicked)
@@ -64,8 +66,9 @@ namespace LabZKT
             }
             else
             {
-                RunSim.currentTact = (RunSim.currentTact + 1) % 8;
-                dataGridView_Info.Rows[2].Cells[0].Value = RunSim.currentTact;
+                //RunSim.currentTact = (RunSim.currentTact + 1) % 8;
+                OutCurrentTack = (InCurrentTack + 1) % 8;
+                dataGridView_Info.Rows[2].Cells[0].Value = OutCurrentTack;// RunSim.currentTact;
             }
         }
         public void EnDisableButtons()

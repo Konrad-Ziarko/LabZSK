@@ -16,7 +16,6 @@ namespace LabZKT
             {
                 new Thread(SystemSounds.Beep.Play).Start();
                 //zapisac bledna i poprawna wartosc do logu
-                int len = 0;
                 logManager.addToMemory("\tBłąd(" + (MainWindow.mistakes + 1) + "): " + registerToCheck + "=" + badValue +
                     "(" + registerToCheck + "=" + registers[registerToCheck].getInnerValue() + ")\n", logFile);
 
@@ -35,7 +34,6 @@ namespace LabZKT
             }
             else
             {
-                int len = 0;
                 logManager.addToMemory("\t" + registerToCheck + "=" + registers[registerToCheck].getInnerValue() + "\n", logFile);
             }
         }
@@ -989,7 +987,7 @@ namespace LabZKT
                 }
             long rbps = Translator.GetRbpsValue(grid_PM.Rows[raps]) + na;
             RBPS.Text = rbps.ToString("X").PadLeft(12, '0');
-            int len = 0;
+
             logManager.addToMemory("===============================\n\nTakt0: RBPS=" + RBPS.Text + "\n", logFile);
             for (int i = 1; i < 11; i++)
                 for (int j = 1; j < 8; j++)
@@ -1096,7 +1094,7 @@ namespace LabZKT
                     cells[10, j] = false;
                 cells[10, 2] = true;
             }
-            modeManager.nextTact();
+            modeManager.nextTact(inMicroMode, currentTact, out currentTact);
         }
     }
 

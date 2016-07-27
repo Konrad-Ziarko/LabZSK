@@ -15,9 +15,9 @@ namespace LabZKT
     {
         public static short dragValue;
         public static Size hitTest;
-        public static bool inMicroMode = false, isRunning = false, buttonNextTactClicked = false;
-        public static int currentTact = 0;
-        public static bool[,] cells = new bool[11, 8];
+        public static bool buttonNextTactClicked = false;
+        private int currentTact = 0;
+        private bool[,] cells = new bool[11, 8];
         private List<MemoryRecord> List_Memory { get; set; }
         private List<MicroOperation> List_MicroOp { get; set; }
         private MemoryRecord lastRecordFromRRC;
@@ -27,7 +27,8 @@ namespace LabZKT
         private Drawings draw;
         private string logFile = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty;
         private short raps = 0, na = 0;
-        private bool isTestPositive = false, isOverflow = false, wasMaximized = false, inEditMode = false, buttonOKClicked = false;
+        private bool isTestPositive = false, isOverflow = false, wasMaximized = false, inEditMode = false, 
+            buttonOKClicked = false, inMicroMode = false, isRunning = false;
         private Dictionary<string, NumericTextBox> registers;
         private Dictionary<string, BitTextBox> flags;
         private TextBox RBPS;
@@ -70,7 +71,6 @@ namespace LabZKT
         }
         private void initLogInformation()
         {
-            int len;
             string sysType;
             if (Environment.Is64BitOperatingSystem)
                 sysType = "x64";
@@ -449,7 +449,7 @@ namespace LabZKT
 
         private void simulateCPU()
         {
-            modeManager.startSim();
+            modeManager.startSim(out isRunning, cells, out cells);
             if (currentTact == 0)
                 instructionFetch();
             while (isRunning && currentTact > 0)
@@ -463,19 +463,19 @@ namespace LabZKT
             while (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1]))
                 exeTact1();
             if (currentTact == 1)
-                modeManager.nextTact();
+                modeManager.nextTact(inMicroMode, currentTact, out currentTact);
             if (currentTact == 2 && cells[10, 2])
                 logManager.addToMemory("Takt2:\n", logFile);
             while (currentTact == 2 && cells[10, 2])
                 exeTact2();
             while (currentTact >= 2 && currentTact <= 5)
-                modeManager.nextTact();
+                modeManager.nextTact(inMicroMode, currentTact, out currentTact);
             if (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
                 logManager.addToMemory("Takt6:\n", logFile);
             while (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
                 exeTact6();
             if (currentTact == 6)
-                modeManager.nextTact();
+                modeManager.nextTact(inMicroMode, currentTact, out currentTact);
             if (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7] || cells[9, 7]))
                 logManager.addToMemory("Takt7:\n", logFile);
             while (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7]))
@@ -497,7 +497,7 @@ namespace LabZKT
                 modeManager.EnDisableButtons();
                 currentTact = 0;
                 dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
-                modeManager.stopSim();
+                modeManager.stopSim(out isRunning, out inMicroMode);
                 buttonOKClicked = false;
             }
             else if (currentTact == 9)
@@ -506,7 +506,7 @@ namespace LabZKT
                 registers["RALU"].setInnerAndActual(0);
                 currentTact = 0;
                 dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
-                modeManager.stopSim();
+                modeManager.stopSim(out isRunning, out inMicroMode);
             }
             if (currentTact == 7)
                 currentTact = 8;
