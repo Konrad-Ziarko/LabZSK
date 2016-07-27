@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace LabZKT
@@ -22,6 +23,17 @@ namespace LabZKT
         {
             AcceptButton = button_OK;
             CancelButton = button_Cancel;
+            foreach(RadioButton rb in groupBox1.Controls)
+            {
+                rb.MouseDoubleClick += myRadioButton_MouseClick;
+                MethodInfo m = typeof(RadioButton).GetMethod("SetStyle", BindingFlags.Instance | BindingFlags.NonPublic);
+                if (m != null)
+                {
+                    m.Invoke(rb, new object[] { ControlStyles.StandardClick | ControlStyles.StandardDoubleClick, true });
+                    
+                }
+            }
+                
             if (columnIdx == 4 && c1Column == "SHT")
             {
                 init_D2_SHT();
@@ -383,6 +395,11 @@ namespace LabZKT
                     radioButton18.Visible = false;
                     break;
             }
+        }
+
+        void myRadioButton_MouseClick(object sender, MouseEventArgs e)
+        {
+            button_OK_Click(sender, (EventArgs)e);
         }
     }
 }
