@@ -24,21 +24,24 @@ namespace LabZKT
             button_Micro = bMicro;
         }
 
-        public void stopSim()
+        public void stopSim(out bool oIsRunning, out bool oInMicroMode)
         {
             toolStripMenu_Edit.Enabled = true;
-            RunSim.isRunning = false;
-            RunSim.inMicroMode = false;
+            //RunSim.isRunning = false;
+            //RunSim.inMicroMode = false;
+            oIsRunning = false;
+            oInMicroMode = false;
             button_Makro.Visible = true;
             button_Micro.Visible = true;
             toolStripMenu_Clear.Enabled = true;
             label_Status.Text = "Stop";
             label_Status.ForeColor = Color.Green;
         }
-        public void startSim()
+        public void startSim(out bool oIsRunning)
         {
             toolStripMenu_Edit.Enabled = false;
-            RunSim.isRunning = true;
+            //RunSim.isRunning = true;
+            oIsRunning = true;
             button_Makro.Visible = false;
             button_Micro.Visible = false;
             toolStripMenu_Clear.Enabled = false;
@@ -50,7 +53,7 @@ namespace LabZKT
             foreach (var reg in registers)
                 reg.Value.setActualValue(reg.Value.getInnerValue());
         }
-        public void nextTact()
+        public void nextTact(bool inMicroMode)
         {
             if (RunSim.inMicroMode)
             {

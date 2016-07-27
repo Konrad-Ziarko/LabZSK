@@ -13,22 +13,21 @@ namespace LabZKT
 {
     public partial class RunSim : Form
     {
+        public static short dragValue;
+        public static Size hitTest;
+        public static bool inMicroMode = false, isRunning = false, buttonNextTactClicked = false;
+        public static int currentTact = 0;
+        public static bool[,] cells = new bool[11, 8];
         private List<MemoryRecord> List_Memory { get; set; }
         private List<MicroOperation> List_MicroOp { get; set; }
         private MemoryRecord lastRecordFromRRC;
-        Dictionary<string, short> oldRegs;
+        private Dictionary<string, short> oldRegs;
         private ModeManager modeManager;
         private LogManager logManager;
         private Drawings draw;
-        public bool resetBus { get; private set; }
-        public static short dragValue;
-        public static Size hitTest;
         private string logFile = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty;
-        public static bool inMicroMode = false, isRunning = false, buttonNextTactClicked = false;
-        public static int currentTact = 0;
         private short raps = 0, na = 0;
         private bool isTestPositive = false, isOverflow = false, wasMaximized = false, inEditMode = false, buttonOKClicked = false;
-        public static bool[,] cells = new bool[11, 8];
         private Dictionary<string, NumericTextBox> registers;
         private Dictionary<string, BitTextBox> flags;
         private TextBox RBPS;
@@ -45,6 +44,7 @@ namespace LabZKT
             InitializeComponent();
 
         }
+        public bool resetBus { get; private set; }
         public Control getSimPanel()
         {
             return panel_Sim_Control;
@@ -290,7 +290,6 @@ namespace LabZKT
                 {
                     oldRegs.Add(reg.Key, reg.Value.getInnerValue());
                 }
-                //oldRegs = registers;
                 foreach (var reg in registers)
                 {
                     if (reg.Value.registerName == "BUS" || reg.Value.registerName == "LALU" || reg.Value.registerName == "RALU" ||
