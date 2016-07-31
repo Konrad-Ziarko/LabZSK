@@ -58,9 +58,7 @@ namespace LabZKT
                     modeManager.EnDisableButtons();
                     registers[registerToCheck].Focus();
                     while (buttonOKClicked == false)
-                    {
                         Application.DoEvents();
-                    }
                     buttonOKClicked = false;
                     modeManager.EnDisableButtons();
                     registers["RAPS"].setActualValue(254);
@@ -172,6 +170,11 @@ namespace LabZKT
             currentTact = 9;
         }
 
+        private void testAndSet(string register, short setValue)
+        {
+            registers[register].setActualValue(setValue);
+            registers[register].setNeedCheck(out registerToCheck);
+        }
         private void exeTact7()
         {
             if (cells[8, 7])
@@ -337,7 +340,7 @@ namespace LabZKT
                     registers["RAPS"].setActualValue(0);
                     registers["RAPS"].setNeedCheck(out registerToCheck);
                 }
-                //skip TEST
+                //skip TEST if END is present
                 currentTact = 9;
                 cells[7, 7] = false;
                 richTextBox_addText("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
@@ -746,38 +749,31 @@ namespace LabZKT
                 microOpMnemo = grid_PM[1, raps].Value.ToString();
                 if (microOpMnemo == "IXRE")
                 {
-                    registers["LALU"].setActualValue(registers["RI"].getInnerValue());
-                    registers["LALU"].setNeedCheck(out registerToCheck);
+                    testAndSet("LALU", registers["RI"].getInnerValue());
                 }
                 else if (microOpMnemo == "OLR")
                 {
-                    registers["BUS"].setActualValue(registers["LR"].getInnerValue());
-                    registers["BUS"].setNeedCheck(out registerToCheck);
+                    testAndSet("BUS", registers["LR"].getInnerValue());
                 }
                 else if (microOpMnemo == "ORR")
                 {
-                    registers["BUS"].setActualValue(registers["RR"].getInnerValue());
-                    registers["BUS"].setNeedCheck(out registerToCheck);
+                    testAndSet("BUS", registers["RR"].getInnerValue());
                 }
                 else if (microOpMnemo == "ORAE")
                 {
-                    registers["BUS"].setActualValue(registers["RAE"].getInnerValue());
-                    registers["BUS"].setNeedCheck(out registerToCheck);
+                    testAndSet("BUS", registers["RAE"].getInnerValue());
                 }
                 else if (microOpMnemo == "IALU")
                 {
-                    registers["LALU"].setActualValue(registers["A"].getInnerValue());
-                    registers["LALU"].setNeedCheck(out registerToCheck);
+                    testAndSet("LALU", registers["A"].getInnerValue());
                 }
                 else if (microOpMnemo == "OXE")
                 {
-                    registers["RALU"].setActualValue(registers["X"].getInnerValue());
-                    registers["RALU"].setNeedCheck(out registerToCheck);
+                    testAndSet("RALU", registers["X"].getInnerValue());
                 }
                 else if (microOpMnemo == "OX")
                 {
-                    registers["BUS"].setActualValue(registers["X"].getInnerValue());
-                    registers["BUS"].setNeedCheck(out registerToCheck);
+                    testAndSet("BUS", registers["X"].getInnerValue());
                 }
                 cells[1, 1] = false;
                 richTextBox_addText("S1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
@@ -788,18 +784,15 @@ namespace LabZKT
                 microOpMnemo = grid_PM[2, raps].Value.ToString();
                 if (microOpMnemo == "ILK")
                 {
-                    registers["LK"].setActualValue(registers["BUS"].getInnerValue());
-                    registers["LK"].setNeedCheck(out registerToCheck);
+                    testAndSet("LK", registers["BUS"].getInnerValue());
                 }
                 else if (microOpMnemo == "IRAP")
                 {
-                    registers["RAP"].setActualValue(registers["BUS"].getInnerValue());
-                    registers["RAP"].setNeedCheck(out registerToCheck);
+                    testAndSet("RAP", registers["BUS"].getInnerValue());
                 }
                 else if (microOpMnemo == "OXE")
                 {
-                    registers["RALU"].setActualValue(registers["X"].getInnerValue());
-                    registers["RALU"].setNeedCheck(out registerToCheck);
+                    testAndSet("RALU", registers["X"].getInnerValue());
                 }
                 cells[2, 1] = false;
                 resetBus = true;
@@ -821,23 +814,19 @@ namespace LabZKT
                         A |= 0x8000;
                     else
                         A &= 0x7FFF;
-                    registers["A"].setActualValue((short)(A));
-                    registers["A"].setNeedCheck(out registerToCheck);
+                    testAndSet("A", (short)(A));
                 }
                 else if (microOpMnemo == "ARA")
                 {
                     A >>= 1;
                     if (SignBit)
                         A |= 0x8000;
-                    registers["A"].setActualValue((short)(A));
-                    registers["A"].setNeedCheck(out registerToCheck);
+                    testAndSet("A", (short)(A));
                 }
                 else if (microOpMnemo == "LRQ")
                 {
                     A >>= 1;
-                    registers["A"].setActualValue((short)(A));
-                    registers["A"].setNeedCheck(out registerToCheck);
-
+                    testAndSet("A", (short)(A));
                     button_OK.Visible = true;
                     modeManager.EnDisableButtons();
                     registers[registerToCheck].Focus();
@@ -872,19 +861,15 @@ namespace LabZKT
                         Application.DoEvents();
                     modeManager.EnDisableButtons();
                     buttonOKClicked = false;
-
-                    registers["MQ"].setActualValue((short)(registers["MQ"].getInnerValue() << 1));
-                    registers["MQ"].setNeedCheck(out registerToCheck);
+                    testAndSet("MQ", (short)(registers["MQ"].getInnerValue() << 1));
                 }
                 else if (microOpMnemo == "LLA")
                 {
-                    registers["A"].setActualValue((short)(A << 1));
-                    registers["A"].setNeedCheck(out registerToCheck);
+                    testAndSet("A", (short)(A << 1));
                 }
                 else if (microOpMnemo == "LRA")
                 {
-                    registers["A"].setActualValue((short)(A >> 1));
-                    registers["A"].setNeedCheck(out registerToCheck);
+                    testAndSet("A", (short)(A >> 1));
                 }
                 else if (microOpMnemo == "LCA")
                 {

@@ -27,7 +27,7 @@ namespace LabZKT
         private Drawings draw;
         private string logFile = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty;
         private short raps = 0, na = 0;
-        private bool isTestPositive = false, isOverflow = false, wasMaximized = false, inEditMode = false, 
+        private bool isTestPositive = false, isOverflow = false, wasMaximized = false, inEditMode = false,
             buttonOKClicked = false, inMicroMode = false, isRunning = false;
         private Dictionary<string, NumericTextBox> registers;
         private Dictionary<string, BitTextBox> flags;
@@ -66,8 +66,8 @@ namespace LabZKT
             fillGridsWithData();
             grid_PO_SelectionChanged(sender, e);
             initUserInfoArea();
-            RunSim_ResizeEnd(sender, e);
             Focus();
+            RunSim_ResizeEnd(sender, e);
         }
         private void initLogInformation()
         {
@@ -185,11 +185,15 @@ namespace LabZKT
         {
             if (isRunning)
             {
-                //poprawić sposób zamykania, dopisac obsluge przycisku nowa symulacja
+
                 DialogResult result = MessageBox.Show("Jeśli przerwiesz pracę teraz stracisz cały postęp.\nNa pewno chcesz zakończyć symulację?", "Symulacja została już uruchomiona", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
+                {
                     foreach (var reg in registers)
                         reg.Value.Enabled = false;
+                    //poprawić sposób zamykania, dopisac obsluge przycisku nowa symulacja
+                }
+
                 else
                     e.Cancel = true;
             }
@@ -543,13 +547,10 @@ namespace LabZKT
             panel_Sim.Width = Convert.ToInt32(panel_Left.Width * 1.0);
             panel_Sim.Height = Convert.ToInt32(panel_Left.Height - panel_PM.Height);
 
-            rearrangeTextBoxes();
-            new Thread(() =>
-            {
-                Graphics g = panel_Sim_Control.CreateGraphics();
-                draw.drawBackground(ref g);
-            }).Start();
 
+            Graphics g = panel_Sim_Control.CreateGraphics();
+            draw.drawBackground(ref g);
+            rearrangeTextBoxes();
         }
 
         private void RunSim_SizeChanged(object sender, EventArgs e)

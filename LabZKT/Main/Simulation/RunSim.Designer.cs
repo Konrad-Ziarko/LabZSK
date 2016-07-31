@@ -314,7 +314,7 @@
             // 
             // panel_Sim
             // 
-            this.panel_Sim.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.panel_Sim.BackColor = System.Drawing.SystemColors.Control;
             this.panel_Sim.Controls.Add(this.panel_Sim_Control);
             this.panel_Sim.Controls.Add(this.panel_User_Info);
             this.panel_Sim.Dock = System.Windows.Forms.DockStyle.Bottom;
