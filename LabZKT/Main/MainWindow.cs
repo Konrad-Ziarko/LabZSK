@@ -206,7 +206,6 @@ namespace LabZKT
             checkIntegrity();
             initRegisterTextBoxes();
             initFlags();
-
         }
 
         /// Invoke close event when butto is clicked
@@ -280,7 +279,8 @@ namespace LabZKT
         }
         private void button_Run_Click(object sender, EventArgs e)
         {
-            frmSimulation = new RunSim(ref List_Memory, ref List_MicroOp, ref registers, ref flags, ref RBPS, ref lastRecordFromRRC);
+            if (frmSimulation==null)
+                frmSimulation = new RunSim(ref List_Memory, ref List_MicroOp, ref registers, ref flags, ref RBPS, ref lastRecordFromRRC);
             foreach (var reg in registers)
                 reg.Value.Parent = frmSimulation.getSimPanel();
             foreach (var sig in flags)

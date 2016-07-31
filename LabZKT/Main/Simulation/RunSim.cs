@@ -43,7 +43,6 @@ namespace LabZKT
             flags = sig;
             RBPS = rbps;
             InitializeComponent();
-
         }
         public bool resetBus { get; private set; }
         public Control getSimPanel()
@@ -185,21 +184,9 @@ namespace LabZKT
         {
             if (!isRunning)
             {
-                DialogResult result = MessageBox.Show("Jeśli przerwiesz pracę teraz stracisz cały postęp.\nNa pewno chcesz zakończyć symulację?", "Symulacja została już uruchomiona", MessageBoxButtons.YesNo);
+                DialogResult result = MessageBox.Show("Zamknąć okno symulacji i powrócic do głównego menu?\nPostęp symulacji nie zostanie utracony", "Symulacja została już uruchomiona", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
-                {
-                    //naprawić to gówno
-                    foreach (var reg in registers)
-                    {
-                        reg.Value.Enabled = false;
-                        reg.Value.ReadOnly = true;
-                        reg.Value.setInnerAndActual(0);
-                    }
-                    
-                    foreach (var sig in flags)
-                        sig.Value.Enabled = false;
-
-                }
+                    e.Cancel = false;
                 else
                     e.Cancel = true;
             }
@@ -571,6 +558,11 @@ namespace LabZKT
             logManager.clearInMemoryLog();
             logFile = string.Empty;
             //zerowanie rejestrów
+            DialogResult result = MessageBox.Show("Utracisz cały postęp symulacji.\nCzy chcesz zakończyć pracę z obecnym logiem?", "Nowa symulacja", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+
+            }
 
         }
 
