@@ -236,46 +236,46 @@
             // toolStripMenu_Edit
             // 
             this.toolStripMenu_Edit.Name = "toolStripMenu_Edit";
-            this.toolStripMenu_Edit.Size = new System.Drawing.Size(177, 26);
+            this.toolStripMenu_Edit.Size = new System.Drawing.Size(181, 26);
             this.toolStripMenu_Edit.Text = "Edytuj rejestry";
             this.toolStripMenu_Edit.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
             // toolStripMenu_Clear
             // 
             this.toolStripMenu_Clear.Name = "toolStripMenu_Clear";
-            this.toolStripMenu_Clear.Size = new System.Drawing.Size(177, 26);
+            this.toolStripMenu_Clear.Size = new System.Drawing.Size(181, 26);
             this.toolStripMenu_Clear.Text = "Zeruj rejestry";
             this.toolStripMenu_Clear.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(174, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(178, 6);
             // 
             // nowyLogToolStripMenuItem
             // 
             this.nowyLogToolStripMenuItem.Name = "nowyLogToolStripMenuItem";
-            this.nowyLogToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
+            this.nowyLogToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.nowyLogToolStripMenuItem.Text = "Nowy log";
             this.nowyLogToolStripMenuItem.Click += new System.EventHandler(this.nowyLogToolStripMenuItem_Click);
             // 
             // toolStripMenu_Show_Log
             // 
             this.toolStripMenu_Show_Log.Name = "toolStripMenu_Show_Log";
-            this.toolStripMenu_Show_Log.Size = new System.Drawing.Size(177, 26);
+            this.toolStripMenu_Show_Log.Size = new System.Drawing.Size(181, 26);
             this.toolStripMenu_Show_Log.Text = "Pokaż log";
             this.toolStripMenu_Show_Log.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(174, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(178, 6);
             // 
             // toolStripMenu_Exit
             // 
             this.toolStripMenu_Exit.Name = "toolStripMenu_Exit";
-            this.toolStripMenu_Exit.Size = new System.Drawing.Size(177, 26);
-            this.toolStripMenu_Exit.Text = "Zakończ";
+            this.toolStripMenu_Exit.Size = new System.Drawing.Size(181, 26);
+            this.toolStripMenu_Exit.Text = "Zamknij";
             this.toolStripMenu_Exit.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // panel_Decode_PO

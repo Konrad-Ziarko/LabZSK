@@ -7,7 +7,7 @@ namespace LabZKT
     public class ModeManager
     {
         private Dictionary<string, NumericTextBox> registers;
-        private ToolStripMenuItem toolStripMenu_Edit, toolStripMenu_Clear;
+        private ToolStripMenuItem toolStripMenu_Edit, toolStripMenu_Clear, toolStripMenu_Exit;
         private DataGridView dataGridView_Info;
         private Label label_Status;
         private Button button_Makro, button_Micro, button_Next_Tact;
@@ -20,21 +20,22 @@ namespace LabZKT
             }
         }
         public static ModeManager getInstace(ref Dictionary<string, NumericTextBox> regs, ref ToolStripMenuItem tsmie, ref ToolStripMenuItem tsmic,
-            ref Label lStatus, ref Button bMakro, ref Button bMicro, ref DataGridView dgvInfo, ref Button bNext_Tact)
+            ref ToolStripMenuItem tsmiex, ref Label lStatus, ref Button bMakro, ref Button bMicro, ref DataGridView dgvInfo, ref Button bNext_Tact)
         {
             if (instance == null)
-                return instance = new ModeManager(ref regs, ref tsmie, ref tsmic, ref lStatus, ref bMakro, ref bMicro, ref dgvInfo, ref bNext_Tact);
+                return instance = new ModeManager(ref regs, ref tsmie, ref tsmic, ref tsmiex, ref lStatus, ref bMakro, ref bMicro, ref dgvInfo, ref bNext_Tact);
             else
                 return instance;
         }
         private ModeManager(ref Dictionary<string, NumericTextBox> regs, ref ToolStripMenuItem tsmie, ref ToolStripMenuItem tsmic,
-            ref Label lStatus, ref Button bMakro, ref Button bMicro, ref DataGridView dgvInfo, ref Button bNext_Tact)
+            ref ToolStripMenuItem tsmiex, ref Label lStatus, ref Button bMakro, ref Button bMicro, ref DataGridView dgvInfo, ref Button bNext_Tact)
         {
             button_Next_Tact = bNext_Tact;
             dataGridView_Info = dgvInfo;
             registers = regs;
             toolStripMenu_Edit = tsmie;
             toolStripMenu_Clear = tsmic;
+            toolStripMenu_Exit = tsmiex;
             label_Status = lStatus;
             button_Makro = bMakro;
             button_Micro = bMicro;
@@ -43,8 +44,7 @@ namespace LabZKT
         public void stopSim(out bool oIsRunning, out bool oInMicroMode)
         {
             toolStripMenu_Edit.Enabled = true;
-            //RunSim.isRunning = false;
-            //RunSim.inMicroMode = false;
+            toolStripMenu_Exit.Enabled = true;
             oIsRunning = false;
             oInMicroMode = false;
             button_Makro.Visible = true;
@@ -57,7 +57,7 @@ namespace LabZKT
         {
             OutCells = InCells;
             toolStripMenu_Edit.Enabled = false;
-            //RunSim.isRunning = true;
+            toolStripMenu_Exit.Enabled = false;
             OutIsRunning = true;
             button_Makro.Visible = false;
             button_Micro.Visible = false;

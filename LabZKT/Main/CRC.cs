@@ -1,6 +1,6 @@
 ﻿namespace LabZKT
 {
-    public class CRC
+    public static class CRC
     {
         const uint polynomial = 0x04C11DB7;
         private static uint[] table = new uint[256];

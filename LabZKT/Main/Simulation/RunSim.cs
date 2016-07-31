@@ -53,8 +53,8 @@ namespace LabZKT
         private void RunSim_Load(object sender, EventArgs e)
         {
             draw = new Drawings(ref panel_Sim_Control, ref registers, ref flags, ref RBPS);
-            modeManager = ModeManager.getInstace(ref registers, ref toolStripMenu_Edit, ref toolStripMenu_Clear, ref label_Status,
-                ref button_Makro, ref button_Micro, ref dataGridView_Info, ref button_Next_Tact);
+            modeManager = ModeManager.getInstace(ref registers, ref toolStripMenu_Edit, ref toolStripMenu_Clear, ref toolStripMenu_Exit,
+                ref label_Status, ref button_Makro, ref button_Micro, ref dataGridView_Info, ref button_Next_Tact);
             logManager = LogManager.Instance;
             Size = new Size(1024, 768);
             initAll(sender, e);
@@ -183,29 +183,28 @@ namespace LabZKT
         }
         private void RunSim_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (isRunning)
+            if (!isRunning)
             {
-
                 DialogResult result = MessageBox.Show("Jeśli przerwiesz pracę teraz stracisz cały postęp.\nNa pewno chcesz zakończyć symulację?", "Symulacja została już uruchomiona", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
+                    //naprawić to gówno
                     foreach (var reg in registers)
+                    {
                         reg.Value.Enabled = false;
-                    //poprawić sposób zamykania, dopisac obsluge przycisku nowa symulacja
-                }
+                        reg.Value.ReadOnly = true;
+                        reg.Value.setInnerAndActual(0);
+                    }
+                    
+                    foreach (var sig in flags)
+                        sig.Value.Enabled = false;
 
+                }
                 else
                     e.Cancel = true;
             }
             else
-            {
-                foreach (var reg in registers)
-                    reg.Value.Enabled = false;
-                foreach (var sig in flags)
-                    sig.Value.Enabled = false;
-                foreach (var reg in registers)
-                    reg.Value.ReadOnly = true;
-            }
+                e.Cancel = true;
         }
 
         private void showToolStripMenuItem_Click(object sender, EventArgs e)

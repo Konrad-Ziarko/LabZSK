@@ -256,6 +256,7 @@ namespace LabZKT
         public void setInnerAndActual(short newVal)
         {
             innerValue = actualValue = newVal;
+            needCheck = false;
             setText();
         }
         private void clampValue()
