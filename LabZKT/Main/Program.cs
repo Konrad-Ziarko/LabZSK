@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LabZKT.Properties;
+using System;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -16,6 +17,12 @@ namespace LabZKT
         {
             if (singleton.WaitOne(TimeSpan.Zero, true))
             {
+                if (Settings.Default.FirstRun)
+                {
+                    MessageBox.Show("Aplikacja wykorzystuje Moje Dokumenty/Dokumenty jako domyślny katalog dla plików!", "LabZKT", MessageBoxButtons.OK);
+                    Settings.Default.FirstRun = false;
+                    Settings.Default.Save();
+                }
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
                     Application.Run(new MainWindow());
