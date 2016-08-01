@@ -4,6 +4,9 @@ using System.Windows.Forms;
 
 namespace LabZKT
 {
+    /// <summary>
+    /// Static class with all necessary data for descriptions etc.
+    /// </summary>
     public static class Translator
     {
         static string[] DecodeComplexTable = new string[16] {"STP", "CMA", "ALA", "ARA", "LRQ", "LLQ", "LLA",
@@ -116,7 +119,11 @@ namespace LabZKT
             {"NOTL", 0x8 },{"NOTR", 0x9 },{"L", 0xA },{"R", 0xB },{"INCL", 0xC },{"INLK", 0xD },{"DECL", 0xE },
             {"DELK", 0xF },{"INE", 0x10 },{"ZERO", 0x11 }
         };
-
+        /// <summary>
+        /// Compute value of RBPS register.
+        /// </summary>
+        /// <param name="row">Selected row in micro op. memory</param>
+        /// <returns>Selected row micro op. RBPS value</returns>
         public static long GetRbpsValue(DataGridViewRow row)
         {
             long rbps = (instCodeS1[row.Cells[1].Value.ToString()] << 44) + (instCodeD1[row.Cells[2].Value.ToString()] << 40)
@@ -182,6 +189,12 @@ namespace LabZKT
                 decodedInstructionMnemo = DecodeSimpleTable[tmpInt];
             return decodedInstructionMnemo;
         }
+        /// <summary>
+        /// Convert string into bytes array
+        /// </summary>
+        /// <param name="str">input string</param>
+        /// <param name="length">string length</param>
+        /// <returns>bytes array for given string</returns>
         public static byte[] GetBytes(string str, out int length)
         {
             length = str.Length * sizeof(char);

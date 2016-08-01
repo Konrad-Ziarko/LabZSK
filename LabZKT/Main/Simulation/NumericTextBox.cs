@@ -6,6 +6,9 @@ using System.Windows.Forms;
 
 namespace LabZKT
 {
+    /// <summary>
+    /// Class used to hold data for single register
+    /// </summary>
     public class NumericTextBox : TextBox
     {
         private short innerValue = 0, actualValue = 0;

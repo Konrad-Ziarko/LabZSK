@@ -78,10 +78,11 @@ namespace LabZKT
             aligneButtons();
             radioButton1.Focus();
         }
-
+        /// <summary>
+        /// Aligne buttons (OK & Cancel) below radiobuttons 
+        /// </summary>
         private void aligneButtons()
         {
-            ///Aligne buttons just below groupBox
             var loc = button_OK.Location;
             loc.Y = groupBox1.Location.Y + groupBox1.Size.Height + 10;
             if (!groupBox1.Visible)
@@ -347,7 +348,10 @@ namespace LabZKT
 
             numUpDown.Focus();
         }
-
+        /// <summary>
+        /// This method changes property (i.e. 'Visible' to false) of radiobuttons from given index.
+        /// </summary>
+        /// <param name="idxOfRadioButton">Index of first radiobutton to hide</param>
         private void hide_RadioButtons_From(int idxOfRadioButton)
         {
             switch (idxOfRadioButton)

@@ -5,6 +5,9 @@ using System.Windows.Forms;
 
 namespace LabZKT
 {
+    /// <summary>
+    /// Class used to draw circuits between registers
+    /// </summary>
     public class Drawings
     {
         private Panel panel_Sim_Control;

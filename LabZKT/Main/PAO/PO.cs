@@ -9,7 +9,9 @@ namespace LabZKT
 {
     public partial class PO : Form
     {
-        //used to determin whether program should ask about saving changes or not
+        /// <summary>
+        /// Used to determin whether program should ask about saving changes or not
+        /// </summary>
         public static bool isChanged = false;
         private string fileForPO = @"\Env\~mem.zkt";
         public List<MemoryRecord> List_Memory { get; private set; }

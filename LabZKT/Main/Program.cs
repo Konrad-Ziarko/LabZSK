@@ -7,9 +7,8 @@ namespace LabZKT
     static class Program
     {
         /// <summary>
-        /// The main entry point for the application.
+        /// Mutex used to detect if application is already running.
         /// </summary>
-
         static System.Threading.Mutex singleton = new Mutex(true, "LABZKT");
 
         [STAThread]

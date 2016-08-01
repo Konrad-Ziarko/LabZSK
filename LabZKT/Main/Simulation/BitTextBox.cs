@@ -4,6 +4,9 @@ using System.Windows.Forms;
 
 namespace LabZKT
 {
+    /// <summary>
+    /// Class used as CPU flag
+    /// </summary>
     public class BitTextBox : TextBox
     {
         private short innerValue = 0;
@@ -87,7 +90,11 @@ namespace LabZKT
 
             RunSim.hitTest = new Size(e.X, e.Y);
         }
-
+        /// <summary>
+        /// Set current position of this control
+        /// </summary>
+        /// <param name="x">x position</param>
+        /// <param name="y">y position</param>
         public void SetXY(int x, int y)
         {
             var loc = Location;
@@ -95,6 +102,9 @@ namespace LabZKT
             loc.Y = y;
             Location = loc;
         }
+        /// <summary>
+        /// Reset flag inner value
+        /// </summary>
         public void resetValue()
         {
             if (flagName != "MAV")

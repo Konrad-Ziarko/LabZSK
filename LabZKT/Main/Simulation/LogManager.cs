@@ -4,6 +4,9 @@ using System.Text;
 
 namespace LabZKT
 {
+    /// <summary>
+    /// Static class for logs creation and management
+    /// </summary>
     public class LogManager
     {
         private MemoryStream inMemoryLog = new MemoryStream();

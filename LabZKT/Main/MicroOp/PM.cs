@@ -28,7 +28,6 @@ namespace LabZKT
             PM_ResizeEnd(sender, e);
             CenterToScreen();
         }
-
         private void grid_PM_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (Grid_PM.CurrentCell.ColumnIndex > 0)

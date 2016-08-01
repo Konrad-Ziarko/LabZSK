@@ -39,6 +39,9 @@ namespace LabZKT
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// Loads last avaliable PM state into List_MicroOP list
+        /// </summary>
         private void loadLastPMState()
         {
             FileInfo fileInfo = new FileInfo(envPath + fileForPM);
@@ -87,6 +90,9 @@ namespace LabZKT
             }
             File.Delete(envPath + fileForPM);
         }
+        /// <summary>
+        /// Loads last avaliable PAO state into List_Memory list
+        /// </summary>
         private void loadLastPOState()
         {
             FileInfo fileInfo = new FileInfo(envPath + fileForPO);
@@ -180,6 +186,9 @@ namespace LabZKT
             RBPS.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             RBPS.Text = "000000000000";
         }
+        /// <summary>
+        /// Check if program was improperly closed and start recovering data if so.
+        /// </summary>
         private void checkIntegrity()
         {
             Directory.CreateDirectory(envPath + "\\Env");
@@ -299,7 +308,6 @@ namespace LabZKT
         private bool isDebuggerPresent;
         private void timer1_Tick(object sender, EventArgs e)
         {
-
             CheckRemoteDebuggerPresent(Process.GetCurrentProcess().Handle, ref isDebuggerPresent);
             if (isDebuggerPresent || System.Diagnostics.Debugger.IsAttached)
             {

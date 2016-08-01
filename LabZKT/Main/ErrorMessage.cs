@@ -11,7 +11,6 @@ namespace LabZKT
         public ErrorMessage()
         {
             InitializeComponent();
-
         }
 
         private void ErrorMessage_Load(object sender, EventArgs e)

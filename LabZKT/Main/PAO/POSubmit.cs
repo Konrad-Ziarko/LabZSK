@@ -7,9 +7,9 @@ namespace LabZKT
 {
     public partial class PAOSubmit : Form
     {
-        private enum Type { Data, Simple, Complex }
-        private enum DataType { Hex, Binary, Decimal }
-        private DataType chosenDataType = DataType.Decimal;
+        private enum DataType { Data, Simple, Complex }
+        private enum NumeralBase { Hex, Binary, Decimal }
+        private NumeralBase chosenDataType = NumeralBase.Decimal;
         public string binaryData { get; private set; }
         public string hexData { get; private set; }
         public int dataType { get; private set; }
@@ -37,28 +37,32 @@ namespace LabZKT
             panel_Data.Visible = false;
             panel_Simple.Visible = false;
         }
-        private void setAndClose(Type type)
+        /// <summary>
+        /// Build string for selected data type and close this form
+        /// </summary>
+        /// <param name="type">Memory record data type</param>
+        private void setAndClose(DataType type)
         {
             string tempMemoryCell = "";
             dataType = 0;
-            if (type == Type.Data && textBox_Data.Text != "")
+            if (type == DataType.Data && textBox_Data.Text != "")
             {
                 dataType = 1;
-                if (chosenDataType == DataType.Binary)
+                if (chosenDataType == NumeralBase.Binary)
                 {
                     tempMemoryCell = textBox_Data.Text;
                 }
-                else if (chosenDataType == DataType.Decimal)
+                else if (chosenDataType == NumeralBase.Decimal)
                 {
                     tempMemoryCell = Convert.ToString(Convert.ToInt16(textBox_Data.Text, 10), 2);
                 }
-                else if (chosenDataType == DataType.Hex)
+                else if (chosenDataType == NumeralBase.Hex)
                 {
                     tempMemoryCell = String.Join(String.Empty,
                             textBox_Data.Text.Select(c => Convert.ToString(Convert.ToInt16(c.ToString(), 16), 2).PadLeft(4, '0')));
                 }
             }
-            else if (type == Type.Simple)
+            else if (type == DataType.Simple)
             {
                 dataType = 2;
                 tempMemoryCell = Convert.ToString(Convert.ToInt16((comboBox_Simple.SelectedIndex + 1).ToString(), 10), 2).PadLeft(5, '0')
@@ -66,7 +70,7 @@ namespace LabZKT
                     + Convert.ToInt16(checkBox_I.Checked).ToString()
                     + Convert.ToString(Convert.ToInt16(numericUpDown_DA.Value.ToString(), 10), 2).PadLeft(8, '0');
             }
-            else if (type == Type.Complex)
+            else if (type == DataType.Complex)
             {
                 dataType = 3;
                 tempMemoryCell = "00000" +
@@ -86,16 +90,16 @@ namespace LabZKT
 
         private void textBox_Data_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !(e.KeyChar >= '0' && e.KeyChar <= '1') && chosenDataType == DataType.Binary)
+            if (!char.IsControl(e.KeyChar) && !(e.KeyChar >= '0' && e.KeyChar <= '1') && chosenDataType == NumeralBase.Binary)
             {
                 e.Handled = true;
             }
-            else if (!char.IsControl(e.KeyChar) && !(char.IsDigit(e.KeyChar) || e.KeyChar == '-') && chosenDataType == DataType.Decimal)
+            else if (!char.IsControl(e.KeyChar) && !(char.IsDigit(e.KeyChar) || e.KeyChar == '-') && chosenDataType == NumeralBase.Decimal)
             {
                 e.Handled = true;
             }
             else if (!char.IsControl(e.KeyChar) && !(e.KeyChar >= '0' && e.KeyChar <= '9' ||
-                e.KeyChar >= 'a' && e.KeyChar <= 'f' || e.KeyChar >= 'A' && e.KeyChar <= 'F') && chosenDataType == DataType.Hex)
+                e.KeyChar >= 'a' && e.KeyChar <= 'f' || e.KeyChar >= 'A' && e.KeyChar <= 'F') && chosenDataType == NumeralBase.Hex)
             {
                 e.Handled = true;
             }
@@ -170,15 +174,15 @@ namespace LabZKT
         }
         private void button_Data_OK_Click(object sender, EventArgs e)
         {
-            setAndClose(Type.Data);
+            setAndClose(DataType.Data);
         }
         private void button_Simple_OK_Click(object sender, EventArgs e)
         {
-            setAndClose(Type.Simple);
+            setAndClose(DataType.Simple);
         }
         private void button_Complex_OK_Click(object sender, EventArgs e)
         {
-            setAndClose(Type.Complex);
+            setAndClose(DataType.Complex);
         }
 
         private void comboBox_Simple_SelectedIndexChanged(object sender, EventArgs e)
@@ -202,32 +206,32 @@ namespace LabZKT
         private void radioButton_Bin_CheckedChanged(object sender, EventArgs e)
         {
             if (textBox_Data.Text != "")
-                if (chosenDataType == DataType.Decimal)
+                if (chosenDataType == NumeralBase.Decimal)
                     textBox_Data.Text = Convert.ToString(Convert.ToInt16(textBox_Data.Text, 10), 2);
-                else if (chosenDataType == DataType.Hex)
+                else if (chosenDataType == NumeralBase.Hex)
                     textBox_Data.Text = String.Join(String.Empty,
                         textBox_Data.Text.Select(c => Convert.ToString(Convert.ToInt16(c.ToString(), 16), 2).PadLeft(4, '0')));
-            chosenDataType = DataType.Binary;
+            chosenDataType = NumeralBase.Binary;
             validateTextBox();
         }
         private void radioButton_Dec_CheckedChanged(object sender, EventArgs e)
         {
             if (textBox_Data.Text != "")
-                if (chosenDataType == DataType.Binary)
+                if (chosenDataType == NumeralBase.Binary)
                     textBox_Data.Text = Convert.ToString(Convert.ToInt16(textBox_Data.Text, 2), 10);
-                else if (chosenDataType == DataType.Hex)
+                else if (chosenDataType == NumeralBase.Hex)
                     textBox_Data.Text = Convert.ToString(Convert.ToInt16(textBox_Data.Text, 16), 10);
-            chosenDataType = DataType.Decimal;
+            chosenDataType = NumeralBase.Decimal;
             validateTextBox();
         }
         private void radioButton_Hex_CheckedChanged(object sender, EventArgs e)
         {
             if (textBox_Data.Text != "")
-                if (chosenDataType == DataType.Binary)
+                if (chosenDataType == NumeralBase.Binary)
                     textBox_Data.Text = Convert.ToInt16(textBox_Data.Text, 2).ToString("X");
-                else if (chosenDataType == DataType.Decimal)
+                else if (chosenDataType == NumeralBase.Decimal)
                     textBox_Data.Text = Convert.ToInt16(textBox_Data.Text, 10).ToString("X");
-            chosenDataType = DataType.Hex;
+            chosenDataType = NumeralBase.Hex;
             validateTextBox();
         }
 
@@ -235,10 +239,12 @@ namespace LabZKT
         {
             validateTextBox();
         }
-
+        /// <summary>
+        /// Check inserted data and if data is not valid disable apply button
+        /// </summary>
         private void validateTextBox()
         {
-            if (chosenDataType == DataType.Decimal)
+            if (chosenDataType == NumeralBase.Decimal)
             {
                 try
                 {
@@ -256,7 +262,7 @@ namespace LabZKT
                     radioButton_Hex.Enabled = false;
                 }
             }
-            else if (chosenDataType == DataType.Binary)
+            else if (chosenDataType == NumeralBase.Binary)
             {
                 try
                 {
@@ -274,7 +280,7 @@ namespace LabZKT
                     radioButton_Hex.Enabled = false;
                 }
             }
-            else if (chosenDataType == DataType.Hex)
+            else if (chosenDataType == NumeralBase.Hex)
             {
                 try
                 {

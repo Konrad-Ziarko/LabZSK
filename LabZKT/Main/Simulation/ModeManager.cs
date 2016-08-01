@@ -4,6 +4,9 @@ using System.Windows.Forms;
 
 namespace LabZKT
 {
+    /// <summary>
+    /// Class for simulation mode management
+    /// </summary>
     public class ModeManager
     {
         private Dictionary<string, NumericTextBox> registers;
@@ -87,6 +90,9 @@ namespace LabZKT
                 dataGridView_Info.Rows[2].Cells[0].Value = OutCurrentTack;// RunSim.currentTact;
             }
         }
+        /// <summary>
+        /// Change current button 'Enable' state to opposite
+        /// </summary>
         public void EnDisableButtons()
         {
             foreach (var reg in registers)
