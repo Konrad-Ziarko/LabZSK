@@ -36,6 +36,7 @@
             this.button_Author = new System.Windows.Forms.Button();
             this.button_Close = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.button_nightMode = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button_PM
@@ -109,6 +110,18 @@
             this.timer1.Interval = 500;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // button_nightMode
+            // 
+            this.button_nightMode.BackgroundImage = global::LabZKT.Properties.Resources.moon;
+            this.button_nightMode.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_nightMode.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button_nightMode.Location = new System.Drawing.Point(13, 427);
+            this.button_nightMode.Name = "button_nightMode";
+            this.button_nightMode.Size = new System.Drawing.Size(40, 40);
+            this.button_nightMode.TabIndex = 5;
+            this.button_nightMode.UseVisualStyleBackColor = true;
+            this.button_nightMode.Click += new System.EventHandler(this.button_nightMode_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -117,6 +130,7 @@
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(762, 473);
+            this.Controls.Add(this.button_nightMode);
             this.Controls.Add(this.button_Close);
             this.Controls.Add(this.button_Author);
             this.Controls.Add(this.button_Run);
@@ -145,6 +159,7 @@
         private System.Windows.Forms.Button button_Author;
         private System.Windows.Forms.Button button_Close;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button button_nightMode;
     }
 }
 

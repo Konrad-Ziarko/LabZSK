@@ -23,9 +23,20 @@ namespace LabZKT
                     Settings.Default.FirstRun = false;
                     Settings.Default.Save();
                 }
+                bool nMode = false;
+                TimeSpan start = new TimeSpan(17, 0, 0);
+                TimeSpan end = new TimeSpan(5, 0, 0);
+                TimeSpan now = DateTime.Now.TimeOfDay;
+
+                if (now >= start || now <= end)
+                {
+                    DialogResult dr = MessageBox.Show("Uruchomić w trybie nocnym?", "LabZKT", MessageBoxButtons.YesNo);
+                    if (dr == DialogResult.Yes)
+                        nMode = true;
+                }
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
-                    Application.Run(new MainWindow());
+                    Application.Run(new MainWindow(nMode));
             }else
             {
                 MessageBox.Show("Aplikacja jest już uruchomina!", "LabZKT", MessageBoxButtons.OK);

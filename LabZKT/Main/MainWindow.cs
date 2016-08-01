@@ -10,12 +10,13 @@ using System.Windows.Forms;
 
 namespace LabZKT
 {
-    //może tryb nocny?
+    //okodować tryb nocny
     //może zapisać godzine utworzenia logu i ją sprawdzać ?
     //może plik ini z jakimiś ustawieniami ?
 
     public partial class MainWindow : Form
     {
+        public static bool nightMode;
         public static string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
         public static int currnetCycle = 0, mark = 5, mistakes = 0;
         private string fileForPM = @"\Env\~micro.zkt", fileForPO = @"\Env\~mem.zkt";
@@ -35,8 +36,9 @@ namespace LabZKT
         {
             {"MAV", null }, {"IA",null }, {"INT", null }, {"ZNAK",null }, {"XRO", null }, {"OFF", null }
         };
-        public MainWindow()
+        public MainWindow(bool nightMode)
         {
+            MainWindow.nightMode = nightMode;
             InitializeComponent();
         }
         /// <summary>
@@ -215,6 +217,25 @@ namespace LabZKT
             checkIntegrity();
             initRegisterTextBoxes();
             initFlags();
+            checkNightMode();
+        }
+
+        private void checkNightMode()
+        {
+            if (MainWindow.nightMode)
+            {
+                button_nightMode.BackgroundImage = Properties.Resources.sun;
+                BackColor = Color.FromArgb(30, 30, 30);
+                button_PM.BackColor = button_PO.BackColor = button_Run.BackColor = button_Author.BackColor = button_Close.BackColor = Color.FromArgb(50, 50, 50);
+                button_PM.ForeColor = button_PO.ForeColor = button_Author.ForeColor = button_Run.ForeColor = Color.White;
+            }
+            else
+            {
+                button_nightMode.BackgroundImage = Properties.Resources.moon;
+                BackColor = button_Run.BackColor = SystemColors.ButtonHighlight;
+                button_PM.BackColor = button_PO.BackColor =  button_Author.BackColor = button_Close.BackColor = SystemColors.ButtonFace;
+                button_PM.ForeColor = button_PO.ForeColor = button_Author.ForeColor = button_Run.ForeColor = SystemColors.ControlText;
+            }
         }
 
         /// Invoke close event when butto is clicked
@@ -288,7 +309,7 @@ namespace LabZKT
         }
         private void button_Run_Click(object sender, EventArgs e)
         {
-            if (frmSimulation==null)
+            if (frmSimulation == null)
                 frmSimulation = new RunSim(ref List_Memory, ref List_MicroOp, ref registers, ref flags, ref RBPS, ref lastRecordFromRRC);
             foreach (var reg in registers)
                 reg.Value.Parent = frmSimulation.getSimPanel();
@@ -305,6 +326,13 @@ namespace LabZKT
 
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
         static extern bool CheckRemoteDebuggerPresent(IntPtr hProcess, ref bool isDebuggerPresent);
+
+        private void button_nightMode_Click(object sender, EventArgs e)
+        {
+            nightMode = !nightMode;
+            checkNightMode();
+        }
+
         private bool isDebuggerPresent;
         private void timer1_Tick(object sender, EventArgs e)
         {
