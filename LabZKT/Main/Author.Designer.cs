@@ -125,6 +125,7 @@
             this.MinimumSize = new System.Drawing.Size(733, 567);
             this.Name = "Author";
             this.Text = "O programie";
+            this.Load += new System.EventHandler(this.Author_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 

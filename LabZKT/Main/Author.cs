@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace LabZKT
@@ -23,6 +24,10 @@ namespace LabZKT
         private void label3_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Author_Load(object sender, EventArgs e)
+        {
         }
     }
 }

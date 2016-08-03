@@ -33,15 +33,16 @@ namespace LabZKT
         private Dictionary<string, BitTextBox> flags;
         private TextBox RBPS;
         private DataGridViewCellStyle dgvcs1;
-        public RunSim(ref List<MemoryRecord> mem, ref List<MicroOperation> op, ref Dictionary<string, NumericTextBox> reg,
-            ref Dictionary<string, BitTextBox> sig, ref TextBox rbps, ref MemoryRecord lrfr)
+        public RunSim(ref List<MemoryRecord> List_Memory, ref List<MicroOperation> List_MicroOp, 
+            ref Dictionary<string, NumericTextBox> registers,ref Dictionary<string, BitTextBox> flags, 
+            ref TextBox RBPS, ref MemoryRecord lastRecordFromRRC)
         {
-            lastRecordFromRRC = lrfr;
-            List_Memory = mem;
-            List_MicroOp = op;
-            registers = reg;
-            flags = sig;
-            RBPS = rbps;
+            this.lastRecordFromRRC = lastRecordFromRRC;
+            this.List_Memory = List_Memory;
+            this.List_MicroOp = List_MicroOp;
+            this.registers = registers;
+            this.flags = flags;
+            this.RBPS = RBPS;
             InitializeComponent();
         }
         public bool resetBus { get; private set; }
