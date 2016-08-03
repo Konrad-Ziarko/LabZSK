@@ -8,18 +8,21 @@ using System.Windows.Forms;
 
 namespace LabZKT
 {
-    public partial class PM : Form
+    public partial class PM : Form, IPMView
     {
-        //used to determin whether program should ask about saving changes or not
         public static bool isChanged = false;
         private string fileForPM = @"\Env\~micro.zkt";
-        public List<MicroOperation> List_MicroOp;
-        public PM(ref List<MicroOperation> micro)
+        private List<MicroOperation> List_MicroOps;
+        /// Drag & Drop on dataGridView (copy insted of move)
+        private Rectangle dragBoxFromMouseDown;
+        private object valueFromMouseDown;
+        private int idxDragColumn;
+        private bool wasMaximized;
+        public PM(ref List<MicroOperation> List_MicroOps)
         {
-            List_MicroOp = micro;
             InitializeComponent();
-            foreach (MicroOperation row in List_MicroOp)
-                Grid_PM.Rows.Add(row.addr, row.S1, row.D1, row.S2, row.D2, row.S3, row.D3, row.C1, row.C2, row.Test, row.ALU, row.NA);
+            LoadMicroOperations(ref List_MicroOps);
+
         }
 
         private void PM_Load(object sender, EventArgs e)
@@ -30,7 +33,6 @@ namespace LabZKT
             CenterToScreen();
         }
     
-
         private void grid_PM_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (Grid_PM.CurrentCell.ColumnIndex > 0)
@@ -103,7 +105,7 @@ namespace LabZKT
                 {
                     for (int i = 0; i < 256; ++i)
                     {
-                        List_MicroOp[i] = new MicroOperation(i, Grid_PM[1, i].Value.ToString(), Grid_PM[2, i].Value.ToString(),
+                        List_MicroOps[i] = new MicroOperation(i, Grid_PM[1, i].Value.ToString(), Grid_PM[2, i].Value.ToString(),
                     Grid_PM[3, i].Value.ToString(), Grid_PM[4, i].Value.ToString(),
                     Grid_PM[5, i].Value.ToString(), Grid_PM[6, i].Value.ToString(),
                     Grid_PM[7, i].Value.ToString(), Grid_PM[8, i].Value.ToString(),
@@ -173,7 +175,7 @@ namespace LabZKT
             }
             for (int i = 0; i < 256; ++i)
             {
-                List_MicroOp[i] = new MicroOperation(i, Grid_PM[1, i].Value.ToString(), Grid_PM[2, i].Value.ToString(),
+                List_MicroOps[i] = new MicroOperation(i, Grid_PM[1, i].Value.ToString(), Grid_PM[2, i].Value.ToString(),
                     Grid_PM[3, i].Value.ToString(), Grid_PM[4, i].Value.ToString(),
                     Grid_PM[5, i].Value.ToString(), Grid_PM[6, i].Value.ToString(),
                     Grid_PM[7, i].Value.ToString(), Grid_PM[8, i].Value.ToString(),
@@ -236,7 +238,7 @@ namespace LabZKT
                                         tmpMicroOperation = new MicroOperation(attributes[0], attributes[1], attributes[2], attributes[3],
                                             attributes[4], attributes[5], attributes[6], attributes[7], attributes[8], attributes[9],
                                             attributes[10], attributes[11]);
-                                        List_MicroOp[i] = tmpMicroOperation;
+                                        List_MicroOps[i] = tmpMicroOperation;
                                     }
                                     isChanged = true;
                                 }
@@ -268,13 +270,7 @@ namespace LabZKT
                 Grid_PM[idxColumn, idxRow].Value = "";
             }
         }
-
-        /// Drag & Drop on dataGridView (copy insted of move)
-        private Rectangle dragBoxFromMouseDown;
-        private object valueFromMouseDown;
-        private int idxDragColumn;
-        private bool wasMaximized;
-
+        
         private void grid_PM_DragDrop(object sender, DragEventArgs e)
         {
             Point clientPoint = Grid_PM.PointToClient(new Point(e.X, e.Y));
@@ -425,6 +421,13 @@ namespace LabZKT
             panel_View_PM.Width = Convert.ToInt32(Width - panel_Control.Width - 20);
             foreach (DataGridViewColumn c in Grid_PM.Columns)
                 c.Width = panel_View_PM.Width / 12;
+        }
+
+        public void LoadMicroOperations(ref List<MicroOperation> List_MicroOps)
+        {
+            this.List_MicroOps = List_MicroOps;
+            foreach (MicroOperation row in List_MicroOps)
+                Grid_PM.Rows.Add(row.addr, row.S1, row.D1, row.S2, row.D2, row.S3, row.D3, row.C1, row.C2, row.Test, row.ALU, row.NA);
         }
     }
 }

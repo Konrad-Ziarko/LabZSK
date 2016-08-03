@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Main\MicroOp\IPMView.cs" />
     <Compile Include="Main\Simulation\BitTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
