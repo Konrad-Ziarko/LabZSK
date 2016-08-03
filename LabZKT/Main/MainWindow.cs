@@ -21,8 +21,8 @@ namespace LabZKT
         private string fileForPM = @"\Env\~micro.zkt", fileForPO = @"\Env\~mem.zkt";
         private Author frmAuthor;
         private RunSim frmSimulation;
-        private PMView frmPM;
-        private PO frmPO;
+        private PMView pmView;
+        private MemView memView;
         private MemoryRecord lastRecordFromRRC;//pamietaj aby nulowac po zerowaniu rejestrow albo nowej symulacji
         private List<MemoryRecord> List_Memory = new List<MemoryRecord>();
         private List<MicroOperation> List_MicroOp = new List<MicroOperation>();
@@ -183,7 +183,7 @@ namespace LabZKT
                 reg.Value.Enabled = false;
             RBPS.Enabled = false;
             RBPS.Size = new Size(130, 1);
-            RBPS.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            RBPS.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
             RBPS.Text = "000000000000";
         }
         /// <summary>
@@ -278,15 +278,17 @@ namespace LabZKT
         }
         private void button_PM_Click(object sender, EventArgs e)
         {
-            frmPM = new PMView();
+            pmView = new PMView();
             PMModel pmModel = new PMModel(ref List_MicroOp);
-            PMControler pmControler = new PMControler(pmModel, frmPM);
-            frmPM.ShowDialog();
+            PMControler pmControler = new PMControler(pmModel, pmView);
+            pmView.ShowDialog();
         }
         private void button_PO_Click(object sender, EventArgs e)
         {
-            frmPO = new PO(ref List_Memory);
-            frmPO.ShowDialog();
+            memView = new MemView();
+            MemModel memModel = new MemModel(ref List_Memory);
+            MemControler memControler = new MemControler(memModel, memView);
+            memView.ShowDialog();
         }
         private void button_Run_Click(object sender, EventArgs e)
         {

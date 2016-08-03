@@ -1,6 +1,6 @@
 ﻿namespace LabZKT
 {
-    partial class PO
+    partial class MemView
     {
         /// <summary>
         /// Required designer variable.
@@ -43,9 +43,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PO));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MemView));
             this.panel_View_PO = new System.Windows.Forms.Panel();
-            this.Grid_PO = new System.Windows.Forms.DataGridView();
+            this.Grid_Mem = new System.Windows.Forms.DataGridView();
             this.Adres = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Zawartosc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Hex = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -76,7 +76,7 @@
             this.save_File_Dialog = new System.Windows.Forms.SaveFileDialog();
             this.open_File_Dialog = new System.Windows.Forms.OpenFileDialog();
             this.panel_View_PO.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Grid_PO)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Grid_Mem)).BeginInit();
             this.panel_Edit_PO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Decode_Complex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Decode_Simple)).BeginInit();
@@ -89,7 +89,7 @@
             // 
             this.panel_View_PO.AutoSize = true;
             this.panel_View_PO.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel_View_PO.Controls.Add(this.Grid_PO);
+            this.panel_View_PO.Controls.Add(this.Grid_Mem);
             this.panel_View_PO.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel_View_PO.Location = new System.Drawing.Point(0, 0);
             this.panel_View_PO.MinimumSize = new System.Drawing.Size(260, 0);
@@ -97,15 +97,15 @@
             this.panel_View_PO.Size = new System.Drawing.Size(271, 721);
             this.panel_View_PO.TabIndex = 0;
             // 
-            // Grid_PO
+            // Grid_Mem
             // 
-            this.Grid_PO.AllowDrop = true;
-            this.Grid_PO.AllowUserToAddRows = false;
-            this.Grid_PO.AllowUserToDeleteRows = false;
-            this.Grid_PO.AllowUserToResizeColumns = false;
-            this.Grid_PO.AllowUserToResizeRows = false;
-            this.Grid_PO.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.Grid_PO.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Grid_Mem.AllowDrop = true;
+            this.Grid_Mem.AllowUserToAddRows = false;
+            this.Grid_Mem.AllowUserToDeleteRows = false;
+            this.Grid_Mem.AllowUserToResizeColumns = false;
+            this.Grid_Mem.AllowUserToResizeRows = false;
+            this.Grid_Mem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.Grid_Mem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Adres,
             this.Zawartosc,
             this.Hex,
@@ -117,27 +117,27 @@
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Grid_PO.DefaultCellStyle = dataGridViewCellStyle4;
-            this.Grid_PO.Dock = System.Windows.Forms.DockStyle.Left;
-            this.Grid_PO.Location = new System.Drawing.Point(0, 0);
-            this.Grid_PO.MinimumSize = new System.Drawing.Size(260, 0);
-            this.Grid_PO.MultiSelect = false;
-            this.Grid_PO.Name = "Grid_PO";
-            this.Grid_PO.ReadOnly = true;
-            this.Grid_PO.RowHeadersVisible = false;
-            this.Grid_PO.RowTemplate.Height = 24;
-            this.Grid_PO.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.Grid_PO.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Grid_PO.Size = new System.Drawing.Size(271, 721);
-            this.Grid_PO.TabIndex = 0;
-            this.Grid_PO.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grid_PO_CellMouseClick);
-            this.Grid_PO.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grid_PO_CellMouseDoubleClick);
-            this.Grid_PO.SelectionChanged += new System.EventHandler(this.Grid_PO_SelectionChanged);
-            this.Grid_PO.DragDrop += new System.Windows.Forms.DragEventHandler(this.Grid_PO_DragDrop);
-            this.Grid_PO.DragEnter += new System.Windows.Forms.DragEventHandler(this.Grid_PO_DragEnter);
-            this.Grid_PO.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Grid_PO_KeyDown);
-            this.Grid_PO.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Grid_PO_MouseDown);
-            this.Grid_PO.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Grid_PO_MouseMove);
+            this.Grid_Mem.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Grid_Mem.Dock = System.Windows.Forms.DockStyle.Left;
+            this.Grid_Mem.Location = new System.Drawing.Point(0, 0);
+            this.Grid_Mem.MinimumSize = new System.Drawing.Size(260, 0);
+            this.Grid_Mem.MultiSelect = false;
+            this.Grid_Mem.Name = "Grid_Mem";
+            this.Grid_Mem.ReadOnly = true;
+            this.Grid_Mem.RowHeadersVisible = false;
+            this.Grid_Mem.RowTemplate.Height = 24;
+            this.Grid_Mem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.Grid_Mem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.Grid_Mem.Size = new System.Drawing.Size(271, 721);
+            this.Grid_Mem.TabIndex = 0;
+            this.Grid_Mem.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grid_PO_CellMouseClick);
+            this.Grid_Mem.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grid_PO_CellMouseDoubleClick);
+            this.Grid_Mem.SelectionChanged += new System.EventHandler(this.Grid_PO_SelectionChanged);
+            this.Grid_Mem.DragDrop += new System.Windows.Forms.DragEventHandler(this.Grid_PO_DragDrop);
+            this.Grid_Mem.DragEnter += new System.Windows.Forms.DragEventHandler(this.Grid_PO_DragEnter);
+            this.Grid_Mem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Grid_PO_KeyDown);
+            this.Grid_Mem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Grid_PO_MouseDown);
+            this.Grid_Mem.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Grid_PO_MouseMove);
             // 
             // Adres
             // 
@@ -547,7 +547,7 @@
             // 
             this.open_File_Dialog.FileName = "open_File_Dialog";
             // 
-            // PO
+            // MemView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -556,15 +556,15 @@
             this.Controls.Add(this.panel_View_PO);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(900, 650);
-            this.Name = "PO";
+            this.Name = "MemView";
             this.Text = "Pamięć Operacyjna";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PO_FormClosing);
-            this.Load += new System.EventHandler(this.PO_Load);
+            this.Load += new System.EventHandler(this.MemView_Load);
             this.ResizeEnd += new System.EventHandler(this.PO_ResizeEnd);
             this.SizeChanged += new System.EventHandler(this.PO_SizeChanged);
             this.Resize += new System.EventHandler(this.PO_Resize);
             this.panel_View_PO.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.Grid_PO)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Grid_Mem)).EndInit();
             this.panel_Edit_PO.ResumeLayout(false);
             this.panel_Edit_PO.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Decode_Complex)).EndInit();
@@ -581,7 +581,7 @@
 
         private System.Windows.Forms.Panel panel_View_PO;
         private System.Windows.Forms.Panel panel_Edit_PO;
-        private System.Windows.Forms.DataGridView Grid_PO;
+        private System.Windows.Forms.DataGridView Grid_Mem;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.SaveFileDialog save_File_Dialog;
         private System.Windows.Forms.OpenFileDialog open_File_Dialog;

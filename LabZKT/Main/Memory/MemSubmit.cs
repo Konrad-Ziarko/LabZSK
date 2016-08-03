@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace LabZKT
 {
-    public partial class PAOSubmit : Form
+    public partial class MemSubmit : Form
     {
         private enum DataType { Data, Simple, Complex }
         private enum NumeralBase { Hex, Binary, Decimal }
@@ -13,6 +13,7 @@ namespace LabZKT
         public string binaryData { get; private set; }
         public string hexData { get; private set; }
         public int dataType { get; private set; }
+        public bool isChanged { get; set; }
         private void turnOffTabSwitchFocus(Control parent)
         {
             foreach (Control c in parent.Controls)
@@ -22,9 +23,10 @@ namespace LabZKT
                 c.TabStop = false;
             }
         }
-        public PAOSubmit()
+        public MemSubmit()
         {
             InitializeComponent();
+            isChanged = true;
             turnOffTabSwitchFocus(this);
         }
         private void PAOSubmit_Load(object sender, EventArgs e)
@@ -84,7 +86,7 @@ namespace LabZKT
                 hexData = Convert.ToInt16(tempMemoryCell, 2).ToString("X").PadLeft(4, '0');
             }
             else binaryData = hexData = "";
-            PO.isChanged = true;
+            isChanged = true;
             Close();
         }
 

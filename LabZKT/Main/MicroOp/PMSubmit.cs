@@ -324,7 +324,7 @@ namespace LabZKT
             AutoSize = false;
 
             tmpLbl.AutoSize = true;
-            tmpLbl.Font = new System.Drawing.Font("Arial Narrow", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            tmpLbl.Font = new System.Drawing.Font("Arial Narrow", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 238);
             tmpLbl.Location = new System.Drawing.Point(60, 23);
             tmpLbl.Name = "label1";
             tmpLbl.Size = new System.Drawing.Size(196, 23);
@@ -416,7 +416,7 @@ namespace LabZKT
 
         void myRadioButton_MouseClick(object sender, MouseEventArgs e)
         {
-            button_OK_Click(sender, (EventArgs)e);
+            button_OK_Click(sender, e);
         }
     }
 }

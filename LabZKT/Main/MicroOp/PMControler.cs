@@ -17,15 +17,15 @@ namespace LabZKT
         {
             this.theModel = theModel;
             this.theView = theView;
-            theView.LoadMicroOperations(theModel.List_MicroOps);
-            theModel.Grid_PM = theView.GetDataGrid();
+            this.theView.LoadMicroOperations(this.theModel.List_MicroOps);
+            this.theModel.Grid_PM = this.theView.GetDataGrid();
 
 
-            theView.TimerTick += theModel.TimerTick;
-            theView.LoadTable += this.LoadTable;
-            theView.SaveTable += this.SaveTable;
-            theView.CloseForm += this.CloseForm;
-            theView.NewMicroOperation += this.NewMicroOperation;
+            this.theView.TimerTick += this.theModel.TimerTick;
+            this.theView.LoadTable += LoadTable;
+            this.theView.SaveTable += SaveTable;
+            this.theView.CloseForm += CloseForm;
+            this.theView.NewMicroOperation += NewMicroOperation;
         }
 
         private void NewMicroOperation()

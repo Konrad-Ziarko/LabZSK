@@ -1,6 +1,6 @@
 ﻿namespace LabZKT
 {
-    partial class PAOSubmit
+    partial class MemSubmit
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PAOSubmit));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MemSubmit));
             this.panel_Choice = new System.Windows.Forms.Panel();
             this.button_Choice_Cancel = new System.Windows.Forms.Button();
             this.button_Choice_Complex = new System.Windows.Forms.Button();

@@ -221,7 +221,7 @@ namespace LabZKT
                         RichTextBox rtb = new RichTextBox();
                         log.Controls.Add(rtb);
                         rtb.ReadOnly = true;
-                        rtb.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+                        rtb.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
                         rtb.Text = File.ReadAllText(open_File_Dialog.FileName, Encoding.Unicode);
                         log.AutoSize = true;
                         log.AutoSizeMode = AutoSizeMode.GrowAndShrink;
@@ -427,13 +427,13 @@ namespace LabZKT
             if (e.KeyChar == (char)Keys.Enter && !inEditMode)
             {
                 if (isRunning && !inMicroMode)
-                    button_OK_Click(sender, (EventArgs)e);
+                    button_OK_Click(sender, e);
                 else if (isRunning && inMicroMode && currentTact != 7)
-                    button_Next_Tact_Click(sender, (EventArgs)e);
+                    button_Next_Tact_Click(sender, e);
                 else if (isRunning && inMicroMode && currentTact == 7)
-                    button_OK_Click(sender, (EventArgs)e);
+                    button_OK_Click(sender, e);
                 else
-                    button_Makro_Click(sender, (EventArgs)e);
+                    button_Makro_Click(sender, e);
             }
         }
 

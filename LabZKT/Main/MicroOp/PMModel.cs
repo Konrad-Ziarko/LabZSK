@@ -62,9 +62,9 @@ namespace LabZKT
             }
         }
 
-        public void SaveTable(string filePath)
+        public void SaveTable(string fileName)
         {
-            using (BinaryWriter bw = new BinaryWriter(File.OpenRead(filePath)))
+            using (BinaryWriter bw = new BinaryWriter(File.OpenRead(fileName)))
             {
                 bw.Write(Grid_PM.Columns.Count);
                 bw.Write(Grid_PM.Rows.Count);
@@ -78,8 +78,8 @@ namespace LabZKT
                     }
                 }
             }
-            uint crc = CRC.ComputeChecksum(File.ReadAllBytes(filePath));
-            using (BinaryWriter bw = new BinaryWriter(File.Open(filePath, FileMode.Append)))
+            uint crc = CRC.ComputeChecksum(File.ReadAllBytes(fileName));
+            using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Append)))
             {
                 bw.Write(crc);
             }

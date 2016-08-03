@@ -642,12 +642,12 @@ namespace LabZKT
                 }
                 else if (microOpMnemo == "L")
                 {
-                    registers["ALU"].setActualValue((short)(registers["L"].getInnerValue()));
+                    registers["ALU"].setActualValue(registers["L"].getInnerValue());
                     registers["ALU"].setNeedCheck(out registerToCheck);
                 }
                 else if (microOpMnemo == "R")
                 {
-                    registers["ALU"].setActualValue((short)(registers["R"].getInnerValue()));
+                    registers["ALU"].setActualValue(registers["R"].getInnerValue());
                     registers["ALU"].setNeedCheck(out registerToCheck);
                 }
                 else if (microOpMnemo == "INCL")

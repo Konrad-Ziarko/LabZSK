@@ -73,6 +73,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Main\Memory\MemControler.cs" />
+    <Compile Include="Main\Memory\MemModel.cs" />
     <Compile Include="Main\MicroOp\PMControler.cs" />
     <Compile Include="Main\MicroOp\PMModel.cs" />
     <Compile Include="Main\Simulation\BitTextBox.cs">
@@ -104,20 +106,20 @@
     <Compile Include="Main\MicroOp\PMView.Designer.cs">
       <DependentUpon>PMView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\PAO\PO.cs">
+    <Compile Include="Main\Memory\MemView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\PAO\PO.Designer.cs">
-      <DependentUpon>PO.cs</DependentUpon>
+    <Compile Include="Main\Memory\MemView.Designer.cs">
+      <DependentUpon>MemView.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\Simulation\LogManager.cs" />
-    <Compile Include="Main\PAO\MemoryRecord.cs" />
+    <Compile Include="Main\Memory\MemoryRecord.cs" />
     <Compile Include="Main\MicroOp\MicroOperation.cs" />
-    <Compile Include="Main\PAO\POSubmit.cs">
+    <Compile Include="Main\Memory\MemSubmit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\PAO\POSubmit.Designer.cs">
-      <DependentUpon>POSubmit.cs</DependentUpon>
+    <Compile Include="Main\Memory\MemSubmit.Designer.cs">
+      <DependentUpon>MemSubmit.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\Simulation\ModeManager.cs" />
     <Compile Include="Main\Simulation\NumericTextBox.cs">
@@ -153,14 +155,14 @@
     <EmbeddedResource Include="Main\MicroOp\PMView.resx">
       <DependentUpon>PMView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\PAO\PO.resx">
-      <DependentUpon>PO.cs</DependentUpon>
+    <EmbeddedResource Include="Main\Memory\MemView.resx">
+      <DependentUpon>MemView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\Simulation\RunSim.resx">
       <DependentUpon>RunSim.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\PAO\POSubmit.resx">
-      <DependentUpon>POSubmit.cs</DependentUpon>
+    <EmbeddedResource Include="Main\Memory\MemSubmit.resx">
+      <DependentUpon>MemSubmit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

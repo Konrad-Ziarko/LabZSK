@@ -190,7 +190,7 @@ namespace LabZKT
                 path.AddLine(p2, p1);
                 g.DrawPath(pen, path);
             }
-            Font fnt = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            Font fnt = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
             SolidBrush sb = new SolidBrush(Color.DarkOrange);
             foreach (var flg in flags.Values)
                 g.DrawString(flg.flagName, fnt, sb, flg.Location.X, flg.Location.Y - 18);
