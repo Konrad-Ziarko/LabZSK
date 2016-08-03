@@ -14,7 +14,7 @@ namespace LabZKT
         public event Action<string> SaveTable;
         public event Action<string> LoadTable;
         public event Action CloseForm;
-
+        public event Action NewMemoryRecord;
 
         public bool isChanged { get; set; }
 
@@ -69,7 +69,7 @@ namespace LabZKT
         {
             if (Grid_Mem.CurrentCell.ColumnIndex > 0)
             {
-                
+                NewMemoryRecord();
             }
             Grid_PO_SelectionChanged(sender, e);
         }

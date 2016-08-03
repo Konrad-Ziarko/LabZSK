@@ -75,8 +75,8 @@
   <ItemGroup>
     <Compile Include="Main\Memory\MemControler.cs" />
     <Compile Include="Main\Memory\MemModel.cs" />
-    <Compile Include="Main\MicroOp\PMControler.cs" />
-    <Compile Include="Main\MicroOp\PMModel.cs" />
+    <Compile Include="Main\Operations\PMControler.cs" />
+    <Compile Include="Main\Operations\PMModel.cs" />
     <Compile Include="Main\Simulation\BitTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -100,10 +100,10 @@
     <Compile Include="Main\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\MicroOp\PMView.cs">
+    <Compile Include="Main\Operations\PMView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\MicroOp\PMView.Designer.cs">
+    <Compile Include="Main\Operations\PMView.Designer.cs">
       <DependentUpon>PMView.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\Memory\MemView.cs">
@@ -114,7 +114,7 @@
     </Compile>
     <Compile Include="Main\Simulation\LogManager.cs" />
     <Compile Include="Main\Memory\MemoryRecord.cs" />
-    <Compile Include="Main\MicroOp\MicroOperation.cs" />
+    <Compile Include="Main\Operations\MicroOperation.cs" />
     <Compile Include="Main\Memory\MemSubmit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,9 +126,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Main\Program.cs" />
-    <Compile Include="Main\Simulation\SimLogic.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Main\Simulation\RunSim.cs">
       <SubType>Form</SubType>
@@ -136,10 +133,10 @@
     <Compile Include="Main\Simulation\RunSim.Designer.cs">
       <DependentUpon>RunSim.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\MicroOp\PMSubmit.cs">
+    <Compile Include="Main\Operations\PMSubmit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\MicroOp\PMSubmit.Designer.cs">
+    <Compile Include="Main\Operations\PMSubmit.Designer.cs">
       <DependentUpon>PMSubmit.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\Translator.cs" />
@@ -152,7 +149,7 @@
     <EmbeddedResource Include="Main\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\MicroOp\PMView.resx">
+    <EmbeddedResource Include="Main\Operations\PMView.resx">
       <DependentUpon>PMView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\Memory\MemView.resx">
@@ -174,7 +171,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Main\MicroOp\PMSubmit.resx">
+    <EmbeddedResource Include="Main\Operations\PMSubmit.resx">
       <DependentUpon>PMSubmit.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest" />

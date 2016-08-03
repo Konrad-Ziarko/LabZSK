@@ -10,7 +10,6 @@ using System.Windows.Forms;
 
 namespace LabZKT
 {
-    //okodować tryb nocny
     //może zapisać godzine utworzenia logu i ją sprawdzać ?
     //może plik ini z jakimiś ustawieniami ?
 

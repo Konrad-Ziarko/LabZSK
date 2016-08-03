@@ -18,14 +18,17 @@ namespace LabZKT
         {
             this.theModel = theModel;
             this.theView = theView;
-
+            this.theModel.Grid_Mem = this.theView.GetDataGrid();
             this.theModel.LoadMemory();
+
+
             this.theView.SetDataGrid(this.theModel.Grid_Mem);
 
             this.theView.TimerTick += this.theModel.TimerTick;
             this.theView.SaveTable += SaveTable;
             this.theView.LoadTable += LoadTable;
             this.theView.CloseForm += CloseForm;
+            this.theView.NewMemoryRecord += NewMemoryRecord;
         }
         
         public void NewMemoryRecord()
