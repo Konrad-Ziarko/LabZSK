@@ -1,6 +1,6 @@
 ﻿namespace LabZKT
 {
-    partial class PM
+    partial class PMView
     {
         /// <summary>
         /// Required designer variable.
@@ -32,7 +32,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PM));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PMView));
             this.panel_View_PM = new System.Windows.Forms.Panel();
             this.Grid_PM = new System.Windows.Forms.DataGridView();
             this.addres = new System.Windows.Forms.DataGridViewTextBoxColumn();

@@ -73,7 +73,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Main\MicroOp\IPMView.cs" />
+    <Compile Include="Main\MicroOp\PMControler.cs" />
+    <Compile Include="Main\MicroOp\PMModel.cs" />
     <Compile Include="Main\Simulation\BitTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -97,11 +98,11 @@
     <Compile Include="Main\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\MicroOp\PM.cs">
+    <Compile Include="Main\MicroOp\PMView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\MicroOp\PM.Designer.cs">
-      <DependentUpon>PM.cs</DependentUpon>
+    <Compile Include="Main\MicroOp\PMView.Designer.cs">
+      <DependentUpon>PMView.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\PAO\PO.cs">
       <SubType>Form</SubType>
@@ -149,8 +150,8 @@
     <EmbeddedResource Include="Main\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\MicroOp\PM.resx">
-      <DependentUpon>PM.cs</DependentUpon>
+    <EmbeddedResource Include="Main\MicroOp\PMView.resx">
+      <DependentUpon>PMView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\PAO\PO.resx">
       <DependentUpon>PO.cs</DependentUpon>

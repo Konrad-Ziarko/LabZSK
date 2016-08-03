@@ -9,6 +9,7 @@ namespace LabZKT
     {
         private int columnIdx;
         private string chosenInstruction, c1Column, selectedInstruction;
+        public bool isChanged = false;
 
         public string SelectedInstruction
         {
@@ -113,7 +114,7 @@ namespace LabZKT
                 SelectedInstruction = Convert.ToInt32(numUpDown.Value).ToString();
             }
             DialogResult = DialogResult.OK;
-            PM.isChanged = true;
+            isChanged = true;
             Close();
         }
 

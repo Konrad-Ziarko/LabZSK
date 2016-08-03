@@ -21,7 +21,7 @@ namespace LabZKT
         private string fileForPM = @"\Env\~micro.zkt", fileForPO = @"\Env\~mem.zkt";
         private Author frmAuthor;
         private RunSim frmSimulation;
-        private PM frmPM;
+        private PMView frmPM;
         private PO frmPO;
         private MemoryRecord lastRecordFromRRC;//pamietaj aby nulowac po zerowaniu rejestrow albo nowej symulacji
         private List<MemoryRecord> List_Memory = new List<MemoryRecord>();
@@ -278,7 +278,9 @@ namespace LabZKT
         }
         private void button_PM_Click(object sender, EventArgs e)
         {
-            frmPM = new PM(ref List_MicroOp);
+            frmPM = new PMView();
+            PMModel pmModel = new PMModel(ref List_MicroOp);
+            PMControler pmControler = new PMControler(pmModel, frmPM);
             frmPM.ShowDialog();
         }
         private void button_PO_Click(object sender, EventArgs e)
