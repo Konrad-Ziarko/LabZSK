@@ -578,17 +578,7 @@ namespace LabZKT
 
         private void logTimer_Tick(object sender, EventArgs e)
         {
-            //jesli symulacja ruszyla okno tylko ukrywac lub zapisywac gdzies stany rejesstrow
-            //zapamietac liczbe bledow i ocene, oraz cykl
-            /*
-            new Thread(() =>
-            {
-                Directory.CreateDirectory(MainWindow.envPath + @"\Env");
-                using (BinaryWriter bw = new BinaryWriter(File.Create(MainWindow.envPath + @"\Env\Log_" + DateTime.Now.ToString("HH_mm_ss"))))
-                {
-                    bw.Write(logManager.GetBuffer());
-                }
-            }).Start();*/
+
         }
     }
 }

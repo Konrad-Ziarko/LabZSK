@@ -68,13 +68,26 @@ namespace LabZKT
             {
                 var temp = List_Memory[registers["RAP"].getActualValue()];
                 grid_PO.Rows[registers["RAP"].getActualValue()].Selected = true;
-                if (temp.XSI.Substring(2, 1) == "1")
-                    isTestPositive = true;
-                else
+                if (temp.typ == 1)
                 {
                     otherValue = true;
-                    registers["RAPS"].setActualValue((short)Convert.ToInt16(temp.OP, 2));
+                    registers["RAPS"].setActualValue(Convert.ToInt16(temp.value, 2));
                 }
+                else if(temp.typ == 2)
+                {
+                    if (temp.XSI.Substring(2, 1) == "1")
+                        isTestPositive = true;
+                    else
+                    {
+                        otherValue = true;
+                        registers["RAPS"].setActualValue(Convert.ToInt16(temp.OP, 2));
+                    }
+                }
+                else if (temp.typ == 3)
+                {
+                    isTestPositive = true;
+                }
+                
             }
             else if (microOpMnemo == "TAS")
             {
@@ -150,7 +163,7 @@ namespace LabZKT
             else if (!otherValue)
             {
                 //czy zerować raps jak overflow?
-                registers["RAPS"].setActualValue((short)((registers["RAPS"].getInnerValue() + 1) % 256));
+                registers["RAPS"].setActualValue((short)((registers["RAPS"].getInnerValue() + 1) & 255));
             }
             registers["RAPS"].setNeedCheck(out registerToCheck);
 

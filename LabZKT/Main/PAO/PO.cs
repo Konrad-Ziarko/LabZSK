@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -192,47 +193,57 @@ namespace LabZKT
                 DialogResult openFileDialogResult = open_File_Dialog.ShowDialog();
                 if (openFileDialogResult == DialogResult.OK && open_File_Dialog.FileName != "")
                 {
-                    //naucz czytania plikow labsaga
-                    //
-                    //
-                    //
-                    //
-                    //
-                    if (CRC.ComputeChecksum(File.ReadAllBytes(open_File_Dialog.FileName)) == 0)
-                        using (BinaryReader br = new BinaryReader(open_File_Dialog.OpenFile()))
-                        {
-                            int n = br.ReadInt32();
-                            int m = br.ReadInt32();
-                            if (m == 256 && n == 4)
+                    string[] split = open_File_Dialog.FileName.Split('.');
+                    string extension = split[split.Length - 1];
+                    try
+                    {
+                        byte[] dataChunk = File.ReadAllBytes(open_File_Dialog.FileName);
+                        if (dataChunk.Length >= 2974 && CRC.ComputeChecksum(File.ReadAllBytes(open_File_Dialog.FileName)) == 0)
+                            using (BinaryReader br = new BinaryReader(open_File_Dialog.OpenFile()))
                             {
-                                MemoryRecord tmpMemory;
-                                string singleMemoryRecord = "";
-                                string tmpString = "";
-                                for (int i = 0; i < m; ++i)
+                                int n = br.ReadInt32();
+                                int m = br.ReadInt32();
+                                if (m == 256 && n == 4)
                                 {
-                                    for (int j = 0; j < n; ++j)
+                                    MemoryRecord tmpMemory;
+                                    string singleMemoryRecord = "";
+                                    string tmpString = "";
+                                    for (int i = 0; i < m; ++i)
                                     {
-                                        if (br.ReadBoolean())
+                                        for (int j = 0; j < n; ++j)
                                         {
-                                            tmpString = br.ReadString();
-                                            singleMemoryRecord += tmpString + " ";
-                                            Grid_PO.Rows[i].Cells[j].Value = tmpString;
+                                            if (br.ReadBoolean())
+                                            {
+                                                tmpString = br.ReadString();
+                                                singleMemoryRecord += tmpString + " ";
+                                                Grid_PO.Rows[i].Cells[j].Value = tmpString;
+                                            }
+                                            else
+                                                br.ReadBoolean();
                                         }
-                                        else
-                                            br.ReadBoolean();
+                                        string[] attributes = singleMemoryRecord.Split(' ');
+                                        singleMemoryRecord = "";
+                                        tmpMemory = new MemoryRecord(Convert.ToInt16(attributes[0]), attributes[1], attributes[2], Convert.ToInt16(attributes[3]));
+                                        List_Memory[i] = tmpMemory;
                                     }
-                                    string[] attributes = singleMemoryRecord.Split(' ');
-                                    singleMemoryRecord = "";
-                                    tmpMemory = new MemoryRecord(Convert.ToInt16(attributes[0]), attributes[1], attributes[2], Convert.ToInt16(attributes[3]));
-                                    List_Memory[i] = tmpMemory;
+                                    isChanged = true;
                                 }
-                                isChanged = true;
+                                else
+                                    MessageBox.Show("To nie jest plik z poprawnym mikroprogramem!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
                             }
-                            else
-                                MessageBox.Show("To nie jest plik z poprawnym mikroprogramem!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
-                        }
-                    else
+                        else if (Regex.Match(extension, @"[sS][aA][gG]").Success)
+                            //naucz czytania plikow labsaga
+                            //
+                            ;
+                        else
+                            MessageBox.Show("Wykryto niespójność pliku!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
+                    }
+                    catch (Exception)
+                    {
                         MessageBox.Show("Wykryto niespójność pliku!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
+                    }
+
+
                 }
 
             }
