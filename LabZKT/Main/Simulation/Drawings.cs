@@ -10,19 +10,16 @@ namespace LabZKT
     /// </summary>
     public class Drawings
     {
-        private Panel panel_Sim_Control;
         private Dictionary<string, NumericTextBox> registers;
         private Dictionary<string, BitTextBox> flags;
         private TextBox RBPS;
-        public Drawings(ref Panel panel, ref Dictionary<string, NumericTextBox> regs, 
-            ref Dictionary<string, BitTextBox> flgs, ref TextBox rbps)
+        public Drawings(ref Dictionary<string, NumericTextBox> regs, ref Dictionary<string, BitTextBox> flgs, ref TextBox rbps)
         {
-            panel_Sim_Control = panel;
             registers = regs;
             flags = flgs;
             RBPS = rbps;
         }
-        public void drawBackground(ref Graphics g)
+        public void drawBackground(ref Graphics g, Panel panel_Sim_Control)
         {
             g.Clear(Color.FromArgb(255, 27, 96, 51));
             GraphicsPath path = new GraphicsPath();

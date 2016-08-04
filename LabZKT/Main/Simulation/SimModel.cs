@@ -1,76 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Media;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LabZKT
 {
-    public partial class RunSim : Form
+    public class SimModel
     {
-        public static short dragValue;
-        public static Size hitTest;
-        public static bool buttonNextTactClicked = false;
-        private int currentTact = 0;
-        private bool[,] cells = new bool[11, 8];
-        private List<MemoryRecord> List_Memory { get; set; }
-        private List<MicroOperation> List_MicroOp { get; set; }
-        private MemoryRecord lastRecordFromRRC;
+        public event Action StartSim;
+        public event Action StopSim;
+        public event Action<string, string, string> AddText;
+        public event Action ButtonOKSetVisivle;
+        public event Action ButtonNextTactSetVisible;
+        public event Action<int> SetNextTact;
+
+        public MemoryRecord selectedIntruction { get; set; }
+        public Dictionary<string, BitTextBox> flags { get; set; }
+        public MemoryRecord lastRecordFromRRC { get; set; }
+        public List<MemoryRecord> List_Memory { get; set; }
+        public List<MicroOperation> List_MicroOp { get; set; }
+        public TextBox RBPS { get; set; }
+        public Dictionary<string, NumericTextBox> registers { get; set; }
+        public DataGridView Grid_Mem { get; set; }
+        public DataGridView Grid_PM { get; set; }
+        //
+        public bool resetBus { get; set; }
         private Dictionary<string, short> oldRegs;
-        private ModeManager modeManager;
         private LogManager logManager;
-        private Drawings draw;
-        private string logFile = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty;
-        private short raps = 0, na = 0;
-        private bool isTestPositive = false, isOverflow = false, wasMaximized = false, inEditMode = false,
-            buttonOKClicked = false, inMicroMode = false, isRunning = false;
-        private Dictionary<string, NumericTextBox> registers;
-        private Dictionary<string, BitTextBox> flags;
-        private TextBox RBPS;
-        private DataGridViewCellStyle dgvcs1;
-        public RunSim(ref List<MemoryRecord> List_Memory, ref List<MicroOperation> List_MicroOp, 
-            ref Dictionary<string, NumericTextBox> registers,ref Dictionary<string, BitTextBox> flags, 
-            ref TextBox RBPS, ref MemoryRecord lastRecordFromRRC)
+
+        internal void getMemoryRecord(int idxRow)
         {
-            this.lastRecordFromRRC = lastRecordFromRRC;
+            selectedIntruction = List_Memory[idxRow];
+        }
+
+        private Drawings draw;
+
+        private bool[,] cells = new bool[11, 8];
+        public int currentTact = 0;
+        public bool isTestPositive = false, isOverflow = false, inEditMode = false,
+            buttonOKClicked = false, inMicroMode = false, isRunning = false;
+        public string logFile = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty;
+        public short raps = 0, na = 0;
+        public bool buttonNextTactClicked = false;
+        //
+        public SimModel(ref List<MemoryRecord> List_Memory, ref List<MicroOperation> List_MicroOp, ref Dictionary<string, NumericTextBox> registers, ref Dictionary<string, BitTextBox> flags, ref TextBox RBPS, ref MemoryRecord lastRecordFromRRC)
+        {
             this.List_Memory = List_Memory;
             this.List_MicroOp = List_MicroOp;
             this.registers = registers;
             this.flags = flags;
             this.RBPS = RBPS;
-            InitializeComponent();
-        }
-        public bool resetBus { get; private set; }
-        public Control getSimPanel()
-        {
-            return panel_Sim_Control;
-        }
-        private void RunSim_Load(object sender, EventArgs e)
-        {
-            draw = new Drawings(ref panel_Sim_Control, ref registers, ref flags, ref RBPS);
-            modeManager = ModeManager.getInstace(ref registers, ref toolStripMenu_Edit, ref toolStripMenu_Clear, ref toolStripMenu_Exit,
-                ref label_Status, ref button_Makro, ref button_Micro, ref dataGridView_Info, ref button_Next_Tact);
+            this.lastRecordFromRRC = lastRecordFromRRC;
+            //
             logManager = LogManager.Instance;
-            Size = new Size(1024, 768);
-            initAll(sender, e);
+            draw = new Drawings(ref registers, ref flags, ref RBPS);
         }
-        private void initAll(object sender, EventArgs e)
+
+        public void LoadLists()
         {
-            nowyLogToolStripMenuItem.Enabled = false;
-            CenterToScreen();
-            fillGridsWithData();
-            grid_PO_SelectionChanged(sender, e);
-            initUserInfoArea();
-            Focus();
-            RunSim_ResizeEnd(sender, e);
+            foreach (MemoryRecord row in List_Memory)
+                Grid_Mem.Rows.Add(row.addr, row.value, row.hex);
+            foreach (MicroOperation row in List_MicroOp)
+                Grid_PM.Rows.Add(row.addr, row.S1, row.D1, row.S2, row.D2, row.S3,
+                    row.D3, row.C1, row.C2, row.Test, row.ALU, row.NA);
         }
-        private void initLogInformation()
+        public void initLogInformation()
         {
             string sysType;
             if (Environment.Is64BitOperatingSystem)
@@ -93,32 +94,7 @@ namespace LabZKT
             Environment.UserName + "\"\n" + "Dostępne interfejsy sieciowe: " + ipAddrList + "\n\n\n", logFile);
         }
 
-        private void fillGridsWithData()
-        {
-            foreach (MemoryRecord row in List_Memory)
-                grid_PO.Rows.Add(row.addr, row.value, row.hex);
-            foreach (MicroOperation row in List_MicroOp)
-                grid_PM.Rows.Add(row.addr, row.S1, row.D1, row.S2, row.D2, row.S3,
-                    row.D3, row.C1, row.C2, row.Test, row.ALU, row.NA);
-        }
-        private void initUserInfoArea()
-        {
-            dataGridView_Info.Rows.Add(MainWindow.mark, "Ocena");
-            dataGridView_Info.Rows.Add(MainWindow.mistakes, "Błędy");
-            dataGridView_Info.Rows.Add("0", "Takt");
-            dataGridView_Info.Rows.Add(MainWindow.currnetCycle, "Cykl");
-            dataGridView_Info.Enabled = false;
-            dataGridView_Info.ClearSelection();
-
-            dgvcs1 = new System.Windows.Forms.DataGridViewCellStyle();
-            dgvcs1.ForeColor = Color.Green;
-            dataGridView_Info.Rows[0].DefaultCellStyle = dgvcs1;
-            DataGridViewCellStyle dgvcs2 = new System.Windows.Forms.DataGridViewCellStyle();
-            dgvcs2.ForeColor = Color.Blue;
-            dataGridView_Info.Rows[2].DefaultCellStyle = dgvcs2;
-            dataGridView_Info.Rows[3].DefaultCellStyle = dgvcs2;
-        }
-        private void rearrangeTextBoxes()
+        public void rearrangeTextBoxes(Control panel_Sim_Control)
         {
             int horizontalGap = Convert.ToInt32(0.25 * panel_Sim_Control.Width);
             int verticalGap = Convert.ToInt32(0.2 * panel_Sim_Control.Height);
@@ -164,7 +140,7 @@ namespace LabZKT
                 - 65 + registers["L"].Location.X, verticalGap * 4 + (verticalGap - 27) * 3 / 4);
         }
 
-        private void switchLayOut()
+        public void switchLayOut(Control panel_Sim_Control)
         {
             if (registers["SUMA"].Visible)
             {
@@ -179,213 +155,58 @@ namespace LabZKT
             new Thread(() =>
             {
                 Graphics g = panel_Sim_Control.CreateGraphics();
-                draw.drawBackground(ref g);
+                draw.drawBackground(ref g, panel_Sim_Control as Panel);
             }).Start();
         }
-        private void RunSim_FormClosing(object sender, FormClosingEventArgs e)
+
+        public void leaveEditMode()
         {
-            if (!isRunning)
+            foreach (var oldReg in oldRegs)
             {
-                DialogResult result = MessageBox.Show("Zamknąć okno symulacji i powrócic do głównego menu?\nPostęp symulacji nie zostanie utracony", "Symulacja została już uruchomiona", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes)
-                    e.Cancel = false;
-                else
-                    e.Cancel = true;
+                if (registers[oldReg.Key].getInnerValue() != oldReg.Value)
+                    logManager.addToMemory("Zmiana zawartości rejestru:" + oldReg.Key + " " +
+                        oldReg.Value + "=>" + registers[oldReg.Key].getInnerValue() + "\n", logFile);
             }
-            else
-                e.Cancel = true;
+            foreach (var reg in registers)
+                reg.Value.Enabled = false;
+            foreach (var sig in flags)
+                sig.Value.Enabled = false;
+            foreach (var reg in registers)
+                reg.Value.ReadOnly = true;
         }
-
-        private void showToolStripMenuItem_Click(object sender, EventArgs e)
+        public void enterEditMode()
         {
-            open_File_Dialog.Filter = "Logi symulatora|*.log|Wszystko|*.*";
-            open_File_Dialog.Title = "Wczytaj log";
-            open_File_Dialog.InitialDirectory = MainWindow.envPath;
-
-            DialogResult openFileDialogResult = open_File_Dialog.ShowDialog();
-            if (openFileDialogResult == DialogResult.OK && open_File_Dialog.FileName != "")
+            oldRegs = new Dictionary<string, short>();
+            foreach (var reg in registers)
             {
-                try
-                {
-                    FileInfo fileInfo = new FileInfo(open_File_Dialog.FileName + "crc");
-                    fileInfo.Attributes = FileAttributes.Normal;
-                    uint crcFromFile;
-                    using (BinaryReader br = new BinaryReader(File.Open(open_File_Dialog.FileName + "crc", FileMode.Open)))
-                    {
-                        crcFromFile = br.ReadUInt32();
-                    }
-                    fileInfo.Attributes = FileAttributes.Hidden;
-                    uint crc = CRC.ComputeChecksum(File.ReadAllBytes(open_File_Dialog.FileName));
-                    if (crcFromFile == crc)
-                    {
-                        Form log = new Form();
-                        RichTextBox rtb = new RichTextBox();
-                        log.Controls.Add(rtb);
-                        rtb.ReadOnly = true;
-                        rtb.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
-                        rtb.Text = File.ReadAllText(open_File_Dialog.FileName, Encoding.Unicode);
-                        log.AutoSize = true;
-                        log.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-                        int width = 200;
-                        Graphics g = Graphics.FromHwnd(rtb.Handle);
-                        foreach (var line in rtb.Lines)
-                        {
-                            SizeF f = g.MeasureString(line, rtb.Font);
-                            width = (int)(f.Width) > width ? (int)(f.Width) : width;
-                        }
-                        rtb.Width = width + 10;
-                        rtb.Height = 600;
-                        log.MaximizeBox = false;
-                        log.SizeGripStyle = SizeGripStyle.Hide;
-                        log.ShowDialog();
-                    }
-                    else
-                    {
-                        //ktoś modyfikował log albo skasował sumę kontrolną logu
-                    }
-                }
-                catch (FileNotFoundException)
-                {
-
-                }
+                oldRegs.Add(reg.Key, reg.Value.getInnerValue());
             }
-        }
-
-        private void editToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (inEditMode)
+            foreach (var reg in registers)
             {
-                foreach (var oldReg in oldRegs)
-                {
-                    if (registers[oldReg.Key].getInnerValue() != oldReg.Value)
-                        logManager.addToMemory("Zmiana zawartości rejestru:" + oldReg.Key + " " +
-                            oldReg.Value + "=>" + registers[oldReg.Key].getInnerValue() + "\n", logFile);
-                }
-                foreach (var reg in registers)
+                if (reg.Value.registerName == "BUS" || reg.Value.registerName == "LALU" || reg.Value.registerName == "RALU" ||
+                    reg.Value.registerName == "L" || reg.Value.registerName == "R" || reg.Value.registerName == "SUMA")
                     reg.Value.Enabled = false;
-                foreach (var sig in flags)
-                    sig.Value.Enabled = false;
-                foreach (var reg in registers)
-                    reg.Value.ReadOnly = true;
-                toolStripMenu_Edit.Text = "Edytuj rejestry";
-                button_Makro.Visible = true;
-                button_Micro.Visible = true;
-                toolStripMenu_Clear.Enabled = true;
-                inEditMode = false;
-                label_Status.Text = "Stop";
+                else
+                    reg.Value.Enabled = true;
             }
-            else
-            {
-                oldRegs = new Dictionary<string, short>();
-                foreach (var reg in registers)
-                {
-                    oldRegs.Add(reg.Key, reg.Value.getInnerValue());
-                }
-                foreach (var reg in registers)
-                {
-                    if (reg.Value.registerName == "BUS" || reg.Value.registerName == "LALU" || reg.Value.registerName == "RALU" ||
-                        reg.Value.registerName == "L" || reg.Value.registerName == "R" || reg.Value.registerName == "SUMA")
-                        reg.Value.Enabled = false;
-                    else
-                        reg.Value.Enabled = true;
-                }
-
-                foreach (var sig in flags)
-                    sig.Value.Enabled = true;
-                foreach (var reg in registers)
-                    reg.Value.ReadOnly = false;
-                toolStripMenu_Edit.Text = "Zakończ edycję";
-                button_Makro.Visible = false;
-                button_Micro.Visible = false;
-                toolStripMenu_Clear.Enabled = false;
-                inEditMode = true;
-                label_Status.Text = "Edycja";
-            }
+            foreach (var sig in flags)
+                sig.Value.Enabled = true;
+            foreach (var reg in registers)
+                reg.Value.ReadOnly = false;
         }
-
-        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        public void clearRegisters()
         {
             foreach (var reg in registers)
                 reg.Value.resetValue();
             foreach (var flg in flags)
                 flg.Value.resetValue();
-            dgvcs1.ForeColor = Color.Green;
-            MainWindow.mark = 5;
-            MainWindow.mistakes = MainWindow.currnetCycle = 0;
-            dataGridView_Info.Rows[0].Cells[0].Value = 5;
-            dataGridView_Info.Rows[1].Cells[0].Value = dataGridView_Info.Rows[2].Cells[0].Value =
-                dataGridView_Info.Rows[3].Cells[0].Value = 0;
         }
-
-        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        public void addToLog(string text)
         {
-            Invoke((MethodInvoker)delegate ()
-            {
-                Close();
-            });
-        }
-
-        private void grid_PO_SelectionChanged(object sender, EventArgs e)
-        {
-            int idxRow = grid_PO.CurrentCell.RowIndex;
-            int idxCol = grid_PO.CurrentCell.ColumnIndex;
-
-            MemoryRecord instruction = List_Memory[idxRow];
-            string instructionMnemo = "";
-            label1.Text = "Komórka " + idxRow + "\n";
-            if (instruction.typ == 1)
-            {
-                label1.Text += "DANA\n";
-                label1.Text += instruction.value.ToString() + "b\n";
-                label1.Text += Convert.ToInt16(instruction.value, 2) + "d\n";
-                label1.Text += Convert.ToInt16(instruction.value, 2).ToString("X") + "h";
-            }
-            else if (instruction.typ == 2)
-                instructionMnemo = Translator.DecodeInstruction(instruction.OP);
-            else if (instruction.typ == 3)
-                instructionMnemo = Translator.DecodeInstruction(instruction.AOP);
-            string instructionDescription = Translator.GetInsrtuctionDescription(instructionMnemo, instruction.value, instruction.typ);
-            label1.Text += instructionDescription;
-        }
-
-        private void grid_PM_SelectionChanged(object sender, EventArgs e)
-        {
-            if (grid_PM.CurrentCell.ColumnIndex == 0)
-                grid_PM.ClearSelection();
-        }
-        private void richTextBox_addText(string tact, string mnemo, string description)
-        {
-            string text;
-            if (richTextBox_Log.Lines.Count() == 0)
-                text = tact.PadRight(5, ' ');
-            else
-                text = '\n' + tact.PadRight(5, ' ');
-            int start = richTextBox_Log.TextLength;
-            richTextBox_Log.AppendText(text);
-            int end = richTextBox_Log.TextLength;
-            richTextBox_Log.Select(start, end - start);
-            richTextBox_Log.SelectionColor = Color.Red;
-            richTextBox_Log.Select(end, 0);
-            start = richTextBox_Log.TextLength;
-            richTextBox_Log.AppendText(mnemo.PadRight(6, ' ') + description);
-            end = richTextBox_Log.TextLength;
-            richTextBox_Log.Select(start, end - start);
-            richTextBox_Log.SelectionColor = Color.Black;
-            richTextBox_Log.Select(end, 0);
-            richTextBox_Log.ScrollToCaret();
             //poprawić format logu
-            logManager.addToMemory("\t" + tact + " " + mnemo + " " + description + "\n", logFile);
+            logManager.addToMemory(text, logFile);
         }
-        delegate void simulateCPUCallBack();
-        private void button_Makro_Click(object sender, EventArgs e)
-        {
-            prepareSimulation(false);
-        }
-        private void button_Micro_Click(object sender, EventArgs e)
-        {
-            prepareSimulation(true);
-        }
-        private void prepareSimulation(bool b)
+        public void prepareSimulation(bool b)
         {
             inMicroMode = b;
             SaveFileDialog dialog = new SaveFileDialog();
@@ -398,55 +219,58 @@ namespace LabZKT
                 if (saveFileDialogResult == DialogResult.OK && dialog.FileName != "")
                 {
                     logFile = dialog.FileName;
-                    logTimer.Enabled = true;
                     initLogInformation();
                     logManager.addToMemory("========Start symulacji========\n======Zawartość rejestrów======\n", logFile);
                     foreach (var reg in registers.Values)
                         logManager.addToMemory(reg.registerName + "=" + reg.Text + "\n", logFile);
                 }
             }
-            simulateCPUCallBack cb = new simulateCPUCallBack(simulateCPU);
-            new Thread(() => Invoke(cb)).Start();
+            new Thread(simulateCPU).Start();
         }
-        private void button_Next_Tact_Click(object sender, EventArgs e)
+        public void DrawBackground(Control panel_Sim_Control)
         {
-            button_Next_Tact.Visible = false;
-            buttonNextTactClicked = true;
-            currentTact = (currentTact + 1) % 8;
-            dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
+            Graphics g = panel_Sim_Control.CreateGraphics();
+            draw.drawBackground(ref g, panel_Sim_Control as Panel);
+            rearrangeTextBoxes(panel_Sim_Control);
         }
 
-        private void button_OK_Click(object sender, EventArgs e)
+        public void checkRegisters()
         {
-            button_OK.Visible = false;
-            checkRegisters();
-            buttonOKClicked = true;
-        }
+            short badValue;
 
-        private void RunSim_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)Keys.Enter && !inEditMode)
+            if (!registers[registerToCheck].checkValue(out badValue))
             {
-                if (isRunning && !inMicroMode)
-                    button_OK_Click(sender, e);
-                else if (isRunning && inMicroMode && currentTact != 7)
-                    button_Next_Tact_Click(sender, e);
-                else if (isRunning && inMicroMode && currentTact == 7)
-                    button_OK_Click(sender, e);
-                else
-                    button_Makro_Click(sender, e);
+                new Thread(SystemSounds.Beep.Play).Start();
+                logManager.addToMemory("\tBłąd(" + (MainWindow.mistakes + 1) + "): " + registerToCheck + "=" + badValue +
+                    "(" + registerToCheck + "=" + registers[registerToCheck].getInnerValue() + ")\n", logFile);
+
+                MainWindow.mistakes++;
+                if (MainWindow.mistakes >= 2 && MainWindow.mistakes <= 5)
+                    MainWindow.mark = 4;
+                else if (MainWindow.mistakes >= 6 && MainWindow.mistakes <= 9)
+                    MainWindow.mark = 3;
+                else if (MainWindow.mistakes >= 10)
+                    MainWindow.mark = 2;
+            }
+            else
+            {
+                logManager.addToMemory("\t" + registerToCheck + "=" + registers[registerToCheck].getInnerValue() + "\n", logFile);
             }
         }
-
+        public void NewLog()
+        {
+            logManager.addToMemory("\n" + DateTime.Now.ToString("HH:MM:ss:") + "========Stop  symulacji========\n", logFile);
+            logManager.clearInMemoryLog();
+            logFile = string.Empty;
+        }
         private void simulateCPU()
         {
-            modeManager.startSim(out isRunning, cells, out cells);
+            startSim();
             if (currentTact == 0)
                 instructionFetch();
             while (isRunning && currentTact > 0)
                 executeInstruction();
         }
-
         private void executeInstruction()
         {
             if (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1]))
@@ -454,19 +278,19 @@ namespace LabZKT
             while (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1]))
                 exeTact1();
             if (currentTact == 1)
-                modeManager.nextTact(inMicroMode, currentTact, out currentTact);
+                nextTact();
             if (currentTact == 2 && cells[10, 2])
                 logManager.addToMemory("Takt2:\n", logFile);
             while (currentTact == 2 && cells[10, 2])
                 exeTact2();
             while (currentTact >= 2 && currentTact <= 5)
-                modeManager.nextTact(inMicroMode, currentTact, out currentTact);
+                nextTact();
             if (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
                 logManager.addToMemory("Takt6:\n", logFile);
             while (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
                 exeTact6();
             if (currentTact == 6)
-                modeManager.nextTact(inMicroMode, currentTact, out currentTact);
+                nextTact();
             if (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7] || cells[9, 7]))
                 logManager.addToMemory("Takt7:\n", logFile);
             while (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7]))
@@ -479,16 +303,16 @@ namespace LabZKT
             {
                 registers["RAPS"].setActualValue((short)(registers["RAPS"].getInnerValue() + 1));
                 registers["RAPS"].setNeedCheck(out registerToCheck);
-                grid_PM.CurrentCell = grid_PM[11, registers["RAPS"].getInnerValue()];
-                button_OK.Visible = true;
-                modeManager.EnDisableButtons();
+                Grid_PM.CurrentCell = Grid_PM[11, registers["RAPS"].getInnerValue()];
+                ButtonOKSetVisivle();
+                EnDisableButtons();
                 registers[registerToCheck].Focus();
                 while (buttonOKClicked == false)
                     Application.DoEvents();
-                modeManager.EnDisableButtons();
+                EnDisableButtons();
                 currentTact = 0;
-                dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
-                modeManager.stopSim(out isRunning, out inMicroMode);
+                SetNextTact(currentTact);
+                stopSim();
                 buttonOKClicked = false;
             }
             else if (currentTact == 9)
@@ -496,124 +320,17 @@ namespace LabZKT
                 registers["LALU"].setInnerAndActual(0);
                 registers["RALU"].setInnerAndActual(0);
                 currentTact = 0;
-                dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
-                modeManager.stopSim(out isRunning, out inMicroMode);
+                SetNextTact(currentTact);
+                stopSim();
             }
             if (currentTact == 7)
                 currentTact = 8;
         }
 
-        private void grid_PO_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void RunSim_ResizeEnd(object sender, EventArgs e)
-        {
-            float horizontalRatio = 0.2f, verticalRatio = 0.15f;
-
-            int tempPoWidth = Convert.ToInt32(Width * horizontalRatio);
-            panel_PO.Height = Convert.ToInt32(Height * 1.0);
-            if (tempPoWidth > 280)
-                panel_PO.Width = 280;
-            else
-                panel_PO.Width = tempPoWidth;
-
-            panel_Left.Width = Convert.ToInt32(Width - panel_PO.Width - 20);
-            panel_Left.Height = Convert.ToInt32(Height * 1.0);
-
-            int tempPmHeight = Convert.ToInt32(panel_Left.Height * verticalRatio);
-            if (tempPmHeight < 400)
-                panel_PM.Height = 400;
-            else
-                panel_PM.Height = tempPmHeight;
-            panel_PM.Width = Convert.ToInt32(panel_Left.Width * 1.0);
-
-            panel_Sim.Width = Convert.ToInt32(panel_Left.Width * 1.0);
-            panel_Sim.Height = Convert.ToInt32(panel_Left.Height - panel_PM.Height);
-
-
-            Graphics g = panel_Sim_Control.CreateGraphics();
-            draw.drawBackground(ref g);
-            rearrangeTextBoxes();
-        }
-
-        private void RunSim_SizeChanged(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Maximized && !wasMaximized)
-            {
-                wasMaximized = true;
-                RunSim_ResizeEnd(sender, e);
-            }
-            else if (wasMaximized)
-            {
-                wasMaximized = false;
-                RunSim_ResizeEnd(sender, e);
-            }
-        }
-        private void nowyLogToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            logManager.addToMemory("\n" + DateTime.Now.ToString("HH:MM:ss:") + "========Stop  symulacji========\n", logFile);
-            logManager.clearInMemoryLog();
-            logFile = string.Empty;
-            //zerowanie rejestrów
-            DialogResult result = MessageBox.Show("Utracisz cały postęp symulacji.\nCzy chcesz zakończyć pracę z obecnym logiem?", "Nowa symulacja", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
-            {
-
-            }
-
-        }
-
-        private void RunSim_Paint(object sender, PaintEventArgs e)
-        {
-            new Thread(() =>
-            {
-                Graphics g = panel_Sim_Control.CreateGraphics();
-                draw.drawBackground(ref g);
-            }).Start();
-        }
-
-        private void logTimer_Tick(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkRegisters()
-        {
-            short badValue;
-
-            if (!registers[registerToCheck].checkValue(out badValue))
-            {
-                new Thread(SystemSounds.Beep.Play).Start();
-                logManager.addToMemory("\tBłąd(" + (MainWindow.mistakes + 1) + "): " + registerToCheck + "=" + badValue +
-                    "(" + registerToCheck + "=" + registers[registerToCheck].getInnerValue() + ")\n", logFile);
-
-                MainWindow.mistakes++;
-                dataGridView_Info[0, 1].Value = MainWindow.mistakes;
-                if (MainWindow.mistakes >= 2 && MainWindow.mistakes <= 5)
-                    MainWindow.mark = 4;
-                else if (MainWindow.mistakes >= 6 && MainWindow.mistakes <= 9)
-                    MainWindow.mark = 3;
-                else if (MainWindow.mistakes >= 10)
-                {
-                    dgvcs1.ForeColor = Color.Red;
-                    MainWindow.mark = 2;
-                }
-                dataGridView_Info[0, 0].Value = MainWindow.mark;
-            }
-            else
-            {
-                logManager.addToMemory("\t" + registerToCheck + "=" + registers[registerToCheck].getInnerValue() + "\n", logFile);
-            }
-        }
         private void exeTest()
         {
-            grid_PM.CurrentCell = grid_PM[9, raps];
-            microOpMnemo = grid_PM[9, raps].Value.ToString();
+            Grid_PM.CurrentCell = Grid_PM[9, raps];
+            microOpMnemo = Grid_PM[9, raps].Value.ToString();
             bool otherValue = false;
             if (microOpMnemo == "UNB")
                 isTestPositive = true;
@@ -628,20 +345,20 @@ namespace LabZKT
                     //czy tak test TINT?
                     registers["RAP"].setActualValue(255);
                     registers["RAP"].setNeedCheck(out registerToCheck);
-                    button_OK.Visible = true;
-                    modeManager.EnDisableButtons();
+                    ButtonOKSetVisivle();
+                    EnDisableButtons();
                     registers[registerToCheck].Focus();
                     while (buttonOKClicked == false)
                         Application.DoEvents();
                     buttonOKClicked = false;
-                    modeManager.EnDisableButtons();
+                    EnDisableButtons();
                     registers["RAPS"].setActualValue(254);
                 }
             }
             else if (microOpMnemo == "TIND")
             {
                 var temp = List_Memory[registers["RAP"].getActualValue()];
-                grid_PO.Rows[registers["RAP"].getActualValue()].Selected = true;
+                Grid_Mem.Rows[registers["RAP"].getActualValue()].Selected = true;
                 if (temp.typ == 1)
                 {
                     otherValue = true;
@@ -681,7 +398,7 @@ namespace LabZKT
             else if (microOpMnemo == "TCR")
             {
                 short lk = registers["LK"].getInnerValue();
-                if (grid_PM.Rows[raps].Cells[7].Value.ToString() == "SHT")
+                if (Grid_PM.Rows[raps].Cells[7].Value.ToString() == "SHT")
                 {
                     if (registers["LK"].getInnerValue() == 0)
                         isTestPositive = true;
@@ -727,7 +444,7 @@ namespace LabZKT
                     isTestPositive = true;
             }
             cells[9, 7] = false;
-            richTextBox_addText("TEST", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+            AddText("TEST", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
 
             if (isTestPositive)
             {
@@ -741,19 +458,19 @@ namespace LabZKT
             }
             registers["RAPS"].setNeedCheck(out registerToCheck);
 
-            grid_PM.CurrentCell = grid_PM[11, registers["RAPS"].getInnerValue()];
+            Grid_PM.CurrentCell = Grid_PM[11, registers["RAPS"].getInnerValue()];
 
-            button_OK.Visible = true;
+            ButtonOKSetVisivle();
             if (registerToCheck != "")
             {
-                modeManager.EnDisableButtons();
+                EnDisableButtons();
                 registers[registerToCheck].Focus();
             }
             while (buttonOKClicked == false)
                 Application.DoEvents();
             buttonOKClicked = false;
             if (registerToCheck != "")
-                modeManager.EnDisableButtons();
+                EnDisableButtons();
             currentTact = 9;
         }
 
@@ -766,8 +483,8 @@ namespace LabZKT
         {
             if (cells[8, 7])
             {
-                grid_PM.CurrentCell = grid_PM[8, raps];
-                microOpMnemo = grid_PM[8, raps].Value.ToString();
+                Grid_PM.CurrentCell = Grid_PM[8, raps];
+                microOpMnemo = Grid_PM[8, raps].Value.ToString();
                 if (microOpMnemo == "RA")
                 {
                     registers["A"].setActualValue(0);
@@ -787,12 +504,12 @@ namespace LabZKT
                     flags["INT"].setInnerValue(1);
                 }
                 cells[8, 7] = false;
-                richTextBox_addText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[5, 7])
             {
-                grid_PM.CurrentCell = grid_PM[5, raps];
-                microOpMnemo = grid_PM[5, raps].Value.ToString();
+                Grid_PM.CurrentCell = Grid_PM[5, raps];
+                microOpMnemo = Grid_PM[5, raps].Value.ToString();
                 if (microOpMnemo == "ORI")
                 {
                     registers["BUS"].setActualValue(registers["RI"].getInnerValue());
@@ -829,12 +546,12 @@ namespace LabZKT
                     registers["BUS"].setNeedCheck(out registerToCheck);
                 }
                 cells[5, 7] = false;
-                richTextBox_addText("S3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddText("S3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[6, 7])
             {
-                grid_PM.CurrentCell = grid_PM[6, raps];
-                microOpMnemo = grid_PM[6, raps].Value.ToString();
+                Grid_PM.CurrentCell = Grid_PM[6, raps];
+                microOpMnemo = Grid_PM[6, raps].Value.ToString();
                 if (microOpMnemo == "OXE")
                 {
                     registers["RALU"].setActualValue(registers["X"].getInnerValue());
@@ -916,12 +633,12 @@ namespace LabZKT
                 }
                 cells[6, 7] = false;
                 resetBus = true;
-                richTextBox_addText("D3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddText("D3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[7, 7])
             {
-                grid_PM.CurrentCell = grid_PM[7, raps];
-                microOpMnemo = grid_PM[7, raps].Value.ToString();
+                Grid_PM.CurrentCell = Grid_PM[7, raps];
+                microOpMnemo = Grid_PM[7, raps].Value.ToString();
                 if (microOpMnemo == "END")
                 {
                     registers["RAPS"].setActualValue(0);
@@ -930,12 +647,12 @@ namespace LabZKT
                 //skip TEST if END is present
                 currentTact = 9;
                 cells[7, 7] = false;
-                richTextBox_addText("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddText("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
-            button_OK.Visible = true;
+            ButtonOKSetVisivle();
             if (registerToCheck != "")
             {
-                modeManager.EnDisableButtons();
+                EnDisableButtons();
                 registers[registerToCheck].Focus();
             }
             while (buttonOKClicked == false)
@@ -947,15 +664,15 @@ namespace LabZKT
                 resetBus = false;
             }
             if (registerToCheck != "")
-                modeManager.EnDisableButtons();
+                EnDisableButtons();
         }
 
         private void exeTact6()
         {
             if (cells[3, 6])
             {
-                grid_PM.CurrentCell = grid_PM[3, raps];
-                microOpMnemo = grid_PM[3, raps].Value.ToString();
+                Grid_PM.CurrentCell = Grid_PM[3, raps];
+                microOpMnemo = Grid_PM[3, raps].Value.ToString();
                 if (microOpMnemo == "IXRE")
                 {
                     registers["LALU"].setActualValue(registers["RI"].getInnerValue());
@@ -1012,12 +729,12 @@ namespace LabZKT
                     registers["BUS"].setNeedCheck(out registerToCheck);
                 }
                 cells[3, 6] = false;
-                richTextBox_addText("S2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddText("S2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[4, 6])
             {
-                grid_PM.CurrentCell = grid_PM[4, raps];
-                microOpMnemo = grid_PM[4, raps].Value.ToString();
+                Grid_PM.CurrentCell = Grid_PM[4, raps];
+                microOpMnemo = Grid_PM[4, raps].Value.ToString();
                 if (microOpMnemo == "ORI")
                 {
                     registers["BUS"].setActualValue(registers["RI"].getInnerValue());
@@ -1079,12 +796,12 @@ namespace LabZKT
                 }
                 cells[4, 6] = false;
                 resetBus = true;
-                richTextBox_addText("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddText("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[8, 6])
             {
-                grid_PM.CurrentCell = grid_PM[8, raps];
-                microOpMnemo = grid_PM[8, raps].Value.ToString();
+                Grid_PM.CurrentCell = Grid_PM[8, raps];
+                microOpMnemo = Grid_PM[8, raps].Value.ToString();
                 if (microOpMnemo == "DLK")
                 {
                     registers["LK"].setActualValue((short)(registers["LK"].getInnerValue() - 1));
@@ -1120,12 +837,12 @@ namespace LabZKT
                     registers["MQ"].setNeedCheck(out registerToCheck);
                 }
                 cells[8, 6] = false;
-                richTextBox_addText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
-            button_OK.Visible = true;
+            ButtonOKSetVisivle();
             if (registerToCheck != "")
             {
-                modeManager.EnDisableButtons();
+                EnDisableButtons();
                 registers[registerToCheck].Focus();
             }
             while (buttonOKClicked == false)
@@ -1137,15 +854,15 @@ namespace LabZKT
             }
             buttonOKClicked = false;
             if (registerToCheck != "")
-                modeManager.EnDisableButtons();
+                EnDisableButtons();
         }
 
         private void exeTact2()
         {
             if (cells[10, 2])
             {
-                grid_PM.CurrentCell = grid_PM[10, raps];
-                microOpMnemo = grid_PM[10, raps].Value.ToString();
+                Grid_PM.CurrentCell = Grid_PM[10, raps];
+                microOpMnemo = Grid_PM[10, raps].Value.ToString();
                 isOverflow = false;
                 if (microOpMnemo == "ADS")
                 {
@@ -1299,19 +1016,19 @@ namespace LabZKT
                     registers["ALU"].setNeedCheck(out registerToCheck);
                 }
                 cells[10, 2] = false;
-                richTextBox_addText("ALU", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddText("ALU", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
 
-            button_OK.Visible = true;
+            ButtonOKSetVisivle();
             if (registerToCheck != "")
             {
-                modeManager.EnDisableButtons();
+                EnDisableButtons();
                 registers[registerToCheck].Focus();
             }
             while (buttonOKClicked == false)
                 Application.DoEvents();
             if (registerToCheck != "")
-                modeManager.EnDisableButtons();
+                EnDisableButtons();
             if ((registers["ALU"].getActualValue() & 0x8000) == 0x8000)
                 flags["ZNAK"].setInnerValue(1);
             else
@@ -1332,8 +1049,8 @@ namespace LabZKT
         {
             if (cells[1, 1])
             {
-                grid_PM.CurrentCell = grid_PM[1, raps];
-                microOpMnemo = grid_PM[1, raps].Value.ToString();
+                Grid_PM.CurrentCell = Grid_PM[1, raps];
+                microOpMnemo = Grid_PM[1, raps].Value.ToString();
                 if (microOpMnemo == "IXRE")
                 {
                     testAndSet("LALU", registers["RI"].getInnerValue());
@@ -1363,12 +1080,12 @@ namespace LabZKT
                     testAndSet("BUS", registers["X"].getInnerValue());
                 }
                 cells[1, 1] = false;
-                richTextBox_addText("S1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddText("S1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[2, 1])
             {
-                grid_PM.CurrentCell = grid_PM[2, raps];
-                microOpMnemo = grid_PM[2, raps].Value.ToString();
+                Grid_PM.CurrentCell = Grid_PM[2, raps];
+                microOpMnemo = Grid_PM[2, raps].Value.ToString();
                 if (microOpMnemo == "ILK")
                 {
                     testAndSet("LK", registers["BUS"].getInnerValue());
@@ -1383,14 +1100,14 @@ namespace LabZKT
                 }
                 cells[2, 1] = false;
                 resetBus = true;
-                richTextBox_addText("D1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddText("D1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[4, 1])
             {
-                grid_PM.CurrentCell = grid_PM[4, raps];
-                microOpMnemo = grid_PM[4, raps].Value.ToString();
-                richTextBox_addText("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                richTextBox_addText("C1", "SHT", Translator.GetMicroOpDescription("SHT"));
+                Grid_PM.CurrentCell = Grid_PM[4, raps];
+                microOpMnemo = Grid_PM[4, raps].Value.ToString();
+                AddText("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddText("C1", "SHT", Translator.GetMicroOpDescription("SHT"));
                 int A = registers["A"].getInnerValue();
                 bool SignBit = (A & 0x8000) == 0x8000 ? true : false;
                 bool LastBit = (A & 0x0001) == 0x0001 ? true : false;
@@ -1414,12 +1131,12 @@ namespace LabZKT
                 {
                     A >>= 1;
                     testAndSet("A", (short)(A));
-                    button_OK.Visible = true;
-                    modeManager.EnDisableButtons();
+                    ButtonOKSetVisivle();
+                    EnDisableButtons();
                     registers[registerToCheck].Focus();
                     while (buttonOKClicked == false)
                         Application.DoEvents();
-                    modeManager.EnDisableButtons();
+                    EnDisableButtons();
                     buttonOKClicked = false;
                     if (LastBit)
                     {
@@ -1441,12 +1158,12 @@ namespace LabZKT
                         registers["A"].setActualValue((short)(A));
                     registers["A"].setNeedCheck(out registerToCheck);
 
-                    button_OK.Visible = true;
-                    modeManager.EnDisableButtons();
+                    ButtonOKSetVisivle();
+                    EnDisableButtons();
                     registers[registerToCheck].Focus();
                     while (buttonOKClicked == false)
                         Application.DoEvents();
-                    modeManager.EnDisableButtons();
+                    EnDisableButtons();
                     buttonOKClicked = false;
                     testAndSet("MQ", (short)(registers["MQ"].getInnerValue() << 1));
                 }
@@ -1470,8 +1187,8 @@ namespace LabZKT
             }
             else if (cells[7, 1])
             {
-                grid_PM.CurrentCell = grid_PM[7, raps];
-                microOpMnemo = grid_PM[7, raps].Value.ToString();
+                Grid_PM.CurrentCell = Grid_PM[7, raps];
+                microOpMnemo = Grid_PM[7, raps].Value.ToString();
                 if (microOpMnemo == "CWC")
                 {
                     flags["MAV"].setInnerValue(0);
@@ -1499,12 +1216,12 @@ namespace LabZKT
                     //;
                 }
                 cells[7, 1] = false;
-                richTextBox_addText("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddText("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[8, 1])
             {
-                grid_PM.CurrentCell = grid_PM[8, raps];
-                microOpMnemo = grid_PM[8, raps].Value.ToString();
+                Grid_PM.CurrentCell = Grid_PM[8, raps];
+                microOpMnemo = Grid_PM[8, raps].Value.ToString();
                 if (microOpMnemo == "CEA")
                 {
                     ///zwykly adresacja
@@ -1512,18 +1229,18 @@ namespace LabZKT
                     //dana?
                 }
                 cells[8, 1] = false;
-                richTextBox_addText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
-            button_OK.Visible = true;
+            ButtonOKSetVisivle();
             if (registerToCheck != "")
             {
-                modeManager.EnDisableButtons();
+                EnDisableButtons();
                 registers[registerToCheck].Focus();
             }
             while (buttonOKClicked == false)
                 Application.DoEvents();
             if (registerToCheck != "")
-                modeManager.EnDisableButtons();
+                EnDisableButtons();
             if (resetBus)
             {
                 registers["BUS"].setInnerAndActual(0);
@@ -1542,9 +1259,9 @@ namespace LabZKT
 
             raps = registers["RAPS"].getInnerValue();
 
-            var row = grid_PM.Rows[raps];
+            var row = Grid_PM.Rows[raps];
             na = 0;
-            grid_PM.CurrentCell = grid_PM[1, raps];
+            Grid_PM.CurrentCell = Grid_PM[1, raps];
             if ((string)row.Cells[11].Value == "")
                 na = 0;
             else
@@ -1556,7 +1273,7 @@ namespace LabZKT
                 {
                     na = 0;
                 }
-            long rbps = Translator.GetRbpsValue(grid_PM.Rows[raps]) + na;
+            long rbps = Translator.GetRbpsValue(Grid_PM.Rows[raps]) + na;
             RBPS.Text = rbps.ToString("X").PadLeft(12, '0');
 
             logManager.addToMemory("===============================\n\nTakt0: RBPS=" + RBPS.Text + "\n", logFile);
@@ -1665,7 +1382,43 @@ namespace LabZKT
                     cells[10, j] = false;
                 cells[10, 2] = true;
             }
-            modeManager.nextTact(inMicroMode, currentTact, out currentTact);
+            nextTact();
+        }
+
+        private void startSim()
+        {
+            isRunning = true;
+            for (int i = 0; i < 11; i++)
+                for (int j = 0; j < 8; j++)
+                    cells[i, j] = true;
+            foreach (var reg in registers)
+                reg.Value.setActualValue(reg.Value.getInnerValue());
+        }
+        private void stopSim()
+        {
+            isRunning = false;
+            inMicroMode = false;
+        }
+        public void nextTact()
+        {
+            if (inMicroMode)
+            {
+                ButtonNextTactSetVisible();
+                while (buttonNextTactClicked)
+                    Application.DoEvents();
+                buttonNextTactClicked = false;
+            }
+            else
+            {
+                currentTact = (currentTact + 1) % 8;
+                SetNextTact(currentTact);
+            }
+            buttonNextTactClicked = false;
+        }
+        public void EnDisableButtons()
+        {
+            foreach (var reg in registers)
+                reg.Value.Enabled = !reg.Value.Enabled;
         }
     }
 }

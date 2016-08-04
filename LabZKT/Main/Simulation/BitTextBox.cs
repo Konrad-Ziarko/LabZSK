@@ -88,7 +88,7 @@ namespace LabZKT
         {
             base.OnMouseDown(e);
 
-            RunSim.hitTest = new Size(e.X, e.Y);
+            SimView.hitTest = new Size(e.X, e.Y);
         }
         /// <summary>
         /// Set current position of this control

@@ -154,15 +154,15 @@ namespace LabZKT
         {
             base.OnMouseDown(e);
 
-            RunSim.hitTest = new Size(e.X, e.Y);
+            SimView.hitTest = new Size(e.X, e.Y);
         }
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseDown(e);
 
-            if ((e.Button & MouseButtons.Left) == MouseButtons.Left && Math.Sqrt(Math.Pow(RunSim.hitTest.Width - e.X, 2) + Math.Pow(RunSim.hitTest.Height - e.Y, 2)) > 30)
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left && Math.Sqrt(Math.Pow(SimView.hitTest.Width - e.X, 2) + Math.Pow(SimView.hitTest.Height - e.Y, 2)) > 30)
             {
-                RunSim.dragValue = innerValue;
+                SimView.dragValue = innerValue;
                 DoDragDrop(innerValue, DragDropEffects.Copy);
                 setText();
             }
@@ -180,7 +180,7 @@ namespace LabZKT
 
             try
             {
-                innerValue = RunSim.dragValue;
+                innerValue = SimView.dragValue;
                 actualValue = innerValue;
                 setText();
             }

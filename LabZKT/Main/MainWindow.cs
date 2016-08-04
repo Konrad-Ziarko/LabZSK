@@ -19,7 +19,7 @@ namespace LabZKT
         public static int currnetCycle = 0, mark = 5, mistakes = 0;
         private string fileForPM = @"\Env\~micro.zkt", fileForPO = @"\Env\~mem.zkt";
         private Author frmAuthor;
-        private RunSim frmSimulation;
+        private SimView simView;
         private PMView pmView;
         private MemView memView;
         private MemoryRecord lastRecordFromRRC;//pamietaj aby nulowac po zerowaniu rejestrow albo nowej symulacji
@@ -291,14 +291,17 @@ namespace LabZKT
         }
         private void button_Run_Click(object sender, EventArgs e)
         {
-            if (frmSimulation == null)
-                frmSimulation = new RunSim(ref List_Memory, ref List_MicroOp, ref registers, ref flags, ref RBPS, ref lastRecordFromRRC);
+            
+            if (simView == null)
+                simView = new SimView();
             foreach (var reg in registers)
-                reg.Value.Parent = frmSimulation.getSimPanel();
+                reg.Value.Parent = simView.getSimPanel();
             foreach (var sig in flags)
-                sig.Value.Parent = frmSimulation.getSimPanel();
-            RBPS.Parent = frmSimulation.getSimPanel();
-            frmSimulation.ShowDialog();
+                sig.Value.Parent = simView.getSimPanel();
+            RBPS.Parent = simView.getSimPanel();
+            SimModel simModel = new SimModel(ref List_Memory, ref List_MicroOp, ref registers, ref flags, ref RBPS, ref lastRecordFromRRC);
+            SimControler simControler = new SimControler(simModel, simView);
+            simView.ShowDialog();
         }
         private void button_Author_Click(object sender, EventArgs e)
         {
