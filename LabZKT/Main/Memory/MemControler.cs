@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace LabZKT
 {
@@ -9,21 +10,22 @@ namespace LabZKT
         MemSubmit theSubView;
 
 
-        public MemControler(MemModel theModel, MemView theView)
+        public MemControler(ref List<MemoryRecord> List_Memory)
         {
-            this.theModel = theModel;
-            this.theView = theView;
-            this.theModel.Grid_Mem = this.theView.GetDataGrid();
-            this.theModel.LoadMemory();
+            theModel = new MemModel(ref List_Memory);
+            theView = new MemView();
+            theModel.Grid_Mem = theView.GetDataGrid();
+            theModel.LoadMemory();
 
 
-            this.theView.SetDataGrid(this.theModel.Grid_Mem);
+            theView.SetDataGrid(theModel.Grid_Mem);
 
-            this.theView.TimerTick += this.theModel.TimerTick;
-            this.theView.SaveTable += SaveTable;
-            this.theView.LoadTable += LoadTable;
-            this.theView.CloseForm += CloseForm;
-            this.theView.NewMemoryRecord += NewMemoryRecord;
+            theView.TimerTick += theModel.TimerTick;
+            theView.SaveTable += SaveTable;
+            theView.LoadTable += LoadTable;
+            theView.CloseForm += CloseForm;
+            theView.NewMemoryRecord += NewMemoryRecord;
+            theView.ShowDialog();
         }
         
         public void NewMemoryRecord()

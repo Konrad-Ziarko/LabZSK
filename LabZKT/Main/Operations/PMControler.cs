@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace LabZKT
@@ -9,20 +10,22 @@ namespace LabZKT
         PMView theView;
         PMSubmit theSubView;
 
-        public PMControler(PMModel theModel, PMView theView)
+        public PMControler(ref List<MicroOperation> List_MicroOp)
         {
-            this.theModel = theModel;
-            this.theView = theView;
-            this.theView.LoadMicroOperations(this.theModel.List_MicroOps);
-            this.theModel.Grid_PM = this.theView.GetDataGrid();
+            theModel = new PMModel(ref List_MicroOp);
+            theView = new PMView();
+            theView.LoadMicroOperations(theModel.List_MicroOps);
+            theModel.Grid_PM = theView.GetDataGrid();
 
 
-            this.theView.TimerTick += this.theModel.TimerTick;
-            this.theView.LoadTable += LoadTable;
-            this.theView.SaveTable += SaveTable;
-            this.theView.CloseForm += CloseForm;
-            this.theView.NewMicroOperation += NewMicroOperation;
-            this.theView.CallSubView += CallSubView;
+            theView.TimerTick += theModel.TimerTick;
+            theView.LoadTable += LoadTable;
+            theView.SaveTable += SaveTable;
+            theView.CloseForm += CloseForm;
+            theView.NewMicroOperation += NewMicroOperation;
+            theView.CallSubView += CallSubView;
+
+            theView.ShowDialog();
         }
 
         private void CallSubView(int idx)

@@ -17,10 +17,7 @@ namespace LabZKT
         private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
         private string fileForPM = @"\Env\~micro.zkt", fileForPO = @"\Env\~mem.zkt";
         private Author frmAuthor;
-        private SimView simView;
         private SimModel simModel;
-        private PMView pmView;
-        private MemView memView;
         private MemoryRecord lastRecordFromRRC;//pamietaj aby nulowac po zerowaniu rejestrow albo nowej symulacji
         private List<MemoryRecord> List_Memory = new List<MemoryRecord>();
         private List<MicroOperation> List_MicroOp = new List<MicroOperation>();
@@ -276,30 +273,17 @@ namespace LabZKT
         }
         private void button_PM_Click(object sender, EventArgs e)
         {
-            pmView = new PMView();
-            PMModel pmModel = new PMModel(ref List_MicroOp);
-            PMControler pmControler = new PMControler(pmModel, pmView);
-            pmView.ShowDialog();
+            PMControler pmControler = new PMControler(ref List_MicroOp);
         }
         private void button_PO_Click(object sender, EventArgs e)
         {
-            memView = new MemView();
-            MemModel memModel = new MemModel(ref List_Memory);
-            MemControler memControler = new MemControler(memModel, memView);
-            memView.ShowDialog();
+            MemControler memControler = new MemControler(ref List_Memory);
         }
         private void button_Run_Click(object sender, EventArgs e)
         {
-                simView = new SimView();
-            foreach (var reg in registers)
-                reg.Value.Parent = simView.getSimPanel();
-            foreach (var sig in flags)
-                sig.Value.Parent = simView.getSimPanel();
-            RBPS.Parent = simView.getSimPanel();
             if (simModel == null)
                 simModel = new SimModel(ref List_Memory, ref List_MicroOp, ref registers, ref flags, ref RBPS, ref lastRecordFromRRC);
-            SimControler simControler = new SimControler(simModel, simView);
-            simView.ShowDialog();
+            SimControler simControler = new SimControler(simModel);
         }
         private void button_Author_Click(object sender, EventArgs e)
         {

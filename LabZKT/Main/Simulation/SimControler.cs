@@ -1,16 +1,20 @@
-﻿using System;
-
-namespace LabZKT
+﻿namespace LabZKT
 {
     public class SimControler
     {
         private SimModel theModel;
         private SimView theView;
 
-        public SimControler(SimModel simModel, SimView simView)
+        public SimControler(SimModel simModel)
         {
             theModel = simModel;
-            theView = simView;
+            theView = new SimView();
+            foreach (var reg in theModel.registers)
+                reg.Value.Parent = theView.getSimPanel();
+            foreach (var sig in theModel.flags)
+                sig.Value.Parent = theView.getSimPanel();
+            theModel.RBPS.Parent = theView.getSimPanel();
+
             theModel.LoadLists(theView.GetDataGridMem(), theView.GetDataGridPM());
             theModel.rearrangeTextBoxes(theView.getSimPanel());
 
@@ -32,6 +36,8 @@ namespace LabZKT
             theModel.ButtonNextTactSetVisible += buttonNextTactSetVisible;
             theModel.ButtonOKSetVisivle += buttonOKSetVisible;
             theModel.SetNextTact += setNextTact;
+
+            theView.ShowDialog();
         }
 
         private void ButtonOKClicked()
