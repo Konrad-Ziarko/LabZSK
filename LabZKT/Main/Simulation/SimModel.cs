@@ -64,8 +64,10 @@ namespace LabZKT
             draw = new Drawings(ref registers, ref flags, ref RBPS);
         }
 
-        public void LoadLists()
+        public void LoadLists(DataGridView Grid_Mem, DataGridView Grid_PM)
         {
+            this.Grid_Mem = Grid_Mem;
+            this.Grid_PM = Grid_PM;
             foreach (MemoryRecord row in List_Memory)
                 Grid_Mem.Rows.Add(row.addr, row.value, row.hex);
             foreach (MicroOperation row in List_MicroOp)
@@ -94,7 +96,11 @@ namespace LabZKT
             Environment.MachineName + "\" " + sysType + " " + Environment.OSVersion + " OS\nZalogowano jako: \"" +
             Environment.UserName + "\"\n" + "Dostępne interfejsy sieciowe: " + ipAddrList + "\n\n\n", logFile);
         }
-
+        delegate void SetCallback(Point loc);
+        private void setLocation(Point loc)
+        {
+            RBPS.Location = loc;
+        }
         public void rearrangeTextBoxes(Control panel_Sim_Control)
         {
             int horizontalGap = Convert.ToInt32(0.25 * panel_Sim_Control.Width);
@@ -130,8 +136,16 @@ namespace LabZKT
             var loc = RBPS.Location;
             loc.X = horizontalGap + (horizontalGap - 130) / 2;
             loc.Y = verticalGap * 4 + (verticalGap - 27) / 2;
-            RBPS.Location = loc;
 
+            if (RBPS.InvokeRequired)
+            {
+                SetCallback d = new SetCallback(setLocation);
+                RBPS.Invoke(d, new object[] { loc });
+            }
+            else
+            {
+                RBPS.Location = loc;
+            }
             registers["RAPS"].SetXY(horizontalGap * 2 + (horizontalGap - 130) / 2, verticalGap * 4 + (verticalGap - 27) / 2);
             registers["RAE"].SetXY(horizontalGap * 3 + (horizontalGap - 130) / 2, verticalGap * 4 + (verticalGap - 27) / 2);
 
@@ -1388,6 +1402,7 @@ namespace LabZKT
 
         private void startSim()
         {
+            StartSim();
             isRunning = true;
             for (int i = 0; i < 11; i++)
                 for (int j = 0; j < 8; j++)
@@ -1397,6 +1412,7 @@ namespace LabZKT
         }
         private void stopSim()
         {
+            StopSim();
             isRunning = false;
             inMicroMode = false;
         }

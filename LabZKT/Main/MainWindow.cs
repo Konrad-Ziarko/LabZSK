@@ -292,7 +292,7 @@ namespace LabZKT
         private void button_Run_Click(object sender, EventArgs e)
         {
             
-            if (simView == null)
+            //if (simView == null)
                 simView = new SimView();
             foreach (var reg in registers)
                 reg.Value.Parent = simView.getSimPanel();

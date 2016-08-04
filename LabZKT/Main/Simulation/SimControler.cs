@@ -16,10 +16,7 @@ namespace LabZKT
         {
             theModel = simModel;
             theView = simView;
-            theModel.initLogInformation();
-            theModel.LoadLists();
-            theView.SetDataGridPM(theModel.Grid_PM);
-            theView.SetDataGridMem(theModel.Grid_Mem);
+            theModel.LoadLists(theView.GetDataGridMem(), theView.GetDataGridPM());
             theModel.rearrangeTextBoxes(theView.getSimPanel());
 
             theView.EnterEditMode += theModel.enterEditMode;

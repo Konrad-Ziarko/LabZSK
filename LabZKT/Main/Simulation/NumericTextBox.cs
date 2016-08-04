@@ -190,12 +190,26 @@ namespace LabZKT
             }
 
         }
+        //zrobić delegata
         public void SetXY(int x, int y)
         {
-            var loc = Location;
+            Point loc = Location;
             loc.X = x;
             loc.Y = y;
-            Location = loc;
+            setLocation(loc);
+        }
+        delegate void SetCallback(Point loc);
+        private void setLocation(Point loc)
+        {
+            if (InvokeRequired)
+            {
+                SetCallback d = new SetCallback(setLocation);
+                this.Invoke(d, new object[] { loc });
+            }
+            else
+            {
+                Location = loc;
+            } 
         }
         public void resetValue()
         {
