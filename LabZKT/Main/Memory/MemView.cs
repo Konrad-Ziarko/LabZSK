@@ -10,6 +10,7 @@ namespace LabZKT
 {
     public partial class MemView : Form
     {
+        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
         public event Action<DataGridView> TimerTick;
         public event Action<string> SaveTable;
         public event Action<string> LoadTable;
@@ -105,9 +106,9 @@ namespace LabZKT
         {
             save_File_Dialog.Filter = "Pamięć operacyjna|*.po|Wszystko|*.*";
             save_File_Dialog.Title = "Zapisz zawartość pamięci";
-            if (!Directory.Exists(MainWindow.envPath + @"\PO\"))
-                Directory.CreateDirectory(MainWindow.envPath + @"\PO\");
-            save_File_Dialog.InitialDirectory = MainWindow.envPath + @"\PO\";
+            if (!Directory.Exists(envPath + @"\PO\"))
+                Directory.CreateDirectory(envPath + @"\PO\");
+            save_File_Dialog.InitialDirectory = envPath + @"\PO\";
             DialogResult saveFileDialogResult = save_File_Dialog.ShowDialog();
             if (saveFileDialogResult == DialogResult.OK && save_File_Dialog.FileName != "")
             {
@@ -126,10 +127,10 @@ namespace LabZKT
             {
                 open_File_Dialog.Filter = "Pamięć operacyjna|*.po|Wszystko|*.*";
                 open_File_Dialog.Title = "Wczytaj zawartość pamięci operacyjnej";
-                if (Directory.Exists(MainWindow.envPath + @"\PO\"))
-                    open_File_Dialog.InitialDirectory = MainWindow.envPath + @"\PO\";
+                if (Directory.Exists(envPath + @"\PO\"))
+                    open_File_Dialog.InitialDirectory = envPath + @"\PO\";
                 else
-                    open_File_Dialog.InitialDirectory = MainWindow.envPath;
+                    open_File_Dialog.InitialDirectory = envPath;
 
                 DialogResult openFileDialogResult = open_File_Dialog.ShowDialog();
                 if (openFileDialogResult == DialogResult.OK && open_File_Dialog.FileName != "")

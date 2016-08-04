@@ -14,6 +14,7 @@ namespace LabZKT
 {
     public partial class SimView : Form
     {
+        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
         public event Action EnterEditMode;
         public event Action LeaveEditMode;
         public event Action ClearRegisters;
@@ -114,7 +115,7 @@ namespace LabZKT
         {
             open_File_Dialog.Filter = "Logi symulatora|*.log|Wszystko|*.*";
             open_File_Dialog.Title = "Wczytaj log";
-            open_File_Dialog.InitialDirectory = MainWindow.envPath;
+            open_File_Dialog.InitialDirectory = envPath;
 
             DialogResult openFileDialogResult = open_File_Dialog.ShowDialog();
             if (openFileDialogResult == DialogResult.OK && open_File_Dialog.FileName != "")

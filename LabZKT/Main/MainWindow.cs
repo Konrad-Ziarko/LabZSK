@@ -15,7 +15,7 @@ namespace LabZKT
 
     public partial class MainWindow : Form
     {
-        public static string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
+        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
         public static int currnetCycle = 0, mark = 5, mistakes = 0;
         private string fileForPM = @"\Env\~micro.zkt", fileForPO = @"\Env\~mem.zkt";
         private Author frmAuthor;

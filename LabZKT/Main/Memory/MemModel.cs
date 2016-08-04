@@ -11,6 +11,7 @@ namespace LabZKT
 {
     public class MemModel
     {
+        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
         public bool isChanged { get; set; }
         public string filePath { get; set; } 
         public List<MemoryRecord> List_Memory { get; set; }
@@ -31,21 +32,21 @@ namespace LabZKT
 
         public void TimerTick(DataGridView Grid_Mem)
         {
-            FileInfo fileInfo = new FileInfo(MainWindow.envPath + filePath);
+            FileInfo fileInfo = new FileInfo(envPath + filePath);
             try
             {
-                if (File.Exists(MainWindow.envPath + filePath))
+                if (File.Exists(envPath + filePath))
                     fileInfo.Attributes = FileAttributes.Normal;
                 fileInfo.Directory.Create();
             }
             catch (Exception)
             {
                 fileInfo.Directory.Create();
-                File.Delete(MainWindow.envPath + filePath);
+                File.Delete(envPath + filePath);
             }
             finally
             {
-                using (BinaryWriter bw = new BinaryWriter(File.Open(MainWindow.envPath + filePath, FileMode.Create)))
+                using (BinaryWriter bw = new BinaryWriter(File.Open(envPath + filePath, FileMode.Create)))
                 {
                     bw.Write(Grid_Mem.Columns.Count);
                     bw.Write(Grid_Mem.Rows.Count);
@@ -62,8 +63,8 @@ namespace LabZKT
                         }
                     }
                 }
-                uint crc = CRC.ComputeChecksum(File.ReadAllBytes(MainWindow.envPath + filePath));
-                using (BinaryWriter bw = new BinaryWriter(File.Open(MainWindow.envPath + filePath, FileMode.Append)))
+                uint crc = CRC.ComputeChecksum(File.ReadAllBytes(envPath + filePath));
+                using (BinaryWriter bw = new BinaryWriter(File.Open(envPath + filePath, FileMode.Append)))
                 {
                     bw.Write(crc);
                 }

@@ -14,6 +14,7 @@ namespace LabZKT
 {
     public class SimModel
     {
+        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
         public event Action StartSim;
         public event Action StopSim;
         public event Action<string, string, string> AddText;
@@ -210,7 +211,7 @@ namespace LabZKT
         {
             inMicroMode = b;
             SaveFileDialog dialog = new SaveFileDialog();
-            dialog.InitialDirectory = MainWindow.envPath;
+            dialog.InitialDirectory = envPath;
             while (logFile == "")
             {
                 dialog.Filter = "Log symulatora|*.log|Wszystko|*.*";

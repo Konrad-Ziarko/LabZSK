@@ -10,11 +10,13 @@ namespace LabZKT
 {
     public partial class PMView : Form
     {
+        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
         public event Action<DataGridView> TimerTick;
         public event Action<string> LoadTable;
         public event Action<string> SaveTable;
         public event Action CloseForm;
         public event Action NewMicroOperation;
+        public event Action<int> CallSubView;
 
         /// Drag & Drop on dataGridView (copy insted of move)
         private Rectangle dragBoxFromMouseDown;
@@ -90,9 +92,9 @@ namespace LabZKT
         {
             save_File_Dialog.Filter = "Pamięć mikroprogramu|*.pm|Wszystko|*.*";
             save_File_Dialog.Title = "Zapisz mikroprogram";
-            if (!Directory.Exists(MainWindow.envPath + @"\PM\"))
-                Directory.CreateDirectory(MainWindow.envPath + @"\PM\");
-            save_File_Dialog.InitialDirectory = MainWindow.envPath + @"\PM\";
+            if (!Directory.Exists(envPath + @"\PM\"))
+                Directory.CreateDirectory(envPath + @"\PM\");
+            save_File_Dialog.InitialDirectory = envPath + @"\PM\";
             DialogResult saveFileDialogResult = save_File_Dialog.ShowDialog();
             if (saveFileDialogResult == DialogResult.OK && save_File_Dialog.FileName != "")
             {
@@ -111,10 +113,10 @@ namespace LabZKT
             {
                 open_File_Dialog.Filter = "Pamięć Mikroprogramu|*.pm|Wszystko|*.*";
                 open_File_Dialog.Title = "Wczytaj mikroprogram";
-                if (Directory.Exists(MainWindow.envPath + @"\PM\"))
-                    open_File_Dialog.InitialDirectory = MainWindow.envPath + @"\PM\";
+                if (Directory.Exists(envPath + @"\PM\"))
+                    open_File_Dialog.InitialDirectory = envPath + @"\PM\";
                 else
-                    open_File_Dialog.InitialDirectory = MainWindow.envPath;
+                    open_File_Dialog.InitialDirectory = envPath;
 
                 DialogResult openFileDialogResult = open_File_Dialog.ShowDialog();
                 if (openFileDialogResult == DialogResult.OK && open_File_Dialog.FileName != "")
@@ -164,12 +166,7 @@ namespace LabZKT
                         Grid_PM[3, hitTestInfo.RowIndex].Value = "";
                         Grid_PM[5, hitTestInfo.RowIndex].Value = "";
                         Grid_PM[6, hitTestInfo.RowIndex].Value = "";
-                        using (PMSubmit form_Radio = new PMSubmit(4, Grid_PM[4, hitTestInfo.RowIndex].Value.ToString(), Grid_PM[7, hitTestInfo.RowIndex].Value.ToString()))
-                        {
-                            var result = form_Radio.ShowDialog();
-                            if (result == DialogResult.OK)
-                                Grid_PM[4, hitTestInfo.RowIndex].Value = form_Radio.SelectedInstruction;
-                        }
+                        CallSubView(hitTestInfo.RowIndex);                        
                     }
                     else if ((hitTestInfo.ColumnIndex == 3 || hitTestInfo.ColumnIndex == 5 || hitTestInfo.ColumnIndex == 6
                         || hitTestInfo.ColumnIndex == 8) && Grid_PM[7, hitTestInfo.RowIndex].Value.ToString() == "SHT")

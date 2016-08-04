@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LabZKT
 {
     class PMModel
     {
+        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
         public string filePath { get; set; } 
         public List<MicroOperation> List_MicroOps { get; set; }
         public bool isChanged { get; set; } 
         public DataGridView Grid_PM { get; set; }
+        public int idxRow { get; set; }
 
         public  PMModel(ref List<MicroOperation> List_MicroOps)
         {
@@ -25,21 +24,21 @@ namespace LabZKT
 
         public void TimerTick(DataGridView Grid_PM)
         {
-            FileInfo fileInfo = new FileInfo(MainWindow.envPath + filePath);
+            FileInfo fileInfo = new FileInfo(envPath + filePath);
             try
             {
-                if (File.Exists(MainWindow.envPath + filePath))
+                if (File.Exists(envPath + filePath))
                     fileInfo.Attributes = FileAttributes.Normal;
                 fileInfo.Directory.Create();
             }
             catch (Exception)
             {
                 fileInfo.Directory.Create();
-                File.Delete(MainWindow.envPath + filePath);
+                File.Delete(envPath + filePath);
             }
             finally
             {
-                using (BinaryWriter bw = new BinaryWriter(File.Open(MainWindow.envPath + filePath, FileMode.Create)))
+                using (BinaryWriter bw = new BinaryWriter(File.Open(envPath + filePath, FileMode.Create)))
                 {
                     bw.Write(Grid_PM.Columns.Count);
                     bw.Write(Grid_PM.Rows.Count);
@@ -53,8 +52,8 @@ namespace LabZKT
                         }
                     }
                 }
-                uint crc = CRC.ComputeChecksum(File.ReadAllBytes(MainWindow.envPath + filePath));
-                using (BinaryWriter bw = new BinaryWriter(File.Open(MainWindow.envPath + filePath, FileMode.Append)))
+                uint crc = CRC.ComputeChecksum(File.ReadAllBytes(envPath + filePath));
+                using (BinaryWriter bw = new BinaryWriter(File.Open(envPath + filePath, FileMode.Append)))
                 {
                     bw.Write(crc);
                 }
@@ -178,20 +177,11 @@ namespace LabZKT
             }
             else if (newMicroInstruction == "SHT")
             {
-                int idxRow = Grid_PM.CurrentCell.RowIndex;
+                idxRow = Grid_PM.CurrentCell.RowIndex;
                 int idxCol = Grid_PM.CurrentCell.ColumnIndex;
                 Grid_PM[3, idxRow].Value = "";
                 Grid_PM[5, idxRow].Value = "";
                 Grid_PM[6, idxRow].Value = "";
-                using (PMSubmit form_Radio = new PMSubmit(4, Grid_PM[4, idxRow].Value.ToString(), Grid_PM[7, idxRow].Value.ToString()))
-                {
-                    var result = form_Radio.ShowDialog();
-                    if (result == DialogResult.OK)
-                        newMicroInstruction = form_Radio.SelectedInstruction;
-                    else
-                        newMicroInstruction = currentMicroInstruction;
-                    Grid_PM[4, idxRow].Value = newMicroInstruction;
-                }
             }
         }
     }

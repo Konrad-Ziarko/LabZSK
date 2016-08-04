@@ -26,6 +26,17 @@ namespace LabZKT
             this.theView.SaveTable += SaveTable;
             this.theView.CloseForm += CloseForm;
             this.theView.NewMicroOperation += NewMicroOperation;
+            this.theView.CallSubView += CallSubView;
+        }
+
+        private void CallSubView(int idx)
+        {
+            using (theSubView = new PMSubmit(4, theModel.Grid_PM[4, idx].Value.ToString(), theModel.Grid_PM[7, idx].Value.ToString()))
+            {
+                var result = theSubView.ShowDialog();
+                if (result == DialogResult.OK)
+                    theModel.Grid_PM[4, idx].Value = theSubView.SelectedInstruction;
+            }
         }
 
         private void NewMicroOperation()
@@ -54,6 +65,18 @@ namespace LabZKT
 
             }
             theModel.NewMicroOperation(newMicroInstruction, currentMicroInstruction);
+            if(newMicroInstruction == "SHT")
+            {
+                using (theSubView = new PMSubmit(4, theModel.Grid_PM[4, theModel.idxRow].Value.ToString(), theModel.Grid_PM[7, theModel.idxRow].Value.ToString()))
+                {
+                    var result = theSubView.ShowDialog();
+                    if (result == DialogResult.OK)
+                        newMicroInstruction = theSubView.SelectedInstruction;
+                    else
+                        newMicroInstruction = currentMicroInstruction;
+                    theModel.Grid_PM[4, theModel.idxRow].Value = newMicroInstruction;
+                }
+            }
             theView.SetDataGrid(theModel.Grid_PM);
 
             theView.isChanged = theModel.isChanged;
