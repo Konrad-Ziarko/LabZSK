@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Media;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
@@ -16,10 +15,10 @@ namespace LabZKT
     public partial class MainWindow : Form
     {
         private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
-        public static int currnetCycle = 0, mark = 5, mistakes = 0;
         private string fileForPM = @"\Env\~micro.zkt", fileForPO = @"\Env\~mem.zkt";
         private Author frmAuthor;
         private SimView simView;
+        private SimModel simModel;
         private PMView pmView;
         private MemView memView;
         private MemoryRecord lastRecordFromRRC;//pamietaj aby nulowac po zerowaniu rejestrow albo nowej symulacji
@@ -291,15 +290,14 @@ namespace LabZKT
         }
         private void button_Run_Click(object sender, EventArgs e)
         {
-            
-            //if (simView == null)
                 simView = new SimView();
             foreach (var reg in registers)
                 reg.Value.Parent = simView.getSimPanel();
             foreach (var sig in flags)
                 sig.Value.Parent = simView.getSimPanel();
             RBPS.Parent = simView.getSimPanel();
-            SimModel simModel = new SimModel(ref List_Memory, ref List_MicroOp, ref registers, ref flags, ref RBPS, ref lastRecordFromRRC);
+            if (simModel == null)
+                simModel = new SimModel(ref List_Memory, ref List_MicroOp, ref registers, ref flags, ref RBPS, ref lastRecordFromRRC);
             SimControler simControler = new SimControler(simModel, simView);
             simView.ShowDialog();
         }

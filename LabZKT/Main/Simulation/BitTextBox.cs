@@ -100,20 +100,7 @@ namespace LabZKT
             var loc = Location;
             loc.X = x;
             loc.Y = y;
-            setLocation(loc);
-        }
-        delegate void SetCallback(Point loc);
-        private void setLocation(Point loc)
-        {
-            if (InvokeRequired)
-            {
-                SetCallback d = new SetCallback(setLocation);
-                this.Invoke(d, new object[] { loc });
-            }
-            else
-            {
-                Location = loc;
-            }
+            Location = loc;
         }
         /// <summary>
         /// Reset flag inner value

@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Media;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace LabZKT
@@ -23,17 +18,20 @@ namespace LabZKT
         public event Action<bool> PrepareSimulation;
         public event Action NextTact;
         public event Action<Control> DrawBackground;
-        public event Action CheckRegisters;
         public event Action NewLog;
         public event Action CheckProperties;
+        public event Action ButtonOKClicked;
 
         public static short dragValue;
         public static Size hitTest;
         private DataGridViewCellStyle dgvcs1;
         public bool wasMaximized = false;
 
-        public MemoryRecord selectedInstruction { get; set; }
+        public int currnetCycle { get; set; }
+        public int mark { get; set; }
+        public int mistakes { get; set; }
         public int currentTact { get; set; }
+        public MemoryRecord selectedInstruction { get; set; }
         public bool isRunning { get; set; }
         public bool inEditMode { get; set; }
         public bool inMicroMode { get; set; }
@@ -81,10 +79,11 @@ namespace LabZKT
 
         private void initUserInfoArea()
         {
-            dataGridView_Info.Rows.Add(MainWindow.mark, "Ocena");
-            dataGridView_Info.Rows.Add(MainWindow.mistakes, "Błędy");
+            CheckProperties();
+            dataGridView_Info.Rows.Add(mark, "Ocena");
+            dataGridView_Info.Rows.Add(mistakes, "Błędy");
             dataGridView_Info.Rows.Add("0", "Takt");
-            dataGridView_Info.Rows.Add(MainWindow.currnetCycle, "Cykl");
+            dataGridView_Info.Rows.Add(currnetCycle, "Cykl");
             dataGridView_Info.Enabled = false;
             dataGridView_Info.ClearSelection();
 
@@ -194,8 +193,6 @@ namespace LabZKT
         {
             ClearRegisters();
             dgvcs1.ForeColor = Color.Green;
-            MainWindow.mark = 5;
-            MainWindow.mistakes = MainWindow.currnetCycle = 0;
             dataGridView_Info.Rows[0].Cells[0].Value = 5;
             dataGridView_Info.Rows[1].Cells[0].Value = dataGridView_Info.Rows[2].Cells[0].Value =
                 dataGridView_Info.Rows[3].Cells[0].Value = 0;
@@ -262,7 +259,6 @@ namespace LabZKT
         
         private void button_Makro_Click(object sender, EventArgs e)
         {
-            PrepareSimulation(false);
             toolStripMenu_Edit.Enabled = false;
             toolStripMenu_Exit.Enabled = false;
             button_Makro.Visible = false;
@@ -270,10 +266,10 @@ namespace LabZKT
             toolStripMenu_Clear.Enabled = false;
             label_Status.Text = "Start";
             label_Status.ForeColor = Color.Red;
+            PrepareSimulation(false);
         }
         private void button_Micro_Click(object sender, EventArgs e)
         {
-            PrepareSimulation(true);
             toolStripMenu_Edit.Enabled = false;
             toolStripMenu_Exit.Enabled = false;
             button_Makro.Visible = false;
@@ -281,6 +277,7 @@ namespace LabZKT
             toolStripMenu_Clear.Enabled = false;
             label_Status.Text = "Start";
             label_Status.ForeColor = Color.Red;
+            PrepareSimulation(true);
         }
         public void stopSim()
         {
@@ -305,13 +302,13 @@ namespace LabZKT
         }
         private void button_OK_Click(object sender, EventArgs e)
         {
+            ButtonOKClicked();
             button_OK.Visible = false;
-            CheckRegisters();
-            dataGridView_Info[0, 1].Value = MainWindow.mistakes;
-            dataGridView_Info[0, 0].Value = MainWindow.mark;
-            if (MainWindow.mistakes >= 10)
+            CheckProperties();
+            dataGridView_Info[0, 1].Value = mistakes;
+            dataGridView_Info[0, 0].Value = mark;
+            if (mistakes >= 10)
                 dgvcs1.ForeColor = Color.Red;
-            buttonOKClicked = true;
         }
 
         private void RunSim_KeyPress(object sender, KeyPressEventArgs e)
@@ -361,10 +358,7 @@ namespace LabZKT
 
             panel_Sim.Width = Convert.ToInt32(panel_Left.Width * 1.0);
             panel_Sim.Height = Convert.ToInt32(panel_Left.Height - panel_PM.Height);
-            new Thread(() =>
-            {
-                DrawBackground(panel_Sim_Control);
-            }).Start();//było bez wątku
+            DrawBackground(panel_Sim_Control);
         }
 
         private void RunSim_SizeChanged(object sender, EventArgs e)
@@ -394,10 +388,7 @@ namespace LabZKT
 
         private void RunSim_Paint(object sender, PaintEventArgs e)
         {
-            new Thread(() =>
-            {
-                DrawBackground(panel_Sim_Control);
-            }).Start();
+            DrawBackground(panel_Sim_Control);
         }
         public void buttonOkSetVisible()
         {

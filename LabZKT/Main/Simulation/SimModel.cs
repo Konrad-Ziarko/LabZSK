@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Media;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LabZKT
@@ -22,6 +19,9 @@ namespace LabZKT
         public event Action ButtonNextTactSetVisible;
         public event Action<int> SetNextTact;
 
+        public int currnetCycle { get; set; }
+        public int mark { get; set; }
+        public int mistakes { get; set; }
         public MemoryRecord selectedIntruction { get; set; }
         public Dictionary<string, BitTextBox> flags { get; set; }
         public MemoryRecord lastRecordFromRRC { get; set; }
@@ -60,6 +60,8 @@ namespace LabZKT
             this.RBPS = RBPS;
             this.lastRecordFromRRC = lastRecordFromRRC;
             //
+            currentTact = mistakes= 0;
+            mark = 5;
             logManager = LogManager.Instance;
             draw = new Drawings(ref registers, ref flags, ref RBPS);
         }
@@ -96,11 +98,6 @@ namespace LabZKT
             Environment.MachineName + "\" " + sysType + " " + Environment.OSVersion + " OS\nZalogowano jako: \"" +
             Environment.UserName + "\"\n" + "Dostępne interfejsy sieciowe: " + ipAddrList + "\n\n\n", logFile);
         }
-        delegate void SetCallback(Point loc);
-        private void setLocation(Point loc)
-        {
-            RBPS.Location = loc;
-        }
         public void rearrangeTextBoxes(Control panel_Sim_Control)
         {
             int horizontalGap = Convert.ToInt32(0.25 * panel_Sim_Control.Width);
@@ -136,16 +133,7 @@ namespace LabZKT
             var loc = RBPS.Location;
             loc.X = horizontalGap + (horizontalGap - 130) / 2;
             loc.Y = verticalGap * 4 + (verticalGap - 27) / 2;
-
-            if (RBPS.InvokeRequired)
-            {
-                SetCallback d = new SetCallback(setLocation);
-                RBPS.Invoke(d, new object[] { loc });
-            }
-            else
-            {
-                RBPS.Location = loc;
-            }
+            RBPS.Location = loc;
             registers["RAPS"].SetXY(horizontalGap * 2 + (horizontalGap - 130) / 2, verticalGap * 4 + (verticalGap - 27) / 2);
             registers["RAE"].SetXY(horizontalGap * 3 + (horizontalGap - 130) / 2, verticalGap * 4 + (verticalGap - 27) / 2);
 
@@ -167,11 +155,8 @@ namespace LabZKT
                 registers["SUMA"].Visible = registers["L"].Visible = registers["R"].Visible = true;
                 RBPS.Visible = registers["RAPS"].Visible = registers["RAE"].Visible = false;
             }
-            new Thread(() =>
-            {
-                Graphics g = panel_Sim_Control.CreateGraphics();
-                draw.drawBackground(ref g, panel_Sim_Control as Panel);
-            }).Start();
+            Graphics g = panel_Sim_Control.CreateGraphics();
+            draw.drawBackground(ref g, panel_Sim_Control as Panel);
         }
 
         public void leaveEditMode()
@@ -211,6 +196,8 @@ namespace LabZKT
         }
         public void clearRegisters()
         {
+            mark = 5;
+            mistakes = currnetCycle = 0;
             foreach (var reg in registers)
                 reg.Value.resetValue();
             foreach (var flg in flags)
@@ -240,7 +227,7 @@ namespace LabZKT
                         logManager.addToMemory(reg.registerName + "=" + reg.Text + "\n", logFile);
                 }
             }
-            new Thread(simulateCPU).Start();
+            simulateCPU();
         }
         public void DrawBackground(Control panel_Sim_Control)
         {
@@ -256,16 +243,16 @@ namespace LabZKT
             if (!registers[registerToCheck].checkValue(out badValue))
             {
                 new Thread(SystemSounds.Beep.Play).Start();
-                logManager.addToMemory("\tBłąd(" + (MainWindow.mistakes + 1) + "): " + registerToCheck + "=" + badValue +
+                logManager.addToMemory("\tBłąd(" + (mistakes + 1) + "): " + registerToCheck + "=" + badValue +
                     "(" + registerToCheck + "=" + registers[registerToCheck].getInnerValue() + ")\n", logFile);
 
-                MainWindow.mistakes++;
-                if (MainWindow.mistakes >= 2 && MainWindow.mistakes <= 5)
-                    MainWindow.mark = 4;
-                else if (MainWindow.mistakes >= 6 && MainWindow.mistakes <= 9)
-                    MainWindow.mark = 3;
-                else if (MainWindow.mistakes >= 10)
-                    MainWindow.mark = 2;
+                mistakes++;
+                if (mistakes >= 2 && mistakes <= 5)
+                    mark = 4;
+                else if (mistakes >= 6 && mistakes <= 9)
+                    mark = 3;
+                else if (mistakes >= 10)
+                    mark = 2;
             }
             else
             {
@@ -313,8 +300,6 @@ namespace LabZKT
             if (currentTact == 7 && cells[9, 7])
                 exeTest();
             else if (currentTact == 7 && !isTestPositive)
-                currentTact = 8;
-            else if (currentTact == 8)
             {
                 registers["RAPS"].setActualValue((short)(registers["RAPS"].getInnerValue() + 1));
                 registers["RAPS"].setNeedCheck(out registerToCheck);
@@ -330,7 +315,7 @@ namespace LabZKT
                 stopSim();
                 buttonOKClicked = false;
             }
-            else if (currentTact == 9)
+            else if (currentTact == 8)
             {
                 registers["LALU"].setInnerAndActual(0);
                 registers["RALU"].setInnerAndActual(0);
@@ -338,8 +323,6 @@ namespace LabZKT
                 SetNextTact(currentTact);
                 stopSim();
             }
-            if (currentTact == 7)
-                currentTact = 8;
         }
 
         private void exeTest()
@@ -1403,7 +1386,6 @@ namespace LabZKT
         private void startSim()
         {
             StartSim();
-            isRunning = true;
             for (int i = 0; i < 11; i++)
                 for (int j = 0; j < 8; j++)
                     cells[i, j] = true;
@@ -1421,15 +1403,11 @@ namespace LabZKT
             if (inMicroMode)
             {
                 ButtonNextTactSetVisible();
-                while (buttonNextTactClicked)
+                while (buttonNextTactClicked == false)
                     Application.DoEvents();
-                buttonNextTactClicked = false;
             }
-            else
-            {
-                currentTact = (currentTact + 1) % 8;
-                SetNextTact(currentTact);
-            }
+            currentTact = (currentTact + 1) % 8;
+            SetNextTact(currentTact);
             buttonNextTactClicked = false;
         }
         public void EnDisableButtons()

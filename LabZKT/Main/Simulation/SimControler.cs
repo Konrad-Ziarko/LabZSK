@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LabZKT
 {
@@ -28,8 +23,8 @@ namespace LabZKT
             theView.PrepareSimulation += theModel.prepareSimulation;
             theView.NextTact += nextTact;
             theView.DrawBackground += theModel.DrawBackground;
-            theView.CheckRegisters += checkRegisters;
             theView.CheckProperties += checkProperties;
+            theView.ButtonOKClicked += ButtonOKClicked;
 
             theModel.StartSim += startSim;
             theModel.StopSim += theView.stopSim;
@@ -37,6 +32,12 @@ namespace LabZKT
             theModel.ButtonNextTactSetVisible += buttonNextTactSetVisible;
             theModel.ButtonOKSetVisivle += buttonOKSetVisible;
             theModel.SetNextTact += setNextTact;
+        }
+
+        private void ButtonOKClicked()
+        {
+            theView.buttonOKClicked = theModel.buttonOKClicked = true;
+            theModel.checkRegisters();
         }
 
         private void setNextTact(int value)
@@ -59,17 +60,14 @@ namespace LabZKT
             theView.currentTact = theModel.currentTact;
             theView.isRunning = theModel.isRunning;
             theView.inMicroMode = theModel.inMicroMode;
+            theView.currnetCycle = theModel.currnetCycle;
+            theView.mark = theModel.mark;
+            theView.mistakes = theModel.mistakes;
         }
 
         private void startSim()
         {
-            theView.isRunning = true;
-        }
-
-        private void checkRegisters()
-        {
-            theModel.checkRegisters();
-            theModel.buttonOKClicked = false;
+            theView.isRunning = theModel.isRunning = true;
         }
 
         private void getMemoryRecord(int idxRow)
@@ -81,7 +79,7 @@ namespace LabZKT
         public void nextTact()
         {
             theModel.buttonNextTactClicked = true;
-            theModel.nextTact();
+            //theModel.nextTact();
             theView.SetGridInfo(theModel.currentTact);
         }
     }
