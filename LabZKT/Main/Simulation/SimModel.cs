@@ -83,18 +83,17 @@ namespace LabZKT
                 sysType = "x64";
             else
                 sysType = "x32";
-            string ipAddrList = String.Empty;
+            string ipAddrList = string.Empty;
             foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
                 if (item.NetworkInterfaceType == NetworkInterfaceType.Ethernet && item.OperationalStatus == OperationalStatus.Up)
                     foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
                         if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
-                            if (ipAddrList == String.Empty)
+                            if (ipAddrList == string.Empty)
                                 ipAddrList += ip.Address.ToString();
                             else
-                                ipAddrList += "\n".PadRight(31, ' ') + ip.Address.ToString();
+                                ipAddrList += "\n".PadRight(43, ' ') + ip.Address.ToString();
             logManager.createNewLog(logFile);
-            logManager.addToMemory("Uruchomienie symulatora o " + DateTime.Now.ToString("HH:MM:ss:")
-            + "\nKomputer w domenie: \"" + Environment.UserDomainName + "\"\nStacja \"" +
+            logManager.addToMemory("Komputer w domenie: \"" + Environment.UserDomainName + "\"\nStacja \"" +
             Environment.MachineName + "\" " + sysType + " " + Environment.OSVersion + " OS\nZalogowano jako: \"" +
             Environment.UserName + "\"\n" + "Dostępne interfejsy sieciowe: " + ipAddrList + "\n\n\n", logFile);
         }
@@ -164,7 +163,7 @@ namespace LabZKT
             foreach (var oldReg in oldRegs)
             {
                 if (registers[oldReg.Key].getInnerValue() != oldReg.Value)
-                    logManager.addToMemory("Zmiana zawartości rejestru:" + oldReg.Key + " " +
+                    logManager.addToMemory("Zmiana zawartości rejestru: " + oldReg.Key.PadRight(6, ' ') +
                         oldReg.Value + "=>" + registers[oldReg.Key].getInnerValue() + "\n", logFile);
             }
             foreach (var reg in registers)
@@ -196,6 +195,7 @@ namespace LabZKT
         }
         public void clearRegisters()
         {
+            logManager.addToMemory("\n====Zerowanie rejestrów====\n", logFile);
             mark = 5;
             mistakes = currnetCycle = 0;
             foreach (var reg in registers)
@@ -222,9 +222,9 @@ namespace LabZKT
                 {
                     logFile = dialog.FileName;
                     initLogInformation();
-                    logManager.addToMemory("========Start symulacji========\n======Zawartość rejestrów======\n", logFile);
+                    logManager.addToMemory("========Start symulacji========\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(31, ' ') + "\n======Zawartość rejestrów======\n", logFile);
                     foreach (var reg in registers.Values)
-                        logManager.addToMemory(reg.registerName + "=" + reg.Text + "\n", logFile);
+                        logManager.addToMemory((reg.registerName + "=").PadLeft(5, ' ') + reg.Text + "\n", logFile);
                 }
             }
             simulateCPU();
@@ -244,7 +244,7 @@ namespace LabZKT
             {
                 new Thread(SystemSounds.Beep.Play).Start();
                 logManager.addToMemory("\tBłąd(" + (mistakes + 1) + "): " + registerToCheck + "=" + badValue +
-                    "(" + registerToCheck + "=" + registers[registerToCheck].getInnerValue() + ")\n", logFile);
+                    "(" + registerToCheck + "=" + registers[registerToCheck].getInnerValue() + ")\n\n", logFile);
 
                 mistakes++;
                 if (mistakes >= 2 && mistakes <= 5)
@@ -261,7 +261,8 @@ namespace LabZKT
         }
         public void NewLog()
         {
-            logManager.addToMemory("\n" + DateTime.Now.ToString("HH:MM:ss:") + "========Stop  symulacji========\n", logFile);
+            logManager.addToMemory("\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(29, ' ') + "\n=======Stop  symulacji=======\n"+
+                "Ocena: "+mark + "   Błędy: "+mistakes+"\n", logFile);
             logManager.clearInMemoryLog();
             logFile = string.Empty;
         }
@@ -1224,7 +1225,7 @@ namespace LabZKT
                 {
                     ///zwykly adresacja
                     //rozszerzony N
-                    //dana?
+                    //dana
                 }
                 cells[8, 1] = false;
                 AddText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));

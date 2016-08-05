@@ -74,6 +74,7 @@
         private void startSim()
         {
             theView.isRunning = theModel.isRunning = true;
+            theView.disableNewLog();
         }
 
         private void getMemoryRecord(int idxRow)

@@ -60,7 +60,7 @@ namespace LabZKT
                 }
                 else if (chosenDataType == NumeralBase.Hex)
                 {
-                    tempMemoryCell = String.Join(String.Empty,
+                    tempMemoryCell = string.Join(string.Empty,
                             textBox_Data.Text.Select(c => Convert.ToString(Convert.ToInt16(c.ToString(), 16), 2).PadLeft(4, '0')));
                 }
             }
@@ -211,7 +211,7 @@ namespace LabZKT
                 if (chosenDataType == NumeralBase.Decimal)
                     textBox_Data.Text = Convert.ToString(Convert.ToInt16(textBox_Data.Text, 10), 2);
                 else if (chosenDataType == NumeralBase.Hex)
-                    textBox_Data.Text = String.Join(String.Empty,
+                    textBox_Data.Text = string.Join(string.Empty,
                         textBox_Data.Text.Select(c => Convert.ToString(Convert.ToInt16(c.ToString(), 16), 2).PadLeft(4, '0')));
             chosenDataType = NumeralBase.Binary;
             validateTextBox();

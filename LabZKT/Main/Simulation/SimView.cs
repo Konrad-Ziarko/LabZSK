@@ -68,14 +68,6 @@ namespace LabZKT
         {
             return Grid_Mem;
         }
-        public void SetDataGridPM(DataGridView Grid_PM )
-        {
-            this.Grid_PM = Grid_PM;
-        }
-        public void SetDataGridMem(DataGridView Grid_Mem)
-        {
-            this.Grid_Mem = Grid_Mem;
-        }
 
         private void initUserInfoArea()
         {
@@ -169,6 +161,7 @@ namespace LabZKT
         {
             if (inEditMode)
             {
+                panel_Control.Focus();
                 LeaveEditMode();
                 toolStripMenu_Edit.Text = "Edytuj rejestry";
                 button_Makro.Visible = true;
@@ -290,6 +283,7 @@ namespace LabZKT
             toolStripMenu_Clear.Enabled = true;
             label_Status.Text = "Stop";
             label_Status.ForeColor = Color.Green;
+            nowyLogToolStripMenuItem.Enabled = true;
         }
         private void button_Next_Tact_Click(object sender, EventArgs e)
         {
@@ -376,14 +370,12 @@ namespace LabZKT
         }
         private void nowyLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NewLog();
-            //zerowanie rejestrów
             DialogResult result = MessageBox.Show("Utracisz cały postęp symulacji.\nCzy chcesz zakończyć pracę z obecnym logiem?", "Nowa symulacja", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
-
+                NewLog();
+                disableNewLog();
             }
-
         }
 
         private void RunSim_Paint(object sender, PaintEventArgs e)
@@ -397,6 +389,10 @@ namespace LabZKT
         public void buttonNextTactSetVisible()
         {
             button_Next_Tact.Visible = true;
+        }
+        public void disableNewLog()
+        {
+            nowyLogToolStripMenuItem.Enabled = false;
         }
     }
 }
