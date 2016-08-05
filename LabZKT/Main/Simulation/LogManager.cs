@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace LabZKT
+namespace LabZKT.Simulation
 {
     /// <summary>
     /// Static class for logs creation and management

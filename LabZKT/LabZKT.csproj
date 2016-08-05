@@ -77,10 +77,10 @@
     <Compile Include="Main\Memory\MemModel.cs" />
     <Compile Include="Main\Operations\PMControler.cs" />
     <Compile Include="Main\Operations\PMModel.cs" />
-    <Compile Include="Main\Simulation\BitTextBox.cs">
+    <Compile Include="Main\Controls\BitTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Main\CRC.cs" />
+    <Compile Include="Main\StaticClasses\CRC.cs" />
     <Compile Include="Main\Simulation\Drawings.cs" />
     <Compile Include="Main\ErrorMessage.cs">
       <SubType>Form</SubType>
@@ -121,7 +121,7 @@
     <Compile Include="Main\Memory\MemSubmit.Designer.cs">
       <DependentUpon>MemSubmit.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\Simulation\NumericTextBox.cs">
+    <Compile Include="Main\Controls\NumericTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Main\Program.cs" />
@@ -146,7 +146,7 @@
     <Compile Include="Main\Operations\PMSubmit.Designer.cs">
       <DependentUpon>PMSubmit.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\Translator.cs" />
+    <Compile Include="Main\StaticClasses\Translator.cs" />
     <EmbeddedResource Include="Main\ErrorMessage.resx">
       <DependentUpon>ErrorMessage.cs</DependentUpon>
     </EmbeddedResource>

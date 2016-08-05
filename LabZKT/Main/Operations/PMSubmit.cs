@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace LabZKT
+namespace LabZKT.MicroOperations
 {
     public partial class PMSubmit : Form
     {

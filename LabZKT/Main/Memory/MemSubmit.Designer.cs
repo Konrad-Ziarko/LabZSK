@@ -1,4 +1,4 @@
-﻿namespace LabZKT
+﻿namespace LabZKT.Memory
 {
     partial class MemSubmit
     {

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LabZKT.Memory;
+using LabZKT.MicroOperations;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Media;
@@ -7,7 +9,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace LabZKT
+namespace LabZKT.Simulation
 {
     public class SimModel
     {

@@ -5,7 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace LabZKT
+namespace LabZKT.MicroOperations
 {
     public partial class PMView : Form
     {

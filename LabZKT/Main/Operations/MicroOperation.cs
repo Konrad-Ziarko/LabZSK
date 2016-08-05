@@ -1,4 +1,4 @@
-﻿namespace LabZKT
+﻿namespace LabZKT.MicroOperations
 {
     public class MicroOperation
     {

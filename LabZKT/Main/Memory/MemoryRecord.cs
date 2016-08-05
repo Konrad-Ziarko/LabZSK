@@ -1,4 +1,4 @@
-﻿namespace LabZKT
+﻿namespace LabZKT.Memory
 {
     public class MemoryRecord
     {

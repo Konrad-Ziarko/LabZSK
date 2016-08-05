@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace LabZKT
+namespace LabZKT.MicroOperations
 {
     class PMControler
     {

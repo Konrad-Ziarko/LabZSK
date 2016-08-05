@@ -4,7 +4,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace LabZKT
+namespace LabZKT.Memory
 {
     public partial class MemView : Form
     {

@@ -3,7 +3,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace LabZKT
+namespace LabZKT.Memory
 {
     public partial class MemSubmit : Form
     {

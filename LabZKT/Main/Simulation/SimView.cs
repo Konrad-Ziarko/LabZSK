@@ -1,11 +1,12 @@
-﻿using System;
+﻿using LabZKT.Memory;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace LabZKT
+namespace LabZKT.Simulation
 {
     public partial class SimView : Form
     {

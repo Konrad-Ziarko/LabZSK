@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LabZKT.Simulation;
+using System;
 using System.Drawing;
 using System.Globalization;
 using System.Text.RegularExpressions;

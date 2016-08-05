@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace LabZKT
+namespace LabZKT.Memory
 {
     public class MemControler
     {

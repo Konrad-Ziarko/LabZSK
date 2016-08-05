@@ -1,4 +1,7 @@
-﻿using System;
+﻿using LabZKT.Memory;
+using LabZKT.MicroOperations;
+using LabZKT.Simulation;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
