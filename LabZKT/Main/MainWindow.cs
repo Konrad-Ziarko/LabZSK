@@ -207,6 +207,13 @@ namespace LabZKT
         }
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            TimeSpan start = new TimeSpan(17, 0, 0);
+            TimeSpan end = new TimeSpan(5, 0, 0);
+            TimeSpan now = DateTime.Now.TimeOfDay;
+            if (now >= start || now <= end)
+            {
+                DialogResult dr = MessageBox.Show("Pamiętaj aby pracować w oświtlonym pomieszczeniu!", "LabZKT", MessageBoxButtons.OK);
+            }
             checkIntegrity();
             initRegisterTextBoxes();
             initFlags();
