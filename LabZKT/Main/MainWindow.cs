@@ -210,7 +210,7 @@ namespace LabZKT
         }
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            TimeSpan start = new TimeSpan(17, 0, 0);
+            TimeSpan start = new TimeSpan(20, 0, 0);
             TimeSpan end = new TimeSpan(5, 0, 0);
             TimeSpan now = DateTime.Now.TimeOfDay;
             if (now >= start || now <= end)

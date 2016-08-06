@@ -1,10 +1,10 @@
-﻿namespace LabZKT.Simulation
+﻿
+namespace LabZKT.Simulation
 {
     public class SimControler
     {
         private SimModel theModel;
         private SimView theView;
-
         public SimControler(SimModel simModel)
         {
             theModel = simModel;

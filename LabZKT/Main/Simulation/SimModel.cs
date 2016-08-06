@@ -1,5 +1,6 @@
 ﻿using LabZKT.Memory;
 using LabZKT.MicroOperations;
+using LabZKT.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -95,6 +96,8 @@ namespace LabZKT.Simulation
                             else
                                 ipAddrList += "\n".PadRight(43, ' ') + ip.Address.ToString();
             logManager.createNewLog(logFile);
+            Settings.Default.LogFiles.Add(logFile);
+            Settings.Default.Save();
             logManager.addToMemory("Komputer w domenie: \"" + Environment.UserDomainName + "\"\nStacja \"" +
             Environment.MachineName + "\" " + sysType + " " + Environment.OSVersion + " OS\nZalogowano jako: \"" +
             Environment.UserName + "\"\n" + "Dostępne interfejsy sieciowe: " + ipAddrList + "\n\n\n", logFile);
