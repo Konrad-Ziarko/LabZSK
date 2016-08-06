@@ -22,6 +22,7 @@ namespace LabZKT.Simulation
         public event Action ButtonNextTactSetVisible;
         public event Action<int> SetNextTact;
 
+        public bool isNewLogEnabled = false;
         public int currnetCycle { get; set; }
         public int mark { get; set; }
         public int mistakes { get; set; }
@@ -331,6 +332,7 @@ namespace LabZKT.Simulation
             }
         }
 
+        #region Instruction Execution
         private void exeTest()
         {
             Grid_PM.CurrentCell = Grid_PM[9, raps];
@@ -478,11 +480,6 @@ namespace LabZKT.Simulation
             currentTact = 9;
         }
 
-        private void testAndSet(string register, short setValue)
-        {
-            registers[register].setActualValue(setValue);
-            registers[register].setNeedCheck(out registerToCheck);
-        }
         private void exeTact7()
         {
             if (cells[8, 7])
@@ -1254,6 +1251,8 @@ namespace LabZKT.Simulation
             flags["MAV"].setInnerValue(1);
             buttonOKClicked = false;
         }
+        #endregion
+
         private void instructionFetch()
         {
             for (int i = 0; i < 8; i++)
@@ -1416,10 +1415,16 @@ namespace LabZKT.Simulation
             SetNextTact(currentTact);
             buttonNextTactClicked = false;
         }
+
         public void EnDisableButtons()
         {
             foreach (var reg in registers)
                 reg.Value.Enabled = !reg.Value.Enabled;
+        }
+        private void testAndSet(string register, short setValue)
+        {
+            registers[register].setActualValue(setValue);
+            registers[register].setNeedCheck(out registerToCheck);
         }
     }
 }

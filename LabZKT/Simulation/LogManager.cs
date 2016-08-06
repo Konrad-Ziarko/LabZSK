@@ -56,6 +56,10 @@ namespace LabZKT.Simulation
             }
         }
 
+        /// <summary>
+        /// Get array of bytes from this stream
+        /// </summary>
+        /// <returns>Array of bytes</returns>
         internal byte[] GetBuffer()
         {
             return inMemoryLog.GetBuffer();

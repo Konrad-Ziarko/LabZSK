@@ -1,4 +1,6 @@
 ﻿
+using System.Threading;
+
 namespace LabZKT.Simulation
 {
     public class SimControler
@@ -8,7 +10,7 @@ namespace LabZKT.Simulation
         public SimControler(SimModel simModel)
         {
             theModel = simModel;
-            theView = new SimView();
+            theView = new SimView(theModel.isNewLogEnabled);
             foreach (var reg in theModel.registers)
                 reg.Value.Parent = theView.getSimPanel();
             foreach (var sig in theModel.flags)
@@ -29,6 +31,7 @@ namespace LabZKT.Simulation
             theView.DrawBackground += theModel.DrawBackground;
             theView.CheckProperties += checkProperties;
             theView.ButtonOKClicked += ButtonOKClicked;
+            theView.SaveCurrentState += SaveState;
 
             theModel.StartSim += startSim;
             theModel.StopSim += theView.stopSim;
@@ -36,8 +39,20 @@ namespace LabZKT.Simulation
             theModel.ButtonNextTactSetVisible += buttonNextTactSetVisible;
             theModel.ButtonOKSetVisivle += buttonOKSetVisible;
             theModel.SetNextTact += setNextTact;
+            //new Thread(() =>
+            //{
+            //    while (true)
+            //    {
+            //        Thread.Sleep(2000);
+            //        
+            //    }
+            //}).Start();
 
             theView.ShowDialog();
+        }
+        private void SaveState(bool b)
+        {
+            theModel.isNewLogEnabled = b;
         }
 
         private void ButtonOKClicked()
@@ -74,7 +89,7 @@ namespace LabZKT.Simulation
         private void startSim()
         {
             theView.isRunning = theModel.isRunning = true;
-            theView.disableNewLog();
+            theView.setNewLog(false);
         }
 
         private void getMemoryRecord(int idxRow)

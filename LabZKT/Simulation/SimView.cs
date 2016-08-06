@@ -22,6 +22,7 @@ namespace LabZKT.Simulation
         public event Action NewLog;
         public event Action CheckProperties;
         public event Action ButtonOKClicked;
+        public event Action<bool> SaveCurrentState;
 
         public static short dragValue;
         public static Size hitTest;
@@ -38,9 +39,10 @@ namespace LabZKT.Simulation
         public bool inMicroMode { get; set; }
         public bool buttonOKClicked { get; set; }
 
-        public SimView()
+        public SimView(bool b)
         {
             InitializeComponent();
+            nowyLogToolStripMenuItem.Enabled = b;
         }
         public Control getSimPanel()
         {
@@ -53,7 +55,6 @@ namespace LabZKT.Simulation
         }
         private void initAll(object sender, EventArgs e)
         {
-            nowyLogToolStripMenuItem.Enabled = false;
             CenterToScreen();
             grid_PO_SelectionChanged(sender, e);
             initUserInfoArea();
@@ -93,6 +94,9 @@ namespace LabZKT.Simulation
         {
             if (isRunning)
                 e.Cancel = true;
+            else
+                SaveCurrentState(nowyLogToolStripMenuItem.Enabled);
+
         }
         
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
@@ -367,7 +371,7 @@ namespace LabZKT.Simulation
             if (result == DialogResult.Yes)
             {
                 NewLog();
-                disableNewLog();
+                setNewLog(false);
             }
         }
 
@@ -383,9 +387,9 @@ namespace LabZKT.Simulation
         {
             button_Next_Tact.Visible = true;
         }
-        public void disableNewLog()
+        public void setNewLog(bool b)
         {
-            nowyLogToolStripMenuItem.Enabled = false;
+            nowyLogToolStripMenuItem.Enabled = b;
         }
     }
 }
