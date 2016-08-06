@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabZKT", "LabZKT\LabZKT.csp
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Symulator LabZKT", "Symulator LabZKT\Symulator LabZKT.vdproj", "{E589802F-3DF0-4B05-B41D-FDE73E74370A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deinstalator", "Deinstalator\Deinstalator.csproj", "{1FB9A0B8-89B2-4906-B072-1F51EF6D056D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,18 @@ Global
 		{E589802F-3DF0-4B05-B41D-FDE73E74370A}.Release|Any CPU.ActiveCfg = Release
 		{E589802F-3DF0-4B05-B41D-FDE73E74370A}.Release|x64.ActiveCfg = Release
 		{E589802F-3DF0-4B05-B41D-FDE73E74370A}.Release|x86.ActiveCfg = Release
+		{1FB9A0B8-89B2-4906-B072-1F51EF6D056D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FB9A0B8-89B2-4906-B072-1F51EF6D056D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FB9A0B8-89B2-4906-B072-1F51EF6D056D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1FB9A0B8-89B2-4906-B072-1F51EF6D056D}.Debug|x64.Build.0 = Debug|Any CPU
+		{1FB9A0B8-89B2-4906-B072-1F51EF6D056D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1FB9A0B8-89B2-4906-B072-1F51EF6D056D}.Debug|x86.Build.0 = Debug|Any CPU
+		{1FB9A0B8-89B2-4906-B072-1F51EF6D056D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FB9A0B8-89B2-4906-B072-1F51EF6D056D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FB9A0B8-89B2-4906-B072-1F51EF6D056D}.Release|x64.ActiveCfg = Release|Any CPU
+		{1FB9A0B8-89B2-4906-B072-1F51EF6D056D}.Release|x64.Build.0 = Release|Any CPU
+		{1FB9A0B8-89B2-4906-B072-1F51EF6D056D}.Release|x86.ActiveCfg = Release|Any CPU
+		{1FB9A0B8-89B2-4906-B072-1F51EF6D056D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

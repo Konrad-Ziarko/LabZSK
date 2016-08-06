@@ -94,7 +94,7 @@ namespace LabZKT.Simulation
             if (isRunning)
                 e.Cancel = true;
         }
-
+        
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
             open_File_Dialog.Filter = "Logi symulatora|*.log|Wszystko|*.*";

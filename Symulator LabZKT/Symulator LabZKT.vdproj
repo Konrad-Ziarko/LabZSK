@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_0F20B511CE494E2A8C58DE4686235A32"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_543EBA849B5040BBB927F025BA614495"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -27,8 +33,20 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_CFC74500EEAF7746BC3661976B11CF12"
+        "OwnerKey" = "8:_0F20B511CE494E2A8C58DE4686235A32"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_543EBA849B5040BBB927F025BA614495"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_0F20B511CE494E2A8C58DE4686235A32"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -119,6 +137,20 @@
     {
         "CustomAction"
         {
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_23108E08D7F34971AA7A4FDA194CB55F"
+            {
+            "Name" = "8:Primary output from Deinstalator (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_0F20B511CE494E2A8C58DE4686235A32"
+            "FileType" = "3:1"
+            "InstallAction" = "3:4"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_35E8201D_3B6D_4399_A86C_8CD95075F356"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:"
+            }
         }
         "DefaultFeature"
         {
@@ -230,7 +262,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Symulator LabZKT"
         "ProductCode" = "8:{FBD0F683-13CC-431E-806E-37EE0B308CB7}"
-        "PackageCode" = "8:{1A1FD8A9-B731-4526-8B52-2E3FC086272C}"
+        "PackageCode" = "8:{DB706443-4FE8-4726-8361-1BFEE9023601}"
         "UpgradeCode" = "8:{C6C943D1-2C34-4EBC-BEDF-3480841123A4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -393,7 +425,7 @@
                 {
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_33EE3E4F49F042A8A10DA39E40CFB936"
                     {
-                    "Sequence" = "3:100"
+                    "Sequence" = "3:110"
                     "DisplayName" = "8:Welcome"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
@@ -441,7 +473,7 @@
                     }
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_A6930F3A73BD48E091CE39182FD4EF51"
                     {
-                    "Sequence" = "3:110"
+                    "Sequence" = "3:200"
                     "DisplayName" = "8:License Agreement"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
@@ -487,7 +519,7 @@
                     }
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_C09FBD219ABD46718CC4991FA7F9A9E9"
                     {
-                    "Sequence" = "3:300"
+                    "Sequence" = "3:400"
                     "DisplayName" = "8:Confirm Installation"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
@@ -509,7 +541,7 @@
                     }
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_DC46F33837494E84BF47E499A3704389"
                     {
-                    "Sequence" = "3:200"
+                    "Sequence" = "3:300"
                     "DisplayName" = "8:Installation Folder"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
@@ -841,9 +873,37 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0F20B511CE494E2A8C58DE4686235A32"
+            {
+            "SourcePath" = "8:..\\Deinstalator\\obj\\Release\\Deinstalator.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_B7ACF3CF31B944A39FE28535DB0ED715"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{1FB9A0B8-89B2-4906-B072-1F51EF6D056D}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_543EBA849B5040BBB927F025BA614495"
             {
-            "SourcePath" = "8:..\\LabZKT\\obj\\Debug\\LabZKT.exe"
+            "SourcePath" = "8:..\\LabZKT\\obj\\Release\\LabZKT.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B7ACF3CF31B944A39FE28535DB0ED715"
