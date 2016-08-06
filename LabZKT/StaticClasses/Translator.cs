@@ -26,6 +26,7 @@ namespace LabZKT
             {"NOP","11111" }
         };
 
+        #region Descriptions
         static Dictionary<string, string> InstructionDescriptions = new Dictionary<string, string>() { { "STP","Stop dynamiczny" },
             {"CMA","Uzupełnienie A do 2" }, {"ALA","Przesunięcie arytmetyczne A w lewo" } ,{"ARA","Przesunięcie arytmetyczne A w prawo" },
             { "LRQ","Przesunięcie logiczne A || MQ w prawo" }, {"LLQ","Przesunięcie logiczne A || MQ w lewo" },
@@ -71,28 +72,31 @@ namespace LabZKT
             {"R","ALU = RALU"},{"INCL","ALU = LALU + 1"},{"INLK","ALU = RALU + 1"},{"DECL","ALU = LALU - 1"},
             {"DELK","ALU = RALU - 1"},{"ONE","ALU = 1"},{"ZERO","ALU = 0"},
         };
+        #endregion
+
+        #region Instruction Codes
         private static Dictionary<string, long> instCodeS1 = new Dictionary<string, long>()
         {
-            {"", 0 },{"IXRE", 2 },{"OLR", 4 },{"ORR", 6 },{"ORAE", 8 },{"IALU", 0xA },{"OXE", 0xC },{"OX", 0xE }
+            {"", 0 },{"IXRE", 0x1 },{"OLR", 0x2 },{"ORR", 0x3 },{"ORAE", 0x4 },{"IALU", 0x5 },{"OXE", 0x6 },{"OX", 0x7 }
         };
         private static Dictionary<string, long> instCodeD1 = new Dictionary<string, long>()
         {
-            {"", 0 },{"ILK", 8 },{"IRAP", 0x10 },{"OXE", 0x18 }
+            {"", 0 },{"ILK", 0x1 },{"IRAP", 0x2 },{"OXE", 0x3 }
         };
         private static Dictionary<string, long> instCodeS2 = new Dictionary<string, long>()
         {
-            {"", 0 },{"IRAE", 0x8 },{"ORR", 0x10 },{"ORI", 0x18 },{"ORAE", 0x20 },{"OA", 0x28 },{"OMQ", 0x30 },{"OX", 0x38 },
-            {"OBE", 0x40 },{"IXRE", 0x48 },{"IALU", 0x50 },{"OXE", 0x58 }
+            {"", 0 },{"IRAE", 0x1 },{"ORR", 0x2 },{"ORI", 0x3 },{"ORAE", 0x4 },{"OA", 0x5 },{"OMQ", 0x6 },{"OX", 0x7 },
+            {"OBE", 0x8 },{"IXRE", 0x9 },{"IALU", 0xA },{"OXE", 0xB }
         };
         private static Dictionary<string, long> instCodeD2 = new Dictionary<string, long>()
         {
-            {"", 0 },{"ILR", 0x8 },{"IX", 0x10 },{"IBE", 0x18 },{"IRI", 0x20 },{"IBI", 0x28 },{"IA", 0x30 },{"IMQ", 0x38 },
-            {"OXE", 0x40 },{"NSI", 0x48 },{"IAS", 0x50 },{"SGN", 0x58 },
-            {"ALA", 0x8 },{"ARA", 0x10 },{"LRQ", 0x18 },{"LLQ", 0x20 },{"LLA", 0x28 },{"LRA", 0x30 },{"LCA", 0x38 }
+            {"", 0 },{"ILR", 0x1 },{"IX", 0x2 },{"IBE", 0x3 },{"IRI", 0x4 },{"IBI", 0x5 },{"IA", 0x6 },{"IMQ", 0x7 },
+            {"OXE", 0x8 },{"NSI", 0x9 },{"IAS", 0xA },{"SGN", 0xB }, {"ALA", 0xC }, {"ARA", 0xD },{"LRQ", 0xE },
+            { "LLQ", 0xF },{"LLA", 0x10 },{"LRA", 0x11 },{"LCA", 0x12 }
         };
         private static Dictionary<string, long> instCodeS3 = new Dictionary<string, long>()
         {
-            {"", 0 },{"ORI", 1 },{"OLR", 2 },{"OA", 3 },{"ORAE", 4 },{"OMQ", 5 },{"ORB", 6 },{"OXE",7 }
+            {"", 0 },{"ORI", 0x1 },{"OLR", 0x2 },{"OA", 0x3 },{"ORAE", 0x4 },{"OMQ", 0x5 },{"ORB", 0x6 },{"OXE", 0x7 }
         };
         private static Dictionary<string, long> instCodeD3 = new Dictionary<string, long>()
         {
@@ -101,12 +105,12 @@ namespace LabZKT
         };
         private static Dictionary<string, long> instCodeC1 = new Dictionary<string, long>()
         {
-            {"", 0 },{"CWC", 2 },{"RRC", 4 },{"MUL", 6 },{"DIV", 8 },{"SHT", 10 },{"IWC", 12 },{"END", 14 }
+            {"", 0 },{"CWC", 0x1 },{"RRC", 0x2 },{"MUL", 0x3 },{"DIV", 0x4 },{"SHT", 0x5 },{"IWC", 0x6 },{"END", 0x7 }
         };
         private static Dictionary<string, long> instCodeC2 = new Dictionary<string, long>()
         {
-            {"", 0 },{"DLK", 2 },{"SOFF", 4 },{"ROFF", 6 },{"SXRO", 8 },{"RXRO", 10 },{"DRI", 12 },{"RA", 14 },
-            { "RMQ", 16 }, {"AQ16", 18 },{"RINT", 20 },{"OPC", 22 },{"CEA", 24 },{"ENI", 26 }
+            {"", 0 },{"DLK", 0x1 },{"SOFF", 0x2 },{"ROFF", 0x3 },{"SXRO", 0x4 },{"RXRO", 0x5 },{"DRI", 0x6 },{"RA", 0x7 },
+            { "RMQ", 0x8 }, {"AQ16", 0x9 },{"RINT", 0xA },{"OPC", 0xB },{"CEA", 0xC },{"ENI", 0xD }
         };
         private static Dictionary<string, long> instCodeTest = new Dictionary<string, long>()
         {
@@ -119,6 +123,8 @@ namespace LabZKT
             {"NOTL", 0x8 },{"NOTR", 0x9 },{"L", 0xA },{"R", 0xB },{"INCL", 0xC },{"INLK", 0xD },{"DECL", 0xE },
             {"DELK", 0xF },{"INE", 0x10 },{"ZERO", 0x11 }
         };
+        #endregion
+
         /// <summary>
         /// Compute value of RBPS register.
         /// </summary>
@@ -126,10 +132,10 @@ namespace LabZKT
         /// <returns>Selected row micro op. RBPS value</returns>
         public static long GetRbpsValue(DataGridViewRow row)
         {
-            long rbps = (instCodeS1[row.Cells[1].Value.ToString()] << 44) + (instCodeD1[row.Cells[2].Value.ToString()] << 40)
-                + (instCodeS2[row.Cells[3].Value.ToString()] << 36) + (instCodeD2[row.Cells[4].Value.ToString()] << 32)
+            long rbps = (instCodeS1[row.Cells[1].Value.ToString()] << 45) + (instCodeD1[row.Cells[2].Value.ToString()] << 43)
+                + (instCodeS2[row.Cells[3].Value.ToString()] << 39) + (instCodeD2[row.Cells[4].Value.ToString()] << 35)
                 + (instCodeS3[row.Cells[5].Value.ToString()] << 32) + (instCodeD3[row.Cells[6].Value.ToString()] << 28)
-                + (instCodeC1[row.Cells[7].Value.ToString()] << 24) + (instCodeC2[row.Cells[8].Value.ToString()] << 20)
+                + (instCodeC1[row.Cells[7].Value.ToString()] << 25) + (instCodeC2[row.Cells[8].Value.ToString()] << 21)
                 + (instCodeTest[row.Cells[9].Value.ToString()] << 16) + (instCodeALU[row.Cells[10].Value.ToString()] << 8);
 
                 return rbps;
