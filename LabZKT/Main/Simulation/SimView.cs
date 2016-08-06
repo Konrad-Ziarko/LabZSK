@@ -91,15 +91,7 @@ namespace LabZKT.Simulation
   
         private void RunSim_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!isRunning)
-            {
-                DialogResult result = MessageBox.Show("Zamknąć okno symulacji i powrócic do głównego menu?\nPostęp symulacji nie zostanie utracony", "Symulacja została już uruchomiona", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes)
-                    e.Cancel = false;
-                else
-                    e.Cancel = true;
-            }
-            else
+            if (isRunning)
                 e.Cancel = true;
         }
 
