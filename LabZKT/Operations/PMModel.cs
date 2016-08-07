@@ -192,19 +192,5 @@ namespace LabZKT.MicroOperations
                 Grid_PM[6, idxRow].Value = "";
             }
         }
-
-        DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-        private DataGridViewTextBoxColumn addres;
-        private DataGridViewTextBoxColumn s1;
-        private DataGridViewTextBoxColumn d1;
-        private DataGridViewTextBoxColumn s2;
-        private DataGridViewTextBoxColumn d2;
-        private DataGridViewTextBoxColumn s3;
-        private DataGridViewTextBoxColumn d3;
-        private DataGridViewTextBoxColumn c1;
-        private DataGridViewTextBoxColumn c2;
-        private DataGridViewTextBoxColumn Test;
-        private DataGridViewTextBoxColumn ALU;
-        private DataGridViewTextBoxColumn NA;
     }
 }

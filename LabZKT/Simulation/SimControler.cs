@@ -39,14 +39,6 @@ namespace LabZKT.Simulation
             theModel.ButtonNextTactSetVisible += buttonNextTactSetVisible;
             theModel.ButtonOKSetVisivle += buttonOKSetVisible;
             theModel.SetNextTact += setNextTact;
-            //new Thread(() =>
-            //{
-            //    while (true)
-            //    {
-            //        Thread.Sleep(2000);
-            //        
-            //    }
-            //}).Start();
 
             theView.ShowDialog();
         }

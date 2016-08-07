@@ -25,8 +25,6 @@ namespace LabZKT.Simulation
         public event Action ButtonOKClicked;
         public event Action<bool> SaveCurrentState;
 
-        public static short dragValue;
-        public static Size hitTest;
         private DataGridViewCellStyle dgvcs1;
         public bool wasMaximized = false;
 

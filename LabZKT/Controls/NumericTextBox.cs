@@ -12,6 +12,8 @@ namespace LabZKT.Controls
     /// </summary>
     public class NumericTextBox : TextBox
     {
+        private static short dragValue;
+        private static Point hitTest;
         private short innerValue = 0, actualValue = 0;
         public string registerName { get; private set; }
         public bool needCheck { get; set; }
@@ -148,21 +150,23 @@ namespace LabZKT.Controls
                 Text = "";
             }
         }
-
+        protected override void OnMouseDoubleClick(MouseEventArgs e)
+        {
+            Text = "";
+        }
         /// Drag & Drop on dataGridView (copy insted of move)
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-
-            SimView.hitTest = new Size(e.X, e.Y);
+            hitTest = new Point(e.X, e.Y);
         }
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseDown(e);
 
-            if ((e.Button & MouseButtons.Left) == MouseButtons.Left && Math.Sqrt(Math.Pow(SimView.hitTest.Width - e.X, 2) + Math.Pow(SimView.hitTest.Height - e.Y, 2)) > 30)
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left && Math.Sqrt(Math.Pow(hitTest.X - e.X, 2) + Math.Pow(hitTest.Y - e.Y, 2)) > 30)
             {
-                SimView.dragValue = innerValue;
+                dragValue = innerValue;
                 DoDragDrop(innerValue, DragDropEffects.Copy);
                 setText();
             }
@@ -180,7 +184,7 @@ namespace LabZKT.Controls
 
             try
             {
-                innerValue = SimView.dragValue;
+                innerValue = dragValue;
                 actualValue = innerValue;
                 setText();
             }
