@@ -3,7 +3,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace LabZKT
+namespace LabZKT.Controls
 {
     /// <summary>
     /// Class used as CPU flag
@@ -12,6 +12,7 @@ namespace LabZKT
     {
         private short innerValue = 0;
         public string flagName { get; private set; }
+        public Size hitTest { get; set; }
         public BitTextBox(Size s)
         {
             Height = s.Height;
@@ -84,13 +85,6 @@ namespace LabZKT
             Text = "";
         }
 
-        /// Drag & Drop on dataGridView (copy insted of move)
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            base.OnMouseDown(e);
-
-            SimView.hitTest = new Size(e.X, e.Y);
-        }
         /// <summary>
         /// Set current position of this control
         /// </summary>

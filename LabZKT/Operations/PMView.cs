@@ -29,12 +29,6 @@ namespace LabZKT.MicroOperations
             InitializeComponent();
         }
 
-        public void LoadMicroOperations(List<MicroOperation> List_MicroOps)
-        {
-            foreach (MicroOperation row in List_MicroOps)
-                Grid_PM.Rows.Add(row.addr, row.S1, row.D1, row.S2, row.D2, row.S3, row.D3, row.C1, row.C2, row.Test, row.ALU, row.NA);
-        }
-
         private void PM_Load(object sender, EventArgs e)
         {
             CancelButton = button_Close;

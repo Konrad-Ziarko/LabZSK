@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace LabZKT
+namespace LabZKT.Controls
 {
     /// <summary>
     /// Class used to hold data for single register
@@ -102,7 +102,6 @@ namespace LabZKT
             else
             {
                 e.Handled = true;
-                //    MessageBeep();
             }
         }
 

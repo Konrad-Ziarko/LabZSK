@@ -1,4 +1,5 @@
 ﻿using LabZKT.Memory;
+using LabZKT.StaticClasses;
 using System;
 using System.Drawing;
 using System.IO;
@@ -81,10 +82,10 @@ namespace LabZKT.Simulation
             dataGridView_Info.Enabled = false;
             dataGridView_Info.ClearSelection();
 
-            dgvcs1 = new System.Windows.Forms.DataGridViewCellStyle();
+            dgvcs1 = new DataGridViewCellStyle();
             dgvcs1.ForeColor = Color.Green;
             dataGridView_Info.Rows[0].DefaultCellStyle = dgvcs1;
-            DataGridViewCellStyle dgvcs2 = new System.Windows.Forms.DataGridViewCellStyle();
+            DataGridViewCellStyle dgvcs2 = new DataGridViewCellStyle();
             dgvcs2.ForeColor = Color.Blue;
             dataGridView_Info.Rows[2].DefaultCellStyle = dgvcs2;
             dataGridView_Info.Rows[3].DefaultCellStyle = dgvcs2;

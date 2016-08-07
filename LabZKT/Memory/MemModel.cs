@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LabZKT.StaticClasses;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -71,7 +72,7 @@ namespace LabZKT.Memory
 
         public void SaveTable(string fileName)
         {
-            using (BinaryWriter bw = new BinaryWriter(File.OpenRead(fileName)))
+            using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Create)))
             {
                 bw.Write(Grid_Mem.Columns.Count);
                 bw.Write(Grid_Mem.Rows.Count);

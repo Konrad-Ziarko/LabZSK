@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LabZKT.StaticClasses;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -13,6 +14,13 @@ namespace LabZKT.MicroOperations
         public List<MicroOperation> List_MicroOps { get; set; }
         public bool isChanged { get; set; } 
         public DataGridView Grid_PM { get; set; }
+
+        internal void LoadMicroOperations()
+        {
+            foreach (MicroOperation row in List_MicroOps)
+                Grid_PM.Rows.Add(row.addr, row.S1, row.D1, row.S2, row.D2, row.S3, row.D3, row.C1, row.C2, row.Test, row.ALU, row.NA);
+        }
+
         public int idxRow { get; set; }
 
         public  PMModel(ref List<MicroOperation> List_MicroOps)
@@ -63,7 +71,7 @@ namespace LabZKT.MicroOperations
 
         public void SaveTable(string fileName)
         {
-            using (BinaryWriter bw = new BinaryWriter(File.OpenRead(fileName)))
+            using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Create)))
             {
                 bw.Write(Grid_PM.Columns.Count);
                 bw.Write(Grid_PM.Rows.Count);
@@ -184,5 +192,19 @@ namespace LabZKT.MicroOperations
                 Grid_PM[6, idxRow].Value = "";
             }
         }
+
+        DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+        private DataGridViewTextBoxColumn addres;
+        private DataGridViewTextBoxColumn s1;
+        private DataGridViewTextBoxColumn d1;
+        private DataGridViewTextBoxColumn s2;
+        private DataGridViewTextBoxColumn d2;
+        private DataGridViewTextBoxColumn s3;
+        private DataGridViewTextBoxColumn d3;
+        private DataGridViewTextBoxColumn c1;
+        private DataGridViewTextBoxColumn c2;
+        private DataGridViewTextBoxColumn Test;
+        private DataGridViewTextBoxColumn ALU;
+        private DataGridViewTextBoxColumn NA;
     }
 }

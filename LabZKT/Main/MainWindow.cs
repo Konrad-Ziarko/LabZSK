@@ -1,6 +1,8 @@
-﻿using LabZKT.Memory;
+﻿using LabZKT.Controls;
+using LabZKT.Memory;
 using LabZKT.MicroOperations;
 using LabZKT.Simulation;
+using LabZKT.StaticClasses;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,9 +14,6 @@ using System.Windows.Forms;
 
 namespace LabZKT
 {
-    //może zapisać godzine utworzenia logu i ją sprawdzać ?
-    //może plik ini z jakimiś ustawieniami ?
-
     public partial class MainWindow : Form
     {
         private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";

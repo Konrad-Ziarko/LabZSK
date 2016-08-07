@@ -1,6 +1,8 @@
-﻿using LabZKT.Memory;
+﻿using LabZKT.Controls;
+using LabZKT.Memory;
 using LabZKT.MicroOperations;
 using LabZKT.Properties;
+using LabZKT.StaticClasses;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

@@ -1,4 +1,4 @@
-﻿namespace LabZKT
+﻿namespace LabZKT.StaticClasses
 {
     public static class CRC
     {

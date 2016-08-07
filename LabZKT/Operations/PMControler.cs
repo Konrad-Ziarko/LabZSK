@@ -14,9 +14,9 @@ namespace LabZKT.MicroOperations
         {
             theModel = new PMModel(ref List_MicroOp);
             theView = new PMView();
-            theView.LoadMicroOperations(theModel.List_MicroOps);
             theModel.Grid_PM = theView.GetDataGrid();
-
+            theModel.LoadMicroOperations();
+            theView.SetDataGrid(theModel.Grid_PM);
 
             theView.TimerTick += theModel.TimerTick;
             theView.LoadTable += LoadTable;

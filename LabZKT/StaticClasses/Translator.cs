@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace LabZKT
+namespace LabZKT.StaticClasses
 {
     /// <summary>
     /// Static class with all necessary data for descriptions etc.

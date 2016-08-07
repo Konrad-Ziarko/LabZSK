@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using LabZKT.Controls;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
