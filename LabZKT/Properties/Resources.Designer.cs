@@ -110,12 +110,12 @@ namespace LabZKT.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Bitmap moon {
+        internal static System.Drawing.Icon pc {
             get {
-                object obj = ResourceManager.GetObject("moon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                object obj = ResourceManager.GetObject("pc", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
@@ -125,16 +125,6 @@ namespace LabZKT.Properties {
         internal static System.Drawing.Bitmap splash1 {
             get {
                 object obj = ResourceManager.GetObject("splash1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap sun {
-            get {
-                object obj = ResourceManager.GetObject("sun", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

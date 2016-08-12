@@ -20,18 +20,19 @@ namespace LabZKT.Simulation
             theModel.LoadLists(theView.GetDataGridMem(), theView.GetDataGridPM());
             theModel.rearrangeTextBoxes(theView.getSimPanel());
 
-            theView.EnterEditMode += theModel.enterEditMode;
-            theView.LeaveEditMode += theModel.leaveEditMode;
-            theView.ClearRegisters += theModel.clearRegisters;
-            theView.GetMemoryRecord += getMemoryRecord;
-            theView.AddToLog += theModel.addToLog;
-            theView.NewLog += theModel.NewLog;
-            theView.PrepareSimulation += theModel.prepareSimulation;
-            theView.NextTact += nextTact;
-            theView.DrawBackground += theModel.DrawBackground;
-            theView.CheckProperties += checkProperties;
-            theView.ButtonOKClicked += ButtonOKClicked;
-            theView.SaveCurrentState += SaveState;
+            theView.AEnterEditMode += theModel.enterEditMode;
+            theView.ALeaveEditMode += theModel.leaveEditMode;
+            theView.AClearRegisters += theModel.clearRegisters;
+            theView.AGetMemoryRecord += getMemoryRecord;
+            theView.AAddToLog += theModel.addToLog;
+            theView.ANewLog += theModel.NewLog;
+            theView.APrepareSimulation += theModel.prepareSimulation;
+            theView.ANextTact += nextTact;
+            theView.ADrawBackground += theModel.DrawBackground;
+            theView.ACheckProperties += checkProperties;
+            theView.AButtonOKClicked += ButtonOKClicked;
+            theView.ASaveCurrentState += SaveState;
+            theView.AShowLog += theModel.ShowLog;
 
             theModel.StartSim += startSim;
             theModel.StopSim += theView.stopSim;

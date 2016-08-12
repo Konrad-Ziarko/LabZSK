@@ -13,18 +13,19 @@ namespace LabZKT.Simulation
     public partial class SimView : Form
     {
         private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
-        public event Action EnterEditMode;
-        public event Action LeaveEditMode;
-        public event Action ClearRegisters;
-        public event Action<int> GetMemoryRecord;
-        public event Action<string> AddToLog;
-        public event Action<bool> PrepareSimulation;
-        public event Action NextTact;
-        public event Action<Control> DrawBackground;
-        public event Action NewLog;
-        public event Action CheckProperties;
-        public event Action ButtonOKClicked;
-        public event Action<bool> SaveCurrentState;
+        public event Action AEnterEditMode;
+        public event Action ALeaveEditMode;
+        public event Action AClearRegisters;
+        public event Action<int> AGetMemoryRecord;
+        public event Action<string> AAddToLog;
+        public event Action<bool> APrepareSimulation;
+        public event Action ANextTact;
+        public event Action<Control> ADrawBackground;
+        public event Action ANewLog;
+        public event Action ACheckProperties;
+        public event Action AButtonOKClicked;
+        public event Action<bool> ASaveCurrentState;
+        public event Action<string> AShowLog;
 
         private DataGridViewCellStyle dgvcs1;
         public bool wasMaximized = false;
@@ -73,7 +74,7 @@ namespace LabZKT.Simulation
 
         private void initUserInfoArea()
         {
-            CheckProperties();
+            ACheckProperties();
             dataGridView_Info.Rows.Add(mark, "Ocena");
             dataGridView_Info.Rows.Add(mistakes, "Błędy");
             dataGridView_Info.Rows.Add("0", "Takt");
@@ -95,7 +96,7 @@ namespace LabZKT.Simulation
             if (isRunning)
                 e.Cancel = true;
             else
-                SaveCurrentState(nowyLogToolStripMenuItem.Enabled);
+                ASaveCurrentState(nowyLogToolStripMenuItem.Enabled);
 
         }
         
@@ -108,48 +109,7 @@ namespace LabZKT.Simulation
             DialogResult openFileDialogResult = open_File_Dialog.ShowDialog();
             if (openFileDialogResult == DialogResult.OK && open_File_Dialog.FileName != "")
             {
-                try
-                {
-                    uint crcFromFile;
-                    byte[] arr= new byte[4];
-                       FileInfo fileInfo = new FileInfo(open_File_Dialog.FileName);
-                    uint crc = CRC.ComputeChecksum(File.ReadAllBytes(open_File_Dialog.FileName));
-                    if (fileInfo.AlternateDataStreamExists("crc"))
-                    {
-                        using (FileStream fs = fileInfo.GetAlternateDataStream("crc").OpenRead())
-                        {
-                            fs.Read(arr, 0, 4);
-                        }
-                        crcFromFile = BitConverter.ToUInt32(arr, 0);
-                        if (crcFromFile == crc)
-                        {
-                            Form log = new Form();
-                            RichTextBox rtb = new RichTextBox();
-                            log.Controls.Add(rtb);
-                            rtb.ReadOnly = true;
-                            rtb.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
-                            rtb.Text = File.ReadAllText(open_File_Dialog.FileName, Encoding.Unicode);
-                            log.AutoSize = true;
-                            log.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-                            int width = 200;
-                            Graphics g = Graphics.FromHwnd(rtb.Handle);
-                            foreach (var line in rtb.Lines)
-                            {
-                                SizeF f = g.MeasureString(line, rtb.Font);
-                                width = (int)(f.Width) > width ? (int)(f.Width) : width;
-                            }
-                            rtb.Width = width + 10;
-                            rtb.Height = 600;
-                            log.MaximizeBox = false;
-                            log.SizeGripStyle = SizeGripStyle.Hide;
-                            log.ShowDialog();
-                        }
-                    }
-                }
-                catch (FileNotFoundException)
-                {
-
-                }
+                AShowLog(open_File_Dialog.FileName);
             }
         }
 
@@ -158,7 +118,7 @@ namespace LabZKT.Simulation
             if (inEditMode)
             {
                 panel_Control.Focus();
-                LeaveEditMode();
+                ALeaveEditMode();
                 toolStripMenu_Edit.Text = "Edytuj rejestry";
                 button_Makro.Visible = true;
                 button_Micro.Visible = true;
@@ -168,7 +128,7 @@ namespace LabZKT.Simulation
             }
             else
             {
-                EnterEditMode();
+                AEnterEditMode();
                 toolStripMenu_Edit.Text = "Zakończ edycję";
                 button_Makro.Visible = false;
                 button_Micro.Visible = false;
@@ -180,7 +140,7 @@ namespace LabZKT.Simulation
 
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ClearRegisters();
+            AClearRegisters();
             dgvcs1.ForeColor = Color.Green;
             dataGridView_Info.Rows[0].Cells[0].Value = 5;
             dataGridView_Info.Rows[1].Cells[0].Value = dataGridView_Info.Rows[2].Cells[0].Value =
@@ -200,7 +160,7 @@ namespace LabZKT.Simulation
             int idxRow = Grid_Mem.CurrentCell.RowIndex;
             int idxCol = Grid_Mem.CurrentCell.ColumnIndex;
 
-            GetMemoryRecord(idxRow);
+            AGetMemoryRecord(idxRow);
             string instructionMnemo = "";
             label1.Text = "Komórka " + idxRow + "\n";
             if (selectedInstruction.typ == 1)
@@ -243,7 +203,7 @@ namespace LabZKT.Simulation
             richTextBox_Log.SelectionColor = Color.Black;
             richTextBox_Log.Select(end, 0);
             richTextBox_Log.ScrollToCaret();
-            AddToLog("\t" + tact + " " + mnemo + " " + description + "\n");
+            AAddToLog("\t" + tact + " " + mnemo + " " + description + "\n");
         }
         
         private void button_Makro_Click(object sender, EventArgs e)
@@ -255,7 +215,7 @@ namespace LabZKT.Simulation
             toolStripMenu_Clear.Enabled = false;
             label_Status.Text = "Start";
             label_Status.ForeColor = Color.Red;
-            PrepareSimulation(false);
+            APrepareSimulation(false);
         }
         private void button_Micro_Click(object sender, EventArgs e)
         {
@@ -266,7 +226,7 @@ namespace LabZKT.Simulation
             toolStripMenu_Clear.Enabled = false;
             label_Status.Text = "Start";
             label_Status.ForeColor = Color.Red;
-            PrepareSimulation(true);
+            APrepareSimulation(true);
         }
         public void stopSim()
         {
@@ -284,7 +244,7 @@ namespace LabZKT.Simulation
         private void button_Next_Tact_Click(object sender, EventArgs e)
         {
             button_Next_Tact.Visible = false;
-            NextTact();
+            ANextTact();
         }
         public void SetGridInfo(int value)
         {
@@ -292,9 +252,9 @@ namespace LabZKT.Simulation
         }
         private void button_OK_Click(object sender, EventArgs e)
         {
-            ButtonOKClicked();
+            AButtonOKClicked();
             button_OK.Visible = false;
-            CheckProperties();
+            ACheckProperties();
             dataGridView_Info[0, 1].Value = mistakes;
             dataGridView_Info[0, 0].Value = mark;
             if (mistakes >= 10)
@@ -305,7 +265,7 @@ namespace LabZKT.Simulation
         {
             if (e.KeyChar == (char)Keys.Enter && !inEditMode)
             {
-                CheckProperties();
+                ACheckProperties();
                 if (isRunning && !inMicroMode)
                     button_OK_Click(sender, e);
                 else if (isRunning && inMicroMode && currentTact != 7)
@@ -348,7 +308,7 @@ namespace LabZKT.Simulation
 
             panel_Sim.Width = Convert.ToInt32(panel_Left.Width * 1.0);
             panel_Sim.Height = Convert.ToInt32(panel_Left.Height - panel_PM.Height);
-            DrawBackground(panel_Sim_Control);
+            ADrawBackground(panel_Sim_Control);
         }
 
         private void RunSim_SizeChanged(object sender, EventArgs e)
@@ -369,14 +329,14 @@ namespace LabZKT.Simulation
             DialogResult result = MessageBox.Show("Utracisz cały postęp symulacji.\nCzy chcesz zakończyć pracę z obecnym logiem?", "Nowa symulacja", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
-                NewLog();
+                ANewLog();
                 setNewLog(false);
             }
         }
 
         private void RunSim_Paint(object sender, PaintEventArgs e)
         {
-            DrawBackground(panel_Sim_Control);
+            ADrawBackground(panel_Sim_Control);
         }
         public void buttonOkSetVisible()
         {

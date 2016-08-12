@@ -21,14 +21,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_5183FFA88FD14077B687DFE232FFAA5C"
+        "MsmKey" = "8:_543EBA849B5040BBB927F025BA614495"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_543EBA849B5040BBB927F025BA614495"
+        "MsmKey" = "8:_7AA1CED368E2431E945769B243E5457D"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_89B90963733AAF4A4F67590EFE235721"
+        "OwnerKey" = "8:_543EBA849B5040BBB927F025BA614495"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -45,8 +51,20 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_FD3B6DB3F80C4D078B379BF1A128C954"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_543EBA849B5040BBB927F025BA614495"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_89B90963733AAF4A4F67590EFE235721"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -180,7 +198,7 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5183FFA88FD14077B687DFE232FFAA5C"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7AA1CED368E2431E945769B243E5457D"
             {
             "SourcePath" = "8:..\\..\\..\\..\\Downloads\\pc.ico"
             "TargetName" = "8:pc.ico"
@@ -198,6 +216,37 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_89B90963733AAF4A4F67590EFE235721"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Trinet.Core.IO.Ntfs, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_89B90963733AAF4A4F67590EFE235721"
+                    {
+                    "Name" = "8:Trinet.Core.IO.Ntfs.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Trinet.Core.IO.Ntfs.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_B7ACF3CF31B944A39FE28535DB0ED715"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F49BE72F490881CBF5DBB06B9472D4D2"
@@ -229,6 +278,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FD3B6DB3F80C4D078B379BF1A128C954"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Downloads\\KTZLogoL.png"
+            "TargetName" = "8:KTZLogoL.png"
+            "Tag" = "8:"
+            "Folder" = "8:_B7ACF3CF31B944A39FE28535DB0ED715"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
         }
@@ -288,7 +357,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Symulator LabZKT"
         "ProductCode" = "8:{FBD0F683-13CC-431E-806E-37EE0B308CB7}"
-        "PackageCode" = "8:{D5C5040C-E4A6-4DBD-B3FE-C3C2E9256EE5}"
+        "PackageCode" = "8:{0B976A11-E8BB-4081-9C62-2FFAD192D4FD}"
         "UpgradeCode" = "8:{C6C943D1-2C34-4EBC-BEDF-3480841123A4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -419,7 +488,7 @@
             "Target" = "8:_543EBA849B5040BBB927F025BA614495"
             "Folder" = "8:_B85A6029221046E89364155D0D0212EA"
             "WorkingFolder" = "8:_B7ACF3CF31B944A39FE28535DB0ED715"
-            "Icon" = "8:_5183FFA88FD14077B687DFE232FFAA5C"
+            "Icon" = "8:_7AA1CED368E2431E945769B243E5457D"
             "Feature" = "8:"
             }
         }
@@ -507,6 +576,42 @@
                             "Setting" = "3:1"
                             "Value" = "8:#1203"
                             "DefaultValue" = "8:#1203"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_645ACD2BF05F444CAE931B93FEFF48DB"
+                    {
+                    "Sequence" = "3:120"
+                    "DisplayName" = "8:Splash"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdSplashDlg.wid"
+                        "Properties"
+                        {
+                            "SplashBitmap"
+                            {
+                            "Name" = "8:SplashBitmap"
+                            "DisplayName" = "8:#1013"
+                            "Description" = "8:#1113"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:_FD3B6DB3F80C4D078B379BF1A128C954"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Sunken"
+                            {
+                            "Name" = "8:Sunken"
+                            "DisplayName" = "8:#1007"
+                            "Description" = "8:#1107"
+                            "Type" = "3:5"
+                            "ContextData" = "8:4;True=4;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:4"
+                            "DefaultValue" = "3:4"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -767,9 +872,45 @@
             "Attributes" = "3:1"
                 "Dialogs"
                 {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_38737FE29CE44EA580876AF66B289BF6"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_27BC538C3214434FBB2FF35B1F857D2A"
                     {
                     "Sequence" = "3:110"
+                    "DisplayName" = "8:Splash"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminSplashDlg.wid"
+                        "Properties"
+                        {
+                            "SplashBitmap"
+                            {
+                            "Name" = "8:SplashBitmap"
+                            "DisplayName" = "8:#1013"
+                            "Description" = "8:#1113"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:_FD3B6DB3F80C4D078B379BF1A128C954"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Sunken"
+                            {
+                            "Name" = "8:Sunken"
+                            "DisplayName" = "8:#1007"
+                            "Description" = "8:#1107"
+                            "Type" = "3:5"
+                            "ContextData" = "8:4;True=4;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:4"
+                            "DefaultValue" = "3:4"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_38737FE29CE44EA580876AF66B289BF6"
+                    {
+                    "Sequence" = "3:200"
                     "DisplayName" = "8:License Agreement"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
@@ -815,7 +956,7 @@
                     }
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_5EA863E48AFE47DB82249B192E7A9FC7"
                     {
-                    "Sequence" = "3:200"
+                    "Sequence" = "3:300"
                     "DisplayName" = "8:Installation Folder"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
@@ -885,7 +1026,7 @@
                     }
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_DE6EE67ED41C4C9EBB208AA78E1D7E62"
                     {
-                    "Sequence" = "3:300"
+                    "Sequence" = "3:400"
                     "DisplayName" = "8:Confirm Installation"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"

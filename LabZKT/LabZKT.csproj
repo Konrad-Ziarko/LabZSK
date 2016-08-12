@@ -214,9 +214,8 @@
   <ItemGroup>
     <Content Include="Resources\heh.ico" />
     <Content Include="Resources\Logo_WAT.ico" />
+    <None Include="Resources\pc.ico" />
     <None Include="Resources\splash.png" />
-    <None Include="Resources\sun.png" />
-    <None Include="Resources\moon.png" />
     <None Include="Resources\BSoD.wav" />
     <None Include="Resources\maxresdefault.jpg" />
   </ItemGroup>

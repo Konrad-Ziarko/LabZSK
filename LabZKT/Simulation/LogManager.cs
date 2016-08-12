@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows.Forms;
 using Trinet.Core.IO.Ntfs;
 
 namespace LabZKT.Simulation
@@ -31,6 +32,7 @@ namespace LabZKT.Simulation
         #endregion
         private MemoryStream inMemoryLog = new MemoryStream();
         private static readonly LogManager instance;
+        private string LogFile = string.Empty;
         public static LogManager Instance
         {
             get
@@ -43,24 +45,44 @@ namespace LabZKT.Simulation
         {
             instance = new LogManager();
         }
-        internal void addToMemory(string v, string logFile)
+        internal bool checkLogIntegrity(string pathToLog)
         {
-            if (logFile != string.Empty)
+            bool toReturn = false;
+            uint crcFromFile;
+            byte[] arr = new byte[4];
+            FileInfo fileInfo = new FileInfo(pathToLog);
+            uint crc = CRC.ComputeChecksum(File.ReadAllBytes(pathToLog));
+            if (fileInfo.AlternateDataStreamExists("crc"))
             {
-                FileInfo fileInfo = new FileInfo(logFile);
+                using (FileStream fs = fileInfo.GetAlternateDataStream("crc").OpenRead())
+                {
+                    fs.Read(arr, 0, 4);
+                }
+                crcFromFile = BitConverter.ToUInt32(arr, 0);
+                if (crcFromFile == crc)
+                    toReturn = true;
+                else toReturn = false;
+            }
+            return toReturn;
+        }
+        internal void addToMemory(string v)
+        {
+            if (LogFile != string.Empty)
+            {
+                FileInfo fileInfo = new FileInfo(LogFile);
                 int len = 0;
                 byte[] bytes = Translator.GetBytes(v, out len);
                 inMemoryLog.Write(bytes, 0, len);
 
-                using (BinaryWriter bw = new BinaryWriter(File.Open(logFile, FileMode.Append), Encoding.UTF8))
+                using (BinaryWriter bw = new BinaryWriter(File.Open(LogFile, FileMode.Append), Encoding.UTF8))
                 {
                     bw.Write(bytes);
                 }
-                uint crc = CRC.ComputeChecksum(File.ReadAllBytes(logFile));
+                uint crc = CRC.ComputeChecksum(File.ReadAllBytes(LogFile));
                 if (!fileInfo.AlternateDataStreamExists("crc"))
                 {
                     var stream = CreateFile(
-                    logFile + ":crc",
+                    LogFile + ":crc",
                     GENERIC_WRITE,
                     FILE_SHARE_WRITE,
                     IntPtr.Zero,
@@ -94,10 +116,11 @@ namespace LabZKT.Simulation
                 using (BinaryWriter bw = new BinaryWriter(File.Open(logFile, FileMode.CreateNew), Encoding.UTF8))
                 {
                 }
+                LogFile = logFile;
             }
-            catch (IOException)
+            catch
             {
-                File.Delete(logFile);
+                MessageBox.Show("Wysątpił nieoczekiwany błąd podczas tworzenia logu!", "Ups", MessageBoxButtons.OK);
             }
         }
         internal void clearInMemoryLog()

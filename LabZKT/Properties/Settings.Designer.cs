@@ -34,16 +34,5 @@ namespace LabZKT.Properties {
                 this["FirstRun"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection LogFiles {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["LogFiles"]));
-            }
-            set {
-                this["LogFiles"] = value;
-            }
-        }
     }
 }
