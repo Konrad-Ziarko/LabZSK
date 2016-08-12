@@ -1,7 +1,9 @@
 ﻿using LabZKT.StaticClasses;
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
+using Trinet.Core.IO.Ntfs;
 
 namespace LabZKT.Simulation
 {
@@ -10,6 +12,23 @@ namespace LabZKT.Simulation
     /// </summary>
     public class LogManager
     {
+        #region ADS
+        public const int GENERIC_WRITE = 1073741824;
+        public const int FILE_SHARE_DELETE = 4;
+        public const int FILE_SHARE_WRITE = 2;
+        public const int FILE_SHARE_READ = 1;
+        public const int OPEN_ALWAYS = 4;
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern IntPtr CreateFile(string lpFileName,
+                                                uint dwDesiredAccess,
+                                                uint dwShareMode,
+                                                IntPtr lpSecurityAttributes,
+                                                uint dwCreationDisposition,
+                                                uint dwFlagsAndAttributes,
+                                                IntPtr hTemplateFile);
+        [DllImport("kernel32", SetLastError = true)]
+        public static extern bool CloseHandle(IntPtr handle);
+        #endregion
         private MemoryStream inMemoryLog = new MemoryStream();
         private static readonly LogManager instance;
         public static LogManager Instance
@@ -28,7 +47,7 @@ namespace LabZKT.Simulation
         {
             if (logFile != string.Empty)
             {
-                FileInfo fileInfo;
+                FileInfo fileInfo = new FileInfo(logFile);
                 int len = 0;
                 byte[] bytes = Translator.GetBytes(v, out len);
                 inMemoryLog.Write(bytes, 0, len);
@@ -38,22 +57,24 @@ namespace LabZKT.Simulation
                     bw.Write(bytes);
                 }
                 uint crc = CRC.ComputeChecksum(File.ReadAllBytes(logFile));
-
-                try
+                if (!fileInfo.AlternateDataStreamExists("crc"))
                 {
-                    fileInfo = new FileInfo(logFile + "crc");
-                    fileInfo.Attributes = FileAttributes.Normal;
+                    var stream = CreateFile(
+                    logFile + ":crc",
+                    GENERIC_WRITE,
+                    FILE_SHARE_WRITE,
+                    IntPtr.Zero,
+                    OPEN_ALWAYS,
+                    0,
+                    IntPtr.Zero);
+                    if (stream != IntPtr.Zero)
+                    {
+                        CloseHandle(stream);
+                    }
                 }
-                catch (Exception)
-                {
-                    //No crc file
-                }
-                using (BinaryWriter bw = new BinaryWriter(File.Open(logFile + "crc", FileMode.Create)))
-                {
-                    bw.Write(crc);
-                }
-                fileInfo = new FileInfo(logFile + "crc");
-                fileInfo.Attributes = FileAttributes.Hidden;
+                FileStream fs = fileInfo.GetAlternateDataStream("crc").OpenWrite();
+                fs.Write(BitConverter.GetBytes(crc), 0, 4);
+                fs.Close();
             }
         }
 

@@ -71,6 +71,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Trinet.Core.IO.Ntfs">
+      <HintPath>..\..\NTFS-Streams\ntfsstreams\bin\Trinet.Core.IO.Ntfs.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Memory\MemControler.cs" />

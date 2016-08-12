@@ -143,9 +143,10 @@ namespace LabZKT.Memory
                             MessageBox.Show("To nie jest plik z poprawnym mikroprogramem!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
                     }
                 else if (Regex.Match(extension, @"[sS][aA][gG]").Success)
-                    //naucz czytania plikow labsaga
-                    //
-                    ;
+                //naucz czytania plikow labsaga
+                //
+                {;
+                }
                 else
                     MessageBox.Show("Wykryto niespójność pliku!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
             }

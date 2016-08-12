@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Trinet.Core.IO.Ntfs;
 
 namespace LabZKT.Simulation
 {
@@ -109,41 +110,40 @@ namespace LabZKT.Simulation
             {
                 try
                 {
-                    FileInfo fileInfo = new FileInfo(open_File_Dialog.FileName + "crc");
-                    fileInfo.Attributes = FileAttributes.Normal;
                     uint crcFromFile;
-                    using (BinaryReader br = new BinaryReader(File.Open(open_File_Dialog.FileName + "crc", FileMode.Open)))
-                    {
-                        crcFromFile = br.ReadUInt32();
-                    }
-                    fileInfo.Attributes = FileAttributes.Hidden;
+                    byte[] arr= new byte[4];
+                       FileInfo fileInfo = new FileInfo(open_File_Dialog.FileName);
                     uint crc = CRC.ComputeChecksum(File.ReadAllBytes(open_File_Dialog.FileName));
-                    if (crcFromFile == crc)
+                    if (fileInfo.AlternateDataStreamExists("crc"))
                     {
-                        Form log = new Form();
-                        RichTextBox rtb = new RichTextBox();
-                        log.Controls.Add(rtb);
-                        rtb.ReadOnly = true;
-                        rtb.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
-                        rtb.Text = File.ReadAllText(open_File_Dialog.FileName, Encoding.Unicode);
-                        log.AutoSize = true;
-                        log.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-                        int width = 200;
-                        Graphics g = Graphics.FromHwnd(rtb.Handle);
-                        foreach (var line in rtb.Lines)
+                        using (FileStream fs = fileInfo.GetAlternateDataStream("crc").OpenRead())
                         {
-                            SizeF f = g.MeasureString(line, rtb.Font);
-                            width = (int)(f.Width) > width ? (int)(f.Width) : width;
+                            fs.Read(arr, 0, 4);
                         }
-                        rtb.Width = width + 10;
-                        rtb.Height = 600;
-                        log.MaximizeBox = false;
-                        log.SizeGripStyle = SizeGripStyle.Hide;
-                        log.ShowDialog();
-                    }
-                    else
-                    {
-                        //ktoś modyfikował log albo skasował sumę kontrolną logu
+                        crcFromFile = BitConverter.ToUInt32(arr, 0);
+                        if (crcFromFile == crc)
+                        {
+                            Form log = new Form();
+                            RichTextBox rtb = new RichTextBox();
+                            log.Controls.Add(rtb);
+                            rtb.ReadOnly = true;
+                            rtb.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
+                            rtb.Text = File.ReadAllText(open_File_Dialog.FileName, Encoding.Unicode);
+                            log.AutoSize = true;
+                            log.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+                            int width = 200;
+                            Graphics g = Graphics.FromHwnd(rtb.Handle);
+                            foreach (var line in rtb.Lines)
+                            {
+                                SizeF f = g.MeasureString(line, rtb.Font);
+                                width = (int)(f.Width) > width ? (int)(f.Width) : width;
+                            }
+                            rtb.Width = width + 10;
+                            rtb.Height = 600;
+                            log.MaximizeBox = false;
+                            log.SizeGripStyle = SizeGripStyle.Hide;
+                            log.ShowDialog();
+                        }
                     }
                 }
                 catch (FileNotFoundException)
