@@ -13,7 +13,6 @@ namespace LabZKT.Memory
         public string binaryData { get; private set; }
         public string hexData { get; private set; }
         public int dataType { get; private set; }
-        public bool isChanged { get; set; }
         private void turnOffTabSwitchFocus(Control parent)
         {
             foreach (Control c in parent.Controls)
@@ -26,7 +25,6 @@ namespace LabZKT.Memory
         public MemSubmit()
         {
             InitializeComponent();
-            isChanged = true;
             turnOffTabSwitchFocus(this);
         }
         private void PAOSubmit_Load(object sender, EventArgs e)
@@ -86,7 +84,6 @@ namespace LabZKT.Memory
                 hexData = Convert.ToInt16(tempMemoryCell, 2).ToString("X").PadLeft(4, '0');
             }
             else binaryData = hexData = "";
-            isChanged = true;
             Close();
         }
 

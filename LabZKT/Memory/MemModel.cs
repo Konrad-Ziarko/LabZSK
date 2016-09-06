@@ -109,7 +109,7 @@ namespace LabZKT.Memory
             try
             {
                 byte[] dataChunk = File.ReadAllBytes(fileName);
-                if (dataChunk.Length >= 2974 && CRC.ComputeChecksum(File.ReadAllBytes(fileName)) == 0)
+                if (dataChunk.Length >= 2974 && CRC.ComputeChecksum(File.ReadAllBytes(fileName)) == 0 && Regex.Match(extension, @"[pP][oO]").Success)
                     using (BinaryReader br = new BinaryReader(File.OpenRead(fileName)))
                     {
                         int n = br.ReadInt32();
@@ -148,7 +148,7 @@ namespace LabZKT.Memory
                 {;
                 }
                 else
-                    MessageBox.Show("Wykryto niespójność pliku!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
+                    throw new Exception();
             }
             catch (Exception)
             {

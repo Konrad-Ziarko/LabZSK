@@ -32,19 +32,16 @@ namespace LabZKT.Memory
         {
             using (theSubView = new MemSubmit())
             {
+                theSubView.Location = Cursor.Position;
                 var result = theSubView.ShowDialog();
                 if (result == DialogResult.OK)
                 {
                     theModel.Grid_Mem.Rows[theModel.Grid_Mem.CurrentCell.RowIndex].Cells[1].Value = theSubView.binaryData;
                     theModel.Grid_Mem.Rows[theModel.Grid_Mem.CurrentCell.RowIndex].Cells[2].Value = theSubView.hexData;
                     theModel.Grid_Mem.Rows[theModel.Grid_Mem.CurrentCell.RowIndex].Cells[3].Value = theSubView.dataType;
-                }
-                if (!theModel.isChanged)
-                {
-                    theModel.isChanged = theSubView.isChanged;
+                    theModel.isChanged = theView.isChanged = true;
                 }
             }
-            theView.isChanged = true;
         }
 
         private void CloseForm()

@@ -110,7 +110,7 @@ namespace LabZKT.MicroOperations
             try
             {
                 byte[] dataChunk = File.ReadAllBytes(fileName);
-                if (dataChunk.Length >= 6814 && CRC.ComputeChecksum(File.ReadAllBytes(fileName)) == 0)
+                if (dataChunk.Length >= 6814 && CRC.ComputeChecksum(File.ReadAllBytes(fileName)) == 0 && Regex.Match(extension, @"[pP][mM]").Success)
                     using (BinaryReader br = new BinaryReader(File.OpenRead(fileName)))
                     {
                         int n = br.ReadInt32();
@@ -130,7 +130,6 @@ namespace LabZKT.MicroOperations
                                         allMicroOpInRow += tmpString + " ";
                                         Grid_PM[j, i].Value = tmpString;
                                     }
-
                                     else
                                         br.ReadBoolean();
                                 }
@@ -153,7 +152,7 @@ namespace LabZKT.MicroOperations
                     ;
                 }
                 else
-                    MessageBox.Show("Wykryto niespójność pliku!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
+                    throw new Exception();
             }
             catch (Exception)
             {

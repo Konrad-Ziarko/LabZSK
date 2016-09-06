@@ -52,17 +52,13 @@ namespace LabZKT.Simulation
         private void RunSim_Load(object sender, EventArgs e)
         {
             Size = new Size(1024, 768);
-            initAll(sender, e);
-        }
-        private void initAll(object sender, EventArgs e)
-        {
             CenterToScreen();
             grid_PO_SelectionChanged(sender, e);
             initUserInfoArea();
             Focus();
             RunSim_ResizeEnd(sender, e);
         }
-        
+       
         public DataGridView GetDataGridPM()
         {
             return Grid_PM;

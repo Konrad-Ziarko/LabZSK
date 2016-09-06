@@ -149,35 +149,6 @@ namespace LabZKT.Memory
             });
         }
 
-        private void PO_Resize(object sender, EventArgs e)
-        {
-            float horizontalRatio = 0.2f;
-            int tempViewPo = Convert.ToInt32(Width * horizontalRatio);
-
-            panel_Left.Height = Convert.ToInt32(Height * 1.0);
-            if (tempViewPo > 280)
-            {
-                panel_View_PO.Width = Convert.ToInt32(280);
-            }
-            else panel_View_PO.Width = tempViewPo;
-
-            panel_Left.Width = Convert.ToInt32(Width - panel_View_PO.Width - 20);
-            panel_Left.Height = Convert.ToInt32(Height * 1.0);
-
-            dataGridView_Decode_Simple.Height = panel_Left.Size.Height * 6 / 10;
-            dataGridView_Decode_Complex.Height = panel_Left.Size.Height * 4 / 10;
-            dataGridView_Decode_Simple.ColumnHeadersHeight = dataGridView_Decode_Simple.Height / 6;
-            foreach (DataGridViewRow x in dataGridView_Decode_Simple.Rows)
-            {
-                x.Height = dataGridView_Decode_Simple.Height / 6;
-            }
-            dataGridView_Decode_Complex.ColumnHeadersHeight = dataGridView_Decode_Complex.Height / 4;
-            foreach (DataGridViewRow x in dataGridView_Decode_Complex.Rows)
-            {
-                x.Height = dataGridView_Decode_Complex.Height / 4;
-            }
-        }
-
         private void PO_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (isChanged)
@@ -348,11 +319,25 @@ namespace LabZKT.Memory
                 button_Clear_Row_Click(sender, e);
         }
 
-        private void PO_ResizeEnd(object sender, EventArgs e)
+        private void PO_SizeChanged(object sender, EventArgs e)
         {
             float horizontalRatio = 0.4f;
-            Grid_Mem.Width = panel_View_PO.Width = Convert.ToInt32(Width * horizontalRatio - 10);
-            panel_Edit_PO.Width = Convert.ToInt32(Width * (1 - horizontalRatio) - 10);
+            panel_View_PO.Width = Convert.ToInt32(Width * horizontalRatio);
+            panel_Left.Width = Convert.ToInt32(Width - panel_View_PO.Width - 20);
+            panel_Left.Height = Convert.ToInt32(Height * 1.0);
+
+            dataGridView_Decode_Simple.Height = panel_Left.Size.Height * 6 / 10;
+            dataGridView_Decode_Complex.Height = panel_Left.Size.Height * 4 / 10;
+            dataGridView_Decode_Simple.ColumnHeadersHeight = dataGridView_Decode_Simple.Height / 6;
+            foreach (DataGridViewRow x in dataGridView_Decode_Simple.Rows)
+            {
+                x.Height = dataGridView_Decode_Simple.Height / 6;
+            }
+            dataGridView_Decode_Complex.ColumnHeadersHeight = dataGridView_Decode_Complex.Height / 4;
+            foreach (DataGridViewRow x in dataGridView_Decode_Complex.Rows)
+            {
+                x.Height = dataGridView_Decode_Complex.Height / 4;
+            }
 
             int startLocation = 12;
             int diffSize = (panel_Right.Height - startLocation - (5 * button_Clear_Row.Size.Height)) / 5;
@@ -377,19 +362,6 @@ namespace LabZKT.Memory
             startLocation += diffSize;
             bLocation.Y = startLocation;
             button_Close.Location = bLocation;
-        }
-        private void PO_SizeChanged(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Maximized && !wasMaximized)
-            {
-                wasMaximized = true;
-                PO_ResizeEnd(sender, e);
-            }
-            else if (wasMaximized)
-            {
-                wasMaximized = false;
-                PO_ResizeEnd(sender, e);
-            }
         }
     }
 }
