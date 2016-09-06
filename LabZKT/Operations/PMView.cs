@@ -21,7 +21,6 @@ namespace LabZKT.MicroOperations
         private Rectangle dragBoxFromMouseDown;
         private object valueFromMouseDown;
         private int idxDragColumn;
-        private bool wasMaximized;
 
         public bool isChanged { get; set; }
         public PMView()

@@ -33,7 +33,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_89B90963733AAF4A4F67590EFE235721"
+        "MsmKey" = "8:_D63521F024725AE54A5C16B017B6FDBD"
         "OwnerKey" = "8:_543EBA849B5040BBB927F025BA614495"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -64,7 +64,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_89B90963733AAF4A4F67590EFE235721"
+        "OwnerKey" = "8:_D63521F024725AE54A5C16B017B6FDBD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -101,21 +101,11 @@
             {
             "Enabled" = "11:TRUE"
             "PromptEnabled" = "11:TRUE"
-            "PrerequisitesLocation" = "2:1"
+            "PrerequisitesLocation" = "2:2"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
                 "Items"
                 {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
-                    {
-                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
-                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
-                    }
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
-                    {
-                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
-                    "ProductCode" = "8:.NETFramework,Version=v4.5"
-                    }
                     "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5.2"
                     {
                     "Name" = "8:Microsoft .NET Framework 4.5.2 (x86 and x64)"
@@ -218,14 +208,14 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_89B90963733AAF4A4F67590EFE235721"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D63521F024725AE54A5C16B017B6FDBD"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:Trinet.Core.IO.Ntfs, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_89B90963733AAF4A4F67590EFE235721"
+                    "_D63521F024725AE54A5C16B017B6FDBD"
                     {
                     "Name" = "8:Trinet.Core.IO.Ntfs.dll"
                     "Attributes" = "3:512"
@@ -357,7 +347,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Symulator LabZKT"
         "ProductCode" = "8:{FBD0F683-13CC-431E-806E-37EE0B308CB7}"
-        "PackageCode" = "8:{0B976A11-E8BB-4081-9C62-2FFAD192D4FD}"
+        "PackageCode" = "8:{8E152491-66DC-4D3A-9A5C-6BE36E184588}"
         "UpgradeCode" = "8:{C6C943D1-2C34-4EBC-BEDF-3480841123A4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

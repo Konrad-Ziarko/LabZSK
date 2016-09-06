@@ -22,7 +22,6 @@ namespace LabZKT.Memory
         private Rectangle dragBoxFromMouseDown;
         private object valueFromMouseDown;
         private int idxDragRow;
-        private bool wasMaximized;
         public MemView()
         {
             InitializeComponent();
