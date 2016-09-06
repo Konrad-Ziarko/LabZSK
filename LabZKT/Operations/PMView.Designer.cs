@@ -66,8 +66,9 @@
             this.panel_View_PM.Controls.Add(this.Grid_PM);
             this.panel_View_PM.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel_View_PM.Location = new System.Drawing.Point(0, 0);
+            this.panel_View_PM.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel_View_PM.Name = "panel_View_PM";
-            this.panel_View_PM.Size = new System.Drawing.Size(721, 503);
+            this.panel_View_PM.Size = new System.Drawing.Size(541, 415);
             this.panel_View_PM.TabIndex = 4;
             // 
             // Grid_PM
@@ -110,13 +111,14 @@
             this.Grid_PM.DefaultCellStyle = dataGridViewCellStyle3;
             this.Grid_PM.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Grid_PM.Location = new System.Drawing.Point(0, 0);
+            this.Grid_PM.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Grid_PM.MultiSelect = false;
             this.Grid_PM.Name = "Grid_PM";
             this.Grid_PM.ReadOnly = true;
             this.Grid_PM.RowHeadersVisible = false;
             this.Grid_PM.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.Grid_PM.RowTemplate.Height = 24;
-            this.Grid_PM.Size = new System.Drawing.Size(721, 503);
+            this.Grid_PM.Size = new System.Drawing.Size(541, 415);
             this.Grid_PM.TabIndex = 3;
             this.Grid_PM.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grid_PM_CellMouseDoubleClick);
             this.Grid_PM.DragDrop += new System.Windows.Forms.DragEventHandler(this.grid_PM_DragDrop);
@@ -259,18 +261,19 @@
             this.panel_Control.Controls.Add(this.button_Clear_Table);
             this.panel_Control.Controls.Add(this.button_Clear_Row);
             this.panel_Control.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel_Control.Location = new System.Drawing.Point(693, 0);
+            this.panel_Control.Location = new System.Drawing.Point(519, 0);
+            this.panel_Control.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel_Control.Name = "panel_Control";
-            this.panel_Control.Size = new System.Drawing.Size(189, 503);
+            this.panel_Control.Size = new System.Drawing.Size(143, 415);
             this.panel_Control.TabIndex = 5;
             // 
             // button_Close
             // 
             this.button_Close.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Close.Location = new System.Drawing.Point(13, 393);
-            this.button_Close.Margin = new System.Windows.Forms.Padding(9);
+            this.button_Close.Location = new System.Drawing.Point(10, 319);
+            this.button_Close.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.button_Close.Name = "button_Close";
-            this.button_Close.Size = new System.Drawing.Size(167, 78);
+            this.button_Close.Size = new System.Drawing.Size(125, 63);
             this.button_Close.TabIndex = 4;
             this.button_Close.Text = "Zamknij";
             this.button_Close.UseVisualStyleBackColor = true;
@@ -279,10 +282,10 @@
             // button_Load_Table
             // 
             this.button_Load_Table.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Load_Table.Location = new System.Drawing.Point(13, 297);
-            this.button_Load_Table.Margin = new System.Windows.Forms.Padding(9);
+            this.button_Load_Table.Location = new System.Drawing.Point(10, 241);
+            this.button_Load_Table.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.button_Load_Table.Name = "button_Load_Table";
-            this.button_Load_Table.Size = new System.Drawing.Size(167, 78);
+            this.button_Load_Table.Size = new System.Drawing.Size(125, 63);
             this.button_Load_Table.TabIndex = 3;
             this.button_Load_Table.Text = "Wczytaj tabelę";
             this.button_Load_Table.UseVisualStyleBackColor = true;
@@ -291,10 +294,10 @@
             // button_Save_Table
             // 
             this.button_Save_Table.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Save_Table.Location = new System.Drawing.Point(13, 201);
-            this.button_Save_Table.Margin = new System.Windows.Forms.Padding(9);
+            this.button_Save_Table.Location = new System.Drawing.Point(10, 163);
+            this.button_Save_Table.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.button_Save_Table.Name = "button_Save_Table";
-            this.button_Save_Table.Size = new System.Drawing.Size(167, 78);
+            this.button_Save_Table.Size = new System.Drawing.Size(125, 63);
             this.button_Save_Table.TabIndex = 2;
             this.button_Save_Table.Text = "Zapisz tabelę";
             this.button_Save_Table.UseVisualStyleBackColor = true;
@@ -305,10 +308,10 @@
             this.button_Clear_Table.BackColor = System.Drawing.Color.Red;
             this.button_Clear_Table.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.button_Clear_Table.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Clear_Table.Location = new System.Drawing.Point(13, 105);
-            this.button_Clear_Table.Margin = new System.Windows.Forms.Padding(9);
+            this.button_Clear_Table.Location = new System.Drawing.Point(10, 85);
+            this.button_Clear_Table.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.button_Clear_Table.Name = "button_Clear_Table";
-            this.button_Clear_Table.Size = new System.Drawing.Size(167, 78);
+            this.button_Clear_Table.Size = new System.Drawing.Size(125, 63);
             this.button_Clear_Table.TabIndex = 1;
             this.button_Clear_Table.Text = "Wyczyść tabelę";
             this.button_Clear_Table.UseVisualStyleBackColor = false;
@@ -317,10 +320,10 @@
             // button_Clear_Row
             // 
             this.button_Clear_Row.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Clear_Row.Location = new System.Drawing.Point(13, 9);
-            this.button_Clear_Row.Margin = new System.Windows.Forms.Padding(9);
+            this.button_Clear_Row.Location = new System.Drawing.Point(10, 7);
+            this.button_Clear_Row.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.button_Clear_Row.Name = "button_Clear_Row";
-            this.button_Clear_Row.Size = new System.Drawing.Size(167, 78);
+            this.button_Clear_Row.Size = new System.Drawing.Size(125, 63);
             this.button_Clear_Row.TabIndex = 0;
             this.button_Clear_Row.Text = "Wyczyść wiersz";
             this.button_Clear_Row.UseVisualStyleBackColor = true;
@@ -332,21 +335,21 @@
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // PM
+            // PMView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(882, 503);
+            this.ClientSize = new System.Drawing.Size(662, 415);
             this.Controls.Add(this.panel_Control);
             this.Controls.Add(this.panel_View_PM);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(520, 550);
-            this.Name = "PM";
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MinimumSize = new System.Drawing.Size(394, 454);
+            this.Name = "PMView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Pamięć Mikroprogramu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PM_FormClosing);
             this.Load += new System.EventHandler(this.PM_Load);
-            this.ResizeEnd += new System.EventHandler(this.PM_ResizeEnd);
             this.SizeChanged += new System.EventHandler(this.PM_SizeChanged);
             this.panel_View_PM.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Grid_PM)).EndInit();

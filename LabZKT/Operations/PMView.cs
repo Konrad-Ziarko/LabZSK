@@ -222,24 +222,15 @@ namespace LabZKT.MicroOperations
 
         private void PM_SizeChanged(object sender, EventArgs e)
         {
-            if (WindowState == FormWindowState.Maximized && !wasMaximized)
-            {
-                wasMaximized = true;
-                PM_ResizeEnd(sender, e);
-            }
-            else if (wasMaximized)
-            {
-                wasMaximized = false;
-                PM_ResizeEnd(sender, e);
-            }
-        }
-        private void PM_ResizeEnd(object sender, EventArgs e)
-        {
             int cos = button_Clear_Row.Size.Width;
             panel_Control.Width = 145;
             panel_View_PM.Width = Convert.ToInt32(Width - panel_Control.Width - 20);
             foreach (DataGridViewColumn c in Grid_PM.Columns)
                 c.Width = panel_View_PM.Width / 12;
+        }
+        private void PM_ResizeEnd(object sender, EventArgs e)
+        {
+            
         }
         public DataGridView GetDataGrid()
         {

@@ -56,7 +56,6 @@ namespace LabZKT.Simulation
             grid_PO_SelectionChanged(sender, e);
             initUserInfoArea();
             Focus();
-            RunSim_ResizeEnd(sender, e);
         }
        
         public DataGridView GetDataGridPM()
@@ -280,8 +279,8 @@ namespace LabZKT.Simulation
                 e.Handled = true;
             }
         }
-
-        private void RunSim_ResizeEnd(object sender, EventArgs e)
+        
+        private void RunSim_SizeChanged(object sender, EventArgs e)
         {
             float horizontalRatio = 0.2f, verticalRatio = 0.15f;
 
@@ -305,20 +304,6 @@ namespace LabZKT.Simulation
             panel_Sim.Width = Convert.ToInt32(panel_Left.Width * 1.0);
             panel_Sim.Height = Convert.ToInt32(panel_Left.Height - panel_PM.Height);
             ADrawBackground(panel_Sim_Control);
-        }
-
-        private void RunSim_SizeChanged(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Maximized && !wasMaximized)
-            {
-                wasMaximized = true;
-                RunSim_ResizeEnd(sender, e);
-            }
-            else if (wasMaximized)
-            {
-                wasMaximized = false;
-                RunSim_ResizeEnd(sender, e);
-            }
         }
         private void nowyLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
