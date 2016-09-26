@@ -22,76 +22,75 @@ namespace LabZKT.Simulation
     public class SimModel
     {
         private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
-        public event Action StartSim;
-        public event Action StopSim;
-        public event Action<string, string, string> AddText;
-        public event Action ButtonOKSetVisivle;
-        public event Action ButtonNextTactSetVisible;
-        public event Action<int> SetNextTact;
+        internal event Action StartSim;
+        internal event Action StopSim;
+        internal event Action<string, string, string> AddText;
+        internal event Action ButtonOKSetVisivle;
+        internal event Action ButtonNextTactSetVisible;
+        internal event Action<int> SetNextTact;
 
+        /// <summary>
+        /// Represents whether new log can by created
+        /// </summary>
         public bool isNewLogEnabled = false;
+        /// <summary>
+        /// Represents current CPU cycle
+        /// </summary>
         public int currnetCycle { get; set; }
+        /// <summary>
+        /// Holds value representing current mark
+        /// </summary>
         public int mark { get; set; }
+        /// <summary>
+        /// Holds value of made mistakes
+        /// </summary>
         public int mistakes { get; set; }
-        public MemoryRecord selectedIntruction { get; set; }
+        /// <summary>
+        /// Represents CPU flags
+        /// </summary>
         public Dictionary<string, BitTextBox> flags { get; set; }
-        public MemoryRecord lastRecordFromRRC { get; set; }
-        public List<MemoryRecord> List_Memory { get; set; }
-        public List<MicroOperation> List_MicroOp { get; set; }
+        /// <summary>
+        /// Represents RBPS register
+        /// </summary>
         public TextBox RBPS { get; set; }
+        /// <summary>
+        /// Represents CPU registers
+        /// </summary>
         public Dictionary<string, NumericTextBox> registers { get; set; }
-        public DataGridView Grid_Mem { get; set; }
+        /// <summary>
+        /// Represents CPU current tact
+        /// </summary>
+        public int currentTact = 0;
 
-        internal void ShowLog(string pathToLog)
-        {
-            if (logManager.checkLogIntegrity(pathToLog))
-            {
-                {
-                    Form log = new Form();
-                    RichTextBox rtb = new RichTextBox();
-                    log.Controls.Add(rtb);
-                    rtb.ReadOnly = true;
-                    rtb.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
-                    rtb.Text = File.ReadAllText(pathToLog, Encoding.Unicode);
-                    log.AutoSize = true;
-                    log.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-                    int width = 200;
-                    Graphics g = Graphics.FromHwnd(rtb.Handle);
-                    foreach (var line in rtb.Lines)
-                    {
-                        SizeF f = g.MeasureString(line, rtb.Font);
-                        width = (int)(f.Width) > width ? (int)(f.Width) : width;
-                    }
-                    rtb.Width = width + 10;
-                    rtb.Height = 600;
-                    log.MaximizeBox = false;
-                    log.SizeGripStyle = SizeGripStyle.Hide;
-                    log.ShowDialog();
-                }
-            }
-        }
-
-        public DataGridView Grid_PM { get; set; }
-        
-        public bool resetBus { get; set; }
+        internal bool isTestPositive = false;
+        internal bool isOverflow = false;
+        internal bool inEditMode = false;
+        internal bool buttonOKClicked = false;
+        internal bool inMicroMode = false;
+        internal bool isRunning = false;
+        private DataGridView Grid_PM;
+        internal bool buttonNextTactClicked = false;
+        private bool resetBus;
+        private List<MicroOperation> List_MicroOp;
+        private List<MemoryRecord> List_Memory;
+        private MemoryRecord lastRecordFromRRC;
+        private Drawings draw;
         private Dictionary<string, short> oldRegs;
         private LogManager logManager;
-
-        internal void getMemoryRecord(int idxRow)
-        {
-            selectedIntruction = List_Memory[idxRow];
-        }
-
-        private Drawings draw;
-
+        private MemoryRecord selectedIntruction;
         private bool[,] cells = new bool[11, 8];
-        public int currentTact = 0;
-        public bool isTestPositive = false, isOverflow = false, inEditMode = false,
-            buttonOKClicked = false, inMicroMode = false, isRunning = false;
-        public string logFile = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty;
-        public short raps = 0, na = 0;
-        public bool buttonNextTactClicked = false;
-        //
+        private string logFile = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty;
+        private short raps = 0, na = 0;
+        private DataGridView Grid_Mem;
+        /// <summary>
+        /// Initialize instance of model for computes
+        /// </summary>
+        /// <param name="List_Memory">List of operating memory records</param>
+        /// <param name="List_MicroOp">List of microoperations (microprogram)</param>
+        /// <param name="registers">Dictionary of registers</param>
+        /// <param name="flags">Dictionary of flags</param>
+        /// <param name="RBPS">TextBox representing RBPS register</param>
+        /// <param name="lastRecordFromRRC">Operating memory record last used in RRC operation</param>
         public SimModel(ref List<MemoryRecord> List_Memory, ref List<MicroOperation> List_MicroOp, ref Dictionary<string, NumericTextBox> registers, ref Dictionary<string, BitTextBox> flags, ref TextBox RBPS, ref MemoryRecord lastRecordFromRRC)
         {
             this.List_Memory = List_Memory;
@@ -100,13 +99,27 @@ namespace LabZKT.Simulation
             this.flags = flags;
             this.RBPS = RBPS;
             this.lastRecordFromRRC = lastRecordFromRRC;
-            //
+            
             currentTact = mistakes = 0;
             mark = 5;
             logManager = LogManager.Instance;
             draw = new Drawings(ref registers, ref flags, ref RBPS);
         }
-
+        /// <summary>
+        /// Returns pointed record from list which represents memory
+        /// </summary>
+        /// <param name="idxRow">Index of row representing memory addres</param>
+        /// <returns>Memory record object</returns>
+        public MemoryRecord getMemoryRecord(int idxRow)
+        {
+            selectedIntruction = List_Memory[idxRow];
+            return selectedIntruction;
+        }
+        /// <summary>
+        /// Load memory and microoperations in to passed DataGrid
+        /// </summary>
+        /// <param name="Grid_Mem">DataGrid for operating memory to load</param>
+        /// <param name="Grid_PM">DataGrid for microoperations to load</param>
         public void LoadLists(DataGridView Grid_Mem, DataGridView Grid_PM)
         {
             this.Grid_Mem = Grid_Mem;
@@ -117,6 +130,9 @@ namespace LabZKT.Simulation
                 Grid_PM.Rows.Add(row.addr, row.S1, row.D1, row.S2, row.D2, row.S3,
                     row.D3, row.C1, row.C2, row.Test, row.ALU, row.NA);
         }
+        /// <summary>
+        /// Initialize simulation log
+        /// </summary>
         public void initLogInformation()
         {
             string sysType;
@@ -139,6 +155,10 @@ namespace LabZKT.Simulation
             Environment.MachineName + "\" " + sysType + " " + Environment.OSVersion + " OS\nZalogowano jako: \"" +
             Environment.UserName + "\"\n" + "Dostępne interfejsy sieciowe: " + ipAddrList + "\n\n\n");
         }
+        /// <summary>
+        /// Adjust register grid in parent control
+        /// </summary>
+        /// <param name="panel_Sim_Control">Parent control to place registers</param>
         public void rearrangeTextBoxes(Control panel_Sim_Control)
         {
             int horizontalGap = Convert.ToInt32(0.25 * panel_Sim_Control.Width);
@@ -183,7 +203,6 @@ namespace LabZKT.Simulation
             registers["SUMA"].SetXY((registers["R"].Location.X - registers["L"].Location.X + 130) / 2
                 - 65 + registers["L"].Location.X, verticalGap * 4 + (verticalGap - 27) * 3 / 4);
         }
-
         public void switchLayOut(Control panel_Sim_Control)
         {
             if (registers["SUMA"].Visible)
@@ -198,7 +217,9 @@ namespace LabZKT.Simulation
             }
             draw.drawBackground(panel_Sim_Control);
         }
-
+        /// <summary>
+        /// Leave simulation edit mode
+        /// </summary>
         public void leaveEditMode()
         {
             foreach (var oldReg in oldRegs)
@@ -214,6 +235,9 @@ namespace LabZKT.Simulation
             foreach (var reg in registers)
                 reg.Value.ReadOnly = true;
         }
+        /// <summary>
+        /// Enter simulation edit mode
+        /// </summary>
         public void enterEditMode()
         {
             oldRegs = new Dictionary<string, short>();
@@ -234,6 +258,9 @@ namespace LabZKT.Simulation
             foreach (var reg in registers)
                 reg.Value.ReadOnly = false;
         }
+        /// <summary>
+        /// Reset all registers and flags to default
+        /// </summary>
         public void clearRegisters()
         {
             logManager.addToMemory("\n====Zerowanie rejestrów====\n");
@@ -244,11 +271,19 @@ namespace LabZKT.Simulation
             foreach (var flg in flags)
                 flg.Value.resetValue();
         }
+        /// <summary>
+        /// Add data to current log file
+        /// </summary>
+        /// <param name="text">String representing log information</param>
         public void addToLog(string text)
         {
             //poprawić format logu
             logManager.addToMemory(text);
         }
+        /// <summary>
+        /// Initialize simulation log and start simulation
+        /// </summary>
+        /// <param name="b"></param>
         public void prepareSimulation(bool b)
         {
             inMicroMode = b;
@@ -270,13 +305,19 @@ namespace LabZKT.Simulation
             }
             simulateCPU();
         }
+        /// <summary>
+        /// Initialize background draw
+        /// </summary>
+        /// <param name="panel_Sim_Control"></param>
         public void DrawBackground(Control panel_Sim_Control)
         {
             rearrangeTextBoxes(panel_Sim_Control);
             draw.drawBackground(panel_Sim_Control);
         }
-
-        public void checkRegisters()
+        /// <summary>
+        /// Validate changed register inner value
+        /// </summary>
+        public void validateRegisters()
         {
             short badValue;
 
@@ -299,7 +340,10 @@ namespace LabZKT.Simulation
                 logManager.addToMemory("\t" + registerToCheck + "=" + registers[registerToCheck].innerValue + "\n");
             }
         }
-        public void NewLog()
+        /// <summary>
+        /// Close current log and prepare for new log
+        /// </summary>
+        public void CloseCurrentLogFile()
         {
             logManager.addToMemory("\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(29, ' ') + "\n=======Stop  symulacji=======\n" +
                 "Ocena: " + mark + "   Błędy: " + mistakes + "\n");
@@ -1259,7 +1303,7 @@ namespace LabZKT.Simulation
                 microOpMnemo = Grid_PM[8, raps].Value.ToString();
                 if (microOpMnemo == "CEA")
                 {
-                    ///zwykly adresacja
+                    //zwykly adresacja
                     //rozszerzony N
                     //dana
                 }
@@ -1398,7 +1442,6 @@ namespace LabZKT.Simulation
                 else if (row.Cells[8].Value.ToString() == "OPC")
                 {
                     cells[8, 7] = true;
-                    //if OPC is present TEST is not executed
                     for (int j = 1; j < 8; j++)
                         cells[9, j] = false;
                 }
@@ -1437,7 +1480,7 @@ namespace LabZKT.Simulation
             isRunning = false;
             inMicroMode = false;
         }
-        public void nextTact()
+        private void nextTact()
         {
             if (inMicroMode)
             {
@@ -1450,7 +1493,7 @@ namespace LabZKT.Simulation
             buttonNextTactClicked = false;
         }
 
-        public void EnDisableButtons()
+        private void EnDisableButtons()
         {
             foreach (var reg in registers)
                 reg.Value.Enabled = !reg.Value.Enabled;
@@ -1459,6 +1502,34 @@ namespace LabZKT.Simulation
         {
             registers[register].setActualValue(setValue);
             registers[register].setNeedCheck(out registerToCheck);
+        }
+        internal void ShowLog(string pathToLog)
+        {
+            if (logManager.checkLogIntegrity(pathToLog))
+            {
+                {
+                    Form log = new Form();
+                    RichTextBox rtb = new RichTextBox();
+                    log.Controls.Add(rtb);
+                    rtb.ReadOnly = true;
+                    rtb.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
+                    rtb.Text = File.ReadAllText(pathToLog, Encoding.Unicode);
+                    log.AutoSize = true;
+                    log.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+                    int width = 200;
+                    Graphics g = Graphics.FromHwnd(rtb.Handle);
+                    foreach (var line in rtb.Lines)
+                    {
+                        SizeF f = g.MeasureString(line, rtb.Font);
+                        width = (int)(f.Width) > width ? (int)(f.Width) : width;
+                    }
+                    rtb.Width = width + 10;
+                    rtb.Height = 600;
+                    log.MaximizeBox = false;
+                    log.SizeGripStyle = SizeGripStyle.Hide;
+                    log.ShowDialog();
+                }
+            }
         }
     }
 }

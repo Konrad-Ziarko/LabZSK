@@ -8,32 +8,50 @@ using System.Windows.Forms;
 namespace LabZKT.MicroOperations
 {
     /// <summary>
-    /// Model class
+    /// Provides and computes data for microoperations
     /// </summary>
-    class PMModel
+    public class PMModel
     {
         private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
+        /// <summary>
+        /// String representing path to file
+        /// </summary>
         public string filePath { get; set; } 
+        /// <summary>
+        /// List for microoperations used in class
+        /// </summary>
         public List<MicroOperation> List_MicroOps { get; set; }
+        /// <summary>
+        /// Boolean representing whether model was changed
+        /// </summary>
         public bool isChanged { get; set; } 
+        /// <summary>
+        /// DataGrid used to visualize microoperations
+        /// </summary>
         public DataGridView Grid_PM { get; set; }
-
-        internal void LoadMicroOperations()
-        {
-            foreach (MicroOperation row in List_MicroOps)
-                Grid_PM.Rows.Add(row.addr, row.S1, row.D1, row.S2, row.D2, row.S3, row.D3, row.C1, row.C2, row.Test, row.ALU, row.NA);
-        }
-
+        /// <summary>
+        /// Represents current row in microoperations
+        /// </summary>
         public int idxRow { get; set; }
-
+        /// <summary>
+        /// Initialize instance of model class
+        /// </summary>
+        /// <param name="List_MicroOps">List of microoperations</param>
         public  PMModel(ref List<MicroOperation> List_MicroOps)
         {
             this.List_MicroOps = List_MicroOps;
             filePath = @"\Env\~micro.zkt";
             isChanged = false;
         }
-
-        public void TimerTick(DataGridView Grid_PM)
+        /// <summary>
+        /// Initialize GridView with default data
+        /// </summary>
+        public void LoadMicroOperations()
+        {
+            foreach (MicroOperation row in List_MicroOps)
+                Grid_PM.Rows.Add(row.addr, row.S1, row.D1, row.S2, row.D2, row.S3, row.D3, row.C1, row.C2, row.Test, row.ALU, row.NA);
+        }
+        internal void TimerTick(DataGridView Grid_PM)
         {
             FileInfo fileInfo = new FileInfo(envPath + filePath);
             try
@@ -71,7 +89,10 @@ namespace LabZKT.MicroOperations
                 fileInfo.Attributes = FileAttributes.Hidden;
             }
         }
-
+        /// <summary>
+        /// Save all mircrooperations to file
+        /// </summary>
+        /// <param name="fileName">String representing path to file</param>
         public void SaveTable(string fileName)
         {
             using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Create)))
@@ -104,7 +125,10 @@ namespace LabZKT.MicroOperations
             }
             isChanged = false;
         }
-
+        /// <summary>
+        /// Load microoperations from file
+        /// </summary>
+        /// <param name="fileName">String representing path to file</param>
         public void LoadTable(string fileName)
         {
             string[] split = fileName.Split('.');
@@ -162,8 +186,7 @@ namespace LabZKT.MicroOperations
                 MessageBox.Show("Wykryto niespójność pliku!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
             }
         }
-
-        public void CloseForm()
+        internal void CloseForm()
         {
             for (int i = 0; i < 256; ++i)
             {
@@ -175,8 +198,12 @@ namespace LabZKT.MicroOperations
             Grid_PM[11, i].Value.ToString());
             }
         }
-
-        public void NewMicroOperation(string newMicroInstruction, string currentMicroInstruction)
+        /// <summary>
+        /// Replace microoperation in microoperation
+        /// </summary>
+        /// <param name="newMicroInstruction">String representing new microinstruction name</param>
+        /// <param name="currentMicroInstruction">String representing current microinstruction nam</param>
+        public void NewMicroInstruction(string newMicroInstruction, string currentMicroInstruction)
         {
             Grid_PM.CurrentCell.Value = newMicroInstruction;
             if (Grid_PM.CurrentCell.ColumnIndex == 11 && (Grid_PM.CurrentCell.Value.ToString() == "" || Convert.ToInt32(Grid_PM.CurrentCell.Value) == 0))

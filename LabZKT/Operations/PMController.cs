@@ -5,14 +5,17 @@ using System.Windows.Forms;
 namespace LabZKT.MicroOperations
 {
     /// <summary>
-    /// Controller class
+    /// Controls microoperations view and model
     /// </summary>
     public class PMController
     {
         PMModel theModel;
         PMView theView;
         PMSubmit theSubView;
-
+        /// <summary>
+        /// Initialize instance of controller class
+        /// </summary>
+        /// <param name="List_MicroOp">List of microoperations</param>
         public PMController(ref List<MicroOperation> List_MicroOp)
         {
             theModel = new PMModel(ref List_MicroOp);
@@ -40,7 +43,6 @@ namespace LabZKT.MicroOperations
                     theModel.Grid_PM[4, idx].Value = theSubView.SelectedInstruction;
             }
         }
-
         private void NewMicroOperation()
         {
             string newMicroInstruction = "";
@@ -66,7 +68,7 @@ namespace LabZKT.MicroOperations
                     newMicroInstruction = currentMicroInstruction;
 
             }
-            theModel.NewMicroOperation(newMicroInstruction, currentMicroInstruction);
+            theModel.NewMicroInstruction(newMicroInstruction, currentMicroInstruction);
             if(newMicroInstruction == "SHT")
             {
                 using (theSubView = new PMSubmit(4, theModel.Grid_PM[4, theModel.idxRow].Value.ToString(), theModel.Grid_PM[7, theModel.idxRow].Value.ToString()))
@@ -83,19 +85,16 @@ namespace LabZKT.MicroOperations
 
             theView.isChanged = theModel.isChanged;
         }
-
         private void CloseForm()
         {
             theModel.Grid_PM = theView.GetDataGrid();
             theModel.CloseForm();
         }
-
         private void SaveTable(string filePath)
         {
             theModel.SaveTable(filePath);
             theView.isChanged = theModel.isChanged;
         }
-
         private void LoadTable(string filePath)
         {
             theModel.LoadTable(filePath);

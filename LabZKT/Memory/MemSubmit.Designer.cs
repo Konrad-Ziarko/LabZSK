@@ -324,7 +324,6 @@
             this.checkBox_I.TabIndex = 4;
             this.checkBox_I.Text = " I";
             this.checkBox_I.UseVisualStyleBackColor = true;
-            this.checkBox_I.CheckedChanged += new System.EventHandler(this.checkBox_I_CheckedChanged);
             // 
             // checkBox_S
             // 
@@ -337,7 +336,6 @@
             this.checkBox_S.TabIndex = 3;
             this.checkBox_S.Text = "S";
             this.checkBox_S.UseVisualStyleBackColor = true;
-            this.checkBox_S.CheckedChanged += new System.EventHandler(this.checkBox_S_CheckedChanged);
             // 
             // checkBox_X
             // 
@@ -350,7 +348,6 @@
             this.checkBox_X.TabIndex = 2;
             this.checkBox_X.Text = "X";
             this.checkBox_X.UseVisualStyleBackColor = true;
-            this.checkBox_X.CheckedChanged += new System.EventHandler(this.checkBox_X_CheckedChanged);
             // 
             // numericUpDown_DA
             // 

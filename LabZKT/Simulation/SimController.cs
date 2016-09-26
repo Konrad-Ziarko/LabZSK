@@ -1,12 +1,16 @@
 ﻿namespace LabZKT.Simulation
 {
     /// <summary>
-    /// Controller class
+    /// Controls simulation view and model instances
     /// </summary>
     public class SimController
     {
         private SimModel theModel;
         private SimView theView;
+        /// <summary>
+        /// Initialize controller instance
+        /// </summary>
+        /// <param name="simModel"></param>
         public SimController(SimModel simModel)
         {
             theModel = simModel;
@@ -25,7 +29,7 @@
             theView.AClearRegisters += theModel.clearRegisters;
             theView.AGetMemoryRecord += getMemoryRecord;
             theView.AAddToLog += theModel.addToLog;
-            theView.ANewLog += theModel.NewLog;
+            theView.ANewLog += theModel.CloseCurrentLogFile;
             theView.APrepareSimulation += theModel.prepareSimulation;
             theView.ANextTact += nextTact;
             theView.ADrawBackground += theModel.DrawBackground;
@@ -51,7 +55,7 @@
         private void ButtonOKClicked()
         {
             theView.buttonOKClicked = theModel.buttonOKClicked = true;
-            theModel.checkRegisters();
+            theModel.validateRegisters();
         }
 
         private void setNextTact(int value)
@@ -87,11 +91,10 @@
 
         private void getMemoryRecord(int idxRow)
         {
-            theModel.getMemoryRecord(idxRow);
-            theView.selectedInstruction = theModel.selectedIntruction;
+            theView.selectedInstruction = theModel.getMemoryRecord(idxRow);
         }
 
-        public void nextTact()
+        private void nextTact()
         {
             theModel.buttonNextTactClicked = true;
             //theModel.nextTact();

@@ -5,25 +5,27 @@ using System.Windows.Forms;
 
 namespace LabZKT.MicroOperations
 {
+    /// <summary>
+    /// Responsible for submiting new microoperations
+    /// </summary>
     public partial class PMSubmit : Form
     {
         private int columnIdx;
-        private string chosenInstruction, c1Column, selectedInstruction;
+        private string chosenInstruction, c1Column;
+        /// <summary>
+        /// String representing whether form was changed
+        /// </summary>
         public bool isChanged = false;
-
-        public string SelectedInstruction
-        {
-            get
-            {
-                return selectedInstruction;
-            }
-
-            set
-            {
-                selectedInstruction = value;
-            }
-        }
-
+        /// <summary>
+        /// String representing microoperation name
+        /// </summary>
+        public string SelectedInstruction { get; set; }
+        /// <summary>
+        /// Initialize instance of subview
+        /// </summary>
+        /// <param name="typ">Value representing microoperation type</param>
+        /// <param name="txt">String representing microoperation name</param>
+        /// <param name="c1">String representing microoperation in column C1</param>
         public PMSubmit(int typ, string txt, string c1)
         {
             columnIdx = typ;
@@ -36,17 +38,17 @@ namespace LabZKT.MicroOperations
         {
             AcceptButton = button_OK;
             CancelButton = button_Cancel;
-            foreach(RadioButton rb in groupBox1.Controls)
+            foreach (RadioButton rb in groupBox1.Controls)
             {
                 rb.MouseDoubleClick += myRadioButton_MouseClick;
                 MethodInfo m = typeof(RadioButton).GetMethod("SetStyle", BindingFlags.Instance | BindingFlags.NonPublic);
                 if (m != null)
                 {
                     m.Invoke(rb, new object[] { ControlStyles.StandardClick | ControlStyles.StandardDoubleClick, true });
-                    
+
                 }
             }
-                
+
             if (columnIdx == 4 && c1Column == "SHT")
             {
                 init_D2_SHT();
@@ -79,9 +81,6 @@ namespace LabZKT.MicroOperations
             aligneButtons();
             radioButton1.Focus();
         }
-        /// <summary>
-        /// Aligne buttons (OK & Cancel) below radiobuttons 
-        /// </summary>
         private void aligneButtons()
         {
             var loc = button_OK.Location;
@@ -122,6 +121,7 @@ namespace LabZKT.MicroOperations
         {
             Close();
         }
+        #region Fields init
         private void init_S1()
         {
             groupBox1.Text = Text = "S1";
@@ -349,10 +349,7 @@ namespace LabZKT.MicroOperations
 
             numUpDown.Focus();
         }
-        /// <summary>
-        /// This method changes property (i.e. 'Visible' to false) of radiobuttons from given index.
-        /// </summary>
-        /// <param name="idxOfRadioButton">Index of first radiobutton to hide</param>
+        #endregion
         private void hide_RadioButtons_From(int idxOfRadioButton)
         {
             switch (idxOfRadioButton)
@@ -414,7 +411,7 @@ namespace LabZKT.MicroOperations
             }
         }
 
-        void myRadioButton_MouseClick(object sender, MouseEventArgs e)
+        internal void myRadioButton_MouseClick(object sender, MouseEventArgs e)
         {
             button_OK_Click(sender, e);
         }

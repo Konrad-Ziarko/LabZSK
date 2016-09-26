@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace LabZKT
 {
-    public partial class SplashScreen : Form
+    partial class SplashScreen : Form
     {
         public SplashScreen()
         {

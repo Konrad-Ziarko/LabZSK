@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace LabZKT.Memory
 {
     /// <summary>
-    /// Model class
+    /// Provides and computes data for memory records
     /// </summary>
     public class MemModel
     {
@@ -17,24 +17,38 @@ namespace LabZKT.Memory
         /// Boolean representing whether model was changed
         /// </summary>
         public bool isChanged { get; set; }
+        /// <summary>
+        /// String representing path to file with MemoryRecords list
+        /// </summary>
         public string filePath { get; set; } 
+        /// <summary>
+        /// List of MemoryRecords
+        /// </summary>
         public List<MemoryRecord> List_Memory { get; set; }
+        /// <summary>
+        /// DataGrid of MemoryRecords
+        /// </summary>
         public DataGridView Grid_Mem { get; set; }
-
+        /// <summary>
+        /// Initialize instance of model class
+        /// </summary>
+        /// <param name="List_Memory"></param>
         public MemModel(ref List<MemoryRecord> List_Memory)
         {
             this.List_Memory = List_Memory;
             filePath = @"\Env\~mem.zkt";
             isChanged = false;
         }
-
-        internal void LoadMemory()
+        /// <summary>
+        /// Load all records from internal list to DataGridView object
+        /// </summary>
+        public void LoadMemory()
         {
             foreach (MemoryRecord row in List_Memory)
                 Grid_Mem.Rows.Add(row.addr, row.value, row.hex, row.typ);
         }
 
-        public void TimerTick(DataGridView Grid_Mem)
+        internal void TimerTick(DataGridView Grid_Mem)
         {
             FileInfo fileInfo = new FileInfo(envPath + filePath);
             try
@@ -75,7 +89,10 @@ namespace LabZKT.Memory
                 fileInfo.Attributes = FileAttributes.Hidden;
             }
         }
-
+        /// <summary>
+        /// Save internal memoryrecords list to file
+        /// </summary>
+        /// <param name="fileName">String representing path to file</param>
         public void SaveTable(string fileName)
         {
             using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Create)))
@@ -107,7 +124,10 @@ namespace LabZKT.Memory
             }
             isChanged = false;
         }
-
+        /// <summary>
+        /// Load memoryrecords from file
+        /// </summary>
+        /// <param name="fileName">String representing path to file</param>
         public void LoadTable(string fileName)
         {
             string[] split = fileName.Split('.');

@@ -4,7 +4,7 @@ using System.Windows.Forms;
 namespace LabZKT.Memory
 {
     /// <summary>
-    /// Controller class
+    /// Controls memory records model and view
     /// </summary>
     public class MemController
     {

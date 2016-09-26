@@ -5,14 +5,26 @@ using System.Windows.Forms;
 
 namespace LabZKT.Memory
 {
+    /// <summary>
+    /// Displays form responsible for submiting new MemoryRecords
+    /// </summary>
     public partial class MemSubmit : Form
     {
+        /// <summary>
+        /// String representing memory record in binary
+        /// </summary>
+        public string binaryData { get; private set; }
+        /// <summary>
+        /// String representing memory record in hexadecimal
+        /// </summary>
+        public string hexData { get; private set; }
+        /// <summary>
+        /// Value corresponding to data type
+        /// </summary>
+        public int dataType { get; private set; }
         private enum DataType { Data, Simple, Complex }
         private enum NumeralBase { Hex, Binary, Decimal }
         private NumeralBase chosenDataType = NumeralBase.Decimal;
-        public string binaryData { get; private set; }
-        public string hexData { get; private set; }
-        public int dataType { get; private set; }
         private void turnOffTabSwitchFocus(Control parent)
         {
             foreach (Control c in parent.Controls)
@@ -22,6 +34,9 @@ namespace LabZKT.Memory
                 c.TabStop = false;
             }
         }
+        /// <summary>
+        /// Initialize instance of class
+        /// </summary>
         public MemSubmit()
         {
             InitializeComponent();
@@ -37,10 +52,6 @@ namespace LabZKT.Memory
             panel_Data.Visible = false;
             panel_Simple.Visible = false;
         }
-        /// <summary>
-        /// Build string for selected data type and close this form
-        /// </summary>
-        /// <param name="type">Memory record data type</param>
         private void setAndClose(DataType type)
         {
             string tempMemoryCell = "";
@@ -86,7 +97,6 @@ namespace LabZKT.Memory
             else binaryData = hexData = "";
             Close();
         }
-
         private void textBox_Data_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !(e.KeyChar >= '0' && e.KeyChar <= '1') && chosenDataType == NumeralBase.Binary)
@@ -103,7 +113,7 @@ namespace LabZKT.Memory
                 e.Handled = true;
             }
         }
-
+        #region Buttons
         private void button_Choice_Data_Click(object sender, EventArgs e)
         {
                 panel_Choice.Visible = false;
@@ -150,19 +160,6 @@ namespace LabZKT.Memory
         {
             Close();
         }
-        private void checkBox_X_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-        private void checkBox_S_CheckedChanged(object sender, EventArgs e)
-        {
-
-
-        }
-        private void checkBox_I_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
         private void numericUpDown_DA_ValueChanged(object sender, EventArgs e)
         {
             numericUpDown_DA.Value = Convert.ToInt16(numericUpDown_DA.Value);
@@ -183,7 +180,7 @@ namespace LabZKT.Memory
         {
             setAndClose(DataType.Complex);
         }
-
+        #endregion
         private void comboBox_Simple_SelectedIndexChanged(object sender, EventArgs e)
         {
             numericUpDown_Simple.Value = comboBox_Simple.SelectedIndex + 1;
@@ -192,7 +189,6 @@ namespace LabZKT.Memory
         {
             comboBox_Simple.SelectedIndex = Convert.ToInt16(numericUpDown_Simple.Value) - 1;
         }
-
         private void comboBox_Complex_SelectedIndexChanged(object sender, EventArgs e)
         {
             numericUpDown_Complex.Value = comboBox_Complex.SelectedIndex;
@@ -201,7 +197,6 @@ namespace LabZKT.Memory
         {
             comboBox_Complex.SelectedIndex = Convert.ToInt16(numericUpDown_Complex.Value);
         }
-
         private void radioButton_Bin_CheckedChanged(object sender, EventArgs e)
         {
             if (textBox_Data.Text != "")
@@ -233,14 +228,10 @@ namespace LabZKT.Memory
             chosenDataType = NumeralBase.Hex;
             validateTextBox();
         }
-
         private void textBox_Data_TextChanged(object sender, EventArgs e)
         {
             validateTextBox();
         }
-        /// <summary>
-        /// Check inserted data and if data is not valid disable apply button
-        /// </summary>
         private void validateTextBox()
         {
             if (chosenDataType == NumeralBase.Decimal)

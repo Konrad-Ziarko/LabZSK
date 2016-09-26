@@ -7,21 +7,28 @@ using System.Windows.Forms;
 
 namespace LabZKT.Memory
 {
+    /// <summary>
+    /// Displays memory and allows to modify data
+    /// </summary>
     public partial class MemView : Form
     {
         private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
-        public event Action<DataGridView> TimerTick;
-        public event Action<string> SaveTable;
-        public event Action<string> LoadTable;
-        public event Action CloseForm;
-        public event Action NewMemoryRecord;
-
+        internal event Action<DataGridView> TimerTick;
+        internal event Action<string> SaveTable;
+        internal event Action<string> LoadTable;
+        internal event Action CloseForm;
+        internal event Action NewMemoryRecord;
+        /// <summary>
+        /// Boolean representing whether view was changed
+        /// </summary>
         public bool isChanged { get; set; }
 
-        /// Drag & Drop on dataGridView (copy insted of move)
         private Rectangle dragBoxFromMouseDown;
         private object valueFromMouseDown;
         private int idxDragRow;
+        /// <summary>
+        /// Initialize instance of class
+        /// </summary>
         public MemView()
         {
             InitializeComponent();
@@ -32,8 +39,7 @@ namespace LabZKT.Memory
         {
             return Grid_Mem;
         }
-
-        public void SetDataGrid(DataGridView Grid_Mem)
+        internal void SetDataGrid(DataGridView Grid_Mem)
         {
             this.Grid_Mem = Grid_Mem;
         }

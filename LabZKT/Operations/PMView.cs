@@ -6,22 +6,29 @@ using System.Windows.Forms;
 
 namespace LabZKT.MicroOperations
 {
+    /// <summary>
+    /// Displays microoperations
+    /// </summary>
     public partial class PMView : Form
     {
         private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
-        public event Action<DataGridView> TimerTick;
-        public event Action<string> LoadTable;
-        public event Action<string> SaveTable;
-        public event Action CloseForm;
-        public event Action NewMicroOperation;
-        public event Action<int> CallSubView;
+        internal event Action<DataGridView> TimerTick;
+        internal event Action<string> LoadTable;
+        internal event Action<string> SaveTable;
+        internal event Action CloseForm;
+        internal event Action NewMicroOperation;
+        internal event Action<int> CallSubView;
 
-        /// Drag & Drop on dataGridView (copy insted of move)
         private Rectangle dragBoxFromMouseDown;
         private object valueFromMouseDown;
         private int idxDragColumn;
-
+        /// <summary>
+        /// Boolean representing whether view was changed
+        /// </summary>
         public bool isChanged { get; set; }
+        /// <summary>
+        /// Initialize instance of class
+        /// </summary>
         public PMView()
         {
             InitializeComponent();
@@ -31,7 +38,6 @@ namespace LabZKT.MicroOperations
         {
             CancelButton = button_Close;
             Size = new Size(800, 650);
-            PM_ResizeEnd(sender, e);
             CenterToScreen();
         }
 
@@ -54,7 +60,7 @@ namespace LabZKT.MicroOperations
                 }
             }
         }
-
+        #region Buttons
         private void button_Close_Click(object sender, EventArgs e)
         {
             Invoke((MethodInvoker)delegate ()
@@ -62,7 +68,6 @@ namespace LabZKT.MicroOperations
                 Close();
             });
         }
-
         private void button_Clear_Row_Click(object sender, EventArgs e)
         {
             int idxRowToClear = Convert.ToInt32(Grid_PM.CurrentCell.RowIndex);
@@ -70,7 +75,6 @@ namespace LabZKT.MicroOperations
                 Grid_PM[i, idxRowToClear].Value = "";
             isChanged = true;
         }
-
         private void button_Clear_Table_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < 256; i++)
@@ -78,7 +82,6 @@ namespace LabZKT.MicroOperations
                     Grid_PM[j, i].Value = "";
             isChanged = true;
         }
-
         private void button_Save_Table_Click(object sender, EventArgs e)
         {
             save_File_Dialog.Filter = "Pamięć mikroprogramu|*.pm|Wszystko|*.*";
@@ -93,7 +96,6 @@ namespace LabZKT.MicroOperations
                 save_File_Dialog.FileName = "";
             }
         }
-
         private void button_Load_Table_Click(object sender, EventArgs e)
         {
             DialogResult askUnsavedChanges = DialogResult.Yes;
@@ -116,7 +118,8 @@ namespace LabZKT.MicroOperations
                 }
             }
         }
-
+        #endregion
+        #region Grid methods
         private void grid_PM_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)
@@ -127,7 +130,6 @@ namespace LabZKT.MicroOperations
                 Grid_PM[idxColumn, idxRow].Value = "";
             }
         }
-
         private void grid_PM_DragDrop(object sender, DragEventArgs e)
         {
             Point clientPoint = Grid_PM.PointToClient(new Point(e.X, e.Y));
@@ -175,12 +177,10 @@ namespace LabZKT.MicroOperations
                 isChanged = true;
             }
         }
-
         private void grid_PM_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Copy;
         }
-
         private void grid_PM_MouseDown(object sender, MouseEventArgs e)
         {
             var hitTestInfo = Grid_PM.HitTest(e.X, e.Y);
@@ -198,7 +198,6 @@ namespace LabZKT.MicroOperations
             else
                 dragBoxFromMouseDown = Rectangle.Empty;
         }
-
         private void grid_PM_MouseMove(object sender, MouseEventArgs e)
         {
             if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
@@ -209,7 +208,7 @@ namespace LabZKT.MicroOperations
                 }
             }
         }
-
+        #endregion
         private void timer1_Tick(object sender, EventArgs e)
         {
             new Thread(() =>
@@ -226,15 +225,11 @@ namespace LabZKT.MicroOperations
             foreach (DataGridViewColumn c in Grid_PM.Columns)
                 c.Width = panel_View_PM.Width / 12;
         }
-        private void PM_ResizeEnd(object sender, EventArgs e)
-        {
-            
-        }
-        public DataGridView GetDataGrid()
+        internal DataGridView GetDataGrid()
         {
             return Grid_PM;
         }
-        public void SetDataGrid(DataGridView Grid_PM)
+        internal void SetDataGrid(DataGridView Grid_PM)
         {
             this.Grid_PM = Grid_PM;
         }
