@@ -7,9 +7,15 @@ using System.Windows.Forms;
 
 namespace LabZKT.Memory
 {
+    /// <summary>
+    /// Model class
+    /// </summary>
     public class MemModel
     {
         private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
+        /// <summary>
+        /// Boolean representing whether model was changed
+        /// </summary>
         public bool isChanged { get; set; }
         public string filePath { get; set; } 
         public List<MemoryRecord> List_Memory { get; set; }
@@ -155,7 +161,9 @@ namespace LabZKT.Memory
                 MessageBox.Show("Wykryto niespójność pliku!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
             }
         }
-
+        /// <summary>
+        /// Save all changes on form close
+        /// </summary>
         public void CloseForm()
         {
             for (int i = 0; i < 256; ++i)

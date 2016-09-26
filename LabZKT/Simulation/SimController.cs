@@ -1,13 +1,13 @@
-﻿
-using System.Threading;
-
-namespace LabZKT.Simulation
+﻿namespace LabZKT.Simulation
 {
-    public class SimControler
+    /// <summary>
+    /// Controller class
+    /// </summary>
+    public class SimController
     {
         private SimModel theModel;
         private SimView theView;
-        public SimControler(SimModel simModel)
+        public SimController(SimModel simModel)
         {
             theModel = simModel;
             theView = new SimView(theModel.isNewLogEnabled);

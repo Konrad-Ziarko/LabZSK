@@ -3,8 +3,14 @@ using System.Windows.Forms;
 
 namespace LabZKT
 {
+    /// <summary>
+    /// Windows form for credentials
+    /// </summary>
     public partial class Author : Form
     {
+        /// <summary>
+        /// Initialize instance of this form
+        /// </summary>
         public Author()
         {
             InitializeComponent();

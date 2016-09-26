@@ -5,13 +5,23 @@ using System.Windows.Forms;
 
 namespace LabZKT
 {
+    /// <summary>
+    /// Windows form for errors
+    /// </summary>
     public partial class ErrorMessage : Form
     {
+        /// <summary>
+        /// Initialize instance of this class
+        /// </summary>
         public ErrorMessage()
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Occures when form was loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ErrorMessage_Load(object sender, EventArgs e)
         {
             FormBorderStyle = FormBorderStyle.None;
@@ -34,6 +44,7 @@ namespace LabZKT
         {
             e.Cancel = true;
         }
+
         delegate void DelegateGetFocus();
         private DelegateGetFocus getFocusCallBack;
         private void keepFocus()
@@ -51,7 +62,6 @@ namespace LabZKT
                 }
                 catch (System.ObjectDisposedException)
                 {
-                    // Window was destroyed, terminate application.
                     Application.Exit();
                 }
             }

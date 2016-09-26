@@ -1,7 +1,5 @@
 ﻿using LabZKT.Properties;
 using System;
-using System.Collections.Specialized;
-using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 

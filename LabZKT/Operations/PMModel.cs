@@ -7,6 +7,9 @@ using System.Windows.Forms;
 
 namespace LabZKT.MicroOperations
 {
+    /// <summary>
+    /// Model class
+    /// </summary>
     class PMModel
     {
         private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";

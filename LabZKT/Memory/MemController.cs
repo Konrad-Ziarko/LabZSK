@@ -3,14 +3,20 @@ using System.Windows.Forms;
 
 namespace LabZKT.Memory
 {
-    public class MemControler
+    /// <summary>
+    /// Controller class
+    /// </summary>
+    public class MemController
     {
         MemModel theModel;
         MemView theView;
         MemSubmit theSubView;
 
-
-        public MemControler(ref List<MemoryRecord> List_Memory)
+        /// <summary>
+        /// Initialize instance of controller class
+        /// </summary>
+        /// <param name="List_Memory"></param>
+        public MemController(ref List<MemoryRecord> List_Memory)
         {
             theModel = new MemModel(ref List_Memory);
             theView = new MemView();
@@ -27,7 +33,9 @@ namespace LabZKT.Memory
             theView.NewMemoryRecord += NewMemoryRecord;
             theView.ShowDialog();
         }
-        
+        /// <summary>
+        /// Shows submit dialog form
+        /// </summary>
         public void NewMemoryRecord()
         {
             using (theSubView = new MemSubmit())
@@ -49,13 +57,19 @@ namespace LabZKT.Memory
             theModel.Grid_Mem = theView.GetDataGrid();
             theModel.CloseForm();
         }
-
+        /// <summary>
+        /// Starts save operating memory procedure
+        /// </summary>
+        /// <param name="fileName">String representing name of file</param>
         public void SaveTable(string fileName)
         {
             theModel.SaveTable(fileName);
             theView.isChanged = theModel.isChanged;
         }
-
+        /// <summary>
+        /// Starts load operating memory procedure
+        /// </summary>
+        /// <param name="fileName">String representing name of file</param>
         public void LoadTable(string fileName)
         {
             theModel.LoadTable(fileName);

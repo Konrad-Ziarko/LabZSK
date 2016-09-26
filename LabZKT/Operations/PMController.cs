@@ -4,13 +4,16 @@ using System.Windows.Forms;
 
 namespace LabZKT.MicroOperations
 {
-    class PMControler
+    /// <summary>
+    /// Controller class
+    /// </summary>
+    public class PMController
     {
         PMModel theModel;
         PMView theView;
         PMSubmit theSubView;
 
-        public PMControler(ref List<MicroOperation> List_MicroOp)
+        public PMController(ref List<MicroOperation> List_MicroOp)
         {
             theModel = new PMModel(ref List_MicroOp);
             theView = new PMView();

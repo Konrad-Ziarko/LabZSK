@@ -9,18 +9,18 @@ using Trinet.Core.IO.Ntfs;
 namespace LabZKT.Simulation
 {
     /// <summary>
-    /// Static class for logs creation and management
+    /// Class for logs creation and management
     /// </summary>
     public class LogManager
     {
         #region ADS
-        public const int GENERIC_WRITE = 1073741824;
-        public const int FILE_SHARE_DELETE = 4;
-        public const int FILE_SHARE_WRITE = 2;
-        public const int FILE_SHARE_READ = 1;
-        public const int OPEN_ALWAYS = 4;
+        private const int GENERIC_WRITE = 1073741824;
+        private const int FILE_SHARE_DELETE = 4;
+        private const int FILE_SHARE_WRITE = 2;
+        private const int FILE_SHARE_READ = 1;
+        private const int OPEN_ALWAYS = 4;
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern IntPtr CreateFile(string lpFileName,
+        private static extern IntPtr CreateFile(string lpFileName,
                                                 uint dwDesiredAccess,
                                                 uint dwShareMode,
                                                 IntPtr lpSecurityAttributes,
@@ -28,11 +28,15 @@ namespace LabZKT.Simulation
                                                 uint dwFlagsAndAttributes,
                                                 IntPtr hTemplateFile);
         [DllImport("kernel32", SetLastError = true)]
-        public static extern bool CloseHandle(IntPtr handle);
+        private static extern bool CloseHandle(IntPtr handle);
         #endregion
+
         private MemoryStream inMemoryLog = new MemoryStream();
         private static readonly LogManager instance;
         private string LogFile = string.Empty;
+        /// <summary>
+        /// Initialize singleton instance
+        /// </summary>
         public static LogManager Instance
         {
             get
@@ -45,8 +49,14 @@ namespace LabZKT.Simulation
         {
             instance = new LogManager();
         }
-        internal bool checkLogIntegrity(string pathToLog)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pathToLog">String representing path to log file</param>
+        /// <returns>Boolean indicating wheter log is valid</returns>
+        public bool checkLogIntegrity(string pathToLog)
         {
+            //a jak nie ma ADS? inne sposoby sprawdzenia integralnosci logu robic!
             bool toReturn = false;
             uint crcFromFile;
             byte[] arr = new byte[4];
@@ -65,7 +75,11 @@ namespace LabZKT.Simulation
             }
             return toReturn;
         }
-        internal void addToMemory(string v)
+        /// <summary>
+        /// Appends data to current log file
+        /// </summary>
+        /// <param name="v">String which will be appended to log file</param>
+        public void addToMemory(string v)
         {
             if (LogFile != string.Empty)
             {
@@ -108,12 +122,15 @@ namespace LabZKT.Simulation
         {
             return inMemoryLog.GetBuffer();
         }
-
-        internal void createNewLog(string logFile)
+        /// <summary>
+        /// Initialize new log file
+        /// </summary>
+        /// <param name="logFile">String representing path to log file</param>
+        public void createNewLog(string logFile)
         {
             try
             {
-                using (BinaryWriter bw = new BinaryWriter(File.Open(logFile, FileMode.CreateNew), Encoding.UTF8))
+                using (BinaryWriter bw = new BinaryWriter(File.Open(logFile, FileMode.Create), Encoding.UTF8))
                 {
                 }
                 LogFile = logFile;
@@ -123,7 +140,10 @@ namespace LabZKT.Simulation
                 MessageBox.Show("Wysątpił nieoczekiwany błąd podczas tworzenia logu!", "Ups", MessageBoxButtons.OK);
             }
         }
-        internal void clearInMemoryLog()
+        /// <summary>
+        /// Initialize new instance of 'In memory' log file
+        /// </summary>
+        public void clearInMemoryLog()
         {
             inMemoryLog = new MemoryStream();
         }

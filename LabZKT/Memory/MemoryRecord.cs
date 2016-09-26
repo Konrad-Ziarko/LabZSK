@@ -1,16 +1,53 @@
 ﻿namespace LabZKT.Memory
 {
+    /// <summary>
+    /// Class representing operating memory record
+    /// </summary>
     public class MemoryRecord
     {
+        /// <summary>
+        /// String representing record addres
+        /// </summary>
         public string addr { get; private set; }
+        /// <summary>
+        /// String representing record value
+        /// </summary>
         public string value { get; private set; }
+        /// <summary>
+        /// String representing record in hex
+        /// </summary>
         public string hex { get; private set; }
+        /// <summary>
+        /// Value representing record type
+        /// </summary>
         public int typ { get; private set; }
+        /// <summary>
+        /// String representing simple instruction
+        /// </summary>
         public string OP { get; private set; }
+        /// <summary>
+        /// String representing complex instruction
+        /// </summary>
         public string AOP { get; private set; }
+        /// <summary>
+        /// String representing simple instruction data field
+        /// </summary>
         public string DA { get; private set; }
+        /// <summary>
+        /// String representing complex instruction data field
+        /// </summary>
         public string N { get; private set; }
+        /// <summary>
+        /// String representing XSI bits
+        /// </summary>
         public string XSI { get; private set; }
+        /// <summary>
+        /// Initialize instance of MemoryRecord class
+        /// </summary>
+        /// <param name="a">Addres value 0 to 255</param>
+        /// <param name="v">String representing value of this record in binary</param>
+        /// <param name="h">Hex representation</param>
+        /// <param name="t">Type of record</param>
         public MemoryRecord(int a, string v, string h, int t)
         {
             addr = a.ToString();

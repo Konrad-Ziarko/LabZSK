@@ -37,6 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\LabZKT.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -76,9 +77,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Memory\MemControler.cs" />
+    <Compile Include="Memory\MemController.cs" />
     <Compile Include="Memory\MemModel.cs" />
-    <Compile Include="Operations\PMControler.cs" />
+    <Compile Include="Operations\PMController.cs" />
     <Compile Include="Operations\PMModel.cs" />
     <Compile Include="Controls\BitTextBox.cs">
       <SubType>Component</SubType>
@@ -128,7 +129,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Main\Program.cs" />
-    <Compile Include="Simulation\SimControler.cs" />
+    <Compile Include="Simulation\SimController.cs" />
     <Compile Include="Simulation\SimModel.cs" />
     <Compile Include="Main\SplashScreen.cs">
       <SubType>Form</SubType>

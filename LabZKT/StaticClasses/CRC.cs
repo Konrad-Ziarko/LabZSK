@@ -1,5 +1,8 @@
 ﻿namespace LabZKT.StaticClasses
 {
+    /// <summary>
+    /// Class used for various CRC operations
+    /// </summary>
     public static class CRC
     {
         /// <summary>
@@ -13,7 +16,7 @@
         /// <summary>
         /// Computes checksum for given block of data.
         /// </summary>
-        /// <param name="bytes">Block of data</param>
+        /// <param name="bytes">Block of data to compute</param>
         /// <returns>Check value/sum for given block of data</returns>
         public static uint ComputeChecksum(byte[] bytes)
         {

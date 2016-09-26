@@ -5,15 +5,24 @@ using System.Windows.Forms;
 namespace LabZKT.StaticClasses
 {
     /// <summary>
-    /// Static class with all necessary data for descriptions etc.
+    /// Static class with necessary descriptions
     /// </summary>
     public static class Translator
     {
+        /// <summary>
+        /// String array of complex operations mnemonics
+        /// </summary>
         static string[] DecodeComplexTable = new string[16] {"STP", "CMA", "ALA", "ARA", "LRQ", "LLQ", "LLA",
             "LRA", "LCA", "LAI", "LXI", "INX", "DEX", "OND", "ENI", "LDS"};
+        /// <summary>
+        /// String array of simple operations mnemonics
+        /// </summary>
         static string[] DecodeSimpleTable = new string[32] {"", "ADS", "SUS", "MUL", "DIV", "STQ", "STA", "STQ",
             "LDA", "LDX", "STC", "TXA", "TMQ", "ADX", "SIO", "LIO", "UNB", "BAQ", "BXP", "BXZ", "BXN", "TLD", "BAP",
             "BAZ", "BAN", "LOR", "LPR", "LNG", "EOR", "SRJ", "BDN", "NOP"};
+        /// <summary>
+        /// Dictionary holding binary value of simple and complex operations
+        /// </summary>
         static Dictionary<string, string> EncodeTable = new Dictionary<string, string>() { { "STP","0000" },
             {"CMA","0001" }, {"ALA","0010" } ,{"ARA","0011" }, {"LRQ","0100" }, {"LLQ","0101" }, {"LLA","0110" },
             {"LRA","0111" }, {"LCA","1000" }, {"LAI","1001" }, {"LXI","1010" }, {"INX","1011" }, {"DEX","1100" },
@@ -27,6 +36,9 @@ namespace LabZKT.StaticClasses
         };
 
         #region Descriptions
+        /// <summary>
+        /// Dictionary of desciption for simple and complex operations
+        /// </summary>
         static Dictionary<string, string> InstructionDescriptions = new Dictionary<string, string>() { { "STP","Stop dynamiczny" },
             {"CMA","Uzupełnienie A do 2" }, {"ALA","Przesunięcie arytmetyczne A w lewo" } ,{"ARA","Przesunięcie arytmetyczne A w prawo" },
             { "LRQ","Przesunięcie logiczne A || MQ w prawo" }, {"LLQ","Przesunięcie logiczne A || MQ w lewo" },
@@ -46,6 +58,9 @@ namespace LabZKT.StaticClasses
             { "EOR","Różnica symetryczna A i komórki" }, {"SRJ","Skok ze śladem" }, {"BDN","Skok jeśli urządzenie niedostępne" },
             {"NOP","Nic nie rób" }
         };
+        /// <summary>
+        /// Dictionary of description for microoperations
+        /// </summary>
         static Dictionary<string, string> MicroOpDescriptions = new Dictionary<string, string>() {
             {"IXRE", "RI -> LALU" },{"ILK", "BUS -> LK" },{"IRAP", "BUS -> RAP" },{"IRAE","SUMA -> RAE" },
             {"IALU", "A -> LALU"},{"ILR","BUS -> LR" },{"IX","BUS -> X" },{"IBE","BUS -> RALU" },
@@ -140,18 +155,35 @@ namespace LabZKT.StaticClasses
 
                 return rbps;
         }
+        /// <summary>
+        /// Get microoperation description
+        /// </summary>
+        /// <param name="microOpMnemo">String representing mnemonic of microoperation</param>
+        /// <returns>String representing description</returns>
         public static string GetMicroOpDescription(string microOpMnemo)
         {
             string description = "";
             MicroOpDescriptions.TryGetValue(microOpMnemo, out description);
             return description;
         }
+        /// <summary>
+        /// Get instruction description
+        /// </summary>
+        /// <param name="instructionMnemo">String representing instruction mnemonic name</param>
+        /// <returns>String representing description</returns>
         public static string GetInsrtuctionDescription(string instructionMnemo)
         {
             string description = "";
             InstructionDescriptions.TryGetValue(instructionMnemo, out description);
             return description;
         }
+        /// <summary>
+        /// Get instruction description
+        /// </summary>
+        /// <param name="instructionMnemo">String representing instruction mnemonic name</param>
+        /// <param name="binaryData">String representing binary value of instruction</param>
+        /// <param name="instructionType">Value representing type of instruction</param>
+        /// <returns>String representing description</returns>
         public static string GetInsrtuctionDescription(string instructionMnemo, string binaryData, int instructionType)
         {
             string description = "";
@@ -177,12 +209,11 @@ namespace LabZKT.StaticClasses
 
             return description;
         }
-        public static string EncodeInstruction(string binaryData)
-        {
-            string encodedInstruction = "";
-            EncodeTable.TryGetValue(binaryData, out encodedInstruction);
-            return encodedInstruction;
-        }
+        /// <summary>
+        /// Decode simple or complex instruciton
+        /// </summary>
+        /// <param name="instructionCode">String representing instruction value in binary</param>
+        /// <returns>String representing instruction mnemonic name</returns>
         public static string DecodeInstruction(string instructionCode)
         {
             string decodedInstructionMnemo = "";

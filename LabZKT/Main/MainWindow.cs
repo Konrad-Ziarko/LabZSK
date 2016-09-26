@@ -14,24 +14,55 @@ using System.Windows.Forms;
 
 namespace LabZKT
 {
+    /// <summary>
+    /// Windows form representing application main window
+    /// </summary>
     public partial class MainWindow : Form
     {
+        /// <summary>
+        /// Strign representing default path for files
+        /// </summary>
         private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
+        /// <summary>
+        /// String representing temporary file path
+        /// </summary>
         private string fileForPM = @"\Env\~micro.zkt", fileForPO = @"\Env\~mem.zkt";
+        /// <summary>
+        /// Boolean representing whether debugger is attached or not
+        /// </summary>
+        private bool isDebuggerPresent;
         private Author frmAuthor;
         private SimModel simModel;
-        private MemoryRecord lastRecordFromRRC;//pamietaj aby nulowac po zerowaniu rejestrow albo nowej symulacji
+        private MemoryRecord lastRecordFromRRC;//pamietaj aby nulowac po zerowaniu rejestrow albo nowej symulacji, to delete?
+        /// <summary>
+        /// List of loaded operating memory
+        /// </summary>
         private List<MemoryRecord> List_Memory = new List<MemoryRecord>();
+        /// <summary>
+        /// List of loaded microoperations
+        /// </summary>
         private List<MicroOperation> List_MicroOp = new List<MicroOperation>();
+        /// <summary>
+        /// Dictionary for register controls corresponding to their names
+        /// </summary>
         private Dictionary<string, NumericTextBox> registers = new Dictionary<string, NumericTextBox>() {
             {"LK", null }, {"A", null },{"MQ", null },{"X", null },{"RAP", null },{"LALU", null },{"RALU", null },
         {"RBP", null },{"ALU", null },{"BUS", null },{"RR", null },{"LR", null },{"RI", null },
         {"RAPS", null },{"RAE", null },{"L", null },{"R", null },{"SUMA", null }};
+        /// <summary>
+        /// Control representing RBPS register
+        /// </summary>
         private TextBox RBPS = new TextBox();
+        /// <summary>
+        /// Dictionary for flag controls corresponding to their names
+        /// </summary>
         private Dictionary<string, BitTextBox> flags = new Dictionary<string, BitTextBox>()
         {
             {"MAV", null }, {"IA",null }, {"INT", null }, {"ZNAK",null }, {"XRO", null }, {"OFF", null }
         };
+        /// <summary>
+        /// Initialize main window instance
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -137,6 +168,9 @@ namespace LabZKT
             }
             File.Delete(envPath + fileForPO);
         }
+        /// <summary>
+        /// Initialize flags with default values
+        /// </summary>
         private void initFlags()
         {
             flags["MAV"] = new BitTextBox(130, 125, null, "MAV");
@@ -184,7 +218,7 @@ namespace LabZKT
             RBPS.Text = "000000000000";
         }
         /// <summary>
-        /// Check if program was improperly closed and start recovering data if so.
+        /// Check if program was improperly closed, if so start recovering data
         /// </summary>
         private void checkIntegrity()
         {
@@ -207,6 +241,11 @@ namespace LabZKT
             if (File.Exists(envPath + fileForPO))
                 new Thread(() => { loadLastPOState(); }).Start();
         }
+        /// <summary>
+        /// Occurs when main window was loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainWindow_Load(object sender, EventArgs e)
         {
             TimeSpan start = new TimeSpan(20, 0, 0);
@@ -220,8 +259,11 @@ namespace LabZKT
             initRegisterTextBoxes();
             initFlags();
         }
-        
-        /// Invoke close event when butto is clicked
+        /// <summary>
+        /// Invokes close event when button was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_Close_Click(object sender, EventArgs e)
         {
             Invoke((MethodInvoker)delegate ()
@@ -229,8 +271,11 @@ namespace LabZKT
                 Close();
             });
         }
-
-        /// Handle FormClose event. Handle also Alt+F4 and 'X' button. If necessary save data, logs, etc.
+        /// <summary>
+        /// Occures on FormClose event. Handle Alt+F4 and close button. If necessary save data, logs, etc.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
@@ -280,20 +325,40 @@ namespace LabZKT
                 e.Cancel = true;
             }
         }
+        /// <summary>
+        /// Show microoperations form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_PM_Click(object sender, EventArgs e)
         {
-            PMControler pmControler = new PMControler(ref List_MicroOp);
+            PMController pmControler = new PMController(ref List_MicroOp);
         }
+        /// <summary>
+        /// Show operating memory form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_PO_Click(object sender, EventArgs e)
         {
-            MemControler memControler = new MemControler(ref List_Memory);
+            MemController memControler = new MemController(ref List_Memory);
         }
+        /// <summary>
+        /// Show run simulation form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_Run_Click(object sender, EventArgs e)
         {
             if (simModel == null)
                 simModel = new SimModel(ref List_Memory, ref List_MicroOp, ref registers, ref flags, ref RBPS, ref lastRecordFromRRC);
-            SimControler simControler = new SimControler(simModel);
+            SimController simControler = new SimController(simModel);
         }
+        /// <summary>
+        /// Show credentials form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_Author_Click(object sender, EventArgs e)
         {
             frmAuthor = new Author();
@@ -303,7 +368,11 @@ namespace LabZKT
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
         static extern bool CheckRemoteDebuggerPresent(IntPtr hProcess, ref bool isDebuggerPresent);
 
-        private bool isDebuggerPresent;
+        /// <summary>
+        /// Occures on timer tick. Checks if debugger is attached.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timer1_Tick(object sender, EventArgs e)
         {
             CheckRemoteDebuggerPresent(Process.GetCurrentProcess().Handle, ref isDebuggerPresent);
@@ -316,10 +385,13 @@ namespace LabZKT
                 //tmp.Focus();
             }
         }
-
+        /// <summary>
+        /// Occures when main window was showne. Check if debugger is attached.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainWindow_Shown(object sender, EventArgs e)
         {
-
             CheckRemoteDebuggerPresent(Process.GetCurrentProcess().Handle, ref isDebuggerPresent);
             if (isDebuggerPresent || System.Diagnostics.Debugger.IsAttached)
             {

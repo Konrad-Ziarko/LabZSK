@@ -7,21 +7,32 @@ using System.Windows.Forms;
 namespace LabZKT.Simulation
 {
     /// <summary>
-    /// Class used to draw circuits between registers
+    /// Class used to draw background circuit between registers
     /// </summary>
     public class Drawings
     {
         private Dictionary<string, NumericTextBox> registers;
         private Dictionary<string, BitTextBox> flags;
         private TextBox RBPS;
+        /// <summary>
+        /// Initialize instance of drawing class
+        /// </summary>
+        /// <param name="regs">Dictionary with CPU registers</param>
+        /// <param name="flgs">Dictionary with CPU flags</param>
+        /// <param name="rbps">TextBox representing RBPS register</param>
         public Drawings(ref Dictionary<string, NumericTextBox> regs, ref Dictionary<string, BitTextBox> flgs, ref TextBox rbps)
         {
             registers = regs;
             flags = flgs;
             RBPS = rbps;
         }
-        public void drawBackground(ref Graphics g, Panel panel_Sim_Control)
+        /// <summary>
+        /// Draw background for registers in passed control object
+        /// </summary>
+        /// <param name="panel_Sim_Control">Control for drawing background</param>
+        public void drawBackground(Control panel_Sim_Control)
         {
+            Graphics g = panel_Sim_Control.CreateGraphics();
             g.Clear(Color.FromArgb(255, 27, 96, 51));
             GraphicsPath path = new GraphicsPath();
             Pen pen = new Pen(Color.FromArgb(255, 133, 198, 72), 10);
@@ -198,7 +209,6 @@ namespace LabZKT.Simulation
             if (!registers["SUMA"].Visible)
                 g.DrawString("RBPS", fnt, sb, RBPS.Location.X, RBPS.Location.Y - 18);
             //return bmp;
-
         }
         private Point calculateTriangle(Point bottom, Point top, bool leftSide)
         {

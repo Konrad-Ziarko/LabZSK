@@ -1,5 +1,4 @@
-﻿using LabZKT.Simulation;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -8,18 +7,39 @@ using System.Windows.Forms;
 namespace LabZKT.Controls
 {
     /// <summary>
-    /// Class used to hold data for single register
+    /// Class which represents single CPU register
     /// </summary>
     public class NumericTextBox : TextBox
     {
+        /// <summary>
+        /// String representing register name
+        /// </summary>
+        public string registerName { get; private set; }
+        /// <summary>
+        /// Boolean value representing whether register value was changed and needs to be validated
+        /// </summary>
+        public bool needCheck { get; set; }
+        /// <summary>
+        /// Value stored in register
+        /// </summary>
+        public short innerValue { get; private set; }
+        /// <summary>
+        /// Value which should be moved to this register
+        /// </summary>
+        public short valueWhichShouldBeMovedToRegister { get; private set; }
         private static short dragValue;
         private static Point hitTest;
-        private short innerValue = 0, actualValue = 0;
-        public string registerName { get; private set; }
-        public bool needCheck { get; set; }
-
+        
+        /// <summary>
+        /// Initialize new instance of NumericTextBox
+        /// </summary>
+        /// <param name="name">String representing register name</param>
+        /// <param name="x">Value representing control X position</param>
+        /// <param name="y">Value representing control Y position</param>
+        /// <param name="c">Parent control for this instance</param>
         public NumericTextBox(string name, int x, int y, Control c)
         {
+            innerValue = valueWhichShouldBeMovedToRegister =0;
             registerName = name;
             ReadOnly = AllowDrop = true;
             needCheck = false;
@@ -33,7 +53,10 @@ namespace LabZKT.Controls
             BackColor = Color.White;
             Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
         }
-
+        /// <summary>
+        /// Occurs when key was pressed
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
             base.OnKeyPress(e);
@@ -106,7 +129,10 @@ namespace LabZKT.Controls
                 e.Handled = true;
             }
         }
-
+        /// <summary>
+        /// Occurs when control loses focus
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnLostFocus(EventArgs e)
         {
             base.OnLostFocus(e);
@@ -137,7 +163,10 @@ namespace LabZKT.Controls
                 setText();
             }
         }
-
+        /// <summary>
+        /// Occures when control got focus
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnGotFocus(EventArgs e)
         {
             if (ReadOnly == true)
@@ -150,16 +179,29 @@ namespace LabZKT.Controls
                 Text = "";
             }
         }
+        /// <summary>
+        /// Occurses when control was double clicked
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseDoubleClick(MouseEventArgs e)
         {
-            Text = "";
+           Text = "";
         }
-        /// Drag & Drop on dataGridView (copy insted of move)
+
+        #region Drag&Drop
+        /// <summary>
+        /// Occures when mouse button is down
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
             hitTest = new Point(e.X, e.Y);
         }
+        /// <summary>
+        /// Occures when mouse was moved
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseDown(e);
@@ -171,21 +213,26 @@ namespace LabZKT.Controls
                 setText();
             }
         }
-
+        /// <summary>
+        /// Occures when drag started
+        /// </summary>
+        /// <param name="drgevent"></param>
         protected override void OnDragEnter(DragEventArgs drgevent)
         {
             base.OnDragEnter(drgevent);
             drgevent.Effect = DragDropEffects.Copy;
         }
-
+        /// <summary>
+        /// Occures when drag was ended
+        /// </summary>
+        /// <param name="drgevent"></param>
         protected override void OnDragDrop(DragEventArgs drgevent)
         {
             base.OnDragDrop(drgevent);
-
             try
             {
                 innerValue = dragValue;
-                actualValue = innerValue;
+                valueWhichShouldBeMovedToRegister = innerValue;
                 setText();
             }
             catch (Exception)
@@ -194,7 +241,13 @@ namespace LabZKT.Controls
             }
 
         }
-        //zrobić delegata
+        #endregion
+        
+        /// <summary>
+        /// Set location coordinates for this control
+        /// </summary>
+        /// <param name="x">New X position</param>
+        /// <param name="y">New Y position</param>
         public void SetXY(int x, int y)
         {
             Point loc = Location;
@@ -202,30 +255,37 @@ namespace LabZKT.Controls
             loc.Y = y;
             Location = loc;
         }
+        /// <summary>
+        /// Reset value stored in register to default
+        /// </summary>
         public void resetValue()
         {
             innerValue = 0;
-            actualValue = 0;
+            valueWhichShouldBeMovedToRegister = 0;
             setText();
         }
-        public short getInnerValue()
-        {
-            return innerValue;
-        }
+        /// <summary>
+        /// Set value stored in register
+        /// </summary>
+        /// <param name="newVal">Value to store in register</param>
         public void setInnerValue(short newVal)
         {
             innerValue = newVal;
             setText();
         }
-        public short getActualValue()
-        {
-            return actualValue;
-        }
+        /// <summary>
+        /// Set what value should be moved to that register
+        /// </summary>
+        /// <param name="newVal">Expected register value</param>
         public void setActualValue(short newVal)
         {
-            actualValue = newVal;
+            valueWhichShouldBeMovedToRegister = newVal;
             clampValue();
         }
+        /// <summary>
+        /// Set if register needs to be validated
+        /// </summary>
+        /// <param name="name">String representing register name</param>
         public void setNeedCheck(out string name)
         {
             needCheck = true;
@@ -233,16 +293,21 @@ namespace LabZKT.Controls
             BackColor = Color.Yellow;
             name = registerName;
         }
-        public bool checkValue(out short badValue)
+        /// <summary>
+        /// Validate value moved to register
+        /// </summary>
+        /// <param name="badValue">Incorrect value moved to register or 0</param>
+        /// <returns>Boolean representing validation whether register was valid or not</returns>
+        public bool validateRegisterValue(out short badValue)
         {
             needCheck = false;
             ReadOnly = true;
             BackColor = Color.White;
             setText();
-            if (actualValue != innerValue)
+            if (valueWhichShouldBeMovedToRegister != innerValue)
             {
                 badValue = innerValue;
-                innerValue = actualValue;
+                innerValue = valueWhichShouldBeMovedToRegister;
                 return false;
             }
             else
@@ -251,48 +316,53 @@ namespace LabZKT.Controls
                 return true;
             }
         }
-        public void setText()
+        /// <summary>
+        /// Set register hexadecimal and decimal text representation of stored value
+        /// </summary>
+        private void setText()
         {
             clampValue();
             Text = innerValue.ToString("X") + "h\t" + innerValue;
         }
-        public void incrementInnerValue()
+        /// <summary>
+        /// Set value stored and expected value for register
+        /// </summary>
+        /// <param name="newVal">New value to be stored</param>
+        public void setInnerAndExpectedValue(short newVal)
         {
-            innerValue = (short)(innerValue + 1);
-            clampValue();
-        }
-        public void setInnerAndActual(short newVal)
-        {
-            innerValue = actualValue = newVal;
+            innerValue = valueWhichShouldBeMovedToRegister = newVal;
             needCheck = false;
             setText();
         }
+        /// <summary>
+        /// Protect registers from overflowing by clamping values
+        /// </summary>
         private void clampValue()
         {
             if (registerName == "RAE")
             {
                 innerValue &= 63;
-                actualValue &= 63;
+                valueWhichShouldBeMovedToRegister &= 63;
             }
             else if (registerName == "LK")
             {
                 innerValue &= 127;
-                actualValue &= 127;
+                valueWhichShouldBeMovedToRegister &= 127;
             }
             else if (registerName == "RAPS")
             {
                 innerValue &= 255;
-                actualValue &= 255;
+                valueWhichShouldBeMovedToRegister &= 255;
             }
             else if (registerName == "RAP")
             {
                 innerValue &= 255;
-                actualValue &= 255;
+                valueWhichShouldBeMovedToRegister &= 255;
             }
             else if (registerName == "LR")
             {
                 innerValue &= 255;
-                actualValue &= 255;
+                valueWhichShouldBeMovedToRegister &= 255;
             }
         }
     }
