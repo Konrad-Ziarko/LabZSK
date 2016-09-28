@@ -37,6 +37,7 @@
             theView.AButtonOKClicked += ButtonOKClicked;
             theView.ASaveCurrentState += SaveState;
             theView.AShowLog += theModel.ShowLog;
+            theView.ACallDevConsole += theModel.DevConsole;
 
             theModel.StartSim += startSim;
             theModel.StopSim += theView.stopSim;

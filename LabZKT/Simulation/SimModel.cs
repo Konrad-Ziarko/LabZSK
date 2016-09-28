@@ -53,6 +53,14 @@ namespace LabZKT.Simulation
         /// Represents RBPS register
         /// </summary>
         public TextBox RBPS { get; set; }
+
+        internal void DevConsole()
+        {
+            if (devConsole == null)
+                devConsole = new DevConsole(this);
+            devConsole.Show();
+        }
+
         /// <summary>
         /// Represents CPU registers
         /// </summary>
@@ -68,8 +76,14 @@ namespace LabZKT.Simulation
         internal bool buttonOKClicked = false;
         internal bool inMicroMode = false;
         internal bool isRunning = false;
-        private DataGridView Grid_PM;
         internal bool buttonNextTactClicked = false;
+        #region DEV
+        internal bool DEVMODE = false;
+        internal DevConsole devConsole;
+        internal int DEVVALUE;
+        internal string DEVREGISTER;
+        #endregion
+        private DataGridView Grid_PM;
         private bool resetBus;
         private List<MicroOperation> List_MicroOp;
         private List<MemoryRecord> List_Memory;
@@ -99,7 +113,7 @@ namespace LabZKT.Simulation
             this.flags = flags;
             this.RBPS = RBPS;
             this.lastRecordFromRRC = lastRecordFromRRC;
-            
+
             currentTact = mistakes = 0;
             mark = 5;
             logManager = LogManager.Instance;
@@ -340,6 +354,17 @@ namespace LabZKT.Simulation
                 logManager.addToMemory("\t" + registerToCheck + "=" + registers[registerToCheck].innerValue + "\n");
             }
         }
+        private void waitForButton()
+        {
+            if (!DEVMODE)
+                while (buttonOKClicked == false)
+                    Application.DoEvents();
+            else
+            {
+                registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                validateRegisters();
+            }
+        }
         /// <summary>
         /// Close current log and prepare for new log
         /// </summary>
@@ -392,13 +417,26 @@ namespace LabZKT.Simulation
                 ButtonOKSetVisivle();
                 EnDisableButtons();
                 registers[registerToCheck].Focus();
-                while (buttonOKClicked == false)
-                    Application.DoEvents();
+                waitForButton();
                 EnDisableButtons();
                 currentTact = 0;
                 SetNextTact(currentTact);
-                stopSim();
-                buttonOKClicked = false;
+                if (!DEVMODE)
+                {
+                    stopSim();
+                    buttonOKClicked = false;
+                }
+                else if(DEVMODE && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
+                {
+                    DEVMODE = false;
+                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                    stopSim();
+                    buttonOKClicked = false;
+                }
+                else if (DEVMODE)
+                {
+                    prepareSimulation(false);
+                }
             }
             else if (currentTact == 8)
             {
@@ -432,8 +470,7 @@ namespace LabZKT.Simulation
                     ButtonOKSetVisivle();
                     EnDisableButtons();
                     registers[registerToCheck].Focus();
-                    while (buttonOKClicked == false)
-                        Application.DoEvents();
+                    waitForButton();
                     buttonOKClicked = false;
                     EnDisableButtons();
                     registers["RAPS"].setActualValue(254);
@@ -550,13 +587,14 @@ namespace LabZKT.Simulation
                 EnDisableButtons();
                 registers[registerToCheck].Focus();
             }
-            while (buttonOKClicked == false)
-                Application.DoEvents();
+            waitForButton();
             buttonOKClicked = false;
             if (registerToCheck != "")
                 EnDisableButtons();
             currentTact = 9;
         }
+
+        
 
         private void exeTact7()
         {
@@ -734,8 +772,7 @@ namespace LabZKT.Simulation
                 EnDisableButtons();
                 registers[registerToCheck].Focus();
             }
-            while (buttonOKClicked == false)
-                Application.DoEvents();
+            waitForButton();
             buttonOKClicked = false;
             if (resetBus)
             {
@@ -828,6 +865,11 @@ namespace LabZKT.Simulation
                 {
                     registers["LR"].setActualValue(registers["BUS"].innerValue);
                     registers["LR"].setNeedCheck(out registerToCheck);
+                }
+                else if (microOpMnemo == "IRI")
+                {
+                    registers["RI"].setActualValue(registers["BUS"].innerValue);
+                    registers["RI"].setNeedCheck(out registerToCheck);
                 }
                 else if (microOpMnemo == "IX")
                 {
@@ -924,8 +966,7 @@ namespace LabZKT.Simulation
                 EnDisableButtons();
                 registers[registerToCheck].Focus();
             }
-            while (buttonOKClicked == false)
-                Application.DoEvents();
+            waitForButton();
             if (resetBus)
             {
                 registers["BUS"].setInnerAndExpectedValue(0);
@@ -1104,8 +1145,7 @@ namespace LabZKT.Simulation
                 EnDisableButtons();
                 registers[registerToCheck].Focus();
             }
-            while (buttonOKClicked == false)
-                Application.DoEvents();
+            waitForButton();
             if (registerToCheck != "")
                 EnDisableButtons();
             if ((registers["ALU"].valueWhichShouldBeMovedToRegister & 0x8000) == 0x8000)
@@ -1213,8 +1253,7 @@ namespace LabZKT.Simulation
                     ButtonOKSetVisivle();
                     EnDisableButtons();
                     registers[registerToCheck].Focus();
-                    while (buttonOKClicked == false)
-                        Application.DoEvents();
+                    waitForButton();
                     EnDisableButtons();
                     buttonOKClicked = false;
                     if (LastBit)
@@ -1240,8 +1279,7 @@ namespace LabZKT.Simulation
                     ButtonOKSetVisivle();
                     EnDisableButtons();
                     registers[registerToCheck].Focus();
-                    while (buttonOKClicked == false)
-                        Application.DoEvents();
+                    waitForButton();
                     EnDisableButtons();
                     buttonOKClicked = false;
                     testAndSet("MQ", (short)(registers["MQ"].innerValue << 1));
@@ -1316,8 +1354,7 @@ namespace LabZKT.Simulation
                 EnDisableButtons();
                 registers[registerToCheck].Focus();
             }
-            while (buttonOKClicked == false)
-                Application.DoEvents();
+            waitForButton();
             if (registerToCheck != "")
                 EnDisableButtons();
             if (resetBus)
@@ -1485,8 +1522,9 @@ namespace LabZKT.Simulation
             if (inMicroMode)
             {
                 ButtonNextTactSetVisible();
-                while (buttonNextTactClicked == false)
-                    Application.DoEvents();
+                if(!DEVMODE)
+                    while (buttonNextTactClicked == false)
+                        Application.DoEvents();
             }
             currentTact = (currentTact + 1) % 8;
             SetNextTact(currentTact);

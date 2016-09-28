@@ -26,6 +26,8 @@ namespace LabZKT.Simulation
         internal event Action AButtonOKClicked;
         internal event Action<bool> ASaveCurrentState;
         internal event Action<string> AShowLog;
+        internal event Action ACallDevConsole;
+
         internal int currnetCycle { get; set; }
         internal int mark { get; set; }
         internal int mistakes { get; set; }
@@ -36,7 +38,8 @@ namespace LabZKT.Simulation
         internal bool buttonOKClicked { get; set; }
         private DataGridViewCellStyle dgvcs1;
         private bool inEditMode;
-        
+        private Keys devKeyRequired;
+
         /// <summary>
         /// Initialize simulation view instance
         /// </summary>
@@ -145,7 +148,7 @@ namespace LabZKT.Simulation
             dataGridView_Info.Rows[2].DefaultCellStyle = dgvcs2;
             dataGridView_Info.Rows[3].DefaultCellStyle = dgvcs2;
         }
-  
+
         private void RunSim_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (isRunning)
@@ -328,6 +331,31 @@ namespace LabZKT.Simulation
         private void RunSim_Paint(object sender, PaintEventArgs e)
         {
             ADrawBackground(panel_Sim_Control);
+        }
+
+        private void SimView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.Shift && e.KeyCode == Keys.A)
+            {
+                devKeyRequired = Keys.D;
+            }
+            else if (e.KeyCode == devKeyRequired)
+            {
+                if (devKeyRequired == Keys.D)
+                    devKeyRequired = Keys.E;
+                else if (devKeyRequired == Keys.E)
+                    devKeyRequired = Keys.V;
+                else if (devKeyRequired == Keys.V)
+                    devKeyRequired = Keys.D4;
+                else if (devKeyRequired == Keys.D4)
+                    devKeyRequired = Keys.D2;
+                else if (devKeyRequired == Keys.D2)
+                    ACallDevConsole();
+            }
+            else
+            { 
+                devKeyRequired = Keys.F24;
+            }
         }
     }
 }
