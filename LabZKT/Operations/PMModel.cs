@@ -144,7 +144,6 @@ namespace LabZKT.MicroOperations
                         int m = br.ReadInt32();
                         if (m == 256 && n == 12)
                         {
-                            MicroOperation tmpMicroOperation;
                             string allMicroOpInRow = "";
                             string tmpString = "";
                             for (int i = 0; i < m; ++i)
@@ -160,12 +159,6 @@ namespace LabZKT.MicroOperations
                                     else
                                         br.ReadBoolean();
                                 }
-                                string[] attributes = allMicroOpInRow.Split(' ');
-                                allMicroOpInRow = "";
-                                tmpMicroOperation = new MicroOperation(attributes[0], attributes[1], attributes[2], attributes[3],
-                                    attributes[4], attributes[5], attributes[6], attributes[7], attributes[8], attributes[9],
-                                    attributes[10], attributes[11]);
-                                List_MicroOps[i] = tmpMicroOperation;
                             }
                             isChanged = true;
                         }

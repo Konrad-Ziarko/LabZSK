@@ -142,7 +142,6 @@ namespace LabZKT.Memory
                         int m = br.ReadInt32();
                         if (m == 256 && n == 4)
                         {
-                            MemoryRecord tmpMemory;
                             string singleMemoryRecord = "";
                             string tmpString = "";
                             for (int i = 0; i < m; ++i)
@@ -158,10 +157,6 @@ namespace LabZKT.Memory
                                     else
                                         br.ReadBoolean();
                                 }
-                                string[] attributes = singleMemoryRecord.Split(' ');
-                                singleMemoryRecord = "";
-                                tmpMemory = new MemoryRecord(Convert.ToInt16(attributes[0]), attributes[1], attributes[2], Convert.ToInt16(attributes[3]));
-                                List_Memory[i] = tmpMemory;
                             }
                             isChanged = true;
                         }

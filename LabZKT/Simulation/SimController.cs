@@ -28,7 +28,6 @@
             theView.ALeaveEditMode += theModel.leaveEditMode;
             theView.AClearRegisters += theModel.clearRegisters;
             theView.AGetMemoryRecord += getMemoryRecord;
-            theView.AAddToLog += theModel.addToLog;
             theView.ANewLog += theModel.CloseCurrentLogFile;
             theView.APrepareSimulation += theModel.prepareSimulation;
             theView.ANextTact += nextTact;

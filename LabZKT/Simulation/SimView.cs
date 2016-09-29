@@ -17,7 +17,6 @@ namespace LabZKT.Simulation
         internal event Action ALeaveEditMode;
         internal event Action AClearRegisters;
         internal event Action<int> AGetMemoryRecord;
-        internal event Action<string> AAddToLog;
         internal event Action<bool> APrepareSimulation;
         internal event Action ANextTact;
         internal event Action<Control> ADrawBackground;
@@ -75,7 +74,6 @@ namespace LabZKT.Simulation
             richTextBox_Log.SelectionColor = Color.Black;
             richTextBox_Log.Select(end, 0);
             richTextBox_Log.ScrollToCaret();
-            AAddToLog("\t" + tact + " " + mnemo + " " + description + "\n");
         }
         /// <summary>
         /// Set display for simulation stop state

@@ -288,11 +288,13 @@ namespace LabZKT.Simulation
         /// <summary>
         /// Add data to current log file
         /// </summary>
-        /// <param name="text">String representing log information</param>
-        public void addToLog(string text)
+        /// <param name="tact">String representing current tack</param>
+        /// <param name="mnemo">String representing operation mnemonic</param>
+        /// <param name="description">String representing operation description</param>
+        public void addToLog(string tact, string mnemo, string description)
         {
             //poprawić format logu
-            logManager.addToMemory(text);
+            logManager.addToMemory("\t" + tact + " | " + mnemo + " : " + description + "\n");
         }
         /// <summary>
         /// Initialize simulation log and start simulation
@@ -338,7 +340,7 @@ namespace LabZKT.Simulation
             if (!registers[registerToCheck].validateRegisterValue(out badValue))
             {
                 new Thread(SystemSounds.Beep.Play).Start();
-                logManager.addToMemory("\tBłąd(" + (mistakes + 1) + "): " + registerToCheck + "=" + badValue +
+                logManager.addToMemory("\t\tBłąd(" + (mistakes + 1) + "): " + registerToCheck + "=" + badValue +
                     "(" + registerToCheck + "=" + registers[registerToCheck].innerValue + ")\n\n");
 
                 mistakes++;
@@ -351,7 +353,7 @@ namespace LabZKT.Simulation
             }
             else
             {
-                logManager.addToMemory("\t" + registerToCheck + "=" + registers[registerToCheck].innerValue + "\n");
+                logManager.addToMemory("\t\t" + registerToCheck + "=" + registers[registerToCheck].innerValue + "\n");
             }
         }
         private void waitForButton()
@@ -442,6 +444,12 @@ namespace LabZKT.Simulation
             {
                 registers["LALU"].setInnerAndExpectedValue(0);
                 registers["RALU"].setInnerAndExpectedValue(0);
+                currentTact = 0;
+                SetNextTact(currentTact);
+                stopSim();
+            }
+            else if (currentTact == 9)
+            {
                 currentTact = 0;
                 SetNextTact(currentTact);
                 stopSim();
@@ -566,6 +574,7 @@ namespace LabZKT.Simulation
             }
             cells[9, 7] = false;
             AddText("TEST", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+            addToLog("TEST", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
 
             if (isTestPositive)
             {
@@ -622,6 +631,7 @@ namespace LabZKT.Simulation
                 }
                 cells[8, 7] = false;
                 AddText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[5, 7])
             {
@@ -664,6 +674,7 @@ namespace LabZKT.Simulation
                 }
                 cells[5, 7] = false;
                 AddText("S3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToLog("S3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[6, 7])
             {
@@ -751,6 +762,7 @@ namespace LabZKT.Simulation
                 cells[6, 7] = false;
                 resetBus = true;
                 AddText("D3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToLog("D3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[7, 7])
             {
@@ -765,6 +777,7 @@ namespace LabZKT.Simulation
                 currentTact = 9;
                 cells[7, 7] = false;
                 AddText("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToLog("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             ButtonOKSetVisivle();
             if (registerToCheck != "")
@@ -846,6 +859,7 @@ namespace LabZKT.Simulation
                 }
                 cells[3, 6] = false;
                 AddText("S2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToLog("S2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[4, 6])
             {
@@ -918,6 +932,7 @@ namespace LabZKT.Simulation
                 cells[4, 6] = false;
                 resetBus = true;
                 AddText("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToLog("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[8, 6])
             {
@@ -959,6 +974,7 @@ namespace LabZKT.Simulation
                 }
                 cells[8, 6] = false;
                 AddText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             ButtonOKSetVisivle();
             if (registerToCheck != "")
@@ -1023,7 +1039,7 @@ namespace LabZKT.Simulation
                 }
                 else if (microOpMnemo == "CMA")
                 {
-                    registers["ALU"].setActualValue((short)(1 + registers["LALU"].innerValue));
+                    registers["ALU"].setActualValue((short)(1 + ~registers["LALU"].innerValue));
                     registers["ALU"].setNeedCheck(out registerToCheck);
                 }
                 else if (microOpMnemo == "OR")
@@ -1137,6 +1153,7 @@ namespace LabZKT.Simulation
                 }
                 cells[10, 2] = false;
                 AddText("ALU", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToLog("ALU", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
 
             ButtonOKSetVisivle();
@@ -1200,6 +1217,7 @@ namespace LabZKT.Simulation
                 }
                 cells[1, 1] = false;
                 AddText("S1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToLog("S1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[2, 1])
             {
@@ -1220,13 +1238,16 @@ namespace LabZKT.Simulation
                 cells[2, 1] = false;
                 resetBus = true;
                 AddText("D1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToLog("D1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[4, 1])
             {
                 Grid_PM.CurrentCell = Grid_PM[4, raps];
                 microOpMnemo = Grid_PM[4, raps].Value.ToString();
                 AddText("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToLog("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
                 AddText("C1", "SHT", Translator.GetMicroOpDescription("SHT"));
+                addToLog("C1", "SHT", Translator.GetMicroOpDescription("SHT"));
                 int A = registers["A"].innerValue;
                 bool SignBit = (A & 0x8000) == 0x8000 ? true : false;
                 bool LastBit = (A & 0x0001) == 0x0001 ? true : false;
@@ -1334,6 +1355,7 @@ namespace LabZKT.Simulation
                 }
                 cells[7, 1] = false;
                 AddText("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToLog("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[8, 1])
             {
@@ -1347,6 +1369,7 @@ namespace LabZKT.Simulation
                 }
                 cells[8, 1] = false;
                 AddText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             ButtonOKSetVisivle();
             if (registerToCheck != "")

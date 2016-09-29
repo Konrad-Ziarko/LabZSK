@@ -68,7 +68,7 @@ namespace LabZKT.StaticClasses
             {"IAS","A0 -> ZNAK" },{"IRR","BUS -> RR" },{"IRBP","BUS -> RBP" },{"SRBP","BUS -> RBP"},
             {"OXE", "X -> RALU"},{"OLR", "LR -> BUS" },{"ORR", "RR -> BUS"},{"ORAE", "RAE -> BUS"},
             {"OX", "X -> BUS"},{"ORI","RI -> BUS" },{"OA","A -> BUS" },{"OMQ","MQ -> BUS" },
-            {"OBE","ALU -> BUS" },{"ORB","RBP -> BUS" },{"NSI","LR+1 -> LR" },{"SGN","X0 -> ZNAK" },
+            {"OBE","ALU -> BUS" },{"ORBP","RBP -> BUS" },{"NSI","LR+1 -> LR" },{"SGN","X0 -> ZNAK" },
             {"ALA","arytmetyczne A w lewo"},{"ARA","arytmetyczne A w prawo"},
             {"LRQ","logiczne A || MQ w prawo"},{"LLQ","logiczne A || MQ w lewo"},
             {"LLA","logiczne A w lewo"},{"LRA","logiczne A w prawo"},
@@ -84,8 +84,8 @@ namespace LabZKT.StaticClasses
             {"TAP","A < 0"},{"TAZ","A = 0"},{"ADS","ALU = LALU + RALU"},{"SUS","ALU = LALU - RALU"},
             {"CMX","ALU = (NOT RALU)+1"},{"CMA","ALU = (NOT LALU)+1"},{"OR","ALU = LALU OR RALU"},{"AND","ALU = LALU AND RALU"},
             {"EOR","ALU = LALU XOR RALU"},{"NOTL","ALU = NOT LALU"},{"NOTR","ALU = NOT RALU"},{"L","ALU = LALU"},
-            {"R","ALU = RALU"},{"INCL","ALU = LALU + 1"},{"INLK","ALU = RALU + 1"},{"DECL","ALU = LALU - 1"},
-            {"DELK","ALU = RALU - 1"},{"ONE","ALU = 1"},{"ZERO","ALU = 0"},
+            {"R","ALU = RALU"},{"INCL","ALU = LALU + 1"},{"INCR","ALU = RALU + 1"},{"DECL","ALU = LALU - 1"},
+            {"DECR","ALU = RALU - 1"},{"ONE","ALU = 1"},{"ZERO","ALU = 0"},
         };
         #endregion
 
@@ -111,7 +111,7 @@ namespace LabZKT.StaticClasses
         };
         private static Dictionary<string, long> instCodeS3 = new Dictionary<string, long>()
         {
-            {"", 0 },{"ORI", 0x1 },{"OLR", 0x2 },{"OA", 0x3 },{"ORAE", 0x4 },{"OMQ", 0x5 },{"ORB", 0x6 },{"OXE", 0x7 }
+            {"", 0 },{"ORI", 0x1 },{"OLR", 0x2 },{"OA", 0x3 },{"ORAE", 0x4 },{"OMQ", 0x5 },{"ORBP", 0x6 },{"OXE", 0x7 }
         };
         private static Dictionary<string, long> instCodeD3 = new Dictionary<string, long>()
         {
@@ -135,8 +135,8 @@ namespace LabZKT.StaticClasses
         private static Dictionary<string, long> instCodeALU = new Dictionary<string, long>()
         {
             {"", 0 },{"ADS", 0x1 },{"SUS", 0x2 },{"CMX", 0x3 },{"CMA", 0x4 },{"OR", 0x5 },{"AND", 0x6 },{"EOR", 0x7 },
-            {"NOTL", 0x8 },{"NOTR", 0x9 },{"L", 0xA },{"R", 0xB },{"INCL", 0xC },{"INLK", 0xD },{"DECL", 0xE },
-            {"DELK", 0xF },{"INE", 0x10 },{"ZERO", 0x11 }
+            {"NOTL", 0x8 },{"NOTR", 0x9 },{"L", 0xA },{"R", 0xB },{"INCL", 0xC },{"INCR", 0xD },{"DECL", 0xE },
+            {"DECR", 0xF },{"ONE", 0x10 },{"ZERO", 0x11 }
         };
         #endregion
 

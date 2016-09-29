@@ -214,7 +214,7 @@ namespace LabZKT.MicroOperations
                 radioButton4.Text = "OA             A -> BUS";
                 radioButton5.Text = "ORAE           RAE -> BUS";
                 radioButton6.Text = "OMQ            MQ -> BUS";
-                radioButton7.Text = "ORB            RBP -> BUS";
+                radioButton7.Text = "ORBP           RBP -> BUS";
                 radioButton8.Text = "OXE            X -> RALU";
                 hide_RadioButtons_From(9);
             }
@@ -309,9 +309,9 @@ namespace LabZKT.MicroOperations
             radioButton11.Text = "L              ALU = LALU";
             radioButton12.Text = "R              ALU = RALU";
             radioButton13.Text = "INCL           ALU = LALU + 1";
-            radioButton14.Text = "INLK           ALU = RALU + 1";
+            radioButton14.Text = "INCR           ALU = RALU + 1";
             radioButton15.Text = "DECL           ALU = LALU - 1";
-            radioButton16.Text = "DELK           ALU = RALU - 1";
+            radioButton16.Text = "DECR           ALU = RALU - 1";
             radioButton17.Text = "ONE            ALU = 1";
             radioButton18.Text = "ZERO           ALU = 0";
         }
