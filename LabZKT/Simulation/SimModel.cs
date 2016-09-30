@@ -217,7 +217,7 @@ namespace LabZKT.Simulation
             registers["SUMA"].SetXY((registers["R"].Location.X - registers["L"].Location.X + 130) / 2
                 - 65 + registers["L"].Location.X, verticalGap * 4 + (verticalGap - 27) * 3 / 4);
         }
-        public void switchLayOut(Control panel_Sim_Control)
+        public void switchLayOut()//Control panel_Sim_Control)
         {
             if (registers["SUMA"].Visible)
             {
@@ -229,7 +229,7 @@ namespace LabZKT.Simulation
                 registers["SUMA"].Visible = registers["L"].Visible = registers["R"].Visible = true;
                 RBPS.Visible = registers["RAPS"].Visible = registers["RAE"].Visible = false;
             }
-            draw.drawBackground(panel_Sim_Control);
+            //draw.drawBackground(panel_Sim_Control);
         }
         /// <summary>
         /// Leave simulation edit mode
@@ -341,7 +341,7 @@ namespace LabZKT.Simulation
             {
                 new Thread(SystemSounds.Beep.Play).Start();
                 logManager.addToMemory("\t\tBłąd(" + (mistakes + 1) + "): " + registerToCheck + "=" + badValue +
-                    "(" + registerToCheck + "=" + registers[registerToCheck].innerValue + ")\n\n");
+                    "(poprawna " + registerToCheck + "=" + registers[registerToCheck].innerValue + ")\n\n");
 
                 mistakes++;
                 if (mistakes >= 2 && mistakes <= 5)
@@ -363,6 +363,7 @@ namespace LabZKT.Simulation
                     Application.DoEvents();
             else
             {
+                Application.DoEvents();
                 registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
                 validateRegisters();
             }
@@ -389,7 +390,7 @@ namespace LabZKT.Simulation
         {
             if (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1]))
                 logManager.addToMemory("Takt1:\n");
-            while (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1]))
+            while (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1] || cells[8, 1]))
                 exeTact1();
             if (currentTact == 1)
                 nextTact();
@@ -413,8 +414,7 @@ namespace LabZKT.Simulation
                 exeTest();
             else if (currentTact == 7 && !isTestPositive)
             {
-                registers["RAPS"].setActualValue((short)(registers["RAPS"].innerValue + 1));
-                registers["RAPS"].setNeedCheck(out registerToCheck);
+                testAndSet("RAPS", (short)(registers["RAPS"].innerValue + 1));
                 Grid_PM.CurrentCell = Grid_PM[11, registers["RAPS"].innerValue];
                 ButtonOKSetVisivle();
                 EnDisableButtons();
@@ -428,7 +428,7 @@ namespace LabZKT.Simulation
                     stopSim();
                     buttonOKClicked = false;
                 }
-                else if(DEVMODE && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
+                else if (DEVMODE && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
                 {
                     DEVMODE = false;
                     registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
@@ -524,7 +524,7 @@ namespace LabZKT.Simulation
                 if ((registers["MQ"].innerValue & 0x0001) != 0x0001)
                     isTestPositive = true;
             }
-            else if (microOpMnemo == "TCR")
+            else if (microOpMnemo == "TLK")
             {
                 short lk = registers["LK"].innerValue;
                 if (Grid_PM.Rows[raps].Cells[7].Value.ToString() == "SHT")
@@ -603,8 +603,6 @@ namespace LabZKT.Simulation
             currentTact = 9;
         }
 
-        
-
         private void exeTact7()
         {
             if (cells[8, 7])
@@ -612,23 +610,13 @@ namespace LabZKT.Simulation
                 Grid_PM.CurrentCell = Grid_PM[8, raps];
                 microOpMnemo = Grid_PM[8, raps].Value.ToString();
                 if (microOpMnemo == "RA")
-                {
-                    registers["A"].setActualValue(0);
-                    registers["A"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("A", 0);
                 else if (microOpMnemo == "RMQ")
-                {
-                    registers["MQ"].setActualValue(0);
-                    registers["MQ"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("MQ", 0);
                 else if (microOpMnemo == "RINT")
-                {
                     flags["INT"].setInnerValue(0);
-                }
                 else if (microOpMnemo == "ENI")
-                {
                     flags["INT"].setInnerValue(1);
-                }
                 cells[8, 7] = false;
                 AddText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
                 addToLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
@@ -638,40 +626,19 @@ namespace LabZKT.Simulation
                 Grid_PM.CurrentCell = Grid_PM[5, raps];
                 microOpMnemo = Grid_PM[5, raps].Value.ToString();
                 if (microOpMnemo == "ORI")
-                {
-                    registers["BUS"].setActualValue(registers["RI"].innerValue);
-                    registers["BUS"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("BUS", registers["RI"].innerValue);
                 else if (microOpMnemo == "ORAE")
-                {
-                    registers["BUS"].setActualValue(registers["RAE"].innerValue);
-                    registers["BUS"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("BUS", registers["RAE"].innerValue);
                 else if (microOpMnemo == "OXE")
-                {
-                    registers["RALU"].setActualValue(registers["X"].innerValue);
-                    registers["RALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("RALU", registers["X"].innerValue);
                 else if (microOpMnemo == "OA")
-                {
-                    registers["BUS"].setActualValue(registers["A"].innerValue);
-                    registers["BUS"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("BUS", registers["A"].innerValue);
                 else if (microOpMnemo == "OMQ")
-                {
-                    registers["BUS"].setActualValue(registers["MQ"].innerValue);
-                    registers["BUS"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("BUS", registers["MQ"].innerValue);
                 else if (microOpMnemo == "OLR")
-                {
-                    registers["BUS"].setActualValue(registers["LR"].innerValue);
-                    registers["BUS"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("BUS", registers["LR"].innerValue);
                 else if (microOpMnemo == "ORBP")
-                {
-                    registers["BUS"].setActualValue(registers["RBP"].innerValue);
-                    registers["BUS"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("BUS", registers["RBP"].innerValue);
                 cells[5, 7] = false;
                 AddText("S3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
                 addToLog("S3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
@@ -681,45 +648,21 @@ namespace LabZKT.Simulation
                 Grid_PM.CurrentCell = Grid_PM[6, raps];
                 microOpMnemo = Grid_PM[6, raps].Value.ToString();
                 if (microOpMnemo == "OXE")
-                {
-                    registers["RALU"].setActualValue(registers["X"].innerValue);
-                    registers["RALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("RALU", registers["X"].innerValue);
                 else if (microOpMnemo == "ILR")
-                {
-                    registers["LR"].setActualValue(registers["BUS"].innerValue);
-                    registers["LR"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("LR", registers["BUS"].innerValue);
                 else if (microOpMnemo == "IX")
-                {
-                    registers["X"].setActualValue(registers["BUS"].innerValue);
-                    registers["X"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("X", registers["BUS"].innerValue);
                 else if (microOpMnemo == "IBE")
-                {
-                    registers["RALU"].setActualValue(registers["BUS"].innerValue);
-                    registers["RALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("RALU", registers["BUS"].innerValue);
                 else if (microOpMnemo == "IBI")
-                {
-                    registers["RAE"].setActualValue(registers["BUS"].innerValue);
-                    registers["RAE"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("RAE", registers["BUS"].innerValue);
                 else if (microOpMnemo == "IA")
-                {
-                    registers["A"].setActualValue(registers["BUS"].innerValue);
-                    registers["A"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("A", registers["BUS"].innerValue);
                 else if (microOpMnemo == "IMQ")
-                {
-                    registers["MQ"].setActualValue(registers["BUS"].innerValue);
-                    registers["MQ"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("MQ", registers["BUS"].innerValue);
                 else if (microOpMnemo == "NSI")
-                {
-                    registers["LR"].setActualValue((short)(registers["LR"].innerValue + 1));
-                    registers["LR"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("LR", (short)(registers["LR"].innerValue + 1));
                 else if (microOpMnemo == "IAS")
                 {
                     if ((registers["A"].innerValue & 0x8000) == 0x8000)
@@ -735,30 +678,15 @@ namespace LabZKT.Simulation
                         flags["ZNAK"].setInnerValue(0);
                 }
                 else if (microOpMnemo == "IX")
-                {
-                    registers["X"].setActualValue(registers["BUS"].innerValue);
-                    registers["X"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("X", registers["BUS"].innerValue);
                 else if (microOpMnemo == "IRI")
-                {
-                    registers["RI"].setActualValue(registers["BUS"].innerValue);
-                    registers["RI"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("RI", registers["BUS"].innerValue);
                 else if (microOpMnemo == "IRR")
-                {
-                    registers["RR"].setActualValue(registers["BUS"].innerValue);
-                    registers["RR"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("RR", registers["BUS"].innerValue);
                 else if (microOpMnemo == "IRBP")
-                {
-                    registers["RBP"].setActualValue(registers["BUS"].innerValue);
-                    registers["RBP"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("RBP", registers["BUS"].innerValue);
                 else if (microOpMnemo == "SRBP")
-                {
-                    registers["RBP"].setActualValue(registers["BUS"].innerValue);
-                    registers["RBP"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("RBP", registers["BUS"].innerValue);
                 cells[6, 7] = false;
                 resetBus = true;
                 AddText("D3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
@@ -769,10 +697,7 @@ namespace LabZKT.Simulation
                 Grid_PM.CurrentCell = Grid_PM[7, raps];
                 microOpMnemo = Grid_PM[7, raps].Value.ToString();
                 if (microOpMnemo == "END")
-                {
-                    registers["RAPS"].setActualValue(0);
-                    registers["RAPS"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("RAPS", 0);
                 //skip TEST if END is present
                 currentTact = 9;
                 cells[7, 7] = false;
@@ -803,60 +728,27 @@ namespace LabZKT.Simulation
                 Grid_PM.CurrentCell = Grid_PM[3, raps];
                 microOpMnemo = Grid_PM[3, raps].Value.ToString();
                 if (microOpMnemo == "IXRE")
-                {
-                    registers["LALU"].setActualValue(registers["RI"].innerValue);
-                    registers["LALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("LALU", registers["RI"].innerValue);
                 else if (microOpMnemo == "ORR")
-                {
-                    registers["BUS"].setActualValue(registers["RR"].innerValue);
-                    registers["BUS"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("BUS", registers["RR"].innerValue);
                 else if (microOpMnemo == "ORI")
-                {
-                    registers["BUS"].setActualValue(registers["RI"].innerValue);
-                    registers["BUS"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("BUS", registers["RI"].innerValue);
                 else if (microOpMnemo == "OBE")
-                {
-                    registers["BUS"].setActualValue(registers["ALU"].innerValue);
-                    registers["BUS"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("BUS", registers["ALU"].innerValue);
                 else if (microOpMnemo == "IRAE")
-                {
-                    registers["RAE"].setActualValue(registers["SUMA"].innerValue);
-                    registers["RAE"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("RAE", registers["SUMA"].innerValue);
                 else if (microOpMnemo == "ORAE")
-                {
-                    registers["BUS"].setActualValue(registers["RAE"].innerValue);
-                    registers["BUS"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("BUS", registers["RAE"].innerValue);
                 else if (microOpMnemo == "IALU")
-                {
-                    registers["LALU"].setActualValue(registers["A"].innerValue);
-                    registers["LALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("LALU", registers["A"].innerValue);
                 else if (microOpMnemo == "OXE")
-                {
-                    registers["RALU"].setActualValue(registers["X"].innerValue);
-                    registers["RALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("RALU", registers["X"].innerValue);
                 else if (microOpMnemo == "OX")
-                {
-                    registers["BUS"].setActualValue(registers["X"].innerValue);
-                    registers["BUS"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("BUS", registers["X"].innerValue);
                 else if (microOpMnemo == "OA")
-                {
-                    registers["BUS"].setActualValue(registers["A"].innerValue);
-                    registers["BUS"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("BUS", registers["A"].innerValue);
                 else if (microOpMnemo == "OMQ")
-                {
-                    registers["BUS"].setActualValue(registers["MQ"].innerValue);
-                    registers["BUS"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("BUS", registers["MQ"].innerValue);
                 cells[3, 6] = false;
                 AddText("S2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
                 addToLog("S2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
@@ -866,55 +758,25 @@ namespace LabZKT.Simulation
                 Grid_PM.CurrentCell = Grid_PM[4, raps];
                 microOpMnemo = Grid_PM[4, raps].Value.ToString();
                 if (microOpMnemo == "ORI")
-                {
-                    registers["BUS"].setActualValue(registers["RI"].innerValue);
-                    registers["BUS"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("BUS", registers["RI"].innerValue);
                 else if (microOpMnemo == "OXE")
-                {
-                    registers["RALU"].setActualValue(registers["X"].innerValue);
-                    registers["RALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("RALU", registers["X"].innerValue);
                 else if (microOpMnemo == "ILR")
-                {
-                    registers["LR"].setActualValue(registers["BUS"].innerValue);
-                    registers["LR"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("LR", registers["BUS"].innerValue);
                 else if (microOpMnemo == "IRI")
-                {
-                    registers["RI"].setActualValue(registers["BUS"].innerValue);
-                    registers["RI"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("RI", registers["BUS"].innerValue);
                 else if (microOpMnemo == "IX")
-                {
-                    registers["X"].setActualValue(registers["BUS"].innerValue);
-                    registers["X"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("X", registers["BUS"].innerValue);
                 else if (microOpMnemo == "IBE")
-                {
-                    registers["RALU"].setActualValue(registers["BUS"].innerValue);
-                    registers["RALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("RALU", registers["BUS"].innerValue);
                 else if (microOpMnemo == "IBI")
-                {
-                    registers["RAE"].setActualValue(registers["BUS"].innerValue);
-                    registers["RAE"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("RAE", registers["BUS"].innerValue);
                 else if (microOpMnemo == "IA")
-                {
-                    registers["A"].setActualValue(registers["BUS"].innerValue);
-                    registers["A"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("A", registers["BUS"].innerValue);
                 else if (microOpMnemo == "IMQ")
-                {
-                    registers["MQ"].setActualValue(registers["BUS"].innerValue);
-                    registers["MQ"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("MQ", registers["BUS"].innerValue);
                 else if (microOpMnemo == "NSI")
-                {
-                    registers["LR"].setActualValue((short)(registers["LR"].innerValue + 1));
-                    registers["LR"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("LR", (short)(registers["LR"].innerValue + 1));
                 else if (microOpMnemo == "IAS")
                 {
                     if ((registers["A"].innerValue & 0x8000) == 0x8000)
@@ -939,38 +801,23 @@ namespace LabZKT.Simulation
                 Grid_PM.CurrentCell = Grid_PM[8, raps];
                 microOpMnemo = Grid_PM[8, raps].Value.ToString();
                 if (microOpMnemo == "DLK")
-                {
-                    registers["LK"].setActualValue((short)(registers["LK"].innerValue - 1));
-                    registers["LK"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("LK", (short)(registers["LK"].innerValue - 1));
                 else if (microOpMnemo == "DRI")
-                {
-                    registers["RI"].setActualValue((short)(registers["RI"].innerValue - 1));
-                    registers["RI"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("RI", (short)(registers["RI"].innerValue - 1));
                 else if (microOpMnemo == "SOFF")
-                {
                     flags["OFF"].setInnerValue(1);
-                }
                 else if (microOpMnemo == "ROFF")
-                {
                     flags["OFF"].setInnerValue(0);
-                }
                 else if (microOpMnemo == "SXRO")
-                {
                     flags["XRO"].setInnerValue(1);
-                }
                 else if (microOpMnemo == "RXRO")
-                {
                     flags["XRO"].setInnerValue(0);
-                }
-                else if (microOpMnemo == "AQ16")
+                else if (microOpMnemo == "AQ15")
                 {
                     if ((registers["A"].innerValue & 0x8000) == 0x8000)
-                        registers["MQ"].setActualValue((short)(registers["MQ"].innerValue & 0xFFFE));
+                        testAndSet("MQ", (short)(registers["MQ"].innerValue & 0xFFFE));
                     else
-                        registers["MQ"].setActualValue((short)(registers["MQ"].innerValue | 0x0001));
-                    registers["MQ"].setNeedCheck(out registerToCheck);
+                        testAndSet("MQ", (short)(registers["MQ"].innerValue | 0x0001));
                 }
                 cells[8, 6] = false;
                 AddText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
@@ -1013,8 +860,7 @@ namespace LabZKT.Simulation
                     {
                         isOverflow = true;
                     }
-                    registers["ALU"].setActualValue((short)(registers["LALU"].innerValue + registers["RALU"].innerValue));
-                    registers["ALU"].setNeedCheck(out registerToCheck);
+                    testAndSet("ALU", (short)(registers["LALU"].innerValue + registers["RALU"].innerValue));
                 }
                 else if (microOpMnemo == "SUS")
                 {
@@ -1029,54 +875,26 @@ namespace LabZKT.Simulation
                     {
                         isOverflow = true;
                     }
-                    registers["ALU"].setActualValue((short)(registers["LALU"].innerValue - registers["RALU"].innerValue));
-                    registers["ALU"].setNeedCheck(out registerToCheck);
+                    testAndSet("ALU", (short)(registers["LALU"].innerValue - registers["RALU"].innerValue));
                 }
                 else if (microOpMnemo == "CMX")
-                {
-                    registers["ALU"].setActualValue((short)(1 + ~registers["RALU"].innerValue));
-                    registers["ALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("ALU", (short)(1 + ~registers["RALU"].innerValue));
                 else if (microOpMnemo == "CMA")
-                {
-                    registers["ALU"].setActualValue((short)(1 + ~registers["LALU"].innerValue));
-                    registers["ALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("ALU", (short)(1 + ~registers["LALU"].innerValue));
                 else if (microOpMnemo == "OR")
-                {
-                    registers["ALU"].setActualValue((short)(registers["LALU"].innerValue | registers["RALU"].innerValue));
-                    registers["ALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("ALU", (short)(registers["LALU"].innerValue | registers["RALU"].innerValue));
                 else if (microOpMnemo == "AND")
-                {
-                    registers["ALU"].setActualValue((short)(registers["LALU"].innerValue & registers["RALU"].innerValue));
-                    registers["ALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("ALU", (short)(registers["LALU"].innerValue & registers["RALU"].innerValue));
                 else if (microOpMnemo == "EOR")
-                {
-                    registers["ALU"].setActualValue((short)(registers["LALU"].innerValue ^ registers["RALU"].innerValue));
-                    registers["ALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("ALU", (short)(registers["LALU"].innerValue ^ registers["RALU"].innerValue));
                 else if (microOpMnemo == "NOTL")
-                {
-                    registers["ALU"].setActualValue((short)(~registers["LALU"].innerValue));
-                    registers["ALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("ALU", (short)(~registers["LALU"].innerValue));
                 else if (microOpMnemo == "NOTR")
-                {
-                    registers["ALU"].setActualValue((short)(~registers["RALU"].innerValue));
-                    registers["ALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("ALU", (short)(~registers["RALU"].innerValue));
                 else if (microOpMnemo == "L")
-                {
-                    registers["ALU"].setActualValue(registers["L"].innerValue);
-                    registers["ALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("ALU", registers["L"].innerValue);
                 else if (microOpMnemo == "R")
-                {
-                    registers["ALU"].setActualValue(registers["R"].innerValue);
-                    registers["ALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("ALU", registers["R"].innerValue);
                 else if (microOpMnemo == "INCL")
                 {
                     try
@@ -1090,8 +908,7 @@ namespace LabZKT.Simulation
                     {
                         isOverflow = true;
                     }
-                    registers["ALU"].setActualValue((short)(registers["LALU"].innerValue + 1));
-                    registers["ALU"].setNeedCheck(out registerToCheck);
+                    testAndSet("ALU", (short)(registers["LALU"].innerValue + 1));
                 }
                 else if (microOpMnemo == "INCR")
                 {
@@ -1106,8 +923,7 @@ namespace LabZKT.Simulation
                     {
                         isOverflow = true;
                     }
-                    registers["ALU"].setActualValue((short)(registers["RALU"].innerValue + 1));
-                    registers["ALU"].setNeedCheck(out registerToCheck);
+                    testAndSet("ALU", (short)(registers["RALU"].innerValue + 1));
                 }
                 else if (microOpMnemo == "DECL")
                 {
@@ -1122,8 +938,7 @@ namespace LabZKT.Simulation
                     {
                         isOverflow = true;
                     }
-                    registers["ALU"].setActualValue((short)(registers["LALU"].innerValue - 1));
-                    registers["ALU"].setNeedCheck(out registerToCheck);
+                    testAndSet("ALU", (short)(registers["LALU"].innerValue - 1));
                 }
                 else if (microOpMnemo == "DECR")
                 {
@@ -1138,19 +953,12 @@ namespace LabZKT.Simulation
                     {
                         isOverflow = true;
                     }
-                    registers["ALU"].setActualValue((short)(registers["RALU"].innerValue - 1));
-                    registers["ALU"].setNeedCheck(out registerToCheck);
+                    testAndSet("ALU", (short)(registers["RALU"].innerValue - 1));
                 }
                 else if (microOpMnemo == "ONE")
-                {
-                    registers["ALU"].setActualValue(1);
-                    registers["ALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("ALU", 1);
                 else if (microOpMnemo == "ZERO")
-                {
-                    registers["ALU"].setActualValue(0);
-                    registers["ALU"].setNeedCheck(out registerToCheck);
-                }
+                    testAndSet("ALU", 0);
                 cells[10, 2] = false;
                 AddText("ALU", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
                 addToLog("ALU", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
@@ -1188,33 +996,19 @@ namespace LabZKT.Simulation
                 Grid_PM.CurrentCell = Grid_PM[1, raps];
                 microOpMnemo = Grid_PM[1, raps].Value.ToString();
                 if (microOpMnemo == "IXRE")
-                {
                     testAndSet("LALU", registers["RI"].innerValue);
-                }
                 else if (microOpMnemo == "OLR")
-                {
                     testAndSet("BUS", registers["LR"].innerValue);
-                }
                 else if (microOpMnemo == "ORR")
-                {
                     testAndSet("BUS", registers["RR"].innerValue);
-                }
                 else if (microOpMnemo == "ORAE")
-                {
                     testAndSet("BUS", registers["RAE"].innerValue);
-                }
                 else if (microOpMnemo == "IALU")
-                {
                     testAndSet("LALU", registers["A"].innerValue);
-                }
                 else if (microOpMnemo == "OXE")
-                {
                     testAndSet("RALU", registers["X"].innerValue);
-                }
                 else if (microOpMnemo == "OX")
-                {
                     testAndSet("BUS", registers["X"].innerValue);
-                }
                 cells[1, 1] = false;
                 AddText("S1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
                 addToLog("S1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
@@ -1224,17 +1018,11 @@ namespace LabZKT.Simulation
                 Grid_PM.CurrentCell = Grid_PM[2, raps];
                 microOpMnemo = Grid_PM[2, raps].Value.ToString();
                 if (microOpMnemo == "ILK")
-                {
                     testAndSet("LK", registers["BUS"].innerValue);
-                }
                 else if (microOpMnemo == "IRAP")
-                {
                     testAndSet("RAP", registers["BUS"].innerValue);
-                }
                 else if (microOpMnemo == "OXE")
-                {
                     testAndSet("RALU", registers["X"].innerValue);
-                }
                 cells[2, 1] = false;
                 resetBus = true;
                 AddText("D1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
@@ -1281,21 +1069,19 @@ namespace LabZKT.Simulation
                     {
                         short MQ = (short)(registers["MQ"].innerValue >> 1);
                         MQ = (short)(MQ | 0x8000);
-                        registers["MQ"].setActualValue(MQ);
+                        testAndSet("MQ", MQ);
                     }
                     else
-                        registers["MQ"].setActualValue((short)(registers["MQ"].innerValue >> 1));
-                    registers["MQ"].setNeedCheck(out registerToCheck);
+                        testAndSet("MQ", (short)(registers["MQ"].innerValue >> 1));
                 }
                 else if (microOpMnemo == "LLQ")
                 {
                     A <<= 1;
                     SignBit = (registers["MQ"].innerValue & 0x8000) == 0x8000 ? true : false;
                     if (SignBit)
-                        registers["A"].setActualValue((short)(A + 1));
+                        testAndSet("A", (short)(A + 1));
                     else
-                        registers["A"].setActualValue((short)(A));
-                    registers["A"].setNeedCheck(out registerToCheck);
+                        testAndSet("A", (short)(A));
 
                     ButtonOKSetVisivle();
                     EnDisableButtons();
@@ -1306,20 +1092,15 @@ namespace LabZKT.Simulation
                     testAndSet("MQ", (short)(registers["MQ"].innerValue << 1));
                 }
                 else if (microOpMnemo == "LLA")
-                {
                     testAndSet("A", (short)(A << 1));
-                }
                 else if (microOpMnemo == "LRA")
-                {
                     testAndSet("A", (short)(A >> 1));
-                }
                 else if (microOpMnemo == "LCA")
                 {
                     if (SignBit)
-                        registers["A"].setActualValue((short)((A << 1) + 1));
+                        testAndSet("A", (short)((A << 1) + 1));
                     else
-                        registers["A"].setActualValue((short)(A << 1));
-                    registers["A"].setNeedCheck(out registerToCheck);
+                        testAndSet("A", (short)(A << 1));
                 }
                 cells[4, 1] = false;
             }
@@ -1339,14 +1120,12 @@ namespace LabZKT.Simulation
                 }
                 else if (microOpMnemo == "MUL")
                 {
-                    registers["LK"].setActualValue(16);
-                    registers["LK"].setNeedCheck(out registerToCheck);
+                    testAndSet("LK", 16);
                     cells[7, 1] = false;
                 }
                 else if (microOpMnemo == "DIV")
                 {
-                    registers["LK"].setActualValue(15);
-                    registers["LK"].setNeedCheck(out registerToCheck);
+                    testAndSet("LK", 15);
                     cells[7, 1] = false;
                 }
                 else if (microOpMnemo == "IWC")
@@ -1363,9 +1142,17 @@ namespace LabZKT.Simulation
                 microOpMnemo = Grid_PM[8, raps].Value.ToString();
                 if (microOpMnemo == "CEA")
                 {
-                    //zwykly adresacja
-                    //rozszerzony N
-                    //dana
+                    switchLayOut();
+
+
+                    //testAndSet();
+                    ButtonOKSetVisivle();
+                    EnDisableButtons();
+                    registers[registerToCheck].Focus();
+                    waitForButton();
+                    EnDisableButtons();
+                    buttonOKClicked = false;
+                    testAndSet("MQ", (short)(registers["MQ"].innerValue << 1));
                 }
                 cells[8, 1] = false;
                 AddText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
@@ -1545,7 +1332,7 @@ namespace LabZKT.Simulation
             if (inMicroMode)
             {
                 ButtonNextTactSetVisible();
-                if(!DEVMODE)
+                if (!DEVMODE)
                     while (buttonNextTactClicked == false)
                         Application.DoEvents();
             }

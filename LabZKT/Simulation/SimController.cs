@@ -37,6 +37,7 @@
             theView.ASaveCurrentState += SaveState;
             theView.AShowLog += theModel.ShowLog;
             theView.ACallDevConsole += theModel.DevConsole;
+            theView.AStopDevConsole += TheView_AStopDevConsole;
 
             theModel.StartSim += startSim;
             theModel.StopSim += theView.stopSim;
@@ -47,6 +48,17 @@
 
             theView.ShowDialog();
         }
+
+        private void TheView_AStopDevConsole()
+        {
+            if (theModel.DEVMODE)
+            {
+                theModel.DEVMODE = false;
+                theModel.DEVREGISTER = null;
+                theModel.DEVVALUE = 0;
+            }
+        }
+
         private void SaveState(bool b)
         {
             theModel.isNewLogEnabled = b;

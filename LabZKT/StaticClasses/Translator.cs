@@ -76,10 +76,10 @@ namespace LabZKT.StaticClasses
             {"MUL","16 -> LK"},{"DIV","15 -> LK"},
             {"SHT","Operacja przesunięcia"},{"IWC","Rozpoczęcie IWC"},{"END","Koniec mikroprogramu"},{"DLK","LK = [LK]-1"},
             {"SOFF","OFF = 1"},{"ROFF","OFF = 0"},{"SXRO","XRO = 1"},{"RXRO","XRO = 0"},
-            {"DRI","RI = RI-1"},{"RA","A = 0"},{"RMQ","MQ = 0"},{"AQ16","NOT A0 -> MQ16"},
+            {"DRI","RI = RI-1"},{"RA","A = 0"},{"RMQ","MQ = 0"},{"AQ15","NOT A0 -> MQ15"},
             {"RINT","INT = 0"},{"OPC","OP lub AOP+32 -> RAPS"},{"CEA","Oblicz adres efektywny"},{"ENI","Odblokuj przerwania"},
             {"UNB","Zawsze pozytywny"},{"TINT","Brak przerwania"},{"TIND","Adresowanie pośrednie"},{"TAS","A >= 0"},
-            {"TXS","RI >= 0"},{"TQ15","MQ15 = 0"},{"TCR","LK=0 jeśli SHT LK!=0"},{"TSD","ZNAK = 0"},
+            {"TXS","RI >= 0"},{"TQ15","MQ15 = 0"},{"TLK","SHT obecne, LK=0?| brak SHT, LK!=0?"},{"TSD","ZNAK = 0"},
             {"TAO","OFF = 0"},{"TXP","RI < 0"},{"TXZ","BXZ i RI <> 0 lub TLD i RI = 0"},{"TXRO","XRO = 0"},
             {"TAP","A < 0"},{"TAZ","A = 0"},{"ADS","ALU = LALU + RALU"},{"SUS","ALU = LALU - RALU"},
             {"CMX","ALU = (NOT RALU)+1"},{"CMA","ALU = (NOT LALU)+1"},{"OR","ALU = LALU OR RALU"},{"AND","ALU = LALU AND RALU"},
@@ -125,11 +125,11 @@ namespace LabZKT.StaticClasses
         private static Dictionary<string, long> instCodeC2 = new Dictionary<string, long>()
         {
             {"", 0 },{"DLK", 0x1 },{"SOFF", 0x2 },{"ROFF", 0x3 },{"SXRO", 0x4 },{"RXRO", 0x5 },{"DRI", 0x6 },{"RA", 0x7 },
-            { "RMQ", 0x8 }, {"AQ16", 0x9 },{"RINT", 0xA },{"OPC", 0xB },{"CEA", 0xC },{"ENI", 0xD }
+            { "RMQ", 0x8 }, {"AQ15", 0x9 },{"RINT", 0xA },{"OPC", 0xB },{"CEA", 0xC },{"ENI", 0xD }
         };
         private static Dictionary<string, long> instCodeTest = new Dictionary<string, long>()
         {
-            {"", 0 },{"UNB", 0x1 },{"TINT", 0x2 },{"TIND", 0x3 },{"TAS", 0x4 },{"TXS", 0x5 },{"TQ15", 0x6 },{"TCR", 0x7 },
+            {"", 0 },{"UNB", 0x1 },{"TINT", 0x2 },{"TIND", 0x3 },{"TAS", 0x4 },{"TXS", 0x5 },{"TQ15", 0x6 },{"TLK", 0x7 },
             {"TSD", 0x8 },{"TAO", 0x9 },{"TXP", 0xA },{"TXZ", 0xB },{"TXRO", 0xC },{"TAP", 0xD },{"TAZ", 0xE }
         };
         private static Dictionary<string, long> instCodeALU = new Dictionary<string, long>()

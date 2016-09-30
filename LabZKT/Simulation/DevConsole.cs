@@ -30,5 +30,17 @@ namespace LabZKT.Simulation
         {
             f.devConsole = null;
         }
+
+        private void DevConsole_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        internal void deactivate()
+        {
+            f.DEVMODE = false;
+            f.DEVREGISTER = null;
+            f.DEVVALUE = 0;
+        }
     }
 }

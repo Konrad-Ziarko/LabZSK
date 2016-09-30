@@ -99,6 +99,7 @@
             this.Name = "DevConsole";
             this.Text = "DevConsole";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DevConsole_FormClosing);
+            this.Load += new System.EventHandler(this.DevConsole_Load);
             ((System.ComponentModel.ISupportInitialize)(this.registerValue)).EndInit();
             this.ResumeLayout(false);
 

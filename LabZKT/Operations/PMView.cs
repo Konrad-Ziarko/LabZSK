@@ -119,7 +119,7 @@ namespace LabZKT.MicroOperations
             }
         }
         #endregion
-        #region Grid methods
+        #region Grid methods+DragAndDrop
         private void grid_PM_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)
@@ -140,14 +140,18 @@ namespace LabZKT.MicroOperations
                 var hitTestInfo = Grid_PM.HitTest(clientPoint.X, clientPoint.Y);
                 if (hitTestInfo.ColumnIndex > 0 && hitTestInfo.RowIndex != -1 && hitTestInfo.ColumnIndex == idxDragColumn)
                 {
-                    if (Grid_PM[7, hitTestInfo.RowIndex].Value.ToString() == "SHT" && valueInCell == "")
+                    if (Grid_PM[7, hitTestInfo.RowIndex].Value.ToString() == "SHT" && hitTestInfo.ColumnIndex == 7 && valueInCell == "")
                     {
                         Grid_PM[4, hitTestInfo.RowIndex].Value = Grid_PM[7, hitTestInfo.RowIndex].Value = "";
                     }
-                    else if (Grid_PM[7, hitTestInfo.RowIndex].Value.ToString() == "SHT" && valueInCell != "SHT")
+                    else if (Grid_PM[7, hitTestInfo.RowIndex].Value.ToString() == "SHT" && hitTestInfo.ColumnIndex==7 && valueInCell != "SHT")
                     {
                         Grid_PM[hitTestInfo.ColumnIndex, hitTestInfo.RowIndex].Value = valueInCell;
                         Grid_PM[4, hitTestInfo.RowIndex].Value = "";
+                    }
+                    else if (Grid_PM[7, hitTestInfo.RowIndex].Value.ToString() == "SHT" && hitTestInfo.ColumnIndex == 4 )
+                    {
+                        Grid_PM[4, hitTestInfo.RowIndex].Value = Grid_PM[7, hitTestInfo.RowIndex].Value = "";
                     }
                     else
                     {
@@ -161,11 +165,11 @@ namespace LabZKT.MicroOperations
                         Grid_PM[6, hitTestInfo.RowIndex].Value = "";
                         CallSubView(hitTestInfo.RowIndex);                        
                     }
-                    else if ((hitTestInfo.ColumnIndex == 3 || hitTestInfo.ColumnIndex == 5 || hitTestInfo.ColumnIndex == 6
-                        || hitTestInfo.ColumnIndex == 8) && Grid_PM[7, hitTestInfo.RowIndex].Value.ToString() == "SHT")
-                    {
-                        Grid_PM[hitTestInfo.ColumnIndex, hitTestInfo.RowIndex].Value = "";
-                    }
+                    //else if ((hitTestInfo.ColumnIndex == 3 || hitTestInfo.ColumnIndex == 5 || hitTestInfo.ColumnIndex == 6
+                    //    || hitTestInfo.ColumnIndex == 8) && Grid_PM[7, hitTestInfo.RowIndex].Value.ToString() == "SHT")
+                    //{
+                    //    //Grid_PM[hitTestInfo.ColumnIndex, hitTestInfo.RowIndex].Value = "";
+                    //}
                     else if ((valueInCell == "ARA" || valueInCell == "ALA" || valueInCell == "LRQ" || valueInCell == "LLQ"
                        || valueInCell == "LLA" || valueInCell == "LRA" || valueInCell == "LCA") && Grid_PM[7, hitTestInfo.RowIndex].Value.ToString() != "SHT")
                     {

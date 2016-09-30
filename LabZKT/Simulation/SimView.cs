@@ -26,6 +26,7 @@ namespace LabZKT.Simulation
         internal event Action<bool> ASaveCurrentState;
         internal event Action<string> AShowLog;
         internal event Action ACallDevConsole;
+        internal event Action AStopDevConsole;
 
         internal int currnetCycle { get; set; }
         internal int mark { get; set; }
@@ -272,6 +273,7 @@ namespace LabZKT.Simulation
         }
         private void RunSim_KeyPress(object sender, KeyPressEventArgs e)
         {
+            AStopDevConsole();
             if (e.KeyChar == (char)Keys.Enter && !inEditMode)
             {
                 ACheckProperties();

@@ -268,7 +268,7 @@ namespace LabZKT.MicroOperations
             radioButton7.Text = "DRI            RI = RI-1";
             radioButton8.Text = "RA             A = 0";
             radioButton9.Text = "RMQ            MQ = 0";
-            radioButton10.Text = "AQ16           NOT A0 -> MQ16";
+            radioButton10.Text = "AQ15           NOT A0 -> MQ15";
             radioButton11.Text = "RINT           INT = 0";
             radioButton12.Text = "OPC            OP lub AOP+32 -> RAPS";
             radioButton13.Text = "CEA            Oblicz adres efektywny";
@@ -284,11 +284,11 @@ namespace LabZKT.MicroOperations
             radioButton5.Text = "TAS            A >= 0";
             radioButton6.Text = "TXS            RI >= 0";
             radioButton7.Text = "TQ15           MQ15 = 0";
-            radioButton8.Text = "TCR            -(LK*SHT)";
+            radioButton8.Text = "TLK            SHT, LK=0 || !SHT, LK!=0";
             radioButton9.Text = "TSD            ZNAK = 0";
             radioButton10.Text = "TAO            OFF = 0";
             radioButton11.Text = "TXP            RI < 0";
-            radioButton12.Text = "TXZ            BXZ i RI <> 0 lub TLD i RI = 0";
+            radioButton12.Text = "TXZ            BXZ i RI <> 0 || TLD i RI = 0";
             radioButton13.Text = "TXRO           XRO = 0";
             radioButton14.Text = "TAP            A < 0";
             radioButton15.Text = "TAZ            A = 0";
