@@ -61,16 +61,10 @@ namespace LabZKT.Controls
         {
             base.OnKeyPress(e);
 
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                Parent.Focus();
-            }
-
-            NumberFormatInfo numberFormatInfo = System.Globalization.CultureInfo.CurrentCulture.NumberFormat;
-            string decimalSeparator = numberFormatInfo.NumberDecimalSeparator;
-            string negativeSign = numberFormatInfo.NegativeSign;
-
-            string keyInput = e.KeyChar.ToString();
+            //if (e.KeyChar == (char)Keys.Enter)
+            //{
+            //    Parent.Focus();
+            //}
 
             if (Char.IsDigit(e.KeyChar) || (e.KeyChar >= 'a' && e.KeyChar <= 'f') || (e.KeyChar >= 'A' && e.KeyChar <= 'F'))
             {
@@ -188,6 +182,32 @@ namespace LabZKT.Controls
            Text = "";
         }
 
+        protected override void OnTextChanged(EventArgs e)
+        {
+            base.OnTextChanged(e);
+            try
+            {
+                if (Text.Length > 0 && Text[Text.Length - 1] == 'h')
+                {
+                    innerValue = Convert.ToInt16(Text.Substring(0, Text.Length - 1), 16);
+                }
+                else if (Text.Length > 0 && Text[Text.Length - 1] != 'h')
+                {
+                    if (Regex.IsMatch(Text, @"^-?\d+$"))
+                    {
+                        innerValue = Convert.ToInt16(Text);
+                    }
+                    else if (Regex.IsMatch(Text, @"^[0-9a-fA-F]+h?$"))
+                    {
+                        innerValue = Convert.ToInt16(Text, 16);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
         #region Drag&Drop
         /// <summary>
         /// Occures when mouse button is down
@@ -339,12 +359,7 @@ namespace LabZKT.Controls
         /// </summary>
         private void clampValue()
         {
-            if (registerName == "RAE")
-            {
-                innerValue &= 63;
-                valueWhichShouldBeMovedToRegister &= 63;
-            }
-            else if (registerName == "LK")
+            if (registerName == "LK")
             {
                 innerValue &= 127;
                 valueWhichShouldBeMovedToRegister &= 127;

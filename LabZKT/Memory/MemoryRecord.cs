@@ -1,4 +1,6 @@
-﻿namespace LabZKT.Memory
+﻿using System;
+
+namespace LabZKT.Memory
 {
     /// <summary>
     /// Class representing operating memory record
@@ -66,6 +68,14 @@
                 AOP = value.Substring(5, 4);
                 N = value.Substring(9, 7);
             }
+        }
+        /// <summary>
+        /// Get value stored in memory record
+        /// </summary>
+        /// <returns>Int16 value representing memory record</returns>
+        public short getInt16Value()
+        {
+            return Convert.ToInt16(this.hex, 16);
         }
     }
 }

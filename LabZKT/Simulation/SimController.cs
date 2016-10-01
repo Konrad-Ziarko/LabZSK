@@ -45,6 +45,7 @@
             theModel.ButtonNextTactSetVisible += buttonNextTactSetVisible;
             theModel.ButtonOKSetVisivle += buttonOKSetVisible;
             theModel.SetNextTact += setNextTact;
+            theModel.ASwitchLayOut += theView.SwitchLayOut;
 
             theView.ShowDialog();
         }

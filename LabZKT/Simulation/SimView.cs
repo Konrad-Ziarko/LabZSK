@@ -49,6 +49,7 @@ namespace LabZKT.Simulation
             InitializeComponent();
             nowyLogToolStripMenuItem.Enabled = needsNewLog;
         }
+
         /// <summary>
         /// Add text to in-simulation log display
         /// </summary>
@@ -93,6 +94,10 @@ namespace LabZKT.Simulation
             nowyLogToolStripMenuItem.Enabled = true;
         }
 
+        internal void SwitchLayOut()
+        {
+            ADrawBackground(panel_Sim_Control);
+        }
         internal void buttonOkSetVisible()
         {
             button_OK.Visible = true;
@@ -332,7 +337,6 @@ namespace LabZKT.Simulation
         {
             ADrawBackground(panel_Sim_Control);
         }
-
         private void SimView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && e.Shift && e.KeyCode == Keys.A)

@@ -69,8 +69,7 @@ namespace LabZKT.Memory
                 }
                 else if (chosenDataType == NumeralBase.Hex)
                 {
-                    tempMemoryCell = string.Join(string.Empty,
-                            textBox_Data.Text.Select(c => Convert.ToString(Convert.ToInt16(c.ToString(), 16), 2).PadLeft(4, '0')));
+                    tempMemoryCell = Convert.ToString(Convert.ToInt16(textBox_Data.Text, 16), 2);
                 }
             }
             else if (type == DataType.Simple)
