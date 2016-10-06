@@ -181,7 +181,10 @@ namespace LabZKT.Controls
         {
            Text = "";
         }
-
+        /// <summary>
+        /// Check if value in textbox is still valid
+        /// </summary>
+        /// <param name="e">Event args</param>
         protected override void OnTextChanged(EventArgs e)
         {
             base.OnTextChanged(e);

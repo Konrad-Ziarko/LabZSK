@@ -219,6 +219,9 @@ namespace LabZKT.Simulation
             registers["SUMA"].SetXY((registers["R"].Location.X - registers["L"].Location.X + 130) / 2
                 - 65 + registers["L"].Location.X, verticalGap * 4 + (verticalGap - 27) * 3 / 4);
         }
+        /// <summary>
+        /// Switch simulation background between 'standard' and 'sum' mode
+        /// </summary>
         public void switchLayOut()
         {
             if (registers["SUMA"].Visible)
