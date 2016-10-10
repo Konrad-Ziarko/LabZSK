@@ -27,6 +27,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_71F5D9EBE8939A0FB92988041D695C1D"
+        "OwnerKey" = "8:_543EBA849B5040BBB927F025BA614495"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_7AA1CED368E2431E945769B243E5457D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -35,12 +41,6 @@
         {
         "MsmKey" = "8:_CFC74500EEAF7746BC3661976B11CF12"
         "OwnerKey" = "8:_0F20B511CE494E2A8C58DE4686235A32"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CFC74500EEAF7746BC3661976B11CF12"
-        "OwnerKey" = "8:_543EBA849B5040BBB927F025BA614495"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -65,6 +65,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_D63521F024725AE54A5C16B017B6FDBD"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_71F5D9EBE8939A0FB92988041D695C1D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -188,6 +194,37 @@
         }
         "File"
         {
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_71F5D9EBE8939A0FB92988041D695C1D"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_71F5D9EBE8939A0FB92988041D695C1D"
+                    {
+                    "Name" = "8:System.Net.Http.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:System.Net.Http.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_B7ACF3CF31B944A39FE28535DB0ED715"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7AA1CED368E2431E945769B243E5457D"
             {
             "SourcePath" = "8:..\\..\\..\\..\\Downloads\\pc.ico"

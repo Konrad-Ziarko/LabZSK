@@ -12,23 +12,23 @@ namespace LabZKT.Simulation
 {
     internal partial class DevConsole : Form
     {
-        SimModel f;
+        SimModel modelRef;
         internal DevConsole(SimModel f)
         {
-            this.f = f;
+            this.modelRef = f;
             InitializeComponent();
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
-            f.DEVMODE = true;
-            f.DEVREGISTER = registerName.Text;
-            f.DEVVALUE = Convert.ToInt16(registerValue.Value);
+            modelRef.DEVMODE = true;
+            modelRef.DEVREGISTER = registerName.Text;
+            modelRef.DEVVALUE = Convert.ToInt16(registerValue.Value);
         }
 
         private void DevConsole_FormClosing(object sender, FormClosingEventArgs e)
         {
-            f.devConsole = null;
+            modelRef.devConsole = null;
         }
 
         private void DevConsole_Load(object sender, EventArgs e)
@@ -38,9 +38,9 @@ namespace LabZKT.Simulation
 
         internal void deactivate()
         {
-            f.DEVMODE = false;
-            f.DEVREGISTER = null;
-            f.DEVVALUE = 0;
+            modelRef.DEVMODE = false;
+            modelRef.DEVREGISTER = null;
+            modelRef.DEVVALUE = 0;
         }
     }
 }

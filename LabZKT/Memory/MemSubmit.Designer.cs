@@ -386,7 +386,7 @@
             "SIO - Start operacji WE-WY",
             "LIO - Ładuj licznik słów WE-WY",
             "UNB - Skok bezwarunkowy",
-            "BAQ - Skocz jeśli nadmiar A",
+            "BAO - Skocz jeśli nadmiar A",
             "BXP - Skocz jeśli RI > 0",
             "BXZ - Skocz jeśli RI = 0",
             "BXN - Skocz jeśli RI < 0",
@@ -494,7 +494,7 @@
             "LXI - Ładuj RI bezpośrednio",
             "INX - Zwiększ modyfikator RI",
             "DEX - Zmniejsz modyfikator RO",
-            "OND - Podłącz urządzenie",
+            "CND - Podłącz urządzenie",
             "ENI - Zezwolenie na przerwania",
             "LDS - Podaj status"});
             this.comboBox_Complex.Location = new System.Drawing.Point(2, 17);

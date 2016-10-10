@@ -13,12 +13,12 @@ namespace LabZKT.StaticClasses
         /// String array of complex operations mnemonics
         /// </summary>
         static string[] DecodeComplexTable = new string[16] {"STP", "CMA", "ALA", "ARA", "LRQ", "LLQ", "LLA",
-            "LRA", "LCA", "LAI", "LXI", "INX", "DEX", "OND", "ENI", "LDS"};
+            "LRA", "LCA", "LAI", "LXI", "INX", "DEX", "CND", "ENI", "LDS"};
         /// <summary>
         /// String array of simple operations mnemonics
         /// </summary>
         static string[] DecodeSimpleTable = new string[32] {"", "ADS", "SUS", "MUL", "DIV", "STQ", "STA", "STQ",
-            "LDA", "LDX", "STC", "TXA", "TMQ", "ADX", "SIO", "LIO", "UNB", "BAQ", "BXP", "BXZ", "BXN", "TLD", "BAP",
+            "LDA", "LDX", "STC", "TXA", "TMQ", "ADX", "SIO", "LIO", "UNB", "BAO", "BXP", "BXZ", "BXN", "TLD", "BAP",
             "BAZ", "BAN", "LOR", "LPR", "LNG", "EOR", "SRJ", "BDN", "NOP"};
         /// <summary>
         /// Dictionary holding binary value of simple and complex operations
@@ -26,10 +26,10 @@ namespace LabZKT.StaticClasses
         static Dictionary<string, string> EncodeTable = new Dictionary<string, string>() { { "STP","0000" },
             {"CMA","0001" }, {"ALA","0010" } ,{"ARA","0011" }, {"LRQ","0100" }, {"LLQ","0101" }, {"LLA","0110" },
             {"LRA","0111" }, {"LCA","1000" }, {"LAI","1001" }, {"LXI","1010" }, {"INX","1011" }, {"DEX","1100" },
-            {"OND","1101" }, {"ENI","1110" }, {"LDS","1111" },
+            {"CND","1101" }, {"ENI","1110" }, {"LDS","1111" },
             {"ADS","00001" }, {"SUS","00010" }, {"MUL","00011" }, {"DIV","00100" }, {"STQ","00101" }, {"STA","00110" },
             {"STX","00111" }, {"LDA","01000" }, {"LDX","01001" }, {"STC","01010" }, {"TXA","01011" }, {"TMQ","01100" },
-            {"ADX","01101" }, {"SIO","01110" }, {"LIO","01111" }, {"UNB","10000" }, {"BAQ","10001" }, {"BXP","10010" },
+            {"ADX","01101" }, {"SIO","01110" }, {"LIO","01111" }, {"UNB","10000" }, {"BAO","10001" }, {"BXP","10010" },
             {"BXZ","10011" }, {"BXN","10100" }, {"TLD","10101" }, {"BAP","10110" }, {"BAZ","10111" }, {"BAN","11000" },
             {"LOR","11001" }, {"LPR","11010" }, {"LNG","11011" }, {"EOR","11100" }, {"SRJ","11101" }, {"BDN","11110" },
             {"NOP","11111" }
@@ -45,13 +45,13 @@ namespace LabZKT.StaticClasses
             { "LLA","Przesunięcie logiczne A w lewo" }, {"LRA","Przesunięcie lgoczine A w prawo" },
             { "LCA","Przesunięcie cykliczne A w lewo" }, {"LAI","Ładuj A bezpośrednio" },
             { "LXI","Ładuj RI bezpośrednio" }, {"INX","Zwiększ modyfikator RI" }, {"DEX","Zmniejsz modyfikator RO" },
-            {"OND","Podłącz urządzenie" }, {"ENI","Zezwolenie na przerwania" }, {"LDS","Podaj status" },
+            {"CND","Podłącz urządzenie" }, {"ENI","Zezwolenie na przerwania" }, {"LDS","Podaj status" },
             {"ADS","Dodawanie" }, {"SUS","Odejmowanie" }, {"MUL","Mnożenie" },
             { "DIV","Dzielenie" }, {"STQ","Zapamiętaj rejestr MQ" }, {"STA","Zapamiętaj akumulator A" },
             {"STX","Zapamiętaj modyfikator RI" }, {"LDA","Ładuj akumulator A" }, {"LDX","Ładuj modyfikator RI" },
             { "STC","Zapamiętaj LR" }, {"TXA","Prześlij RI do A" }, {"TMQ","Prześlij MQ do A" },
             {"ADX","Dodaj do RI" }, {"SIO","Start operacji WE-WY" }, {"LIO","Ładuj licznik słów WE-WY" },
-            { "UNB","Skok bezwarunkowy" }, {"BAQ","Skocz jeśli nadmiar A" }, {"BXP","Skocz jeśli RI > 0" },
+            { "UNB","Skok bezwarunkowy" }, {"BAO","Skocz jeśli nadmiar A" }, {"BXP","Skocz jeśli RI > 0" },
             {"BXZ","Skocz jeśli RI = 0" }, {"BXN","Skocz jeśli RI< 0" }, {"TLD","Skocz jeśli RI> 0 i RI = RI - 1" },
             { "BAP","Skocz jeśli A > 0" }, {"BAZ","Skocz jeśli A = 0" }, {"BAN","Skocz jeśli A< 0" },
             {"LOR","Suma logiczna A i komórki" }, {"LPR","Iloczyn logiczny A i komórki" }, {"LNG","Negacja logiczna A" },
