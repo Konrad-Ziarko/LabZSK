@@ -144,7 +144,6 @@ namespace LabZKT.MicroOperations
                         int m = br.ReadInt32();
                         if (m == 256 && n == 12)
                         {
-                            string allMicroOpInRow = "";
                             string tmpString = "";
                             for (int i = 0; i < m; ++i)
                             {
@@ -153,7 +152,6 @@ namespace LabZKT.MicroOperations
                                     if (br.ReadBoolean())
                                     {
                                         tmpString = br.ReadString();
-                                        allMicroOpInRow += tmpString + " ";
                                         Grid_PM[j, i].Value = tmpString;
                                     }
                                     else
@@ -176,6 +174,9 @@ namespace LabZKT.MicroOperations
             }
             catch (Exception)
             {
+                for (int i = 0; i < 256; ++i)
+                    for (int j = 0; j < 12; ++j)
+                        Grid_PM[j, i].Value = "";
                 MessageBox.Show("Wykryto niespójność pliku!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
             }
         }

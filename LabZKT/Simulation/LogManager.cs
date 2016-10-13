@@ -104,9 +104,7 @@ namespace LabZKT.Simulation
                     0,
                     IntPtr.Zero);
                     if (stream != IntPtr.Zero)
-                    {
                         CloseHandle(stream);
-                    }
                 }
                 FileStream fs = fileInfo.GetAlternateDataStream("crc").OpenWrite();
                 fs.Write(BitConverter.GetBytes(crc), 0, 4);

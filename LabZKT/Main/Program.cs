@@ -10,7 +10,7 @@ namespace LabZKT
         /// <summary>
         /// Mutex used to detect if application is already running.
         /// </summary>
-        static System.Threading.Mutex singleton = new Mutex(true, "LABZKT");
+        static Mutex singleton = new Mutex(true, "LABZKT");
 
         [STAThread]
         static void Main()
@@ -33,6 +33,5 @@ namespace LabZKT
                 MessageBox.Show("Aplikacja jest już uruchomina!", "LabZKT", MessageBoxButtons.OK);
             }
         }
-
     }
 }

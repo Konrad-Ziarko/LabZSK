@@ -142,7 +142,6 @@ namespace LabZKT.Memory
                         int m = br.ReadInt32();
                         if (m == 256 && n == 4)
                         {
-                            string singleMemoryRecord = "";
                             string tmpString = "";
                             for (int i = 0; i < m; ++i)
                             {
@@ -151,7 +150,6 @@ namespace LabZKT.Memory
                                     if (br.ReadBoolean())
                                     {
                                         tmpString = br.ReadString();
-                                        singleMemoryRecord += tmpString + " ";
                                         Grid_Mem.Rows[i].Cells[j].Value = tmpString;
                                     }
                                     else
@@ -173,6 +171,9 @@ namespace LabZKT.Memory
             }
             catch (Exception)
             {
+                for (int i = 0; i < 256; ++i)
+                    for (int j = 0; j < 4; ++j)
+                        Grid_Mem.Rows[i].Cells[j].Value = "";
                 MessageBox.Show("Wykryto niespójność pliku!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
             }
         }
