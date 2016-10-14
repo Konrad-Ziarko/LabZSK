@@ -1,4 +1,5 @@
 ﻿using LabZKT.Properties;
+using LabZKT.Simulation;
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -25,8 +26,8 @@ namespace LabZKT
                 }
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new SplashScreen());
-                Application.Run(new MainWindow());
+                //Application.Run(new SplashScreen());
+                SimController sc = new SimController();
             }
             else
             {

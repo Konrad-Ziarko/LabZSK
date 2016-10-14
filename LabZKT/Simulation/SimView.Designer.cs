@@ -31,18 +31,17 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SimView));
             this.panel_PO = new System.Windows.Forms.Panel();
             this.panel_View_PO = new System.Windows.Forms.Panel();
             this.Grid_Mem = new System.Windows.Forms.DataGridView();
-            this.Adres = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Zawartosc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Hex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel_Decode_PO = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenu_Main = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenu_Edit = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,9 +50,18 @@
             this.nowyLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenu_Show_Log = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.konsolaDevToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.opcjeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenu_Exit = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel_Decode_PO = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.mikroprogramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.wczytajpmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.edytujpmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pamięćOperacyjnaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.wczytajpaoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.edytujpaoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.oAutorzeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel_Left = new System.Windows.Forms.Panel();
             this.panel_Sim = new System.Windows.Forms.Panel();
             this.panel_Sim_Control = new System.Windows.Forms.Panel();
@@ -83,11 +91,14 @@
             this.ALU = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.open_File_Dialog = new System.Windows.Forms.OpenFileDialog();
+            this.Adres = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Zawartosc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Hex = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel_PO.SuspendLayout();
             this.panel_View_PO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid_Mem)).BeginInit();
-            this.menuStrip1.SuspendLayout();
             this.panel_Decode_PO.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.panel_Left.SuspendLayout();
             this.panel_Sim.SuspendLayout();
             this.panel_User_Info.SuspendLayout();
@@ -114,7 +125,6 @@
             // 
             this.panel_View_PO.AutoScroll = true;
             this.panel_View_PO.Controls.Add(this.Grid_Mem);
-            this.panel_View_PO.Controls.Add(this.menuStrip1);
             this.panel_View_PO.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_View_PO.Location = new System.Drawing.Point(0, 0);
             this.panel_View_PO.Margin = new System.Windows.Forms.Padding(2);
@@ -151,7 +161,7 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.Grid_Mem.DefaultCellStyle = dataGridViewCellStyle3;
             this.Grid_Mem.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Grid_Mem.Location = new System.Drawing.Point(0, 24);
+            this.Grid_Mem.Location = new System.Drawing.Point(0, 0);
             this.Grid_Mem.Margin = new System.Windows.Forms.Padding(2);
             this.Grid_Mem.MultiSelect = false;
             this.Grid_Mem.Name = "Grid_Mem";
@@ -167,118 +177,10 @@
             this.Grid_Mem.RowHeadersVisible = false;
             this.Grid_Mem.RowTemplate.Height = 24;
             this.Grid_Mem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Grid_Mem.Size = new System.Drawing.Size(198, 424);
+            this.Grid_Mem.Size = new System.Drawing.Size(198, 448);
             this.Grid_Mem.TabIndex = 0;
             this.Grid_Mem.SelectionChanged += new System.EventHandler(this.grid_PO_SelectionChanged);
             this.Grid_Mem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.grid_PO_KeyDown);
-            // 
-            // Adres
-            // 
-            this.Adres.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.Adres.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Adres.HeaderText = "Adres";
-            this.Adres.MinimumWidth = 38;
-            this.Adres.Name = "Adres";
-            this.Adres.ReadOnly = true;
-            this.Adres.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Adres.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Adres.Width = 38;
-            // 
-            // Zawartosc
-            // 
-            this.Zawartosc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Zawartosc.FillWeight = 40F;
-            this.Zawartosc.HeaderText = "Zawartość";
-            this.Zawartosc.MinimumWidth = 45;
-            this.Zawartosc.Name = "Zawartosc";
-            this.Zawartosc.ReadOnly = true;
-            this.Zawartosc.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Hex
-            // 
-            this.Hex.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Hex.FillWeight = 45F;
-            this.Hex.HeaderText = "Hex";
-            this.Hex.MinimumWidth = 50;
-            this.Hex.Name = "Hex";
-            this.Hex.ReadOnly = true;
-            this.Hex.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Hex.Width = 50;
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenu_Main});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(198, 24);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // toolStripMenu_Main
-            // 
-            this.toolStripMenu_Main.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.toolStripMenu_Main.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.toolStripMenu_Main.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenu_Edit,
-            this.toolStripMenu_Clear,
-            this.toolStripMenuItem1,
-            this.nowyLogToolStripMenuItem,
-            this.toolStripMenu_Show_Log,
-            this.toolStripMenuItem2,
-            this.toolStripMenu_Exit});
-            this.toolStripMenu_Main.Name = "toolStripMenu_Main";
-            this.toolStripMenu_Main.Size = new System.Drawing.Size(113, 20);
-            this.toolStripMenu_Main.Text = "Menu Symulatora";
-            // 
-            // toolStripMenu_Edit
-            // 
-            this.toolStripMenu_Edit.Name = "toolStripMenu_Edit";
-            this.toolStripMenu_Edit.Size = new System.Drawing.Size(148, 22);
-            this.toolStripMenu_Edit.Text = "Edytuj rejestry";
-            this.toolStripMenu_Edit.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
-            // 
-            // toolStripMenu_Clear
-            // 
-            this.toolStripMenu_Clear.Name = "toolStripMenu_Clear";
-            this.toolStripMenu_Clear.Size = new System.Drawing.Size(148, 22);
-            this.toolStripMenu_Clear.Text = "Zeruj rejestry";
-            this.toolStripMenu_Clear.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(145, 6);
-            // 
-            // nowyLogToolStripMenuItem
-            // 
-            this.nowyLogToolStripMenuItem.Name = "nowyLogToolStripMenuItem";
-            this.nowyLogToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.nowyLogToolStripMenuItem.Text = "Nowy log";
-            this.nowyLogToolStripMenuItem.Click += new System.EventHandler(this.nowyLogToolStripMenuItem_Click);
-            // 
-            // toolStripMenu_Show_Log
-            // 
-            this.toolStripMenu_Show_Log.Name = "toolStripMenu_Show_Log";
-            this.toolStripMenu_Show_Log.Size = new System.Drawing.Size(148, 22);
-            this.toolStripMenu_Show_Log.Text = "Pokaż log";
-            this.toolStripMenu_Show_Log.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(145, 6);
-            // 
-            // toolStripMenu_Exit
-            // 
-            this.toolStripMenu_Exit.Name = "toolStripMenu_Exit";
-            this.toolStripMenu_Exit.Size = new System.Drawing.Size(148, 22);
-            this.toolStripMenu_Exit.Text = "Zamknij";
-            this.toolStripMenu_Exit.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // panel_Decode_PO
             // 
@@ -303,6 +205,165 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(198, 138);
             this.label1.TabIndex = 0;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenu_Main,
+            this.mikroprogramToolStripMenuItem,
+            this.pamięćOperacyjnaToolStripMenuItem,
+            this.infoToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(572, 24);
+            this.menuStrip1.TabIndex = 1;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // toolStripMenu_Main
+            // 
+            this.toolStripMenu_Main.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.toolStripMenu_Main.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.toolStripMenu_Main.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenu_Edit,
+            this.toolStripMenu_Clear,
+            this.toolStripMenuItem1,
+            this.nowyLogToolStripMenuItem,
+            this.toolStripMenu_Show_Log,
+            this.toolStripMenuItem2,
+            this.konsolaDevToolStripMenuItem,
+            this.opcjeToolStripMenuItem,
+            this.toolStripMenuItem3,
+            this.toolStripMenu_Exit});
+            this.toolStripMenu_Main.Name = "toolStripMenu_Main";
+            this.toolStripMenu_Main.Size = new System.Drawing.Size(73, 20);
+            this.toolStripMenu_Main.Text = "Symulacja";
+            // 
+            // toolStripMenu_Edit
+            // 
+            this.toolStripMenu_Edit.Name = "toolStripMenu_Edit";
+            this.toolStripMenu_Edit.Size = new System.Drawing.Size(188, 22);
+            this.toolStripMenu_Edit.Text = "Edytuj rejestry";
+            this.toolStripMenu_Edit.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
+            // 
+            // toolStripMenu_Clear
+            // 
+            this.toolStripMenu_Clear.Name = "toolStripMenu_Clear";
+            this.toolStripMenu_Clear.Size = new System.Drawing.Size(188, 22);
+            this.toolStripMenu_Clear.Text = "Zeruj rejestry";
+            this.toolStripMenu_Clear.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(185, 6);
+            // 
+            // nowyLogToolStripMenuItem
+            // 
+            this.nowyLogToolStripMenuItem.Name = "nowyLogToolStripMenuItem";
+            this.nowyLogToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.nowyLogToolStripMenuItem.Text = "Zamknij log";
+            this.nowyLogToolStripMenuItem.Click += new System.EventHandler(this.nowyLogToolStripMenuItem_Click);
+            // 
+            // toolStripMenu_Show_Log
+            // 
+            this.toolStripMenu_Show_Log.Name = "toolStripMenu_Show_Log";
+            this.toolStripMenu_Show_Log.Size = new System.Drawing.Size(188, 22);
+            this.toolStripMenu_Show_Log.Text = "Pokaż log";
+            this.toolStripMenu_Show_Log.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(185, 6);
+            // 
+            // konsolaDevToolStripMenuItem
+            // 
+            this.konsolaDevToolStripMenuItem.Name = "konsolaDevToolStripMenuItem";
+            this.konsolaDevToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.konsolaDevToolStripMenuItem.Text = "Konsola developerska";
+            this.konsolaDevToolStripMenuItem.Click += new System.EventHandler(this.konsolaDevToolStripMenuItem_Click);
+            // 
+            // opcjeToolStripMenuItem
+            // 
+            this.opcjeToolStripMenuItem.Name = "opcjeToolStripMenuItem";
+            this.opcjeToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.opcjeToolStripMenuItem.Text = "Opcje...";
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(185, 6);
+            // 
+            // toolStripMenu_Exit
+            // 
+            this.toolStripMenu_Exit.Name = "toolStripMenu_Exit";
+            this.toolStripMenu_Exit.Size = new System.Drawing.Size(188, 22);
+            this.toolStripMenu_Exit.Text = "Zamknij";
+            this.toolStripMenu_Exit.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+            // 
+            // mikroprogramToolStripMenuItem
+            // 
+            this.mikroprogramToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.wczytajpmToolStripMenuItem,
+            this.edytujpmToolStripMenuItem});
+            this.mikroprogramToolStripMenuItem.Name = "mikroprogramToolStripMenuItem";
+            this.mikroprogramToolStripMenuItem.Size = new System.Drawing.Size(96, 20);
+            this.mikroprogramToolStripMenuItem.Text = "Mikroprogram";
+            // 
+            // wczytajpmToolStripMenuItem
+            // 
+            this.wczytajpmToolStripMenuItem.Name = "wczytajpmToolStripMenuItem";
+            this.wczytajpmToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.wczytajpmToolStripMenuItem.Text = "Wczytaj";
+            this.wczytajpmToolStripMenuItem.Click += new System.EventHandler(this.wczytajpmToolStripMenuItem_Click);
+            // 
+            // edytujpmToolStripMenuItem
+            // 
+            this.edytujpmToolStripMenuItem.Name = "edytujpmToolStripMenuItem";
+            this.edytujpmToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.edytujpmToolStripMenuItem.Text = "Edytuj";
+            this.edytujpmToolStripMenuItem.Click += new System.EventHandler(this.edytujpmToolStripMenuItem_Click);
+            // 
+            // pamięćOperacyjnaToolStripMenuItem
+            // 
+            this.pamięćOperacyjnaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.wczytajpaoToolStripMenuItem1,
+            this.edytujpaoToolStripMenuItem1});
+            this.pamięćOperacyjnaToolStripMenuItem.Name = "pamięćOperacyjnaToolStripMenuItem";
+            this.pamięćOperacyjnaToolStripMenuItem.Size = new System.Drawing.Size(119, 20);
+            this.pamięćOperacyjnaToolStripMenuItem.Text = "Pamięć operacyjna";
+            // 
+            // wczytajpaoToolStripMenuItem1
+            // 
+            this.wczytajpaoToolStripMenuItem1.Name = "wczytajpaoToolStripMenuItem1";
+            this.wczytajpaoToolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
+            this.wczytajpaoToolStripMenuItem1.Text = "Wczytaj";
+            this.wczytajpaoToolStripMenuItem1.Click += new System.EventHandler(this.wczytajpaoToolStripMenuItem1_Click);
+            // 
+            // edytujpaoToolStripMenuItem1
+            // 
+            this.edytujpaoToolStripMenuItem1.Name = "edytujpaoToolStripMenuItem1";
+            this.edytujpaoToolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
+            this.edytujpaoToolStripMenuItem1.Text = "Edytuj";
+            this.edytujpaoToolStripMenuItem1.Click += new System.EventHandler(this.edytujpaoToolStripMenuItem1_Click);
+            // 
+            // infoToolStripMenuItem
+            // 
+            this.infoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.oAutorzeToolStripMenuItem});
+            this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.infoToolStripMenuItem.Text = "Info";
+            // 
+            // oAutorzeToolStripMenuItem
+            // 
+            this.oAutorzeToolStripMenuItem.Name = "oAutorzeToolStripMenuItem";
+            this.oAutorzeToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.oAutorzeToolStripMenuItem.Text = "O autorze...";
+            this.oAutorzeToolStripMenuItem.Click += new System.EventHandler(this.oAutorzeToolStripMenuItem_Click);
             // 
             // panel_Left
             // 
@@ -505,6 +566,7 @@
             this.panel_PM.AutoSize = true;
             this.panel_PM.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panel_PM.Controls.Add(this.Grid_PM);
+            this.panel_PM.Controls.Add(this.menuStrip1);
             this.panel_PM.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel_PM.Location = new System.Drawing.Point(0, 0);
             this.panel_PM.Margin = new System.Windows.Forms.Padding(2);
@@ -544,7 +606,7 @@
             dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.Grid_PM.DefaultCellStyle = dataGridViewCellStyle8;
             this.Grid_PM.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Grid_PM.Location = new System.Drawing.Point(0, 0);
+            this.Grid_PM.Location = new System.Drawing.Point(0, 24);
             this.Grid_PM.Margin = new System.Windows.Forms.Padding(2);
             this.Grid_PM.MultiSelect = false;
             this.Grid_PM.Name = "Grid_PM";
@@ -552,7 +614,7 @@
             this.Grid_PM.RowHeadersVisible = false;
             this.Grid_PM.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.Grid_PM.RowTemplate.Height = 24;
-            this.Grid_PM.Size = new System.Drawing.Size(572, 162);
+            this.Grid_PM.Size = new System.Drawing.Size(572, 138);
             this.Grid_PM.TabIndex = 2;
             this.Grid_PM.SelectionChanged += new System.EventHandler(this.grid_PM_SelectionChanged);
             // 
@@ -678,6 +740,40 @@
             this.NA.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.NA.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // Adres
+            // 
+            this.Adres.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Adres.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Adres.HeaderText = "Adres";
+            this.Adres.MinimumWidth = 38;
+            this.Adres.Name = "Adres";
+            this.Adres.ReadOnly = true;
+            this.Adres.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Adres.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Adres.Width = 38;
+            // 
+            // Zawartosc
+            // 
+            this.Zawartosc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Zawartosc.FillWeight = 40F;
+            this.Zawartosc.HeaderText = "Zawartość";
+            this.Zawartosc.MinimumWidth = 45;
+            this.Zawartosc.Name = "Zawartosc";
+            this.Zawartosc.ReadOnly = true;
+            this.Zawartosc.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Hex
+            // 
+            this.Hex.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Hex.FillWeight = 45F;
+            this.Hex.HeaderText = "Hex";
+            this.Hex.MinimumWidth = 50;
+            this.Hex.Name = "Hex";
+            this.Hex.ReadOnly = true;
+            this.Hex.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Hex.Width = 50;
+            // 
             // SimView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -701,11 +797,10 @@
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RunSim_KeyPress);
             this.panel_PO.ResumeLayout(false);
             this.panel_View_PO.ResumeLayout(false);
-            this.panel_View_PO.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid_Mem)).EndInit();
+            this.panel_Decode_PO.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.panel_Decode_PO.ResumeLayout(false);
             this.panel_Left.ResumeLayout(false);
             this.panel_Left.PerformLayout();
             this.panel_Sim.ResumeLayout(false);
@@ -714,6 +809,7 @@
             this.panel_Control.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Info)).EndInit();
             this.panel_PM.ResumeLayout(false);
+            this.panel_PM.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid_PM)).EndInit();
             this.ResumeLayout(false);
 
@@ -736,9 +832,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenu_Show_Log;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenu_Exit;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Adres;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Zawartosc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Hex;
         private System.Windows.Forms.Panel panel_User_Info;
         private System.Windows.Forms.Panel panel_Sim_Control;
         private System.Windows.Forms.DataGridView dataGridView_Info;
@@ -766,5 +859,19 @@
         private System.Windows.Forms.ToolStripMenuItem nowyLogToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.OpenFileDialog open_File_Dialog;
+        private System.Windows.Forms.ToolStripMenuItem konsolaDevToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem opcjeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem mikroprogramToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem wczytajpmToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem edytujpmToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pamięćOperacyjnaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem wczytajpaoToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem edytujpaoToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem oAutorzeToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Adres;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Zawartosc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Hex;
     }
 }

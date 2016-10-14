@@ -1,4 +1,6 @@
-﻿namespace LabZKT.MicroOperations
+﻿using System;
+
+namespace LabZKT.MicroOperations
 {
     /// <summary>
     /// Class representing single microoperation
@@ -83,6 +85,61 @@
             ALU = alu;
             NA = na;
         }
+
+        internal void setValue(int columnIndex, string newMicroInstruction)
+        {
+            if (columnIndex == 1)
+                S1 = newMicroInstruction;
+            else if (columnIndex == 2)
+                D1 = newMicroInstruction;
+            else if (columnIndex == 3)
+                S2 = newMicroInstruction;
+            else if (columnIndex == 4)
+                D2 = newMicroInstruction;
+            else if (columnIndex == 5)
+                S3 = newMicroInstruction;
+            else if (columnIndex == 6)
+                D3 = newMicroInstruction;
+            else if (columnIndex == 7)
+                C1 = newMicroInstruction;
+            else if (columnIndex == 8)
+                C2 = newMicroInstruction;
+            else if (columnIndex == 9)
+                Test = newMicroInstruction;
+            else if (columnIndex == 10)
+                ALU = newMicroInstruction;
+            else if (columnIndex == 11)
+                NA = newMicroInstruction;
+
+        }
+
+        internal string getColumn(int col)
+        {
+            if (col == 1)
+                return S1;
+            else if (col == 2)
+                return D1;
+            else if (col == 3)
+                return S2;
+            else if (col == 4)
+                return D2;
+            else if (col == 5)
+                return S3;
+            else if (col == 6)
+                return D3;
+            else if (col == 7)
+                return C1;
+            else if (col == 8)
+                return C2;
+            else if (col == 9)
+                return Test;
+            else if (col == 10)
+                return ALU;
+            else if (col == 11)
+                return NA;
+            return "";
+        }
+
         /// <summary>
         /// Initialize microoperation class instance
         /// </summary>

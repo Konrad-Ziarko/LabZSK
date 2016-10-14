@@ -28,11 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -43,13 +39,12 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MemView));
             this.panel_View_PO = new System.Windows.Forms.Panel();
             this.Grid_Mem = new System.Windows.Forms.DataGridView();
-            this.Adres = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Zawartosc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Hex = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Typ = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel_Edit_PO = new System.Windows.Forms.Panel();
             this.dataGridView_Decode_Complex = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -72,9 +67,12 @@
             this.dataGridView_Basic = new System.Windows.Forms.DataGridView();
             this.Nazwa = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Property = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.save_File_Dialog = new System.Windows.Forms.SaveFileDialog();
             this.open_File_Dialog = new System.Windows.Forms.OpenFileDialog();
+            this.Adres = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Zawartosc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Hex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Typ = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel_View_PO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid_Mem)).BeginInit();
             this.panel_Edit_PO.SuspendLayout();
@@ -90,7 +88,7 @@
             this.panel_View_PO.Controls.Add(this.Grid_Mem);
             this.panel_View_PO.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel_View_PO.Location = new System.Drawing.Point(0, 0);
-            this.panel_View_PO.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel_View_PO.Margin = new System.Windows.Forms.Padding(2);
             this.panel_View_PO.MinimumSize = new System.Drawing.Size(195, 0);
             this.panel_View_PO.Name = "panel_View_PO";
             this.panel_View_PO.Size = new System.Drawing.Size(206, 586);
@@ -119,17 +117,17 @@
             this.Grid_Mem.DefaultCellStyle = dataGridViewCellStyle4;
             this.Grid_Mem.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Grid_Mem.Location = new System.Drawing.Point(0, 0);
-            this.Grid_Mem.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Grid_Mem.Margin = new System.Windows.Forms.Padding(2);
             this.Grid_Mem.MinimumSize = new System.Drawing.Size(195, 0);
             this.Grid_Mem.MultiSelect = false;
             this.Grid_Mem.Name = "Grid_Mem";
-            this.Grid_Mem.ReadOnly = true;
             this.Grid_Mem.RowHeadersVisible = false;
             this.Grid_Mem.RowTemplate.Height = 24;
             this.Grid_Mem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.Grid_Mem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.Grid_Mem.Size = new System.Drawing.Size(206, 586);
             this.Grid_Mem.TabIndex = 0;
+            this.Grid_Mem.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.Grid_Mem_CellEndEdit);
             this.Grid_Mem.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grid_PO_CellMouseClick);
             this.Grid_Mem.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grid_PO_CellMouseDoubleClick);
             this.Grid_Mem.SelectionChanged += new System.EventHandler(this.Grid_PO_SelectionChanged);
@@ -138,55 +136,6 @@
             this.Grid_Mem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Grid_PO_KeyDown);
             this.Grid_Mem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Grid_PO_MouseDown);
             this.Grid_Mem.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Grid_PO_MouseMove);
-            // 
-            // Adres
-            // 
-            this.Adres.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Adres.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Adres.HeaderText = "Adres";
-            this.Adres.Name = "Adres";
-            this.Adres.ReadOnly = true;
-            this.Adres.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Adres.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Adres.Width = 40;
-            // 
-            // Zawartosc
-            // 
-            this.Zawartosc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            this.Zawartosc.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Zawartosc.HeaderText = "Zawartość";
-            this.Zawartosc.Name = "Zawartosc";
-            this.Zawartosc.ReadOnly = true;
-            this.Zawartosc.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Zawartosc.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Hex
-            // 
-            this.Hex.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            this.Hex.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Hex.HeaderText = "Hex";
-            this.Hex.MinimumWidth = 65;
-            this.Hex.Name = "Hex";
-            this.Hex.ReadOnly = true;
-            this.Hex.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Hex.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Hex.Width = 65;
-            // 
-            // Typ
-            // 
-            this.Typ.HeaderText = "Typ";
-            this.Typ.Name = "Typ";
-            this.Typ.ReadOnly = true;
-            this.Typ.Visible = false;
             // 
             // panel_Edit_PO
             // 
@@ -197,7 +146,7 @@
             this.panel_Edit_PO.Controls.Add(this.panel_Top);
             this.panel_Edit_PO.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_Edit_PO.Location = new System.Drawing.Point(206, 0);
-            this.panel_Edit_PO.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel_Edit_PO.Margin = new System.Windows.Forms.Padding(2);
             this.panel_Edit_PO.Name = "panel_Edit_PO";
             this.panel_Edit_PO.Size = new System.Drawing.Size(548, 586);
             this.panel_Edit_PO.TabIndex = 1;
@@ -233,7 +182,7 @@
             this.dataGridView_Decode_Complex.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dataGridView_Decode_Complex.EnableHeadersVisualStyles = false;
             this.dataGridView_Decode_Complex.Location = new System.Drawing.Point(2, 356);
-            this.dataGridView_Decode_Complex.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView_Decode_Complex.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView_Decode_Complex.MultiSelect = false;
             this.dataGridView_Decode_Complex.Name = "dataGridView_Decode_Complex";
             this.dataGridView_Decode_Complex.ReadOnly = true;
@@ -330,7 +279,7 @@
             this.dataGridView_Decode_Simple.Dock = System.Windows.Forms.DockStyle.Top;
             this.dataGridView_Decode_Simple.EnableHeadersVisualStyles = false;
             this.dataGridView_Decode_Simple.Location = new System.Drawing.Point(2, 146);
-            this.dataGridView_Decode_Simple.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView_Decode_Simple.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView_Decode_Simple.MultiSelect = false;
             this.dataGridView_Decode_Simple.Name = "dataGridView_Decode_Simple";
             this.dataGridView_Decode_Simple.ReadOnly = true;
@@ -403,7 +352,7 @@
             this.panel_Right.Controls.Add(this.button_Clear_Row);
             this.panel_Right.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel_Right.Location = new System.Drawing.Point(399, 146);
-            this.panel_Right.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel_Right.Margin = new System.Windows.Forms.Padding(2);
             this.panel_Right.Name = "panel_Right";
             this.panel_Right.Size = new System.Drawing.Size(149, 440);
             this.panel_Right.TabIndex = 2;
@@ -475,7 +424,7 @@
             this.panel_Left.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel_Left.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel_Left.Location = new System.Drawing.Point(0, 146);
-            this.panel_Left.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel_Left.Margin = new System.Windows.Forms.Padding(2);
             this.panel_Left.Name = "panel_Left";
             this.panel_Left.Size = new System.Drawing.Size(2, 440);
             this.panel_Left.TabIndex = 1;
@@ -486,7 +435,7 @@
             this.panel_Top.Controls.Add(this.dataGridView_Basic);
             this.panel_Top.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel_Top.Location = new System.Drawing.Point(0, 0);
-            this.panel_Top.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel_Top.Margin = new System.Windows.Forms.Padding(2);
             this.panel_Top.Name = "panel_Top";
             this.panel_Top.Size = new System.Drawing.Size(548, 146);
             this.panel_Top.TabIndex = 0;
@@ -513,7 +462,7 @@
             this.dataGridView_Basic.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView_Basic.EnableHeadersVisualStyles = false;
             this.dataGridView_Basic.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView_Basic.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView_Basic.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView_Basic.MultiSelect = false;
             this.dataGridView_Basic.Name = "dataGridView_Basic";
             this.dataGridView_Basic.ReadOnly = true;
@@ -544,15 +493,56 @@
             this.Property.ReadOnly = true;
             this.Property.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 5000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // open_File_Dialog
             // 
             this.open_File_Dialog.FileName = "open_File_Dialog";
+            // 
+            // Adres
+            // 
+            this.Adres.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Adres.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Adres.HeaderText = "Adres";
+            this.Adres.Name = "Adres";
+            this.Adres.ReadOnly = true;
+            this.Adres.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Adres.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Adres.Width = 40;
+            // 
+            // Zawartosc
+            // 
+            this.Zawartosc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.Zawartosc.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Zawartosc.HeaderText = "Zawartość";
+            this.Zawartosc.Name = "Zawartosc";
+            this.Zawartosc.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Zawartosc.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Hex
+            // 
+            this.Hex.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.Hex.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Hex.HeaderText = "Hex";
+            this.Hex.MinimumWidth = 65;
+            this.Hex.Name = "Hex";
+            this.Hex.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Hex.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Hex.Width = 65;
+            // 
+            // Typ
+            // 
+            this.Typ.HeaderText = "Typ";
+            this.Typ.Name = "Typ";
+            this.Typ.ReadOnly = true;
+            this.Typ.Visible = false;
             // 
             // MemView
             // 
@@ -562,7 +552,7 @@
             this.Controls.Add(this.panel_Edit_PO);
             this.Controls.Add(this.panel_View_PO);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(679, 535);
             this.Name = "MemView";
             this.Text = "Pamięć Operacyjna";
@@ -587,7 +577,6 @@
         private System.Windows.Forms.Panel panel_View_PO;
         private System.Windows.Forms.Panel panel_Edit_PO;
         private System.Windows.Forms.DataGridView Grid_Mem;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.SaveFileDialog save_File_Dialog;
         private System.Windows.Forms.OpenFileDialog open_File_Dialog;
         private System.Windows.Forms.Panel panel_Right;

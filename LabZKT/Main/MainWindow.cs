@@ -168,79 +168,8 @@ namespace LabZKT
             }
             File.Delete(envPath + fileForPO);
         }
-        /// <summary>
-        /// Initialize flags with default values
-        /// </summary>
-        private void initFlags()
-        {
-            flags["MAV"] = new BitTextBox(130, 125, null, "MAV");
-            flags["IA"] = new BitTextBox(140, 125, null, "IA");
-            flags["INT"] = new BitTextBox(290, 125, null, "INT");
-            flags["ZNAK"] = new BitTextBox(450, 65, null, "ZNAK");
-            flags["XRO"] = new BitTextBox(460, 65, null, "XRO");
-            flags["OFF"] = new BitTextBox(470, 65, null, "OFF");
-            foreach (var sig in flags)
-                sig.Value.Enabled = false;
-        }
-        private void initRegisterTextBoxes()
-        {
-            registers["LK"] = new NumericTextBox("LK", 5, 25, null);
-            registers["A"] = new NumericTextBox("A", 155, 25, null);
-            registers["MQ"] = new NumericTextBox("MQ", 305, 25, null);
-            registers["X"] = new NumericTextBox("X", 455, 25, null);
-            registers["RAP"] = new NumericTextBox("RAP", 5, 65, null);
-            registers["LALU"] = new NumericTextBox("LALU", 155, 65, null);
-            registers["RALU"] = new NumericTextBox("RALU", 305, 65, null);
-            registers["RBP"] = new NumericTextBox("RBP", 5, 125, null);
-            registers["ALU"] = new NumericTextBox("ALU", 155, 125, null);
-            registers["BUS"] = new NumericTextBox("BUS", 5, 185, null);
-            registers["RR"] = new NumericTextBox("RR", 155, 225, null);
-            registers["LR"] = new NumericTextBox("LR", 305, 225, null);
-            registers["RI"] = new NumericTextBox("RI", 455, 225, null);
-            registers["RAPS"] = new NumericTextBox("RAPS", 305, 305, null);
-            registers["RAE"] = new NumericTextBox("RAE", 455, 305, null);
-
-            registers["L"] = new NumericTextBox("L", 205, 305, null);
-            registers["R"] = new NumericTextBox("R", 355, 305, null);
-            registers["SUMA"] = new NumericTextBox("SUMA", 285, 355, null);
-            registers["L"].Visible = false;
-            registers["R"].Visible = false;
-            registers["SUMA"].Visible = false;
-            //registers["RBPS"].Visible = false;
-            //registers["RAPS"].Visible = false;
-            //registers["RAE"].Visible = false;
-
-            foreach (var reg in registers)
-                reg.Value.Enabled = false;
-            RBPS.Enabled = false;
-            RBPS.Size = new Size(130, 1);
-            RBPS.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
-            RBPS.Text = "000000000000";
-        }
-        /// <summary>
-        /// Check if program was improperly closed, if so start recovering data
-        /// </summary>
-        private void checkIntegrity()
-        {
-            Directory.CreateDirectory(envPath + "\\Env");
-            Directory.CreateDirectory(envPath + "\\Log");
-            Directory.CreateDirectory(envPath + "\\PO");
-            Directory.CreateDirectory(envPath + "\\PM");
-            for (int i = 0; i < 256; i++)
-                List_MicroOp.Add(new MicroOperation(i, "", "", "", "", "", "", "", "", "", "", ""));
-            for (int i = 0; i < 256; i++)
-                List_Memory.Add(new MemoryRecord(i, "", "", 0));
-            //wykrycie niepoprawnego zamkniecia programu, pytac o wczytanie poprzenich mem i micro
-            if (File.Exists(envPath + fileForPM) || File.Exists(envPath + fileForPO))
-                MessageBox.Show("Wykryto niepoprawne zakończenie pracy symulatora.\nDo pamięci został wczytany ostatni dostępny stan.", "LabZKT", MessageBoxButtons.OK);
-            //Load last available MicroOp list
-            if (File.Exists(envPath + fileForPM))
-                new Thread(() => { loadLastPMState(); }).Start();
-
-            //Load last available MemoryRecords list
-            if (File.Exists(envPath + fileForPO))
-                new Thread(() => { loadLastPOState(); }).Start();
-        }
+        
+       
         /// <summary>
         /// Occurs when main window was loaded
         /// </summary>
@@ -255,9 +184,9 @@ namespace LabZKT
             {
                 DialogResult dr = MessageBox.Show("Pamiętaj aby pracować w oświtlonym pomieszczeniu!", "LabZKT", MessageBoxButtons.OK);
             }
-            checkIntegrity();
-            initRegisterTextBoxes();
-            initFlags();
+            //checkIntegrity();
+            //initRegisterTextBoxes();
+            //initFlags();
         }
         /// <summary>
         /// Invokes close event when button was clicked
@@ -332,7 +261,7 @@ namespace LabZKT
         /// <param name="e"></param>
         private void button_PM_Click(object sender, EventArgs e)
         {
-            PMController pmControler = new PMController(ref List_MicroOp);
+            //PMController pmControler = new PMController(ref List_MicroOp);
         }
         /// <summary>
         /// Show operating memory form
@@ -341,7 +270,7 @@ namespace LabZKT
         /// <param name="e"></param>
         private void button_PO_Click(object sender, EventArgs e)
         {
-            MemController memControler = new MemController(ref List_Memory);
+            //MemController memControler = new MemController(ref List_Memory);
         }
         /// <summary>
         /// Show run simulation form
@@ -352,7 +281,7 @@ namespace LabZKT
         {
             if (simModel == null)
                 simModel = new SimModel(ref List_Memory, ref List_MicroOp, ref registers, ref flags, ref RBPS, ref lastRecordFromRRC);
-            SimController simControler = new SimController(simModel);
+            SimController simControler = new SimController();
         }
         /// <summary>
         /// Show credentials form

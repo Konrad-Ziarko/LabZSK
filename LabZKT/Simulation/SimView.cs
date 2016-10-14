@@ -1,6 +1,8 @@
 ﻿using LabZKT.Memory;
+using LabZKT.MicroOperations;
 using LabZKT.StaticClasses;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -27,6 +29,10 @@ namespace LabZKT.Simulation
         internal event Action<string> AShowLog;
         internal event Action ACallDevConsole;
         internal event Action AStopDevConsole;
+        internal event Action AEditPM;
+        internal event Action AEditPAO;
+        internal event Action ALoadPM;
+        internal event Action ALoadPAO;
 
         internal int currnetCycle { get; set; }
         internal int mark { get; set; }
@@ -38,7 +44,6 @@ namespace LabZKT.Simulation
         internal bool buttonOKClicked { get; set; }
         private DataGridViewCellStyle dgvcs1;
         private bool inEditMode;
-        private Keys devKeyRequired;
 
         /// <summary>
         /// Initialize simulation view instance
@@ -113,6 +118,10 @@ namespace LabZKT.Simulation
         internal DataGridView GetDataGridPM()
         {
             return Grid_PM;
+        }
+        internal void SetDataGridPM(List<MicroOperation> List_MicroOp, int row, int col)
+        {
+            Grid_PM[col, row].Value = List_MicroOp[row].getColumn(col);
         }
         internal DataGridView GetDataGridMem()
         {
@@ -212,7 +221,13 @@ namespace LabZKT.Simulation
                 Close();
             });
         }
-        private void grid_PO_SelectionChanged(object sender, EventArgs e)
+
+        internal void SetDataGridMem(List<MemoryRecord> list_Memory, int row)
+        {
+            Grid_Mem[1, row].Value = list_Memory[row].value;
+            Grid_Mem[2, row].Value = list_Memory[row].hex;
+        }
+        internal void grid_PO_SelectionChanged(object sender, EventArgs e)
         {
             int idxRow = Grid_Mem.CurrentCell.RowIndex;
             int idxCol = Grid_Mem.CurrentCell.ColumnIndex;
@@ -291,6 +306,22 @@ namespace LabZKT.Simulation
                 else
                     button_Makro_Click(sender, e);
             }
+            else if (e.KeyChar == (char)Keys.Escape && inEditMode)
+            {
+                panel_Control.Focus();
+                ALeaveEditMode();
+                toolStripMenu_Edit.Text = "Edytuj rejestry";
+                button_Makro.Visible = true;
+                button_Micro.Visible = true;
+                toolStripMenu_Clear.Enabled = true;
+                inEditMode = false;
+                label_Status.Text = "Stop";
+            }
+            else if (e.KeyChar == (char)Keys.Escape && isRunning)
+            {
+                //przerwanie pracy
+            }
+            
         }
         private void grid_PO_KeyDown(object sender, KeyEventArgs e)
         {
@@ -339,27 +370,40 @@ namespace LabZKT.Simulation
         }
         private void SimView_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control && e.Shift && e.KeyCode == Keys.A)
+            if (e.Alt)
             {
-                devKeyRequired = Keys.D;
+                e.Handled = true;
             }
-            else if (e.KeyCode == devKeyRequired)
-            {
-                if (devKeyRequired == Keys.D)
-                    devKeyRequired = Keys.E;
-                else if (devKeyRequired == Keys.E)
-                    devKeyRequired = Keys.V;
-                else if (devKeyRequired == Keys.V)
-                    devKeyRequired = Keys.D4;
-                else if (devKeyRequired == Keys.D4)
-                    devKeyRequired = Keys.D2;
-                else if (devKeyRequired == Keys.D2)
-                    ACallDevConsole();
-            }
-            else
-            { 
-                devKeyRequired = Keys.F24;
-            }
+        }
+
+        private void edytujpmToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AEditPM();
+        }
+
+        private void edytujpaoToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            AEditPAO();
+        }
+
+        private void wczytajpaoToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ALoadPAO();
+        }
+
+        private void wczytajpmToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ALoadPM();
+        }
+
+        private void konsolaDevToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ACallDevConsole();
+        }
+
+        private void oAutorzeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Author().ShowDialog();
         }
     }
 }

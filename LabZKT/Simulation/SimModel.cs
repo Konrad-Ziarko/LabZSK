@@ -29,6 +29,7 @@ namespace LabZKT.Simulation
         internal event Action ButtonNextTactSetVisible;
         internal event Action<int> SetNextTact;
         internal event Action ASwitchLayOut;
+        internal event Action ASelectionChanged;
 
         /// <summary>
         /// Represents whether new log can by created
@@ -1140,6 +1141,8 @@ namespace LabZKT.Simulation
                     lastRecordFromRRC = List_Memory[registers["RAP"].innerValue];
                     Grid_Mem.Rows[registers["RAP"].innerValue].Selected = true;
                     Grid_Mem.FirstDisplayedScrollingRowIndex = registers["RAP"].innerValue;
+                    Grid_Mem.CurrentCell = Grid_Mem.Rows[registers["RAP"].innerValue].Cells[0];
+                    ASelectionChanged();
                     try
                     {
                         testAndSet("RBP", List_Memory[registers["RAP"].innerValue].getInt16Value());

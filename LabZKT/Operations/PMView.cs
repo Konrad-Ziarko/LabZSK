@@ -1,7 +1,9 @@
-﻿using System;
+﻿using LabZKT.StaticClasses;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Threading;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace LabZKT.MicroOperations
@@ -11,27 +13,33 @@ namespace LabZKT.MicroOperations
     /// </summary>
     public partial class PMView : Form
     {
-        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
-        internal event Action<DataGridView> TimerTick;
-        internal event Action<string> LoadTable;
-        internal event Action<string> SaveTable;
-        internal event Action CloseForm;
-        internal event Action NewMicroOperation;
-        internal event Action<int> CallSubView;
+        internal event Action<int, int, string> AUpdateData;
 
+        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
+        internal PMSubmit theSubView;
         private Rectangle dragBoxFromMouseDown;
         private object valueFromMouseDown;
         private int idxDragColumn;
+
         /// <summary>
-        /// Boolean representing whether view was changed
+        /// String representing path to file
         /// </summary>
-        public bool isChanged { get; set; }
+        /// <summary>
+        /// Represents current row in microoperations
+        /// </summary>
+        public int idxRow { get; set; }
+        /// <summary>
+        /// List for microoperations used in class
+        /// </summary>
+        public List<MicroOperation> List_MicroOps { get; set; }
         /// <summary>
         /// Initialize instance of class
         /// </summary>
-        public PMView()
+        public PMView(ref List<MicroOperation> List_MicroOps)
         {
             InitializeComponent();
+            this.List_MicroOps = List_MicroOps;
+            LoadMicroOperations();
         }
 
         private void PM_Load(object sender, EventArgs e)
@@ -40,7 +48,153 @@ namespace LabZKT.MicroOperations
             Size = new Size(800, 650);
             CenterToScreen();
         }
+        internal void CloseForm()
+        {
+            for (int i = 0; i < 256; ++i)
+            {
+                List_MicroOps[i] = new MicroOperation(i, Grid_PM[1, i].Value.ToString(), Grid_PM[2, i].Value.ToString(),
+            Grid_PM[3, i].Value.ToString(), Grid_PM[4, i].Value.ToString(),
+            Grid_PM[5, i].Value.ToString(), Grid_PM[6, i].Value.ToString(),
+            Grid_PM[7, i].Value.ToString(), Grid_PM[8, i].Value.ToString(),
+            Grid_PM[9, i].Value.ToString(), Grid_PM[10, i].Value.ToString(),
+            Grid_PM[11, i].Value.ToString());
+            }
+        }
+        /// <summary>
+        /// Replace microoperation in microoperation
+        /// </summary>
+        /// <param name="newMicroInstruction">String representing new microinstruction name</param>
+        /// <param name="currentMicroInstruction">String representing current microinstruction nam</param>
+        public void NewMicroInstruction(string newMicroInstruction, string currentMicroInstruction)
+        {
+            Grid_PM.CurrentCell.Value = newMicroInstruction;
+            AUpdateData(Grid_PM.CurrentCell.RowIndex, Grid_PM.CurrentCell.ColumnIndex, newMicroInstruction);
+            if (Grid_PM.CurrentCell.ColumnIndex == 11 && (Grid_PM.CurrentCell.Value.ToString() == "" || Convert.ToInt32(Grid_PM.CurrentCell.Value) == 0))
+            {
+                Grid_PM.CurrentCell.Value = "";
+                AUpdateData(Grid_PM.CurrentCell.RowIndex, Grid_PM.CurrentCell.ColumnIndex, "");
+            }
+            if (newMicroInstruction == "" && Grid_PM.CurrentCell.ColumnIndex == 7)
+            {
+                string tmp = Grid_PM[4, Grid_PM.CurrentCell.RowIndex].Value.ToString();
+                if (tmp == "ALA" || tmp == "ARA" || tmp == "LRQ" || tmp == "LLQ" || tmp == "LLA" || tmp == "LRA" || tmp == "LCA")
+                {
+                    Grid_PM[4, Grid_PM.CurrentCell.RowIndex].Value = "";
+                    AUpdateData(Grid_PM.CurrentCell.RowIndex, 4, "");
+                }
+            }
+            else if (newMicroInstruction == "SHT")
+            {
+                idxRow = Grid_PM.CurrentCell.RowIndex;
+                int idxCol = Grid_PM.CurrentCell.ColumnIndex;
+                Grid_PM[3, idxRow].Value = "";
+                AUpdateData(idxRow, 3, "");
+                Grid_PM[5, idxRow].Value = "";
+                AUpdateData(idxRow, 5, "");
+                Grid_PM[6, idxRow].Value = "";
+                AUpdateData(idxRow, 6, "");
+            }
+        }
+        /// <summary>
+        /// Save all mircrooperations to file
+        /// </summary>
+        /// <param name="fileName">String representing path to file</param>
+        public void SaveTable(string fileName)
+        {
+            using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Create)))
+            {
+                bw.Write(Grid_PM.Columns.Count);
+                bw.Write(Grid_PM.Rows.Count);
+                foreach (DataGridViewRow row in Grid_PM.Rows)
+                {
+                    for (int j = 0; j < Grid_PM.Columns.Count; ++j)
+                    {
+                        var val = row.Cells[j].Value;
+                        bw.Write(true);
+                        bw.Write(val.ToString());
+                    }
+                }
+            }
+            uint crc = CRC.ComputeChecksum(File.ReadAllBytes(fileName));
+            using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Append)))
+            {
+                bw.Write(crc);
+            }
+            for (int i = 0; i < 256; ++i)
+            {
+                List_MicroOps[i] = new MicroOperation(i, Grid_PM[1, i].Value.ToString(), Grid_PM[2, i].Value.ToString(),
+                    Grid_PM[3, i].Value.ToString(), Grid_PM[4, i].Value.ToString(),
+                    Grid_PM[5, i].Value.ToString(), Grid_PM[6, i].Value.ToString(),
+                    Grid_PM[7, i].Value.ToString(), Grid_PM[8, i].Value.ToString(),
+                    Grid_PM[9, i].Value.ToString(), Grid_PM[10, i].Value.ToString(),
+                    Grid_PM[11, i].Value.ToString());
+            }
+        }
+        /// <summary>
+        /// Load microoperations from file
+        /// </summary>
+        /// <param name="fileName">String representing path to file</param>
+        public void LoadTable(string fileName)
+        {
+            string[] split = fileName.Split('.');
+            string extension = split[split.Length - 1];
 
+            try
+            {
+                byte[] dataChunk = File.ReadAllBytes(fileName);
+                if (dataChunk.Length >= 6814 && CRC.ComputeChecksum(File.ReadAllBytes(fileName)) == 0 && Regex.Match(extension, @"[pP][mM]").Success)
+                    using (BinaryReader br = new BinaryReader(File.OpenRead(fileName)))
+                    {
+                        int n = br.ReadInt32();
+                        int m = br.ReadInt32();
+                        if (m == 256 && n == 12)
+                        {
+                            for (int i = 0; i < m; ++i)
+                            {
+                                for (int j = 0; j < n; ++j)
+                                {
+                                    if (br.ReadBoolean())
+                                    {
+                                        Grid_PM[j, i].Value = br.ReadString();
+                                        if (j > 0)
+                                            AUpdateData(i, j, Grid_PM[j, i].Value.ToString());
+                                    }
+                                    else
+                                        br.ReadBoolean();
+                                }
+                            }
+                        }
+                        else
+                            MessageBox.Show("To nie jest plik z poprawnym mikroprogramem!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
+                    }
+                else if (Regex.Match(extension, @"[sS][aA][gG]").Success)
+                //naucz czytania plikow labsaga
+                //
+                {
+                    ;
+                }
+                else
+                    throw new Exception();
+            }
+            catch (Exception)
+            {
+                for (int i = 0; i < 256; ++i)
+                    for (int j = 0; j < 12; ++j)
+                    {
+                        Grid_PM[j, i].Value = "";
+                        AUpdateData(i, j, "");
+                    }
+                MessageBox.Show("Wykryto niespójność pliku!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
+            }
+        }
+        /// <summary>
+        /// Initialize GridView with default data
+        /// </summary>
+        public void LoadMicroOperations()
+        {
+            foreach (MicroOperation row in List_MicroOps)
+                Grid_PM.Rows.Add(row.addr, row.S1, row.D1, row.S2, row.D2, row.S3, row.D3, row.C1, row.C2, row.Test, row.ALU, row.NA);
+        }
         private void grid_PM_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (Grid_PM.CurrentCell.ColumnIndex > 0)
@@ -48,18 +202,51 @@ namespace LabZKT.MicroOperations
                 NewMicroOperation();
             }
         }
-
-        private void PM_FormClosing(object sender, FormClosingEventArgs e)
+        private void NewMicroOperation()
         {
-            if (isChanged)
+            string newMicroInstruction = "";
+            string currentRadioButtonText = (string)Grid_PM.CurrentCell.Value;
+            string currentMicroInstruction = currentRadioButtonText.Split()[0];
+
+            using (theSubView = new PMSubmit(Convert.ToInt32(Grid_PM.CurrentCell.ColumnIndex),
+                currentMicroInstruction, Grid_PM[7, Grid_PM.CurrentCell.RowIndex].Value.ToString()))
             {
-                DialogResult result = MessageBox.Show("Zapamiętać zmiany w mikroprogramie?", "LabZKT", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes)
+                theSubView.StartPosition = FormStartPosition.CenterScreen;
+                var result = theSubView.ShowDialog();
+                if (result == DialogResult.OK)
                 {
-                    CloseForm();
+                    newMicroInstruction = theSubView.SelectedInstruction;
+                    if (currentMicroInstruction == "SHT" && newMicroInstruction != "SHT")
+                    {
+                        Grid_PM[4, Grid_PM.CurrentCell.RowIndex].Value = "";
+                        AUpdateData(Grid_PM.CurrentCell.RowIndex, 4, "");
+                    }
+                }
+                else
+                    newMicroInstruction = currentMicroInstruction;
+
+            }
+            NewMicroInstruction(newMicroInstruction, currentMicroInstruction);
+            if (newMicroInstruction == "SHT")
+            {
+                using (theSubView = new PMSubmit(4, Grid_PM[4, idxRow].Value.ToString(), Grid_PM[7, idxRow].Value.ToString()))
+                {
+                    var result = theSubView.ShowDialog();
+                    if (result == DialogResult.OK)
+                        newMicroInstruction = theSubView.SelectedInstruction;
+                    else
+                        newMicroInstruction = currentMicroInstruction;
+                    Grid_PM[4, idxRow].Value = newMicroInstruction;
+                    AUpdateData(idxRow, 4, newMicroInstruction);
                 }
             }
         }
+        private void PM_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
+        }
+
         #region Buttons
         private void button_Close_Click(object sender, EventArgs e)
         {
@@ -72,15 +259,20 @@ namespace LabZKT.MicroOperations
         {
             int idxRowToClear = Convert.ToInt32(Grid_PM.CurrentCell.RowIndex);
             for (int i = 1; i < 12; i++)
+            {
                 Grid_PM[i, idxRowToClear].Value = "";
-            isChanged = true;
+                AUpdateData(idxRowToClear, i, "");
+            }
+
         }
         private void button_Clear_Table_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < 256; i++)
                 for (int j = 1; j < 12; j++)
+                {
                     Grid_PM[j, i].Value = "";
-            isChanged = true;
+                    AUpdateData(i, j, "");
+                }
         }
         private void button_Save_Table_Click(object sender, EventArgs e)
         {
@@ -96,26 +288,20 @@ namespace LabZKT.MicroOperations
                 save_File_Dialog.FileName = "";
             }
         }
-        private void button_Load_Table_Click(object sender, EventArgs e)
+        internal void button_Load_Table_Click(object sender, EventArgs e)
         {
-            DialogResult askUnsavedChanges = DialogResult.Yes;
-            if (isChanged)
-                askUnsavedChanges = MessageBox.Show("Wprowadziłeś nie zapisane zmiany.\nNapewno chcesz wczytać inny mikroprogram?", "LabZKT", MessageBoxButtons.YesNo);
+            open_File_Dialog.Filter = "Pamięć Mikroprogramu|*.pm|Wszystko|*.*";
+            open_File_Dialog.Title = "Wczytaj mikroprogram";
+            if (Directory.Exists(envPath + @"\PM\"))
+                open_File_Dialog.InitialDirectory = envPath + @"\PM\";
+            else
+                open_File_Dialog.InitialDirectory = envPath;
 
-            if (askUnsavedChanges == DialogResult.Yes)
+            DialogResult openFileDialogResult = open_File_Dialog.ShowDialog();
+            if (openFileDialogResult == DialogResult.OK && open_File_Dialog.FileName != "")
             {
-                open_File_Dialog.Filter = "Pamięć Mikroprogramu|*.pm|Wszystko|*.*";
-                open_File_Dialog.Title = "Wczytaj mikroprogram";
-                if (Directory.Exists(envPath + @"\PM\"))
-                    open_File_Dialog.InitialDirectory = envPath + @"\PM\";
-                else
-                    open_File_Dialog.InitialDirectory = envPath;
-
-                DialogResult openFileDialogResult = open_File_Dialog.ShowDialog();
-                if (openFileDialogResult == DialogResult.OK && open_File_Dialog.FileName != "")
-                {
-                    LoadTable(open_File_Dialog.FileName);
-                }
+                LoadTable(open_File_Dialog.FileName);
+                Show();
             }
         }
         #endregion
@@ -128,6 +314,7 @@ namespace LabZKT.MicroOperations
                 int idxColumn = Convert.ToInt32(Grid_PM.CurrentCell.ColumnIndex);
 
                 Grid_PM[idxColumn, idxRow].Value = "";
+                AUpdateData(idxRow, idxColumn, "");
             }
         }
         private void grid_PM_DragDrop(object sender, DragEventArgs e)
@@ -143,42 +330,57 @@ namespace LabZKT.MicroOperations
                     if (Grid_PM[7, hitTestInfo.RowIndex].Value.ToString() == "SHT" && hitTestInfo.ColumnIndex == 7 && valueInCell == "")
                     {
                         Grid_PM[4, hitTestInfo.RowIndex].Value = Grid_PM[7, hitTestInfo.RowIndex].Value = "";
+                        AUpdateData(hitTestInfo.RowIndex, 7, "");
+                        AUpdateData(hitTestInfo.RowIndex, 4, "");
                     }
-                    else if (Grid_PM[7, hitTestInfo.RowIndex].Value.ToString() == "SHT" && hitTestInfo.ColumnIndex==7 && valueInCell != "SHT")
+                    else if (Grid_PM[7, hitTestInfo.RowIndex].Value.ToString() == "SHT" && hitTestInfo.ColumnIndex == 7 && valueInCell != "SHT")
                     {
                         Grid_PM[hitTestInfo.ColumnIndex, hitTestInfo.RowIndex].Value = valueInCell;
                         Grid_PM[4, hitTestInfo.RowIndex].Value = "";
+                        AUpdateData(hitTestInfo.RowIndex, hitTestInfo.ColumnIndex, valueInCell);
+                        AUpdateData(hitTestInfo.RowIndex, 4, "");
                     }
-                    else if (Grid_PM[7, hitTestInfo.RowIndex].Value.ToString() == "SHT" && hitTestInfo.ColumnIndex == 4 )
+                    else if (Grid_PM[7, hitTestInfo.RowIndex].Value.ToString() == "SHT" && hitTestInfo.ColumnIndex == 4)
                     {
                         Grid_PM[4, hitTestInfo.RowIndex].Value = Grid_PM[7, hitTestInfo.RowIndex].Value = "";
+                        AUpdateData(hitTestInfo.RowIndex, 7, "");
+                        AUpdateData(hitTestInfo.RowIndex, 4, "");
                     }
                     else
                     {
                         Grid_PM[hitTestInfo.ColumnIndex, hitTestInfo.RowIndex].Value = valueInCell;
+                        AUpdateData(hitTestInfo.RowIndex, hitTestInfo.ColumnIndex, valueInCell);
                     }
 
                     if (valueInCell == "SHT")
                     {
                         Grid_PM[3, hitTestInfo.RowIndex].Value = "";
+                        AUpdateData(hitTestInfo.RowIndex, 3, "");
                         Grid_PM[5, hitTestInfo.RowIndex].Value = "";
+                        AUpdateData(hitTestInfo.RowIndex, 5, "");
                         Grid_PM[6, hitTestInfo.RowIndex].Value = "";
-                        CallSubView(hitTestInfo.RowIndex);                        
+                        AUpdateData(hitTestInfo.RowIndex, 6, "");
+                        CallSubView(hitTestInfo.RowIndex);
                     }
-                    //else if ((hitTestInfo.ColumnIndex == 3 || hitTestInfo.ColumnIndex == 5 || hitTestInfo.ColumnIndex == 6
-                    //    || hitTestInfo.ColumnIndex == 8) && Grid_PM[7, hitTestInfo.RowIndex].Value.ToString() == "SHT")
-                    //{
-                    //    //Grid_PM[hitTestInfo.ColumnIndex, hitTestInfo.RowIndex].Value = "";
-                    //}
                     else if ((valueInCell == "ARA" || valueInCell == "ALA" || valueInCell == "LRQ" || valueInCell == "LLQ"
                        || valueInCell == "LLA" || valueInCell == "LRA" || valueInCell == "LCA") && Grid_PM[7, hitTestInfo.RowIndex].Value.ToString() != "SHT")
                     {
                         Grid_PM[hitTestInfo.ColumnIndex, hitTestInfo.RowIndex].Value = "";
+                        AUpdateData(hitTestInfo.RowIndex, hitTestInfo.ColumnIndex, "");
                     }
-
-
                 }
-                isChanged = true;
+            }
+        }
+        private void CallSubView(int idx)
+        {
+            using (theSubView = new PMSubmit(4, Grid_PM[4, idx].Value.ToString(), Grid_PM[7, idx].Value.ToString()))
+            {
+                var result = theSubView.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    Grid_PM[4, idx].Value = theSubView.SelectedInstruction;
+                    AUpdateData(idx, 4, theSubView.SelectedInstruction);
+                }
             }
         }
         private void grid_PM_DragEnter(object sender, DragEventArgs e)
@@ -213,13 +415,6 @@ namespace LabZKT.MicroOperations
             }
         }
         #endregion
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            new Thread(() =>
-            {
-                TimerTick(Grid_PM);
-            }).Start();
-        }
 
         private void PM_SizeChanged(object sender, EventArgs e)
         {

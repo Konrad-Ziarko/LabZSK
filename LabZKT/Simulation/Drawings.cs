@@ -32,7 +32,23 @@ namespace LabZKT.Simulation
         /// <param name="panel_Sim_Control">Control for drawing background</param>
         public void drawBackground(Control panel_Sim_Control)
         {
-            Graphics g = panel_Sim_Control.CreateGraphics();
+            Bitmap skin;
+            switch (Properties.Settings.Default.Skin)
+            {
+                case "":
+                    skin = defaultSkin(panel_Sim_Control);//
+                    break;
+                default:
+                    skin = defaultSkin(panel_Sim_Control);
+                    break;
+            }
+            panel_Sim_Control.BackgroundImage = skin;
+        }
+
+        private Bitmap defaultSkin(Control panel_Sim_Control)
+        {
+            Bitmap background = new Bitmap(panel_Sim_Control.Width, panel_Sim_Control.Height);
+            Graphics g = Graphics.FromImage(background);
             g.Clear(Color.FromArgb(255, 27, 96, 51));
             GraphicsPath path = new GraphicsPath();
             Pen pen = new Pen(Color.FromArgb(255, 133, 198, 72), 10);
@@ -208,7 +224,8 @@ namespace LabZKT.Simulation
                     g.DrawString(reg.registerName, fnt, sb, reg.Location.X, reg.Location.Y - 18);
             if (!registers["SUMA"].Visible)
                 g.DrawString("RBPS", fnt, sb, RBPS.Location.X, RBPS.Location.Y - 18);
-            //return bmp;
+
+            return background;
         }
         private Point calculateTriangle(Point bottom, Point top, bool leftSide)
         {

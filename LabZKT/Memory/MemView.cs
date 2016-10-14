@@ -1,7 +1,9 @@
 ﻿using LabZKT.StaticClasses;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -13,26 +15,25 @@ namespace LabZKT.Memory
     public partial class MemView : Form
     {
         private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
-        internal event Action<DataGridView> TimerTick;
-        internal event Action<string> SaveTable;
-        internal event Action<string> LoadTable;
-        internal event Action CloseForm;
-        internal event Action NewMemoryRecord;
-        /// <summary>
-        /// Boolean representing whether view was changed
-        /// </summary>
-        public bool isChanged { get; set; }
+        internal event Action<int, string, string, int> AUpdateForm;
 
+        /// <summary>
+        /// List of MemoryRecords
+        /// </summary>
+        public List<MemoryRecord> List_Memory { get; set; }
+        MemSubmit theSubView;
         private Rectangle dragBoxFromMouseDown;
         private object valueFromMouseDown;
         private int idxDragRow;
         /// <summary>
         /// Initialize instance of class
         /// </summary>
-        public MemView()
+        public MemView(ref List<MemoryRecord> List_Memory)
         {
+            this.List_Memory = List_Memory;
             InitializeComponent();
             dataGridView_Basic.Rows.Add(3);
+            LoadMemory();
         }
 
         internal DataGridView GetDataGrid()
@@ -61,20 +62,115 @@ namespace LabZKT.Memory
             dataGridView_Basic.Rows[1].Height = 46;
             dataGridView_Basic.Rows[2].Height = 46;
         }
-
-        private void timer1_Tick(object sender, EventArgs e)
+        private void LoadMemory()
         {
-            new Thread(() =>
+            foreach (MemoryRecord row in List_Memory)
+                Grid_Mem.Rows.Add(row.addr, row.value, row.hex, row.typ);
+        }
+        /// <summary>
+        /// Save internal memoryrecords list to file
+        /// </summary>
+        /// <param name="fileName">String representing path to file</param>
+        public void SaveTable(string fileName)
+        {
+            using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Create)))
             {
-                TimerTick(Grid_Mem);
-            }).Start();
+                bw.Write(Grid_Mem.Columns.Count);
+                bw.Write(Grid_Mem.Rows.Count);
+                foreach (DataGridViewRow row in Grid_Mem.Rows)
+                {
+                    for (int j = 0; j < Grid_Mem.Columns.Count; ++j)
+                    {
+                        var val = row.Cells[j].Value;
+                        bw.Write(true);
+                        if (j == 3 && val.ToString() == "")
+                            bw.Write("0");
+                        else
+                            bw.Write(val.ToString());
+                    }
+                }
+            }
+            uint crc = CRC.ComputeChecksum(File.ReadAllBytes(fileName));
+            using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Append)))
+            {
+                bw.Write(crc);
+            }
+            for (int i = 0; i < 256; ++i)
+            {
+                List_Memory[i] = new MemoryRecord(i, (string)Grid_Mem.Rows[i].Cells[1].Value, (string)Grid_Mem.Rows[i].Cells[2].Value,
+                    Convert.ToInt16(Grid_Mem.Rows[i].Cells[3].Value));
+            }
+        }
+        /// <summary>
+        /// Load memoryrecords from file
+        /// </summary>
+        /// <param name="fileName">String representing path to file</param>
+        public void LoadTable(string fileName)
+        {
+            string[] split = fileName.Split('.');
+            string extension = split[split.Length - 1];
+            try
+            {
+                byte[] dataChunk = File.ReadAllBytes(fileName);
+                if (dataChunk.Length >= 2974 && CRC.ComputeChecksum(File.ReadAllBytes(fileName)) == 0 && Regex.Match(extension, @"[pP][oO]").Success)
+                    using (BinaryReader br = new BinaryReader(File.OpenRead(fileName)))
+                    {
+                        int n = br.ReadInt32();
+                        int m = br.ReadInt32();
+                        if (m == 256 && n == 4)
+                        {
+                            for (int i = 0; i < m; ++i)
+                            {
+                                for (int j = 0; j < n; ++j)
+                                {
+                                    if (br.ReadBoolean())
+                                    {
+                                        Grid_Mem.Rows[i].Cells[j].Value = br.ReadString();
+                                    }
+                                    else
+                                        br.ReadBoolean();
+                                }
+                                AUpdateForm(i, Grid_Mem.Rows[i].Cells[1].Value.ToString(), Grid_Mem.Rows[i].Cells[2].Value.ToString(), Convert.ToInt32(Grid_Mem.Rows[i].Cells[3].Value));
+                            }
+                        }
+                        else
+                            MessageBox.Show("To nie jest plik z poprawnym mikroprogramem!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
+                    }
+                else if (Regex.Match(extension, @"[sS][aA][gG]").Success)
+                //naucz czytania plikow labsaga
+                //
+                {
+                    ;
+                }
+                else
+                    throw new Exception();
+            }
+            catch (Exception)
+            {
+                for (int i = 0; i < 256; ++i)
+                    for (int j = 0; j < 4; ++j)
+                        Grid_Mem.Rows[i].Cells[j].Value = "";
+                MessageBox.Show("Wykryto niespójność pliku!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
+            }
         }
 
         private void grid_PO_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            Grid_Mem.EndEdit();
             if (Grid_Mem.CurrentCell.ColumnIndex > 0)
             {
-                NewMemoryRecord();
+                using (theSubView = new MemSubmit())
+                {
+                    theSubView.Location = Cursor.Position;
+                    var result = theSubView.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Value = theSubView.binaryData;
+                        Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[2].Value = theSubView.hexData;
+                        Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[3].Value = theSubView.dataType;
+                        AUpdateForm(Grid_Mem.CurrentCell.RowIndex, theSubView.binaryData, theSubView.hexData, theSubView.dataType);
+                    }
+                }
             }
             Grid_PO_SelectionChanged(sender, e);
         }
@@ -90,7 +186,6 @@ namespace LabZKT.Memory
             Grid_Mem.Rows[idxRowToClear].Cells[1].Value = "";
             Grid_Mem.Rows[idxRowToClear].Cells[2].Value = "";
             Grid_Mem.Rows[idxRowToClear].Cells[3].Value = "0";
-            isChanged = true;
             Grid_PO_SelectionChanged(sender, e);
         }
 
@@ -102,7 +197,6 @@ namespace LabZKT.Memory
                 Grid_Mem.Rows[i].Cells[2].Value = "";
                 Grid_Mem.Rows[i].Cells[3].Value = "0";
             }
-            isChanged = true;
             Grid_PO_SelectionChanged(sender, e);
         }
 
@@ -121,29 +215,22 @@ namespace LabZKT.Memory
             }
         }
 
-        private void button_Load_Table_Click(object sender, EventArgs e)
+        internal void button_Load_Table_Click(object sender, EventArgs e)
         {
-            DialogResult askUnsavedChanges = DialogResult.Yes;
-            if (isChanged)
-                askUnsavedChanges = MessageBox.Show("Wprowadziłeś nie zapisane zmiany.\nNapewno chcesz wczytać plik z pamięcią operacyjną?", "LabZKT", MessageBoxButtons.YesNo);
+            open_File_Dialog.Filter = "Pamięć operacyjna|*.po|Wszystko|*.*";
+            open_File_Dialog.Title = "Wczytaj zawartość pamięci operacyjnej";
+            if (Directory.Exists(envPath + @"\PO\"))
+                open_File_Dialog.InitialDirectory = envPath + @"\PO\";
+            else
+                open_File_Dialog.InitialDirectory = envPath;
 
-            if (askUnsavedChanges == DialogResult.Yes)
+            DialogResult openFileDialogResult = open_File_Dialog.ShowDialog();
+            if (openFileDialogResult == DialogResult.OK && open_File_Dialog.FileName != "")
             {
-                open_File_Dialog.Filter = "Pamięć operacyjna|*.po|Wszystko|*.*";
-                open_File_Dialog.Title = "Wczytaj zawartość pamięci operacyjnej";
-                if (Directory.Exists(envPath + @"\PO\"))
-                    open_File_Dialog.InitialDirectory = envPath + @"\PO\";
-                else
-                    open_File_Dialog.InitialDirectory = envPath;
-
-                DialogResult openFileDialogResult = open_File_Dialog.ShowDialog();
-                if (openFileDialogResult == DialogResult.OK && open_File_Dialog.FileName != "")
-                {
-                    LoadTable(open_File_Dialog.FileName);
-                }
-
+                LoadTable(open_File_Dialog.FileName);
+                Show();
+                Grid_PO_SelectionChanged(sender, e);
             }
-            Grid_PO_SelectionChanged(sender, e);
         }
 
         private void button_Close_Click(object sender, EventArgs e)
@@ -156,14 +243,8 @@ namespace LabZKT.Memory
 
         private void PO_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (isChanged)
-            {
-                DialogResult result = MessageBox.Show("Zapamiętać zmiany w pamięci?", "LabZKT", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes)
-                {
-                    CloseForm();
-                }
-            }
+            e.Cancel = true;
+            this.Hide();
         }
 
         private void dataGridView_Basic_SelectionChanged(object sender, EventArgs e)
@@ -178,7 +259,16 @@ namespace LabZKT.Memory
             string instructionMnemo = "";
             dataGridView_Decode_Simple.Rows.Clear();
             dataGridView_Decode_Complex.Rows.Clear();
-            if (Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[3].Value) > 0)
+            short tmp = 0;
+            try
+            {
+                tmp = Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[3].Value);
+            }
+            catch
+            {
+
+            }
+            if (tmp > 0)
             {
                 dataGridView_Basic.Rows[2].Cells[1].Value = instructionMnemo;
                 if (Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[3].Value) == 1)
@@ -254,6 +344,7 @@ namespace LabZKT.Memory
             {
                 x.Height = dataGridView_Decode_Complex.Height / 4;
             }
+            Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Selected = true;
         }
 
         private void Grid_PO_MouseMove(object sender, MouseEventArgs e)
@@ -302,9 +393,8 @@ namespace LabZKT.Memory
                     Grid_Mem.Rows[hitTestInfo.RowIndex].Cells[1].Value = Grid_Mem.Rows[idxDragRow].Cells[1].Value;
                     Grid_Mem.Rows[hitTestInfo.RowIndex].Cells[2].Value = Grid_Mem.Rows[idxDragRow].Cells[2].Value;
                     Grid_Mem.Rows[hitTestInfo.RowIndex].Cells[3].Value = Grid_Mem.Rows[idxDragRow].Cells[3].Value;
+                    AUpdateForm(hitTestInfo.RowIndex, Grid_Mem.Rows[idxDragRow].Cells[1].Value.ToString(), Grid_Mem.Rows[idxDragRow].Cells[1].Value.ToString(), Convert.ToInt16(Grid_Mem.Rows[idxDragRow].Cells[3].Value));
                 }
-
-                isChanged = true;
             }
         }
 
@@ -367,6 +457,52 @@ namespace LabZKT.Memory
             startLocation += diffSize;
             bLocation.Y = startLocation;
             button_Close.Location = bLocation;
+        }
+
+        private void Grid_Mem_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            decimal tmp;
+
+            try
+            {
+                if (decimal.TryParse(Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Value.ToString(), out tmp))
+                {
+                    tmp = Convert.ToInt16(Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Value.ToString(), 10);
+                    string bin = Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Value.ToString(), 10), 2).PadLeft(16, '0');
+                    string hex = Convert.ToInt16(Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Value.ToString(), 10).ToString("X").PadLeft(4, '0');
+                    AUpdateForm(Grid_Mem.CurrentCell.RowIndex, bin, hex, 1);
+                    Grid_Mem[2, Grid_Mem.CurrentCell.RowIndex].Value = hex;
+                    Grid_Mem[1, Grid_Mem.CurrentCell.RowIndex].Value = bin;
+                    Grid_Mem[3, Grid_Mem.CurrentCell.RowIndex].Value = 1;
+                }
+                else
+                {
+                    string txt = Grid_Mem.Rows[e.RowIndex].Cells[1].Value.ToString();
+                    char[] toRemove = { 'h', 'H' };
+                    txt = txt.TrimEnd(toRemove);
+                    try
+                    {
+                        tmp = Convert.ToInt16(txt, 16);
+                        string bin = Convert.ToString(Convert.ToInt16(tmp), 2).PadLeft(16, '0');
+                        string hex = Convert.ToInt16(tmp).ToString("X").PadLeft(4, '0');
+                        AUpdateForm(Grid_Mem.CurrentCell.RowIndex, bin, hex, 1);
+                        Grid_Mem[2, Grid_Mem.CurrentCell.RowIndex].Value = hex;
+                        Grid_Mem[1, Grid_Mem.CurrentCell.RowIndex].Value = bin;
+                        Grid_Mem[3, Grid_Mem.CurrentCell.RowIndex].Value = List_Memory[Grid_Mem.CurrentCell.RowIndex].typ;
+                    }
+                    catch
+                    {
+                        throw new Exception();
+                    }
+                }
+            }
+            catch
+            {
+                Grid_Mem[1, Grid_Mem.CurrentCell.RowIndex].Value = List_Memory[Grid_Mem.CurrentCell.RowIndex].value;
+                Grid_Mem[2, Grid_Mem.CurrentCell.RowIndex].Value = List_Memory[Grid_Mem.CurrentCell.RowIndex].hex;
+                Grid_Mem[3, Grid_Mem.CurrentCell.RowIndex].Value = List_Memory[Grid_Mem.CurrentCell.RowIndex].typ;
+            }
+
         }
     }
 }

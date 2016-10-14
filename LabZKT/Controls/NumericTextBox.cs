@@ -61,12 +61,11 @@ namespace LabZKT.Controls
         {
             base.OnKeyPress(e);
 
-            //if (e.KeyChar == (char)Keys.Enter)
-            //{
-            //    Parent.Focus();
-            //}
-
-            if (Char.IsDigit(e.KeyChar) || (e.KeyChar >= 'a' && e.KeyChar <= 'f') || (e.KeyChar >= 'A' && e.KeyChar <= 'F'))
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                Parent.Focus();
+            }
+            else if (Char.IsDigit(e.KeyChar) || (e.KeyChar >= 'a' && e.KeyChar <= 'f') || (e.KeyChar >= 'A' && e.KeyChar <= 'F'))
             {
                 if (Text.Length > 0 && Text[Text.Length - 1] == 'h')
                 {
@@ -364,7 +363,7 @@ namespace LabZKT.Controls
         {
             if (registerName == "LK")
             {
-                innerValue &= 127;
+                //innerValue &= 127;
                 valueWhichShouldBeMovedToRegister &= 127;
             }
             else if (registerName == "RAPS")

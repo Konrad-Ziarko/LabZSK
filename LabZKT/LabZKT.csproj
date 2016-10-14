@@ -80,10 +80,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Memory\MemController.cs" />
-    <Compile Include="Memory\MemModel.cs" />
-    <Compile Include="Operations\PMController.cs" />
-    <Compile Include="Operations\PMModel.cs" />
     <Compile Include="Controls\BitTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
