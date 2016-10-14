@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LabZKT</RootNamespace>
     <AssemblyName>LabZKT</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <PublishUrl>publish\</PublishUrl>
@@ -83,6 +83,12 @@
     <Compile Include="Controls\BitTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Other\Options.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Other\Options.Designer.cs">
+      <DependentUpon>Options.cs</DependentUpon>
+    </Compile>
     <Compile Include="Simulation\DevConsole.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,23 +97,17 @@
     </Compile>
     <Compile Include="StaticClasses\CRC.cs" />
     <Compile Include="Simulation\Drawings.cs" />
-    <Compile Include="Main\ErrorMessage.cs">
+    <Compile Include="Other\ErrorMessage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\ErrorMessage.Designer.cs">
+    <Compile Include="Other\ErrorMessage.Designer.cs">
       <DependentUpon>ErrorMessage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\Author.cs">
+    <Compile Include="Other\Author.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\Author.Designer.cs">
+    <Compile Include="Other\Author.Designer.cs">
       <DependentUpon>Author.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Main\MainWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Main\MainWindow.Designer.cs">
-      <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\PMView.cs">
       <SubType>Form</SubType>
@@ -156,21 +156,21 @@
       <DependentUpon>PMSubmit.cs</DependentUpon>
     </Compile>
     <Compile Include="StaticClasses\Translator.cs" />
-    <EmbeddedResource Include="Main\ErrorMessage.resx">
+    <EmbeddedResource Include="Other\ErrorMessage.resx">
       <DependentUpon>ErrorMessage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\Author.resx">
+    <EmbeddedResource Include="Other\Author.resx">
       <DependentUpon>Author.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Main\MainWindow.resx">
-      <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operations\PMView.resx">
       <DependentUpon>PMView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Memory\MemView.resx">
       <DependentUpon>MemView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Other\Options.resx">
+      <DependentUpon>Options.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Simulation\DevConsole.resx">
       <DependentUpon>DevConsole.cs</DependentUpon>

@@ -33,13 +33,13 @@ namespace LabZKT.Simulation
         public void drawBackground(Control panel_Sim_Control)
         {
             Bitmap skin;
-            switch (Properties.Settings.Default.Skin)
+            switch (Properties.Settings.Default.SkinNum)
             {
-                case "":
+                case 0:
                     skin = defaultSkin(panel_Sim_Control);//
                     break;
                 default:
-                    skin = defaultSkin(panel_Sim_Control);
+                    skin = niebieska(panel_Sim_Control);
                     break;
             }
             panel_Sim_Control.BackgroundImage = skin;
@@ -224,6 +224,14 @@ namespace LabZKT.Simulation
                     g.DrawString(reg.registerName, fnt, sb, reg.Location.X, reg.Location.Y - 18);
             if (!registers["SUMA"].Visible)
                 g.DrawString("RBPS", fnt, sb, RBPS.Location.X, RBPS.Location.Y - 18);
+
+            return background;
+        }
+        private Bitmap niebieska(Control panel_Sim_Control)
+        {
+            Bitmap background = new Bitmap(panel_Sim_Control.Width, panel_Sim_Control.Height);
+            Graphics g = Graphics.FromImage(background);
+            g.Clear(Color.FromArgb(255, 0, 10, 99));
 
             return background;
         }

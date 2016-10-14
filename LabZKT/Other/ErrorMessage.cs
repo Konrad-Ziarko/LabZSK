@@ -3,7 +3,7 @@ using System.Media;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace LabZKT
+namespace LabZKT.Other
 {
     /// <summary>
     /// Windows form for errors

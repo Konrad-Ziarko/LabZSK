@@ -36,6 +36,7 @@
             // 
             // registerName
             // 
+            this.registerName.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.registerName.FormattingEnabled = true;
             this.registerName.Items.AddRange(new object[] {
             "LK",
@@ -58,11 +59,12 @@
             "SUMA"});
             this.registerName.Location = new System.Drawing.Point(12, 12);
             this.registerName.Name = "registerName";
-            this.registerName.Size = new System.Drawing.Size(121, 21);
+            this.registerName.Size = new System.Drawing.Size(121, 26);
             this.registerName.TabIndex = 0;
             // 
             // registerValue
             // 
+            this.registerValue.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.registerValue.Location = new System.Drawing.Point(170, 12);
             this.registerValue.Maximum = new decimal(new int[] {
             40000,
@@ -75,14 +77,15 @@
             0,
             -2147483648});
             this.registerValue.Name = "registerValue";
-            this.registerValue.Size = new System.Drawing.Size(89, 20);
+            this.registerValue.Size = new System.Drawing.Size(89, 26);
             this.registerValue.TabIndex = 1;
             // 
             // buttonStart
             // 
-            this.buttonStart.Location = new System.Drawing.Point(12, 113);
+            this.buttonStart.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.buttonStart.Location = new System.Drawing.Point(84, 83);
             this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(75, 23);
+            this.buttonStart.Size = new System.Drawing.Size(105, 33);
             this.buttonStart.TabIndex = 2;
             this.buttonStart.Text = "Start";
             this.buttonStart.UseVisualStyleBackColor = true;

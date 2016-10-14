@@ -56,13 +56,6 @@ namespace LabZKT.Simulation
         /// </summary>
         public TextBox RBPS { get; set; }
 
-        internal void DevConsole()
-        {
-            if (devConsole == null)
-                devConsole = new DevConsole(this);
-            devConsole.Show();
-        }
-
         /// <summary>
         /// Represents CPU registers
         /// </summary>
@@ -81,12 +74,12 @@ namespace LabZKT.Simulation
         internal bool buttonNextTactClicked = false;
         #region DEV
         internal bool DEVMODE = false;
-        internal DevConsole devConsole;
         internal int DEVVALUE;
         internal string DEVREGISTER;
         #endregion
         private DataGridView Grid_PM;
         private bool resetBus;
+        private bool layoutChanged;
         private bool indirectAdresation = false;
         private List<MicroOperation> List_MicroOp;
         private List<MemoryRecord> List_Memory;
@@ -370,6 +363,7 @@ namespace LabZKT.Simulation
             else
             {
                 Application.DoEvents();
+                Thread.Sleep(Settings.Default.Delay);
                 registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
                 validateRegisters();
             }
@@ -453,13 +447,43 @@ namespace LabZKT.Simulation
                 registers["RALU"].setInnerAndExpectedValue(0);
                 currentTact = 0;
                 SetNextTact(currentTact);
-                stopSim();
+                if (!DEVMODE)
+                {
+                    stopSim();
+                    buttonOKClicked = false;
+                }
+                else if (DEVMODE && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
+                {
+                    DEVMODE = false;
+                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                    stopSim();
+                    buttonOKClicked = false;
+                }
+                else if (DEVMODE)
+                {
+                    prepareSimulation(false);
+                }
             }
             else if (currentTact == 9)
             {
                 currentTact = 0;
                 SetNextTact(currentTact);
-                stopSim();
+                if (!DEVMODE)
+                {
+                    stopSim();
+                    buttonOKClicked = false;
+                }
+                else if (DEVMODE && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
+                {
+                    DEVMODE = false;
+                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                    stopSim();
+                    buttonOKClicked = false;
+                }
+                else if (DEVMODE)
+                {
+                    prepareSimulation(false);
+                }
             }
         }
 
@@ -1172,6 +1196,7 @@ namespace LabZKT.Simulation
                 microOpMnemo = Grid_PM[8, raps].Value.ToString();
                 if (microOpMnemo == "CEA")
                 {
+                    layoutChanged = true;
                     switchLayOut();
                     short leftValue = 0, rightValue = 0;
                     if (lastRecordFromRRC != null)
@@ -1227,7 +1252,11 @@ namespace LabZKT.Simulation
             buttonOKClicked = false;
             registers["SUMA"].Visible = registers["L"].Visible = registers["R"].Visible = false;
             RBPS.Visible = registers["RAPS"].Visible = registers["RAE"].Visible = true;
-            ASwitchLayOut();
+            if (layoutChanged)
+            {
+                ASwitchLayOut();
+                layoutChanged = false;
+            }
         }
 
         private void validateRegister()

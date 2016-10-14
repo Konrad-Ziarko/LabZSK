@@ -1,6 +1,7 @@
 ﻿using LabZKT.Properties;
 using LabZKT.Simulation;
 using System;
+using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -12,7 +13,7 @@ namespace LabZKT
         /// Mutex used to detect if application is already running.
         /// </summary>
         static Mutex singleton = new Mutex(true, "LABZKT");
-
+        private static string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
         [STAThread]
         static void Main()
         {
@@ -27,6 +28,11 @@ namespace LabZKT
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 //Application.Run(new SplashScreen());
+                if (File.Exists(envPath + @"\Env\LabZKT.ini"))
+                {
+
+                    Settings.Default.Save();
+                }
                 SimController sc = new SimController();
             }
             else

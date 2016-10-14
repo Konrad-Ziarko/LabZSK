@@ -46,5 +46,53 @@ namespace LabZKT.Properties {
                 this["Skin"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public int Delay {
+            get {
+                return ((int)(this["Delay"]));
+            }
+            set {
+                this["Delay"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsDevConsole {
+            get {
+                return ((bool)(this["IsDevConsole"]));
+            }
+            set {
+                this["IsDevConsole"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CanEditOptions {
+            get {
+                return ((bool)(this["CanEditOptions"]));
+            }
+            set {
+                this["CanEditOptions"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int SkinNum {
+            get {
+                return ((int)(this["SkinNum"]));
+            }
+            set {
+                this["SkinNum"] = value;
+            }
+        }
     }
 }

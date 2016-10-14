@@ -22,7 +22,7 @@ namespace LabZKT.Simulation
         /// <summary>
         /// Boolean representing whether debugger is attached or not
         /// </summary>
-        private bool isDebuggerPresent;
+        //private bool isDebuggerPresent;
         private MemoryRecord lastRecordFromRRC;//pamietaj aby nulowac po zerowaniu rejestrow albo nowej symulacji, to delete?
         /// <summary>
         /// List of loaded operating memory
@@ -54,6 +54,7 @@ namespace LabZKT.Simulation
         private SimView theView;
         private PMView pmView;
         private MemView memView;
+        private DevConsole devConsole;
         /// <summary>
         /// Initialize flags with default values
         /// </summary>
@@ -120,7 +121,6 @@ namespace LabZKT.Simulation
         /// <summary>
         /// Initialize controller instance
         /// </summary>
-        /// <param name="simModel"></param>
         public SimController()
         {
             initLists();
@@ -128,6 +128,7 @@ namespace LabZKT.Simulation
             initRegisterTextBoxes();
             theModel = new SimModel(ref List_Memory, ref List_MicroOp, ref registers, ref flags, ref RBPS, ref lastRecordFromRRC);
             theView = new SimView(theModel.isNewLogEnabled);
+            devConsole = new DevConsole(theModel, theView);
             foreach (var reg in theModel.registers)
                 reg.Value.Parent = theView.getSimPanel();
             foreach (var sig in theModel.flags)
@@ -149,7 +150,7 @@ namespace LabZKT.Simulation
             theView.AButtonOKClicked += ButtonOKClicked;
             theView.ASaveCurrentState += SaveState;
             theView.AShowLog += theModel.ShowLog;
-            theView.ACallDevConsole += theModel.DevConsole;
+            theView.ACallDevConsole += TheView_ACallDevConsole; ;
             theView.AStopDevConsole += TheView_AStopDevConsole;
             theView.AEditPAO += TheView_AEditPAO;
             theView.AEditPM += TheView_AEditPM;
@@ -172,6 +173,11 @@ namespace LabZKT.Simulation
             memView.AUpdateForm += MemView_AUpdateForm;
 
             theView.ShowDialog();
+        }
+
+        private void TheView_ACallDevConsole()
+        {
+            devConsole.Show();
         }
 
         private void TheModel_ASelectionChanged()

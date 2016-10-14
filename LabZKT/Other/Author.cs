@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace LabZKT
+namespace LabZKT.Other
 {
     /// <summary>
     /// Windows form for credentials

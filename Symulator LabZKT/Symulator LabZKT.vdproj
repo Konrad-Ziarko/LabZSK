@@ -21,6 +21,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_50C0B056F74C4201BFDD77F381BF3F5A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_543EBA849B5040BBB927F025BA614495"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -29,12 +35,6 @@
         {
         "MsmKey" = "8:_71F5D9EBE8939A0FB92988041D695C1D"
         "OwnerKey" = "8:_543EBA849B5040BBB927F025BA614495"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_7AA1CED368E2431E945769B243E5457D"
-        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -51,7 +51,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_FD3B6DB3F80C4D078B379BF1A128C954"
+        "MsmKey" = "8:_E293EAB2D1054E57A7EA151CAFF9E07E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -64,13 +64,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D63521F024725AE54A5C16B017B6FDBD"
+        "OwnerKey" = "8:_71F5D9EBE8939A0FB92988041D695C1D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_71F5D9EBE8939A0FB92988041D695C1D"
+        "OwnerKey" = "8:_D63521F024725AE54A5C16B017B6FDBD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -112,10 +112,10 @@
             "ComponentsUrl" = "8:"
                 "Items"
                 {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5.2"
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0"
                     {
-                    "Name" = "8:Microsoft .NET Framework 4.5.2 (x86 and x64)"
-                    "ProductCode" = "8:.NETFramework,Version=v4.5.2"
+                    "Name" = "8:Microsoft .NET Framework 4 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0"
                     }
                 }
             }
@@ -194,6 +194,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_50C0B056F74C4201BFDD77F381BF3F5A"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Google Drive\\logo\\pc.ico"
+            "TargetName" = "8:pc.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_B7ACF3CF31B944A39FE28535DB0ED715"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_71F5D9EBE8939A0FB92988041D695C1D"
             {
             "AssemblyRegister" = "3:1"
@@ -223,26 +243,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7AA1CED368E2431E945769B243E5457D"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Downloads\\pc.ico"
-            "TargetName" = "8:pc.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_B7ACF3CF31B944A39FE28535DB0ED715"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CFC74500EEAF7746BC3661976B11CF12"
@@ -307,10 +307,10 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FD3B6DB3F80C4D078B379BF1A128C954"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E293EAB2D1054E57A7EA151CAFF9E07E"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Downloads\\KTZLogoL.png"
-            "TargetName" = "8:KTZLogoL.png"
+            "SourcePath" = "8:..\\..\\..\\..\\Google Drive\\logo\\KTZLogoL.bmp"
+            "TargetName" = "8:KTZLogoL.bmp"
             "Tag" = "8:"
             "Folder" = "8:_B7ACF3CF31B944A39FE28535DB0ED715"
             "Condition" = "8:"
@@ -323,7 +323,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
@@ -384,7 +384,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Symulator LabZKT"
         "ProductCode" = "8:{FBD0F683-13CC-431E-806E-37EE0B308CB7}"
-        "PackageCode" = "8:{8E152491-66DC-4D3A-9A5C-6BE36E184588}"
+        "PackageCode" = "8:{10BEA748-79A8-4085-B6CA-3E6BF096084D}"
         "UpgradeCode" = "8:{C6C943D1-2C34-4EBC-BEDF-3480841123A4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -515,7 +515,7 @@
             "Target" = "8:_543EBA849B5040BBB927F025BA614495"
             "Folder" = "8:_B85A6029221046E89364155D0D0212EA"
             "WorkingFolder" = "8:_B7ACF3CF31B944A39FE28535DB0ED715"
-            "Icon" = "8:_7AA1CED368E2431E945769B243E5457D"
+            "Icon" = "8:_50C0B056F74C4201BFDD77F381BF3F5A"
             "Feature" = "8:"
             }
         }
@@ -625,7 +625,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:0"
                             "Setting" = "3:2"
-                            "Value" = "8:_FD3B6DB3F80C4D078B379BF1A128C954"
+                            "Value" = "8:_E293EAB2D1054E57A7EA151CAFF9E07E"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "Sunken"
@@ -917,7 +917,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:0"
                             "Setting" = "3:2"
-                            "Value" = "8:_FD3B6DB3F80C4D078B379BF1A128C954"
+                            "Value" = "8:_E293EAB2D1054E57A7EA151CAFF9E07E"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "Sunken"

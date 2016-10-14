@@ -13,34 +13,34 @@ namespace LabZKT.Simulation
     internal partial class DevConsole : Form
     {
         SimModel modelRef;
-        internal DevConsole(SimModel f)
+        SimView viewRef;
+        internal DevConsole(SimModel model, SimView view)
         {
-            this.modelRef = f;
+            this.modelRef = model;
+            this.viewRef = view;
             InitializeComponent();
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
-            modelRef.DEVMODE = true;
-            modelRef.DEVREGISTER = registerName.Text;
-            modelRef.DEVVALUE = Convert.ToInt16(registerValue.Value);
+            if (!modelRef.isRunning)
+            {
+                modelRef.DEVMODE = true;
+                modelRef.DEVREGISTER = registerName.Text;
+                modelRef.DEVVALUE = Convert.ToInt16(registerValue.Value);
+                viewRef.button_Makro_Click(this, new EventArgs());
+            }
         }
 
         private void DevConsole_FormClosing(object sender, FormClosingEventArgs e)
         {
-            modelRef.devConsole = null;
+            Hide();
+            e.Cancel = true;
         }
 
         private void DevConsole_Load(object sender, EventArgs e)
         {
 
-        }
-
-        internal void deactivate()
-        {
-            modelRef.DEVMODE = false;
-            modelRef.DEVREGISTER = null;
-            modelRef.DEVVALUE = 0;
         }
     }
 }

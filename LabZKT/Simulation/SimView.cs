@@ -1,5 +1,6 @@
 ﻿using LabZKT.Memory;
 using LabZKT.MicroOperations;
+using LabZKT.Other;
 using LabZKT.StaticClasses;
 using System;
 using System.Collections.Generic;
@@ -52,6 +53,7 @@ namespace LabZKT.Simulation
         public SimView(bool needsNewLog)
         {
             InitializeComponent();
+            konsolaDevToolStripMenuItem.Enabled = Properties.Settings.Default.IsDevConsole;
             nowyLogToolStripMenuItem.Enabled = needsNewLog;
         }
 
@@ -254,7 +256,7 @@ namespace LabZKT.Simulation
             if (Grid_PM.CurrentCell.ColumnIndex == 0)
                 Grid_PM.ClearSelection();
         }
-        private void button_Makro_Click(object sender, EventArgs e)
+        internal void button_Makro_Click(object sender, EventArgs e)
         {
             toolStripMenu_Edit.Enabled = false;
             toolStripMenu_Exit.Enabled = false;
@@ -366,7 +368,7 @@ namespace LabZKT.Simulation
         }
         private void RunSim_Paint(object sender, PaintEventArgs e)
         {
-            ADrawBackground(panel_Sim_Control);
+            //ADrawBackground(panel_Sim_Control);
         }
         private void SimView_KeyDown(object sender, KeyEventArgs e)
         {
@@ -404,6 +406,21 @@ namespace LabZKT.Simulation
         private void oAutorzeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new Author().ShowDialog();
+        }
+
+        private void opcjeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (Options op = new Options())
+            {
+                op.ACallUpdate += Op_ACallUpdate;
+                op.ShowDialog();
+                konsolaDevToolStripMenuItem.Enabled = Properties.Settings.Default.IsDevConsole;
+            }
+        }
+
+        private void Op_ACallUpdate()
+        {
+            ADrawBackground(panel_Sim_Control);
         }
     }
 }

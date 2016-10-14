@@ -31,15 +31,18 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SimView));
             this.panel_PO = new System.Windows.Forms.Panel();
             this.panel_View_PO = new System.Windows.Forms.Panel();
             this.Grid_Mem = new System.Windows.Forms.DataGridView();
+            this.Adres = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Zawartosc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Hex = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel_Decode_PO = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -91,9 +94,6 @@
             this.ALU = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.open_File_Dialog = new System.Windows.Forms.OpenFileDialog();
-            this.Adres = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Zawartosc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Hex = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel_PO.SuspendLayout();
             this.panel_View_PO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid_Mem)).BeginInit();
@@ -181,6 +181,40 @@
             this.Grid_Mem.TabIndex = 0;
             this.Grid_Mem.SelectionChanged += new System.EventHandler(this.grid_PO_SelectionChanged);
             this.Grid_Mem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.grid_PO_KeyDown);
+            // 
+            // Adres
+            // 
+            this.Adres.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Adres.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Adres.HeaderText = "Adres";
+            this.Adres.MinimumWidth = 38;
+            this.Adres.Name = "Adres";
+            this.Adres.ReadOnly = true;
+            this.Adres.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Adres.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Adres.Width = 38;
+            // 
+            // Zawartosc
+            // 
+            this.Zawartosc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Zawartosc.FillWeight = 40F;
+            this.Zawartosc.HeaderText = "Zawartość";
+            this.Zawartosc.MinimumWidth = 45;
+            this.Zawartosc.Name = "Zawartosc";
+            this.Zawartosc.ReadOnly = true;
+            this.Zawartosc.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Hex
+            // 
+            this.Hex.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Hex.FillWeight = 45F;
+            this.Hex.HeaderText = "Hex";
+            this.Hex.MinimumWidth = 50;
+            this.Hex.Name = "Hex";
+            this.Hex.ReadOnly = true;
+            this.Hex.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Hex.Width = 50;
             // 
             // panel_Decode_PO
             // 
@@ -291,6 +325,7 @@
             this.opcjeToolStripMenuItem.Name = "opcjeToolStripMenuItem";
             this.opcjeToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.opcjeToolStripMenuItem.Text = "Opcje...";
+            this.opcjeToolStripMenuItem.Click += new System.EventHandler(this.opcjeToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
             // 
@@ -392,7 +427,7 @@
             // 
             // panel_Sim_Control
             // 
-            this.panel_Sim_Control.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(96)))), ((int)(((byte)(51)))));
+            this.panel_Sim_Control.BackColor = System.Drawing.SystemColors.Control;
             this.panel_Sim_Control.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_Sim_Control.Location = new System.Drawing.Point(0, 102);
             this.panel_Sim_Control.Margin = new System.Windows.Forms.Padding(2);
@@ -739,40 +774,6 @@
             this.NA.ReadOnly = true;
             this.NA.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.NA.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Adres
-            // 
-            this.Adres.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.Adres.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Adres.HeaderText = "Adres";
-            this.Adres.MinimumWidth = 38;
-            this.Adres.Name = "Adres";
-            this.Adres.ReadOnly = true;
-            this.Adres.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Adres.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Adres.Width = 38;
-            // 
-            // Zawartosc
-            // 
-            this.Zawartosc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Zawartosc.FillWeight = 40F;
-            this.Zawartosc.HeaderText = "Zawartość";
-            this.Zawartosc.MinimumWidth = 45;
-            this.Zawartosc.Name = "Zawartosc";
-            this.Zawartosc.ReadOnly = true;
-            this.Zawartosc.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Hex
-            // 
-            this.Hex.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Hex.FillWeight = 45F;
-            this.Hex.HeaderText = "Hex";
-            this.Hex.MinimumWidth = 50;
-            this.Hex.Name = "Hex";
-            this.Hex.ReadOnly = true;
-            this.Hex.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Hex.Width = 50;
             // 
             // SimView
             // 

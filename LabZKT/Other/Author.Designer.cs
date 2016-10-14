@@ -1,4 +1,4 @@
-﻿namespace LabZKT
+﻿namespace LabZKT.Other
 {
     partial class Author
     {
