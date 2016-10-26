@@ -94,5 +94,41 @@ namespace LabZKT.Properties {
                 this["SkinNum"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int FirstMark {
+            get {
+                return ((int)(this["FirstMark"]));
+            }
+            set {
+                this["FirstMark"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("6")]
+        public int SecondMark {
+            get {
+                return ((int)(this["SecondMark"]));
+            }
+            set {
+                this["SecondMark"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int ThirdMark {
+            get {
+                return ((int)(this["ThirdMark"]));
+            }
+            set {
+                this["ThirdMark"] = value;
+            }
+        }
     }
 }

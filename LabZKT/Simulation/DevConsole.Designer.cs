@@ -99,6 +99,8 @@
             this.Controls.Add(this.buttonStart);
             this.Controls.Add(this.registerValue);
             this.Controls.Add(this.registerName);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "DevConsole";
             this.Text = "DevConsole";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DevConsole_FormClosing);

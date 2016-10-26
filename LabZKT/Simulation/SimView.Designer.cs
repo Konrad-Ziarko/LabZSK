@@ -43,6 +43,7 @@
             this.Adres = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Zawartosc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Hex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.panel_Decode_PO = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -111,7 +112,8 @@
             // panel_PO
             // 
             this.panel_PO.AllowDrop = true;
-            this.panel_PO.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel_PO.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel_PO.BackColor = System.Drawing.SystemColors.Control;
             this.panel_PO.Controls.Add(this.panel_View_PO);
             this.panel_PO.Controls.Add(this.panel_Decode_PO);
             this.panel_PO.Dock = System.Windows.Forms.DockStyle.Right;
@@ -125,6 +127,7 @@
             // 
             this.panel_View_PO.AutoScroll = true;
             this.panel_View_PO.Controls.Add(this.Grid_Mem);
+            this.panel_View_PO.Controls.Add(this.menuStrip2);
             this.panel_View_PO.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_View_PO.Location = new System.Drawing.Point(0, 0);
             this.panel_View_PO.Margin = new System.Windows.Forms.Padding(2);
@@ -161,7 +164,7 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.Grid_Mem.DefaultCellStyle = dataGridViewCellStyle3;
             this.Grid_Mem.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Grid_Mem.Location = new System.Drawing.Point(0, 0);
+            this.Grid_Mem.Location = new System.Drawing.Point(0, 24);
             this.Grid_Mem.Margin = new System.Windows.Forms.Padding(2);
             this.Grid_Mem.MultiSelect = false;
             this.Grid_Mem.Name = "Grid_Mem";
@@ -177,7 +180,7 @@
             this.Grid_Mem.RowHeadersVisible = false;
             this.Grid_Mem.RowTemplate.Height = 24;
             this.Grid_Mem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Grid_Mem.Size = new System.Drawing.Size(198, 448);
+            this.Grid_Mem.Size = new System.Drawing.Size(198, 424);
             this.Grid_Mem.TabIndex = 0;
             this.Grid_Mem.SelectionChanged += new System.EventHandler(this.grid_PO_SelectionChanged);
             this.Grid_Mem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.grid_PO_KeyDown);
@@ -216,6 +219,16 @@
             this.Hex.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Hex.Width = 50;
             // 
+            // menuStrip2
+            // 
+            this.menuStrip2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.menuStrip2.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip2.Name = "menuStrip2";
+            this.menuStrip2.Size = new System.Drawing.Size(198, 24);
+            this.menuStrip2.TabIndex = 1;
+            this.menuStrip2.Text = "menuStrip2";
+            this.menuStrip2.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip2_ItemClicked);
+            // 
             // panel_Decode_PO
             // 
             this.panel_Decode_PO.BackColor = System.Drawing.SystemColors.Control;
@@ -242,6 +255,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.menuStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -258,7 +272,7 @@
             // 
             // toolStripMenu_Main
             // 
-            this.toolStripMenu_Main.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.toolStripMenu_Main.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.toolStripMenu_Main.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.toolStripMenu_Main.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenu_Edit,
@@ -336,7 +350,7 @@
             // 
             this.toolStripMenu_Exit.Name = "toolStripMenu_Exit";
             this.toolStripMenu_Exit.Size = new System.Drawing.Size(188, 22);
-            this.toolStripMenu_Exit.Text = "Zamknij";
+            this.toolStripMenu_Exit.Text = "Zakończ pracę";
             this.toolStripMenu_Exit.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // mikroprogramToolStripMenuItem
@@ -403,7 +417,7 @@
             // panel_Left
             // 
             this.panel_Left.AllowDrop = true;
-            this.panel_Left.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panel_Left.BackColor = System.Drawing.SystemColors.Control;
             this.panel_Left.Controls.Add(this.panel_Sim);
             this.panel_Left.Controls.Add(this.panel_PM);
             this.panel_Left.Dock = System.Windows.Forms.DockStyle.Left;
@@ -428,6 +442,7 @@
             // panel_Sim_Control
             // 
             this.panel_Sim_Control.BackColor = System.Drawing.SystemColors.Control;
+            this.panel_Sim_Control.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.panel_Sim_Control.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_Sim_Control.Location = new System.Drawing.Point(0, 102);
             this.panel_Sim_Control.Margin = new System.Windows.Forms.Padding(2);
@@ -599,7 +614,7 @@
             // panel_PM
             // 
             this.panel_PM.AutoSize = true;
-            this.panel_PM.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel_PM.BackColor = System.Drawing.SystemColors.Control;
             this.panel_PM.Controls.Add(this.Grid_PM);
             this.panel_PM.Controls.Add(this.menuStrip1);
             this.panel_PM.Dock = System.Windows.Forms.DockStyle.Top;
@@ -779,25 +794,29 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(776, 586);
             this.Controls.Add(this.panel_Left);
             this.Controls.Add(this.panel_PO);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.MainMenuStrip = this.menuStrip2;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(792, 625);
             this.Name = "SimView";
             this.Text = "Praca Procesora";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RunSim_FormClosing);
             this.Load += new System.EventHandler(this.RunSim_Load);
+            this.ResizeBegin += new System.EventHandler(this.SimView_ResizeBegin);
+            this.ResizeEnd += new System.EventHandler(this.SimView_ResizeEnd);
             this.SizeChanged += new System.EventHandler(this.RunSim_SizeChanged);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.RunSim_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SimView_KeyDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RunSim_KeyPress);
             this.panel_PO.ResumeLayout(false);
             this.panel_View_PO.ResumeLayout(false);
+            this.panel_View_PO.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid_Mem)).EndInit();
             this.panel_Decode_PO.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
@@ -874,5 +893,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Adres;
         private System.Windows.Forms.DataGridViewTextBoxColumn Zawartosc;
         private System.Windows.Forms.DataGridViewTextBoxColumn Hex;
+        private System.Windows.Forms.MenuStrip menuStrip2;
     }
 }

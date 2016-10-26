@@ -45,7 +45,6 @@ namespace LabZKT.Simulation
         internal bool buttonOKClicked { get; set; }
         private DataGridViewCellStyle dgvcs1;
         private bool inEditMode;
-
         /// <summary>
         /// Initialize simulation view instance
         /// </summary>
@@ -143,6 +142,7 @@ namespace LabZKT.Simulation
             CenterToScreen();
             grid_PO_SelectionChanged(sender, e);
             initUserInfoArea();
+            ADrawBackground(panel_Sim_Control);
             Focus();
         }
         private void initUserInfoArea()
@@ -335,7 +335,7 @@ namespace LabZKT.Simulation
         private void RunSim_SizeChanged(object sender, EventArgs e)
         {
             float horizontalRatio = 0.2f, verticalRatio = 0.15f;
-
+            
             int tempPoWidth = Convert.ToInt32(Width * horizontalRatio);
             panel_PO.Height = Convert.ToInt32(Height * 1.0);
             if (tempPoWidth > 280)
@@ -355,6 +355,7 @@ namespace LabZKT.Simulation
 
             panel_Sim.Width = Convert.ToInt32(panel_Left.Width * 1.0);
             panel_Sim.Height = Convert.ToInt32(panel_Left.Height - panel_PM.Height);
+
             ADrawBackground(panel_Sim_Control);
         }
         private void nowyLogToolStripMenuItem_Click(object sender, EventArgs e)
@@ -421,6 +422,22 @@ namespace LabZKT.Simulation
         private void Op_ACallUpdate()
         {
             ADrawBackground(panel_Sim_Control);
+        }
+
+        private void menuStrip2_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void SimView_ResizeBegin(object sender, EventArgs e)
+        {
+            //panel_Sim_Control.Visible = false;
+        }
+
+        private void SimView_ResizeEnd(object sender, EventArgs e)
+        {
+            //panel_Sim_Control.Visible = true;
+            
         }
     }
 }

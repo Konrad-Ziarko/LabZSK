@@ -343,12 +343,15 @@ namespace LabZKT.Simulation
                     "(poprawna " + registerToCheck + "=" + registers[registerToCheck].innerValue + ")\n\n");
 
                 mistakes++;
-                if (mistakes >= 2 && mistakes <= 5)
-                    mark = 4;
-                else if (mistakes >= 6 && mistakes <= 9)
-                    mark = 3;
-                else if (mistakes >= 10)
+
+                if (mistakes >= Settings.Default.ThirdMark)
                     mark = 2;
+                else if (mistakes >= Settings.Default.SecondMark)
+                    mark = 3;
+                else if (mistakes >= Settings.Default.FirstMark)
+                    mark = 4;
+                else
+                    mark = 5;
             }
             else
             {
