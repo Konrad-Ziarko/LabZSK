@@ -13,6 +13,7 @@ namespace LabZKT.Simulation
     {
         private Dictionary<string, NumericTextBox> registers;
         private Dictionary<string, BitTextBox> flags;
+        private Control controlToDrawOn;
         private TextBox RBPS;
         /// <summary>
         /// Initialize instance of drawing class
@@ -26,30 +27,35 @@ namespace LabZKT.Simulation
             flags = flgs;
             RBPS = rbps;
         }
+        internal void addControlToDrawOn(Control c)
+        {
+            controlToDrawOn = c;
+        }
         /// <summary>
         /// Draw background for registers in passed control object
         /// </summary>
         /// <param name="panel_Sim_Control">Control for drawing background</param>
-        public void drawBackground(Control panel_Sim_Control)
+        public void drawBackground()
         {
             Bitmap skin;
             switch (Properties.Settings.Default.SkinNum)
             {
                 case 0:
-                    skin = defaultSkin(panel_Sim_Control);//
+                    skin = defaultSkin();//
                     break;
                 default:
-                    skin = niebieska(panel_Sim_Control);
+                    skin = niebieska();
                     break;
             }
-            panel_Sim_Control.BackgroundImage = skin;
+            controlToDrawOn.BackgroundImage = skin;
         }
 
-        private Bitmap defaultSkin(Control panel_Sim_Control)
+        private Bitmap defaultSkin()
         {
-            Bitmap background = new Bitmap(panel_Sim_Control.Width, panel_Sim_Control.Height);
+            Bitmap background = new Bitmap(controlToDrawOn.Width, controlToDrawOn.Height);
             Graphics g = Graphics.FromImage(background);
             g.Clear(Color.FromArgb(255, 27, 96, 51));
+
             GraphicsPath path = new GraphicsPath();
             Pen pen = new Pen(Color.FromArgb(255, 133, 198, 72), 10);
             Pen pen2 = new Pen(Color.FromArgb(255, 133, 198, 72), 5);
@@ -58,7 +64,7 @@ namespace LabZKT.Simulation
             Point p2 = new Point();
             p1.X += registers["BUS"].Size.Width / 2;
             p2.Y = p1.Y += registers["BUS"].Size.Height / 2;
-            p2.X = panel_Sim_Control.Width;
+            p2.X = controlToDrawOn.Width;
             g.DrawLine(pen, p1, p2);
             //
             drawJoint(ref p1, ref p2, "RR");
@@ -70,16 +76,16 @@ namespace LabZKT.Simulation
             drawJoint(ref p1, ref p2, "RI");
             g.DrawLine(pen, p2, calculateTriangle(p2, p1, true));
             //
-            p2.X = p1.X = panel_Sim_Control.Location.X + (registers["BUS"].Location.X / 2);
+            p2.X = p1.X = controlToDrawOn.Location.X + (registers["BUS"].Location.X / 2);
             p2.Y = registers["LK"].Location.Y * 3 / 4 + 5;
-            p1.Y = panel_Sim_Control.Size.Height;
+            p1.Y = controlToDrawOn.Size.Height;
             //
             path.StartFigure();
             path.AddLine(p1, p2);
             //
             p2.X = registers["LK"].Location.X * 3 / 4 + 5;
             p1.Y = p2.Y = registers["LK"].Location.Y / 2;
-            p1.X = panel_Sim_Control.Size.Width;
+            p1.X = controlToDrawOn.Size.Width;
             //
             path.AddLine(p2, p1);
             g.DrawPath(pen, path);
@@ -157,12 +163,13 @@ namespace LabZKT.Simulation
             path.Reset();
             path.StartFigure();
             p2.Y = p1.Y;
-            p1.X = p2.X = panel_Sim_Control.Width - (panel_Sim_Control.Width - (registers["X"].Location.X + registers["X"].Size.Width)) / 2;
+            p1.X = p2.X = controlToDrawOn.Width - (controlToDrawOn.Width - (registers["X"].Location.X + registers["X"].Size.Width)) / 2;
             p1.Y = registers["LK"].Location.Y / 2;
             path.AddLine(p2, calculateTriangle(p2, p1, false));
             path.AddLine(p2, p3);
             g.DrawPath(pen, path);
             //
+            controlToDrawOn.Visible = true;
             if (registers["SUMA"].Visible)
             {
                 p2 = registers["RR"].Location;
@@ -192,7 +199,7 @@ namespace LabZKT.Simulation
                 p2.Y += registers["LR"].Size.Height / 2;
                 g.DrawLine(pen, p1, p2);
 
-                p1.X = panel_Sim_Control.Size.Width;
+                p1.X = controlToDrawOn.Size.Width;
                 p2 = registers["SUMA"].Location;
                 p2.X += registers["SUMA"].Size.Width / 2;
                 p1.Y = p2.Y += registers["SUMA"].Size.Height / 2;
@@ -205,13 +212,13 @@ namespace LabZKT.Simulation
                 p1 = registers["RAE"].Location;
                 p1.X += registers["RAE"].Size.Width / 2;
                 p1.Y += registers["RAE"].Size.Height / 2;
-                p2.Y = p1.Y + (panel_Sim_Control.Height - registers["RAE"].Location.Y) / 2;
+                p2.Y = p1.Y + (controlToDrawOn.Height - registers["RAE"].Location.Y) / 2;
                 p2.X = p1.X - (p2.Y - p1.Y);
                 path.AddLine(p1, p2);
 
                 p2.X = registers["BUS"].Location.X;
-                p1.X = panel_Sim_Control.Location.X + (registers["BUS"].Location.X / 2);
-                p1.Y = panel_Sim_Control.Size.Height;
+                p1.X = controlToDrawOn.Location.X + (registers["BUS"].Location.X / 2);
+                p1.Y = controlToDrawOn.Size.Height;
                 path.AddLine(p2, p1);
                 g.DrawPath(pen, path);
             }
@@ -227,11 +234,14 @@ namespace LabZKT.Simulation
 
             return background;
         }
-        private Bitmap niebieska(Control panel_Sim_Control)
+        private Bitmap niebieska()
         {
-            Bitmap background = new Bitmap(panel_Sim_Control.Width, panel_Sim_Control.Height);
+            Bitmap background = new Bitmap(controlToDrawOn.Width, controlToDrawOn.Height);
             Graphics g = Graphics.FromImage(background);
             g.Clear(Color.FromArgb(255, 0, 10, 99));
+
+            controlToDrawOn.Visible = true;
+
 
             return background;
         }

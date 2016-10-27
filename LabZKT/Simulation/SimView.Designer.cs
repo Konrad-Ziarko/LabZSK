@@ -222,6 +222,7 @@
             // menuStrip2
             // 
             this.menuStrip2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.menuStrip2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
             this.menuStrip2.Size = new System.Drawing.Size(198, 24);

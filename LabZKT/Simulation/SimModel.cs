@@ -85,6 +85,7 @@ namespace LabZKT.Simulation
         private List<MemoryRecord> List_Memory;
         private MemoryRecord lastRecordFromRRC;
         private Drawings draw;
+        private Control panel_Sim_Control;
         private Dictionary<string, short> oldRegs;
         private LogManager logManager;
         private MemoryRecord selectedIntruction;
@@ -165,11 +166,18 @@ namespace LabZKT.Simulation
             Environment.MachineName + "\" " + sysType + " " + Environment.OSVersion + " OS\nZalogowano jako: \"" +
             Environment.UserName + "\"\n" + "Dostępne interfejsy sieciowe: " + ipAddrList + "\n\n\n");
         }
+
+        internal void addControlToDrawings(Control control)
+        {
+            panel_Sim_Control = control;
+            draw.addControlToDrawOn(control);
+        }
+
         /// <summary>
         /// Adjust register grid in parent control
         /// </summary>
         /// <param name="panel_Sim_Control">Parent control to place registers</param>
-        public void rearrangeTextBoxes(Control panel_Sim_Control)
+        public void rearrangeTextBoxes()
         {
             int horizontalGap = Convert.ToInt32(0.25 * panel_Sim_Control.Width);
             int verticalGap = Convert.ToInt32(0.2 * panel_Sim_Control.Height);
@@ -324,10 +332,11 @@ namespace LabZKT.Simulation
         /// Initialize background draw
         /// </summary>
         /// <param name="panel_Sim_Control"></param>
-        public void DrawBackground(Control panel_Sim_Control)
+        public void DrawBackground()
         {
-            rearrangeTextBoxes(panel_Sim_Control);
-            draw.drawBackground(panel_Sim_Control);
+            panel_Sim_Control.Visible = false;
+            rearrangeTextBoxes();
+            draw.drawBackground();
         }
         /// <summary>
         /// Validate changed register inner value

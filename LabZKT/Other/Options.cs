@@ -52,12 +52,12 @@ namespace LabZKT.Other
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            //zapisz konfiguracje
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            //odczyt konfiguracji
         }
 
         private void Options_FormClosing(object sender, FormClosingEventArgs e)

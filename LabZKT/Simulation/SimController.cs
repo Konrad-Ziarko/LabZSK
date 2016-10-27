@@ -128,6 +128,7 @@ namespace LabZKT.Simulation
             initRegisterTextBoxes();
             theModel = new SimModel(ref List_Memory, ref List_MicroOp, ref registers, ref flags, ref RBPS, ref lastRecordFromRRC);
             theView = new SimView(theModel.isNewLogEnabled);
+            theModel.addControlToDrawings(theView.getSimPanel());
             devConsole = new DevConsole(theModel, theView);
             foreach (var reg in theModel.registers)
                 reg.Value.Parent = theView.getSimPanel();
@@ -136,7 +137,7 @@ namespace LabZKT.Simulation
             theModel.RBPS.Parent = theView.getSimPanel();
 
             theModel.LoadLists(theView.GetDataGridMem(), theView.GetDataGridPM());
-            theModel.rearrangeTextBoxes(theView.getSimPanel());
+            theModel.rearrangeTextBoxes();
 
             theView.AEnterEditMode += theModel.enterEditMode;
             theView.ALeaveEditMode += theModel.leaveEditMode;

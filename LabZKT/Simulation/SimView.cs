@@ -1,6 +1,7 @@
 ﻿using LabZKT.Memory;
 using LabZKT.MicroOperations;
 using LabZKT.Other;
+using LabZKT.Properties;
 using LabZKT.StaticClasses;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace LabZKT.Simulation
         internal event Action<int> AGetMemoryRecord;
         internal event Action<bool> APrepareSimulation;
         internal event Action ANextTact;
-        internal event Action<Control> ADrawBackground;
+        internal event Action ADrawBackground;
         internal event Action ANewLog;
         internal event Action ACheckProperties;
         internal event Action AButtonOKClicked;
@@ -45,6 +46,8 @@ namespace LabZKT.Simulation
         internal bool buttonOKClicked { get; set; }
         private DataGridViewCellStyle dgvcs1;
         private bool inEditMode;
+        private FormWindowState previousWindowState;
+        private FormWindowState currentWindowState;
         /// <summary>
         /// Initialize simulation view instance
         /// </summary>
@@ -102,7 +105,7 @@ namespace LabZKT.Simulation
 
         internal void SwitchLayOut()
         {
-            ADrawBackground(panel_Sim_Control);
+            ADrawBackground();
         }
         internal void buttonOkSetVisible()
         {
@@ -142,7 +145,7 @@ namespace LabZKT.Simulation
             CenterToScreen();
             grid_PO_SelectionChanged(sender, e);
             initUserInfoArea();
-            ADrawBackground(panel_Sim_Control);
+            SimView_ResizeEnd(sender, e);
             Focus();
         }
         private void initUserInfoArea()
@@ -290,7 +293,7 @@ namespace LabZKT.Simulation
             ACheckProperties();
             dataGridView_Info[0, 1].Value = mistakes;
             dataGridView_Info[0, 0].Value = mark;
-            if (mistakes >= 10)
+            if (mistakes >= Settings.Default.ThirdMark)
                 dgvcs1.ForeColor = Color.Red;
         }
         private void RunSim_KeyPress(object sender, KeyPressEventArgs e)
@@ -322,6 +325,11 @@ namespace LabZKT.Simulation
             else if (e.KeyChar == (char)Keys.Escape && isRunning)
             {
                 //przerwanie pracy
+                DialogResult dr = MessageBox.Show("Czy napewno chcesz zakończyć pracę?\n Uracisz cały postęp.", "Przerwanie pracy", MessageBoxButtons.YesNo);
+                if (dr == DialogResult.Yes)
+                {
+                    //
+                }
             }
             
         }
@@ -334,29 +342,15 @@ namespace LabZKT.Simulation
         }
         private void RunSim_SizeChanged(object sender, EventArgs e)
         {
-            float horizontalRatio = 0.2f, verticalRatio = 0.15f;
-            
-            int tempPoWidth = Convert.ToInt32(Width * horizontalRatio);
-            panel_PO.Height = Convert.ToInt32(Height * 1.0);
-            if (tempPoWidth > 280)
-                panel_PO.Width = 280;
-            else
-                panel_PO.Width = tempPoWidth;
-
-            panel_Left.Width = Convert.ToInt32(Width - panel_PO.Width - 20);
-            panel_Left.Height = Convert.ToInt32(Height * 1.0);
-
-            int tempPmHeight = Convert.ToInt32(panel_Left.Height * verticalRatio);
-            if (tempPmHeight < 400)
-                panel_PM.Height = 400;
-            else
-                panel_PM.Height = tempPmHeight;
-            panel_PM.Width = Convert.ToInt32(panel_Left.Width * 1.0);
-
-            panel_Sim.Width = Convert.ToInt32(panel_Left.Width * 1.0);
-            panel_Sim.Height = Convert.ToInt32(panel_Left.Height - panel_PM.Height);
-
-            ADrawBackground(panel_Sim_Control);
+            previousWindowState = currentWindowState;
+            currentWindowState = WindowState;
+            if (previousWindowState != currentWindowState )
+            {
+                if (currentWindowState == FormWindowState.Maximized && previousWindowState == FormWindowState.Normal)
+                    SimView_ResizeEnd(this, new EventArgs());
+                else if (currentWindowState == FormWindowState.Normal && previousWindowState == FormWindowState.Maximized)
+                    SimView_ResizeEnd(this, new EventArgs());
+            }
         }
         private void nowyLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -421,7 +415,7 @@ namespace LabZKT.Simulation
 
         private void Op_ACallUpdate()
         {
-            ADrawBackground(panel_Sim_Control);
+            ADrawBackground();
         }
 
         private void menuStrip2_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -431,13 +425,37 @@ namespace LabZKT.Simulation
 
         private void SimView_ResizeBegin(object sender, EventArgs e)
         {
-            //panel_Sim_Control.Visible = false;
+            panel_Left.Visible = false;
+            panel_PO.Visible = false;
         }
 
         private void SimView_ResizeEnd(object sender, EventArgs e)
         {
-            //panel_Sim_Control.Visible = true;
             
+            float horizontalRatio = 0.2f, verticalRatio = 0.15f;
+
+            int tempPoWidth = Convert.ToInt32(Width * horizontalRatio);
+            panel_PO.Height = Convert.ToInt32(Height * 1.0);
+            if (tempPoWidth > 280)
+                panel_PO.Width = 280;
+            else
+                panel_PO.Width = tempPoWidth;
+
+            panel_Left.Width = Convert.ToInt32(Width - panel_PO.Width - 20);
+            panel_Left.Height = Convert.ToInt32(Height * 1.0);
+
+            int tempPmHeight = Convert.ToInt32(panel_Left.Height * verticalRatio);
+            if (tempPmHeight < 400)
+                panel_PM.Height = 400;
+            else
+                panel_PM.Height = tempPmHeight;
+            panel_PM.Width = Convert.ToInt32(panel_Left.Width * 1.0);
+
+            panel_Sim.Width = Convert.ToInt32(panel_Left.Width * 1.0);
+            panel_Sim.Height = Convert.ToInt32(panel_Left.Height - panel_PM.Height);
+            panel_Left.Visible = true;
+            panel_PO.Visible = true;
+            ADrawBackground();
         }
     }
 }
