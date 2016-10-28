@@ -151,12 +151,13 @@ namespace LabZKT.Simulation
             theView.AButtonOKClicked += ButtonOKClicked;
             theView.ASaveCurrentState += SaveState;
             theView.AShowLog += theModel.ShowLog;
-            theView.ACallDevConsole += TheView_ACallDevConsole; ;
+            theView.ACallDevConsole += TheView_ACallDevConsole;
             theView.AStopDevConsole += TheView_AStopDevConsole;
             theView.AEditPAO += TheView_AEditPAO;
             theView.AEditPM += TheView_AEditPM;
             theView.ALoadPAO += TheView_ALoadPAO;
             theView.ALoadPM += TheView_ALoadPM;
+            theView.AUpdateForm += MemView_AUpdateForm;
 
             theModel.StartSim += startSim;
             theModel.StopSim += theView.stopSim;
@@ -179,6 +180,7 @@ namespace LabZKT.Simulation
         private void TheView_ACallDevConsole()
         {
             devConsole.Show();
+            devConsole.BringToFront();
         }
 
         private void TheModel_ASelectionChanged()
@@ -205,6 +207,7 @@ namespace LabZKT.Simulation
         private void TheView_AEditPM()
         {
             pmView.Show();
+            pmView.BringToFront();
         }
 
         private void PmView_AUpdateData(int row, int col, string str)
@@ -216,6 +219,7 @@ namespace LabZKT.Simulation
         private void TheView_AEditPAO()
         {
             memView.Show();
+            memView.BringToFront();
         }
 
         private void TheView_AStopDevConsole()

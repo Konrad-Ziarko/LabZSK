@@ -248,12 +248,12 @@ namespace LabZKT.MicroOperations
         }
 
         #region Buttons
-        private void button_Close_Click(object sender, EventArgs e)
+        private void button_Edit_Click(object sender, EventArgs e)
         {
-            Invoke((MethodInvoker)delegate ()
+            if (Grid_PM.CurrentCell.ColumnIndex > 0)
             {
-                Close();
-            });
+                NewMicroOperation();
+            }
         }
         private void button_Clear_Row_Click(object sender, EventArgs e)
         {
@@ -267,12 +267,14 @@ namespace LabZKT.MicroOperations
         }
         private void button_Clear_Table_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < 256; i++)
-                for (int j = 1; j < 12; j++)
-                {
-                    Grid_PM[j, i].Value = "";
-                    AUpdateData(i, j, "");
-                }
+            DialogResult dr = MessageBox.Show("Czy napewno chcesz wyczyścić całą pamięć?", "Tej operacji nie da się cofnąć!", MessageBoxButtons.OKCancel);
+            if (dr == DialogResult.OK)
+                for (int i = 0; i < 256; i++)
+                    for (int j = 1; j < 12; j++)
+                    {
+                        Grid_PM[j, i].Value = "";
+                        AUpdateData(i, j, "");
+                    }
         }
         private void button_Save_Table_Click(object sender, EventArgs e)
         {
@@ -423,6 +425,13 @@ namespace LabZKT.MicroOperations
             panel_View_PM.Width = Convert.ToInt32(Width - panel_Control.Width - 20);
             foreach (DataGridViewColumn c in Grid_PM.Columns)
                 c.Width = panel_View_PM.Width / 12;
+
+            int diffSize = (panel_Control.Height - (5 * button_Clear_Row.Size.Height)) / 5;
+            diffSize += button_Clear_Row.Size.Height;
+            var bLocation = button_Clear_Row.Location;
+            int startLocation = startLocation = panel_Control.Height - button_Clear_Table.Size.Height - 15;
+            bLocation.Y = startLocation;
+            button_Clear_Table.Location = bLocation;
         }
         internal DataGridView GetDataGrid()
         {

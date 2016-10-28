@@ -41,24 +41,27 @@ namespace LabZKT.Simulation
             switch (Properties.Settings.Default.SkinNum)
             {
                 case 0:
-                    skin = defaultSkin();//
+                    skin = drawSkin(Color.FromArgb(255, 27, 96, 51), Color.FromArgb(255, 133, 198, 72), Color.FromArgb(255, 133, 198, 72));
                     break;
                 default:
-                    skin = niebieska();
+                    skin = drawSkin(Color.FromArgb(255, 27, 96, 51), Color.FromArgb(255, 133, 198, 72), Color.FromArgb(255, 133, 198, 72));
                     break;
             }
             controlToDrawOn.BackgroundImage = skin;
         }
 
-        private Bitmap defaultSkin()
+        private Bitmap drawSkin(Color backgroundColor, Color penColor, Color pen2Color)
         {
             Bitmap background = new Bitmap(controlToDrawOn.Width, controlToDrawOn.Height);
             Graphics g = Graphics.FromImage(background);
-            g.Clear(Color.FromArgb(255, 27, 96, 51));
+            g.Clear(backgroundColor);
+            NumericTextBox ntb;
+            if (registers.TryGetValue("BUS", out ntb))
+                ntb.setCustomeBackColor(ControlPaint.Light(backgroundColor, 0.5f));
 
             GraphicsPath path = new GraphicsPath();
-            Pen pen = new Pen(Color.FromArgb(255, 133, 198, 72), 10);
-            Pen pen2 = new Pen(Color.FromArgb(255, 133, 198, 72), 5);
+            Pen pen = new Pen(penColor, 10);
+            Pen pen2 = new Pen(pen2Color, 5);
             pen.LineJoin = LineJoin.Bevel;
             Point p1 = registers["BUS"].Location;
             Point p2 = new Point();
@@ -231,17 +234,6 @@ namespace LabZKT.Simulation
                     g.DrawString(reg.registerName, fnt, sb, reg.Location.X, reg.Location.Y - 18);
             if (!registers["SUMA"].Visible)
                 g.DrawString("RBPS", fnt, sb, RBPS.Location.X, RBPS.Location.Y - 18);
-
-            return background;
-        }
-        private Bitmap niebieska()
-        {
-            Bitmap background = new Bitmap(controlToDrawOn.Width, controlToDrawOn.Height);
-            Graphics g = Graphics.FromImage(background);
-            g.Clear(Color.FromArgb(255, 0, 10, 99));
-
-            controlToDrawOn.Visible = true;
-
 
             return background;
         }

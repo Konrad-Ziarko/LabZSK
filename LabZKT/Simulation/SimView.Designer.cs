@@ -34,8 +34,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SimView));
             this.panel_PO = new System.Windows.Forms.Panel();
             this.panel_View_PO = new System.Windows.Forms.Panel();
@@ -45,7 +46,7 @@
             this.Hex = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.panel_Decode_PO = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.cellDescription = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenu_Main = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenu_Edit = new System.Windows.Forms.ToolStripMenuItem();
@@ -144,7 +145,7 @@
             this.Grid_Mem.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -164,6 +165,7 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.Grid_Mem.DefaultCellStyle = dataGridViewCellStyle3;
             this.Grid_Mem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Grid_Mem.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
             this.Grid_Mem.Location = new System.Drawing.Point(0, 24);
             this.Grid_Mem.Margin = new System.Windows.Forms.Padding(2);
             this.Grid_Mem.MultiSelect = false;
@@ -179,24 +181,27 @@
             this.Grid_Mem.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.Grid_Mem.RowHeadersVisible = false;
             this.Grid_Mem.RowTemplate.Height = 24;
+            this.Grid_Mem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.Grid_Mem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.Grid_Mem.Size = new System.Drawing.Size(198, 424);
             this.Grid_Mem.TabIndex = 0;
+            this.Grid_Mem.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.Grid_Mem_CellEndEdit);
             this.Grid_Mem.SelectionChanged += new System.EventHandler(this.grid_PO_SelectionChanged);
             this.Grid_Mem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.grid_PO_KeyDown);
             // 
             // Adres
             // 
             this.Adres.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.Adres.DefaultCellStyle = dataGridViewCellStyle2;
             this.Adres.HeaderText = "Adres";
-            this.Adres.MinimumWidth = 38;
+            this.Adres.MinimumWidth = 45;
             this.Adres.Name = "Adres";
             this.Adres.ReadOnly = true;
             this.Adres.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.Adres.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Adres.Width = 38;
+            this.Adres.Width = 45;
             // 
             // Zawartosc
             // 
@@ -233,7 +238,7 @@
             // panel_Decode_PO
             // 
             this.panel_Decode_PO.BackColor = System.Drawing.SystemColors.Control;
-            this.panel_Decode_PO.Controls.Add(this.label1);
+            this.panel_Decode_PO.Controls.Add(this.cellDescription);
             this.panel_Decode_PO.Cursor = System.Windows.Forms.Cursors.No;
             this.panel_Decode_PO.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel_Decode_PO.Location = new System.Drawing.Point(0, 448);
@@ -242,17 +247,17 @@
             this.panel_Decode_PO.Size = new System.Drawing.Size(198, 138);
             this.panel_Decode_PO.TabIndex = 1;
             // 
-            // label1
+            // cellDescription
             // 
-            this.label1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(198, 138);
-            this.label1.TabIndex = 0;
+            this.cellDescription.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.cellDescription.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.cellDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cellDescription.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.cellDescription.Location = new System.Drawing.Point(0, 0);
+            this.cellDescription.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.cellDescription.Name = "cellDescription";
+            this.cellDescription.Size = new System.Drawing.Size(198, 138);
+            this.cellDescription.TabIndex = 0;
             // 
             // menuStrip1
             // 
@@ -360,8 +365,8 @@
             this.wczytajpmToolStripMenuItem,
             this.edytujpmToolStripMenuItem});
             this.mikroprogramToolStripMenuItem.Name = "mikroprogramToolStripMenuItem";
-            this.mikroprogramToolStripMenuItem.Size = new System.Drawing.Size(96, 20);
-            this.mikroprogramToolStripMenuItem.Text = "Mikroprogram";
+            this.mikroprogramToolStripMenuItem.Size = new System.Drawing.Size(102, 20);
+            this.mikroprogramToolStripMenuItem.Text = "Mikroprogramy";
             // 
             // wczytajpmToolStripMenuItem
             // 
@@ -450,6 +455,7 @@
             this.panel_Sim_Control.Name = "panel_Sim_Control";
             this.panel_Sim_Control.Size = new System.Drawing.Size(572, 274);
             this.panel_Sim_Control.TabIndex = 1;
+            this.panel_Sim_Control.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panel_Sim_Control_MouseDoubleClick);
             // 
             // panel_User_Info
             // 
@@ -634,6 +640,14 @@
             this.Grid_PM.AllowUserToResizeRows = false;
             this.Grid_PM.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.Grid_PM.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Grid_PM.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.Grid_PM.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Grid_PM.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.addres,
@@ -648,14 +662,14 @@
             this.Test,
             this.ALU,
             this.NA});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Grid_PM.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Grid_PM.DefaultCellStyle = dataGridViewCellStyle9;
             this.Grid_PM.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Grid_PM.Location = new System.Drawing.Point(0, 24);
             this.Grid_PM.Margin = new System.Windows.Forms.Padding(2);
@@ -671,21 +685,24 @@
             // 
             // addres
             // 
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.addres.DefaultCellStyle = dataGridViewCellStyle7;
-            this.addres.FillWeight = 40F;
+            this.addres.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.addres.DefaultCellStyle = dataGridViewCellStyle8;
+            this.addres.FillWeight = 45F;
             this.addres.HeaderText = "Adres";
-            this.addres.MinimumWidth = 40;
+            this.addres.MinimumWidth = 45;
             this.addres.Name = "addres";
             this.addres.ReadOnly = true;
             this.addres.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.addres.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.addres.Width = 45;
             // 
             // s1
             // 
             this.s1.FillWeight = 40F;
             this.s1.HeaderText = "S1";
-            this.s1.MinimumWidth = 40;
+            this.s1.MinimumWidth = 25;
             this.s1.Name = "s1";
             this.s1.ReadOnly = true;
             this.s1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -695,7 +712,7 @@
             // 
             this.d1.FillWeight = 40F;
             this.d1.HeaderText = "D1";
-            this.d1.MinimumWidth = 40;
+            this.d1.MinimumWidth = 25;
             this.d1.Name = "d1";
             this.d1.ReadOnly = true;
             this.d1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -705,7 +722,7 @@
             // 
             this.s2.FillWeight = 40F;
             this.s2.HeaderText = "S2";
-            this.s2.MinimumWidth = 40;
+            this.s2.MinimumWidth = 25;
             this.s2.Name = "s2";
             this.s2.ReadOnly = true;
             this.s2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -715,7 +732,7 @@
             // 
             this.d2.FillWeight = 40F;
             this.d2.HeaderText = "D2";
-            this.d2.MinimumWidth = 40;
+            this.d2.MinimumWidth = 25;
             this.d2.Name = "d2";
             this.d2.ReadOnly = true;
             this.d2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -725,7 +742,7 @@
             // 
             this.s3.FillWeight = 40F;
             this.s3.HeaderText = "S3";
-            this.s3.MinimumWidth = 40;
+            this.s3.MinimumWidth = 25;
             this.s3.Name = "s3";
             this.s3.ReadOnly = true;
             this.s3.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -735,7 +752,7 @@
             // 
             this.d3.FillWeight = 40F;
             this.d3.HeaderText = "D3";
-            this.d3.MinimumWidth = 40;
+            this.d3.MinimumWidth = 25;
             this.d3.Name = "d3";
             this.d3.ReadOnly = true;
             this.d3.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -745,7 +762,7 @@
             // 
             this.c1.FillWeight = 40F;
             this.c1.HeaderText = "C1";
-            this.c1.MinimumWidth = 40;
+            this.c1.MinimumWidth = 25;
             this.c1.Name = "c1";
             this.c1.ReadOnly = true;
             this.c1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -755,7 +772,7 @@
             // 
             this.c2.FillWeight = 40F;
             this.c2.HeaderText = "C2";
-            this.c2.MinimumWidth = 40;
+            this.c2.MinimumWidth = 25;
             this.c2.Name = "c2";
             this.c2.ReadOnly = true;
             this.c2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -765,7 +782,7 @@
             // 
             this.Test.FillWeight = 40F;
             this.Test.HeaderText = "Test";
-            this.Test.MinimumWidth = 40;
+            this.Test.MinimumWidth = 25;
             this.Test.Name = "Test";
             this.Test.ReadOnly = true;
             this.Test.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -775,7 +792,7 @@
             // 
             this.ALU.FillWeight = 40F;
             this.ALU.HeaderText = "ALU";
-            this.ALU.MinimumWidth = 40;
+            this.ALU.MinimumWidth = 25;
             this.ALU.Name = "ALU";
             this.ALU.ReadOnly = true;
             this.ALU.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -785,7 +802,7 @@
             // 
             this.NA.FillWeight = 40F;
             this.NA.HeaderText = "NA";
-            this.NA.MinimumWidth = 40;
+            this.NA.MinimumWidth = 25;
             this.NA.Name = "NA";
             this.NA.ReadOnly = true;
             this.NA.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -852,7 +869,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenu_Show_Log;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenu_Exit;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label cellDescription;
         private System.Windows.Forms.Panel panel_User_Info;
         private System.Windows.Forms.Panel panel_Sim_Control;
         private System.Windows.Forms.DataGridView dataGridView_Info;
@@ -861,18 +878,6 @@
         private System.Windows.Forms.Button button_OK;
         private System.Windows.Forms.Button button_Next_Tact;
         private System.Windows.Forms.Label label_Status;
-        private System.Windows.Forms.DataGridViewTextBoxColumn addres;
-        private System.Windows.Forms.DataGridViewTextBoxColumn s1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn d1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn s2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn d2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn s3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn d3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn c1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn c2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Test;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ALU;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NA;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.Button button_Micro;
@@ -891,9 +896,21 @@
         private System.Windows.Forms.ToolStripMenuItem edytujpaoToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem oAutorzeToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip menuStrip2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn addres;
+        private System.Windows.Forms.DataGridViewTextBoxColumn s1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn d1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn s2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn d2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn s3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn d3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn c1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn c2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Test;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ALU;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NA;
         private System.Windows.Forms.DataGridViewTextBoxColumn Adres;
         private System.Windows.Forms.DataGridViewTextBoxColumn Zawartosc;
         private System.Windows.Forms.DataGridViewTextBoxColumn Hex;
-        private System.Windows.Forms.MenuStrip menuStrip2;
     }
 }

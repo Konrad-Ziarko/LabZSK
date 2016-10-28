@@ -29,7 +29,8 @@ namespace LabZKT.Controls
         public short valueWhichShouldBeMovedToRegister { get; private set; }
         private static short dragValue;
         private static Point hitTest;
-        
+        private Color customeBackColor;
+
         /// <summary>
         /// Initialize new instance of NumericTextBox
         /// </summary>
@@ -39,7 +40,8 @@ namespace LabZKT.Controls
         /// <param name="c">Parent control for this instance</param>
         public NumericTextBox(string name, int x, int y, Control c)
         {
-            innerValue = valueWhichShouldBeMovedToRegister =0;
+            Color customeBackColor = SystemColors.Window;
+            innerValue = valueWhichShouldBeMovedToRegister = 0;
             registerName = name;
             ReadOnly = AllowDrop = true;
             needCheck = false;
@@ -65,62 +67,66 @@ namespace LabZKT.Controls
             {
                 Parent.Focus();
             }
-            else if (Char.IsDigit(e.KeyChar) || (e.KeyChar >= 'a' && e.KeyChar <= 'f') || (e.KeyChar >= 'A' && e.KeyChar <= 'F'))
-            {
-                if (Text.Length > 0 && Text[Text.Length - 1] == 'h')
+            else if (!Text.Contains("\t"))
+
+                if (Char.IsDigit(e.KeyChar) || (e.KeyChar >= 'a' && e.KeyChar <= 'f') || (e.KeyChar >= 'A' && e.KeyChar <= 'F'))
                 {
-                    if (SelectionLength > 0 && SelectionStart < Text.Length - 1)
+                    if (Text.Length > 0 && Text[Text.Length - 1] == 'h')
                     {
-                        int lastSelectionStart = SelectionStart;
-                        Text = Text.Substring(0, lastSelectionStart) + Text.Substring(lastSelectionStart + SelectionLength);
-                        SelectionStart = lastSelectionStart;
+                        if (SelectionLength > 0 && SelectionStart < Text.Length - 1)
+                        {
+                            int lastSelectionStart = SelectionStart;
+                            Text = Text.Substring(0, lastSelectionStart) + Text.Substring(lastSelectionStart + SelectionLength);
+                            SelectionStart = lastSelectionStart;
+                        }
+                        else if (SelectionStart == Text.Length)
+                        {
+                            e.Handled = true;
+                        }
+                        else if (SelectionLength > 0 && SelectionStart == Text.Length - 1)
+                        {
+                            Text = Text.Substring(0, Text.Length - 1);
+                            SelectionStart = Text.Length;
+                        }
                     }
-                    else if (SelectionStart == Text.Length)
+                }
+                else if (e.KeyChar == '\b')
+                {
+                    if (Text.Length == 2 && Text[1] == 'h' && SelectionStart == 1) { Text = "0"; }
+                }
+                else if (e.KeyChar == '-')
+                {
+                    e.Handled = true;
+                    if (Text.Length > 0 && Text[Text.Length - 1] != 'h' && Regex.IsMatch(Text, @"^-?\d+$"))
                     {
-                        e.Handled = true;
+                        if (Text[0] != '-')
+                            Text = '-' + Text;
+                        else
+                            Text = Text.Substring(1);
                     }
-                    else if (SelectionLength > 0 && SelectionStart == Text.Length - 1)
+                    else if (Text.Length == 0)
                     {
-                        Text = Text.Substring(0, Text.Length - 1);
-                        SelectionStart = Text.Length;
+                        Text = "-";
                     }
+                    SelectionStart = Text.Length;
                 }
-            }
-            else if (e.KeyChar == '\b')
-            {
-                if (Text.Length == 2 && Text[1] == 'h' && SelectionStart == 1) { Text = "0"; }
-            }
-            else if (e.KeyChar == '-')
-            {
-                e.Handled = true;
-                if (Text.Length > 0 && Text[Text.Length - 1] != 'h' && Regex.IsMatch(Text, @"^-?\d+$"))
+                else if (e.KeyChar == 'h')
                 {
-                    if (Text[0] != '-')
-                        Text = '-' + Text;
-                    else
-                        Text = Text.Substring(1);
+                    e.Handled = true;
+                    if (Text.Length > 0 && Text[Text.Length - 1] != 'h')
+                    {
+                        Text += 'h';
+                        if (Text[0] == '-')
+                            Text = Text.Substring(1);
+                    }
+                    SelectionStart = Text.Length;
                 }
-                else if (Text.Length == 0)
+                else
                 {
-                    Text = "-";
+                    e.Handled = true;
                 }
-                SelectionStart = Text.Length;
-            }
-            else if (e.KeyChar == 'h')
-            {
-                e.Handled = true;
-                if (Text.Length > 0 && Text[Text.Length - 1] != 'h')
-                {
-                    Text += 'h';
-                    if (Text[0] == '-')
-                        Text = Text.Substring(1);
-                }
-                SelectionStart = Text.Length;
-            }
             else
-            {
                 e.Handled = true;
-            }
         }
         /// <summary>
         /// Occurs when control loses focus
@@ -178,7 +184,12 @@ namespace LabZKT.Controls
         /// <param name="e"></param>
         protected override void OnMouseDoubleClick(MouseEventArgs e)
         {
-           Text = "";
+            Text = "";
+        }
+        protected override void OnMouseClick(MouseEventArgs e)
+        {
+            base.OnMouseClick(e);
+            OnGotFocus(e);
         }
         /// <summary>
         /// Check if value in textbox is still valid
@@ -219,6 +230,7 @@ namespace LabZKT.Controls
         {
             base.OnMouseDown(e);
             hitTest = new Point(e.X, e.Y);
+            OnGotFocus(e);
         }
         /// <summary>
         /// Occures when mouse was moved
@@ -233,6 +245,7 @@ namespace LabZKT.Controls
                 dragValue = innerValue;
                 DoDragDrop(innerValue, DragDropEffects.Copy);
                 setText();
+                OnLostFocus(e);
             }
         }
         /// <summary>
@@ -254,17 +267,15 @@ namespace LabZKT.Controls
             try
             {
                 innerValue = dragValue;
-                valueWhichShouldBeMovedToRegister = innerValue;
                 setText();
             }
             catch (Exception)
             {
                 MessageBox.Show("Błędne dane D&D!", "LabZKT", MessageBoxButtons.OK);
             }
-
         }
         #endregion
-        
+
         /// <summary>
         /// Set location coordinates for this control
         /// </summary>
@@ -324,7 +335,7 @@ namespace LabZKT.Controls
         {
             needCheck = false;
             ReadOnly = true;
-            BackColor = Color.White;
+            BackColor = customeBackColor;
             setText();
             if (valueWhichShouldBeMovedToRegister != innerValue)
             {
@@ -355,6 +366,10 @@ namespace LabZKT.Controls
             innerValue = valueWhichShouldBeMovedToRegister = newVal;
             needCheck = false;
             setText();
+        }
+        public void setCustomeBackColor(Color color)
+        {
+            BackColor = customeBackColor = color;
         }
         /// <summary>
         /// Protect registers from overflowing by clamping values

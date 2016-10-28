@@ -28,6 +28,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -81,10 +83,6 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Trinet.Core.IO.Ntfs, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0aeaaa20a328a46c, processorArchitecture=MSIL">
-      <HintPath>..\packages\Trinet.Core.IO.Ntfs.4.0.0\lib\net35\Trinet.Core.IO.Ntfs.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\BitTextBox.cs">
@@ -206,7 +204,6 @@
     </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="labzkt.pfx" />
-    <None Include="packages.config" />
     <None Include="Properties\DataSources\MemoryRecord.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -233,7 +230,6 @@
     <None Include="Resources\error.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\heh.ico" />
     <Content Include="Resources\Logo_WAT.ico" />
     <None Include="Resources\pc.ico" />
     <None Include="Resources\splash.png" />

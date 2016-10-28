@@ -78,15 +78,15 @@
             this.panel_Choice.Controls.Add(this.button_Choice_Simple);
             this.panel_Choice.Controls.Add(this.button_Choice_Data);
             this.panel_Choice.Location = new System.Drawing.Point(9, 10);
-            this.panel_Choice.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel_Choice.Margin = new System.Windows.Forms.Padding(2);
             this.panel_Choice.Name = "panel_Choice";
-            this.panel_Choice.Size = new System.Drawing.Size(210, 206);
+            this.panel_Choice.Size = new System.Drawing.Size(260, 206);
             this.panel_Choice.TabIndex = 0;
             // 
             // button_Choice_Cancel
             // 
             this.button_Choice_Cancel.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Choice_Cancel.Location = new System.Drawing.Point(122, 159);
+            this.button_Choice_Cancel.Location = new System.Drawing.Point(169, 159);
             this.button_Choice_Cancel.Margin = new System.Windows.Forms.Padding(9, 10, 9, 10);
             this.button_Choice_Cancel.Name = "button_Choice_Cancel";
             this.button_Choice_Cancel.Size = new System.Drawing.Size(80, 27);
@@ -98,7 +98,7 @@
             // button_Choice_Complex
             // 
             this.button_Choice_Complex.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Choice_Complex.Location = new System.Drawing.Point(52, 110);
+            this.button_Choice_Complex.Location = new System.Drawing.Point(75, 110);
             this.button_Choice_Complex.Margin = new System.Windows.Forms.Padding(9, 10, 9, 10);
             this.button_Choice_Complex.Name = "button_Choice_Complex";
             this.button_Choice_Complex.Size = new System.Drawing.Size(111, 27);
@@ -110,7 +110,7 @@
             // button_Choice_Simple
             // 
             this.button_Choice_Simple.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Choice_Simple.Location = new System.Drawing.Point(52, 63);
+            this.button_Choice_Simple.Location = new System.Drawing.Point(75, 63);
             this.button_Choice_Simple.Margin = new System.Windows.Forms.Padding(9, 10, 9, 10);
             this.button_Choice_Simple.Name = "button_Choice_Simple";
             this.button_Choice_Simple.Size = new System.Drawing.Size(111, 27);
@@ -122,7 +122,7 @@
             // button_Choice_Data
             // 
             this.button_Choice_Data.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Choice_Data.Location = new System.Drawing.Point(52, 17);
+            this.button_Choice_Data.Location = new System.Drawing.Point(75, 17);
             this.button_Choice_Data.Margin = new System.Windows.Forms.Padding(9, 10, 9, 10);
             this.button_Choice_Data.Name = "button_Choice_Data";
             this.button_Choice_Data.Size = new System.Drawing.Size(111, 27);
@@ -142,9 +142,9 @@
             this.panel_Data.Controls.Add(this.button_Data_OK);
             this.panel_Data.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.panel_Data.Location = new System.Drawing.Point(9, 10);
-            this.panel_Data.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel_Data.Margin = new System.Windows.Forms.Padding(2);
             this.panel_Data.Name = "panel_Data";
-            this.panel_Data.Size = new System.Drawing.Size(212, 206);
+            this.panel_Data.Size = new System.Drawing.Size(260, 206);
             this.panel_Data.TabIndex = 1;
             // 
             // radioButton_Hex
@@ -152,7 +152,7 @@
             this.radioButton_Hex.AutoSize = true;
             this.radioButton_Hex.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.radioButton_Hex.Location = new System.Drawing.Point(52, 67);
-            this.radioButton_Hex.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButton_Hex.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton_Hex.Name = "radioButton_Hex";
             this.radioButton_Hex.Size = new System.Drawing.Size(110, 21);
             this.radioButton_Hex.TabIndex = 6;
@@ -166,7 +166,7 @@
             this.radioButton_Dec.Checked = true;
             this.radioButton_Dec.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.radioButton_Dec.Location = new System.Drawing.Point(52, 42);
-            this.radioButton_Dec.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButton_Dec.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton_Dec.Name = "radioButton_Dec";
             this.radioButton_Dec.Size = new System.Drawing.Size(86, 21);
             this.radioButton_Dec.TabIndex = 5;
@@ -180,7 +180,7 @@
             this.radioButton_Bin.AutoSize = true;
             this.radioButton_Bin.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.radioButton_Bin.Location = new System.Drawing.Point(52, 17);
-            this.radioButton_Bin.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButton_Bin.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton_Bin.Name = "radioButton_Bin";
             this.radioButton_Bin.Size = new System.Drawing.Size(73, 21);
             this.radioButton_Bin.TabIndex = 4;
@@ -192,7 +192,7 @@
             // 
             this.textBox_Data.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox_Data.Location = new System.Drawing.Point(52, 102);
-            this.textBox_Data.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_Data.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_Data.Name = "textBox_Data";
             this.textBox_Data.Size = new System.Drawing.Size(112, 20);
             this.textBox_Data.TabIndex = 3;
@@ -203,7 +203,7 @@
             // button_Data_Cancel
             // 
             this.button_Data_Cancel.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Data_Cancel.Location = new System.Drawing.Point(121, 159);
+            this.button_Data_Cancel.Location = new System.Drawing.Point(169, 159);
             this.button_Data_Cancel.Margin = new System.Windows.Forms.Padding(9, 10, 9, 10);
             this.button_Data_Cancel.Name = "button_Data_Cancel";
             this.button_Data_Cancel.Size = new System.Drawing.Size(80, 27);
@@ -238,9 +238,9 @@
             this.panel_Simple.Controls.Add(this.numericUpDown_DA);
             this.panel_Simple.Controls.Add(this.comboBox_Simple);
             this.panel_Simple.Location = new System.Drawing.Point(9, 10);
-            this.panel_Simple.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel_Simple.Margin = new System.Windows.Forms.Padding(2);
             this.panel_Simple.Name = "panel_Simple";
-            this.panel_Simple.Size = new System.Drawing.Size(212, 206);
+            this.panel_Simple.Size = new System.Drawing.Size(260, 206);
             this.panel_Simple.TabIndex = 1;
             // 
             // label3
@@ -257,7 +257,7 @@
             // numericUpDown_Simple
             // 
             this.numericUpDown_Simple.Location = new System.Drawing.Point(9, 50);
-            this.numericUpDown_Simple.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown_Simple.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown_Simple.Maximum = new decimal(new int[] {
             31,
             0,
@@ -292,7 +292,7 @@
             // button_Simple_Cancel
             // 
             this.button_Simple_Cancel.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Simple_Cancel.Location = new System.Drawing.Point(122, 159);
+            this.button_Simple_Cancel.Location = new System.Drawing.Point(169, 159);
             this.button_Simple_Cancel.Margin = new System.Windows.Forms.Padding(9, 10, 9, 10);
             this.button_Simple_Cancel.Name = "button_Simple_Cancel";
             this.button_Simple_Cancel.Size = new System.Drawing.Size(80, 27);
@@ -352,7 +352,7 @@
             // numericUpDown_DA
             // 
             this.numericUpDown_DA.Location = new System.Drawing.Point(10, 128);
-            this.numericUpDown_DA.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown_DA.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown_DA.Maximum = new decimal(new int[] {
             255,
             0,
@@ -367,7 +367,7 @@
             // 
             this.comboBox_Simple.Cursor = System.Windows.Forms.Cursors.Cross;
             this.comboBox_Simple.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_Simple.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.comboBox_Simple.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.comboBox_Simple.FormattingEnabled = true;
             this.comboBox_Simple.Items.AddRange(new object[] {
             "ADS - Dodawanie",
@@ -401,10 +401,10 @@
             "SRJ - Skok ze śladem",
             "BDN - Skok jeśli urządzenie niedostępne",
             "NOP - Nic nie rób"});
-            this.comboBox_Simple.Location = new System.Drawing.Point(2, 17);
-            this.comboBox_Simple.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBox_Simple.Location = new System.Drawing.Point(2, 2);
+            this.comboBox_Simple.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox_Simple.Name = "comboBox_Simple";
-            this.comboBox_Simple.Size = new System.Drawing.Size(206, 20);
+            this.comboBox_Simple.Size = new System.Drawing.Size(254, 22);
             this.comboBox_Simple.TabIndex = 0;
             this.comboBox_Simple.SelectedIndexChanged += new System.EventHandler(this.comboBox_Simple_SelectedIndexChanged);
             // 
@@ -419,16 +419,16 @@
             this.panel_Complex.Controls.Add(this.button_Complex_Cancel);
             this.panel_Complex.Controls.Add(this.button_Complex_OK);
             this.panel_Complex.Location = new System.Drawing.Point(9, 10);
-            this.panel_Complex.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel_Complex.Margin = new System.Windows.Forms.Padding(2);
             this.panel_Complex.Name = "panel_Complex";
-            this.panel_Complex.Size = new System.Drawing.Size(212, 206);
+            this.panel_Complex.Size = new System.Drawing.Size(260, 206);
             this.panel_Complex.TabIndex = 2;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label4.Location = new System.Drawing.Point(62, 50);
+            this.label4.Location = new System.Drawing.Point(69, 51);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(41, 19);
@@ -437,8 +437,8 @@
             // 
             // numericUpDown_Complex
             // 
-            this.numericUpDown_Complex.Location = new System.Drawing.Point(6, 51);
-            this.numericUpDown_Complex.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown_Complex.Location = new System.Drawing.Point(10, 50);
+            this.numericUpDown_Complex.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown_Complex.Maximum = new decimal(new int[] {
             15,
             0,
@@ -453,7 +453,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(62, 97);
+            this.label1.Location = new System.Drawing.Point(76, 97);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(20, 19);
@@ -462,8 +462,8 @@
             // 
             // numericUpDown_N
             // 
-            this.numericUpDown_N.Location = new System.Drawing.Point(6, 97);
-            this.numericUpDown_N.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown_N.Location = new System.Drawing.Point(10, 97);
+            this.numericUpDown_N.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown_N.Maximum = new decimal(new int[] {
             127,
             0,
@@ -478,7 +478,7 @@
             // 
             this.comboBox_Complex.Cursor = System.Windows.Forms.Cursors.Cross;
             this.comboBox_Complex.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_Complex.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.comboBox_Complex.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.comboBox_Complex.FormattingEnabled = true;
             this.comboBox_Complex.Items.AddRange(new object[] {
             "STP - Stop dynamiczny",
@@ -497,17 +497,17 @@
             "CND - Podłącz urządzenie",
             "ENI - Zezwolenie na przerwania",
             "LDS - Podaj status"});
-            this.comboBox_Complex.Location = new System.Drawing.Point(2, 17);
-            this.comboBox_Complex.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBox_Complex.Location = new System.Drawing.Point(2, 2);
+            this.comboBox_Complex.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox_Complex.Name = "comboBox_Complex";
-            this.comboBox_Complex.Size = new System.Drawing.Size(206, 20);
+            this.comboBox_Complex.Size = new System.Drawing.Size(254, 22);
             this.comboBox_Complex.TabIndex = 9;
             this.comboBox_Complex.SelectedIndexChanged += new System.EventHandler(this.comboBox_Complex_SelectedIndexChanged);
             // 
             // button_Complex_Cancel
             // 
             this.button_Complex_Cancel.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Complex_Cancel.Location = new System.Drawing.Point(122, 159);
+            this.button_Complex_Cancel.Location = new System.Drawing.Point(169, 159);
             this.button_Complex_Cancel.Margin = new System.Windows.Forms.Padding(9, 10, 9, 10);
             this.button_Complex_Cancel.Name = "button_Complex_Cancel";
             this.button_Complex_Cancel.Size = new System.Drawing.Size(80, 27);
@@ -532,21 +532,22 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(230, 232);
+            this.ClientSize = new System.Drawing.Size(280, 232);
             this.Controls.Add(this.panel_Complex);
             this.Controls.Add(this.panel_Choice);
             this.Controls.Add(this.panel_Simple);
             this.Controls.Add(this.panel_Data);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(246, 271);
-            this.MinimumSize = new System.Drawing.Size(246, 271);
+            this.MaximumSize = new System.Drawing.Size(296, 271);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(296, 271);
             this.Name = "MemSubmit";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "PAOSubmit";
+            this.Text = "Edycja komórki";
             this.Load += new System.EventHandler(this.PAOSubmit_Load);
             this.panel_Choice.ResumeLayout(false);
             this.panel_Data.ResumeLayout(false);

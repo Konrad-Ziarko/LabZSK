@@ -17,6 +17,7 @@ namespace LabZKT.Simulation
     public partial class SimView : Form
     {
         private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
+        internal event Action<int, string, string, int> AUpdateForm;
         internal event Action AEnterEditMode;
         internal event Action ALeaveEditMode;
         internal event Action AClearRegisters;
@@ -46,6 +47,7 @@ namespace LabZKT.Simulation
         internal bool buttonOKClicked { get; set; }
         private DataGridViewCellStyle dgvcs1;
         private bool inEditMode;
+        private Size windowSize;
         private FormWindowState previousWindowState;
         private FormWindowState currentWindowState;
         /// <summary>
@@ -147,6 +149,7 @@ namespace LabZKT.Simulation
             initUserInfoArea();
             SimView_ResizeEnd(sender, e);
             Focus();
+            windowSize = new Size(Width, Height);
         }
         private void initUserInfoArea()
         {
@@ -231,6 +234,8 @@ namespace LabZKT.Simulation
         {
             Grid_Mem[1, row].Value = list_Memory[row].value;
             Grid_Mem[2, row].Value = list_Memory[row].hex;
+            Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Selected = false;
+            Grid_Mem.Rows[row].Selected = true;
         }
         internal void grid_PO_SelectionChanged(object sender, EventArgs e)
         {
@@ -239,20 +244,25 @@ namespace LabZKT.Simulation
 
             AGetMemoryRecord(idxRow);
             string instructionMnemo = "";
-            label1.Text = "Komórka " + idxRow + "\n";
+            cellDescription.Text = "PAO[" + idxRow + "]";
+            if (selectedInstruction.typ == 0)
+                cellDescription.Text += "=0";
+            else
+                cellDescription.Text += "\n";
             if (selectedInstruction.typ == 1)
             {
-                label1.Text += "DANA\n";
-                label1.Text += selectedInstruction.value.ToString() + "b\n";
-                label1.Text += Convert.ToInt16(selectedInstruction.value, 2) + "d\n";
-                label1.Text += Convert.ToInt16(selectedInstruction.value, 2).ToString("X") + "h";
+                cellDescription.Text += "DANA\n";
+                cellDescription.Text += selectedInstruction.value.ToString() + "b\n";
+                cellDescription.Text += Convert.ToUInt16(selectedInstruction.value, 2) + "d\n";
+                cellDescription.Text += Convert.ToInt16(selectedInstruction.value, 2).ToString("X") + "h";
             }
             else if (selectedInstruction.typ == 2)
                 instructionMnemo = Translator.DecodeInstruction(selectedInstruction.OP);
             else if (selectedInstruction.typ == 3)
                 instructionMnemo = Translator.DecodeInstruction(selectedInstruction.AOP);
             string instructionDescription = Translator.GetInsrtuctionDescription(instructionMnemo, selectedInstruction.value, selectedInstruction.typ);
-            label1.Text += instructionDescription;
+            cellDescription.Text += instructionDescription;
+            Grid_Mem.Rows[idxRow].Cells[1].Selected = true;
         }
         private void grid_PM_SelectionChanged(object sender, EventArgs e)
         {
@@ -325,13 +335,13 @@ namespace LabZKT.Simulation
             else if (e.KeyChar == (char)Keys.Escape && isRunning)
             {
                 //przerwanie pracy
-                DialogResult dr = MessageBox.Show("Czy napewno chcesz zakończyć pracę?\n Uracisz cały postęp.", "Przerwanie pracy", MessageBoxButtons.YesNo);
-                if (dr == DialogResult.Yes)
+                DialogResult dr = MessageBox.Show("Czy napewno chcesz zakończyć pracę?\n Uracisz cały postęp.", "Przerwanie pracy", MessageBoxButtons.OKCancel);
+                if (dr == DialogResult.OK)
                 {
                     //
                 }
             }
-            
+
         }
         private void grid_PO_KeyDown(object sender, KeyEventArgs e)
         {
@@ -339,12 +349,25 @@ namespace LabZKT.Simulation
             {
                 e.Handled = true;
             }
+            else if (char.IsLetterOrDigit((char)e.KeyCode) || e.KeyCode == Keys.OemMinus)
+            {
+                Grid_Mem.ReadOnly = false;
+                if ((char)e.KeyCode <= 90 && (char)e.KeyCode >= 65)
+                    Grid_Mem.CurrentCell.Value = (char)(e.KeyCode + 32);
+                else if (e.KeyCode == Keys.OemMinus)
+                    Grid_Mem.CurrentCell.Value = (char)45;
+                else
+                    Grid_Mem.CurrentCell.Value = (char)e.KeyCode;
+                Grid_Mem.BeginEdit(false);
+            }
+            else if (e.KeyCode == Keys.Enter)
+                Grid_Mem.EndEdit();
         }
         private void RunSim_SizeChanged(object sender, EventArgs e)
         {
             previousWindowState = currentWindowState;
             currentWindowState = WindowState;
-            if (previousWindowState != currentWindowState )
+            if (previousWindowState != currentWindowState)
             {
                 if (currentWindowState == FormWindowState.Maximized && previousWindowState == FormWindowState.Normal)
                     SimView_ResizeEnd(this, new EventArgs());
@@ -354,8 +377,8 @@ namespace LabZKT.Simulation
         }
         private void nowyLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Utracisz cały postęp symulacji.\nCzy chcesz zakończyć pracę z obecnym logiem?", "Nowa symulacja", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
+            DialogResult result = MessageBox.Show("Utracisz cały postęp symulacji.\nCzy chcesz zakończyć pracę z obecnym logiem?", "Nowa symulacja", MessageBoxButtons.OKCancel);
+            if (result == DialogResult.OK)
             {
                 ANewLog();
                 setNewLog(false);
@@ -425,37 +448,119 @@ namespace LabZKT.Simulation
 
         private void SimView_ResizeBegin(object sender, EventArgs e)
         {
-            panel_Left.Visible = false;
-            panel_PO.Visible = false;
+            //panel_Left.Visible = false;
+            //panel_PO.Visible = false;
         }
 
         private void SimView_ResizeEnd(object sender, EventArgs e)
         {
-            
-            float horizontalRatio = 0.2f, verticalRatio = 0.15f;
+            if (!windowSize.Equals(new Size(Width, Height)))
+            {
+                windowSize = new Size(Width, Height);
+                float horizontalRatio = 0.2f, verticalRatio = 0.15f;
 
-            int tempPoWidth = Convert.ToInt32(Width * horizontalRatio);
-            panel_PO.Height = Convert.ToInt32(Height * 1.0);
-            if (tempPoWidth > 280)
-                panel_PO.Width = 280;
-            else
-                panel_PO.Width = tempPoWidth;
+                int tempPoWidth = Convert.ToInt32(Width * horizontalRatio);
+                panel_PO.Height = Convert.ToInt32(Height * 1.0);
+                if (tempPoWidth > 280)
+                    panel_PO.Width = 280;
+                else
+                    panel_PO.Width = tempPoWidth;
 
-            panel_Left.Width = Convert.ToInt32(Width - panel_PO.Width - 20);
-            panel_Left.Height = Convert.ToInt32(Height * 1.0);
+                panel_Left.Width = Convert.ToInt32(Width - panel_PO.Width - 20);
+                panel_Left.Height = Convert.ToInt32(Height * 1.0);
 
-            int tempPmHeight = Convert.ToInt32(panel_Left.Height * verticalRatio);
-            if (tempPmHeight < 400)
-                panel_PM.Height = 400;
-            else
-                panel_PM.Height = tempPmHeight;
-            panel_PM.Width = Convert.ToInt32(panel_Left.Width * 1.0);
+                int tempPmHeight = Convert.ToInt32(panel_Left.Height * verticalRatio);
+                if (tempPmHeight < 400)
+                    panel_PM.Height = 400;
+                else
+                    panel_PM.Height = tempPmHeight;
+                panel_PM.Width = Convert.ToInt32(panel_Left.Width * 1.0);
 
-            panel_Sim.Width = Convert.ToInt32(panel_Left.Width * 1.0);
-            panel_Sim.Height = Convert.ToInt32(panel_Left.Height - panel_PM.Height);
-            panel_Left.Visible = true;
-            panel_PO.Visible = true;
-            ADrawBackground();
+                panel_Sim.Width = Convert.ToInt32(panel_Left.Width * 1.0);
+                panel_Sim.Height = Convert.ToInt32(panel_Left.Height - panel_PM.Height);
+
+                //panel_Left.Visible = true;
+                //panel_PO.Visible = true;
+                ADrawBackground();
+            }
+        }
+
+        private void panel_Sim_Control_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (!isRunning)
+                if (inEditMode)
+                {
+                    panel_Control.Focus();
+                    ALeaveEditMode();
+                    toolStripMenu_Edit.Text = "Edytuj rejestry";
+                    button_Makro.Visible = true;
+                    button_Micro.Visible = true;
+                    toolStripMenu_Clear.Enabled = true;
+                    inEditMode = false;
+                    label_Status.Text = "Stop";
+                }
+                else
+                {
+                    AEnterEditMode();
+                    toolStripMenu_Edit.Text = "Zakończ edycję";
+                    button_Makro.Visible = false;
+                    button_Micro.Visible = false;
+                    toolStripMenu_Clear.Enabled = false;
+                    inEditMode = true;
+                    label_Status.Text = "Edycja";
+                }
+        }
+
+        private void Grid_Mem_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            Grid_Mem.ReadOnly = true;
+            decimal variableToTest;
+            short valueAfterConvertion;
+            string hexValueBefore = Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[2].Value.ToString();
+            try
+            {
+                if (decimal.TryParse(Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Value.ToString(), out variableToTest))
+                {
+                    valueAfterConvertion = Convert.ToInt16(Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Value.ToString(), 10);
+                    
+                    string bin = Convert.ToString(valueAfterConvertion, 2).PadLeft(16, '0');
+                    string hex = valueAfterConvertion.ToString("X").PadLeft(4, '0');
+                    AUpdateForm(Grid_Mem.CurrentCell.RowIndex, bin, hex, 1);
+                    Grid_Mem[2, Grid_Mem.CurrentCell.RowIndex].Value = hex;
+                    Grid_Mem[1, Grid_Mem.CurrentCell.RowIndex].Value = bin;
+                }
+                else
+                {
+                    string txt = Grid_Mem.Rows[e.RowIndex].Cells[1].Value.ToString();
+                    char[] toRemove = { 'h', 'H' };
+                    txt = txt.TrimEnd(toRemove);
+                    try
+                    {
+                        valueAfterConvertion = Convert.ToInt16(txt, 16);
+
+                        string bin = Convert.ToString(valueAfterConvertion, 2).PadLeft(16, '0');
+                        string hex = valueAfterConvertion.ToString("X").PadLeft(4, '0');
+                        AUpdateForm(Grid_Mem.CurrentCell.RowIndex, bin, hex, 1);
+                        Grid_Mem[2, Grid_Mem.CurrentCell.RowIndex].Value = hex;
+                        Grid_Mem[1, Grid_Mem.CurrentCell.RowIndex].Value = bin;
+                    }
+                    catch
+                    {
+                        throw new Exception();
+                    }
+                }
+            }
+            catch
+            {
+                try
+                {
+                    Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Value = Convert.ToString(Convert.ToInt16(hexValueBefore, 16), 2);
+                }
+                catch
+                {
+                    Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Value = "";
+                }
+            }
         }
     }
 }

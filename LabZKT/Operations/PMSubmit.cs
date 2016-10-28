@@ -97,7 +97,7 @@ namespace LabZKT.MicroOperations
             {
                 loc.Y = 150;
             }
-            loc.X = 155;
+            loc.X = Width-121;
             button_Cancel.Location = loc;
         }
 

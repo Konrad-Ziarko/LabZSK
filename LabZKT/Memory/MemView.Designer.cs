@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -39,12 +42,13 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MemView));
             this.panel_View_PO = new System.Windows.Forms.Panel();
             this.Grid_Mem = new System.Windows.Forms.DataGridView();
+            this.Adres = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Zawartosc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Hex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Typ = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel_Edit_PO = new System.Windows.Forms.Panel();
             this.dataGridView_Decode_Complex = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,7 +61,7 @@
             this.Dec = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Bin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel_Right = new System.Windows.Forms.Panel();
-            this.button_Close = new System.Windows.Forms.Button();
+            this.button_Edit = new System.Windows.Forms.Button();
             this.button_Load_Table = new System.Windows.Forms.Button();
             this.button_Save_Table = new System.Windows.Forms.Button();
             this.button_Clear_Table = new System.Windows.Forms.Button();
@@ -69,10 +73,6 @@
             this.Property = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.save_File_Dialog = new System.Windows.Forms.SaveFileDialog();
             this.open_File_Dialog = new System.Windows.Forms.OpenFileDialog();
-            this.Adres = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Zawartosc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Hex = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Typ = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel_View_PO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid_Mem)).BeginInit();
             this.panel_Edit_PO.SuspendLayout();
@@ -116,11 +116,13 @@
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.Grid_Mem.DefaultCellStyle = dataGridViewCellStyle4;
             this.Grid_Mem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Grid_Mem.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
             this.Grid_Mem.Location = new System.Drawing.Point(0, 0);
             this.Grid_Mem.Margin = new System.Windows.Forms.Padding(2);
             this.Grid_Mem.MinimumSize = new System.Drawing.Size(195, 0);
             this.Grid_Mem.MultiSelect = false;
             this.Grid_Mem.Name = "Grid_Mem";
+            this.Grid_Mem.ReadOnly = true;
             this.Grid_Mem.RowHeadersVisible = false;
             this.Grid_Mem.RowTemplate.Height = 24;
             this.Grid_Mem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -136,6 +138,55 @@
             this.Grid_Mem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Grid_PO_KeyDown);
             this.Grid_Mem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Grid_PO_MouseDown);
             this.Grid_Mem.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Grid_PO_MouseMove);
+            // 
+            // Adres
+            // 
+            this.Adres.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Adres.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Adres.HeaderText = "Adres";
+            this.Adres.Name = "Adres";
+            this.Adres.ReadOnly = true;
+            this.Adres.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Adres.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Adres.Width = 40;
+            // 
+            // Zawartosc
+            // 
+            this.Zawartosc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.Zawartosc.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Zawartosc.HeaderText = "Zawartość";
+            this.Zawartosc.Name = "Zawartosc";
+            this.Zawartosc.ReadOnly = true;
+            this.Zawartosc.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Zawartosc.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Hex
+            // 
+            this.Hex.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.Hex.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Hex.HeaderText = "Hex";
+            this.Hex.MinimumWidth = 65;
+            this.Hex.Name = "Hex";
+            this.Hex.ReadOnly = true;
+            this.Hex.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Hex.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Hex.Width = 65;
+            // 
+            // Typ
+            // 
+            this.Typ.HeaderText = "Typ";
+            this.Typ.Name = "Typ";
+            this.Typ.ReadOnly = true;
+            this.Typ.Visible = false;
             // 
             // panel_Edit_PO
             // 
@@ -173,7 +224,7 @@
             this.dataGridViewTextBoxColumn6});
             dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -270,7 +321,7 @@
             this.Bin});
             dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -345,7 +396,7 @@
             // panel_Right
             // 
             this.panel_Right.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel_Right.Controls.Add(this.button_Close);
+            this.panel_Right.Controls.Add(this.button_Edit);
             this.panel_Right.Controls.Add(this.button_Load_Table);
             this.panel_Right.Controls.Add(this.button_Save_Table);
             this.panel_Right.Controls.Add(this.button_Clear_Table);
@@ -357,17 +408,19 @@
             this.panel_Right.Size = new System.Drawing.Size(149, 440);
             this.panel_Right.TabIndex = 2;
             // 
-            // button_Close
+            // button_Edit
             // 
-            this.button_Close.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Close.Location = new System.Drawing.Point(11, 334);
-            this.button_Close.Margin = new System.Windows.Forms.Padding(11, 7, 11, 7);
-            this.button_Close.Name = "button_Close";
-            this.button_Close.Size = new System.Drawing.Size(125, 63);
-            this.button_Close.TabIndex = 9;
-            this.button_Close.Text = "Zamknij";
-            this.button_Close.UseVisualStyleBackColor = true;
-            this.button_Close.Click += new System.EventHandler(this.button_Close_Click);
+            this.button_Edit.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            this.button_Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_Edit.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_Edit.Location = new System.Drawing.Point(11, 334);
+            this.button_Edit.Margin = new System.Windows.Forms.Padding(11, 7, 11, 7);
+            this.button_Edit.Name = "button_Edit";
+            this.button_Edit.Size = new System.Drawing.Size(125, 63);
+            this.button_Edit.TabIndex = 9;
+            this.button_Edit.Text = "Edytuj";
+            this.button_Edit.UseVisualStyleBackColor = true;
+            this.button_Edit.Click += new System.EventHandler(this.button_Edit_Click);
             // 
             // button_Load_Table
             // 
@@ -377,7 +430,7 @@
             this.button_Load_Table.Name = "button_Load_Table";
             this.button_Load_Table.Size = new System.Drawing.Size(125, 63);
             this.button_Load_Table.TabIndex = 8;
-            this.button_Load_Table.Text = "Wczytaj tabelę";
+            this.button_Load_Table.Text = "Wczytaj pamięć";
             this.button_Load_Table.UseVisualStyleBackColor = true;
             this.button_Load_Table.Click += new System.EventHandler(this.button_Load_Table_Click);
             // 
@@ -389,7 +442,7 @@
             this.button_Save_Table.Name = "button_Save_Table";
             this.button_Save_Table.Size = new System.Drawing.Size(125, 63);
             this.button_Save_Table.TabIndex = 7;
-            this.button_Save_Table.Text = "Zapisz tabelę";
+            this.button_Save_Table.Text = "Zapisz pamięć";
             this.button_Save_Table.UseVisualStyleBackColor = true;
             this.button_Save_Table.Click += new System.EventHandler(this.button_Save_Table_Click);
             // 
@@ -397,17 +450,20 @@
             // 
             this.button_Clear_Table.BackColor = System.Drawing.Color.Red;
             this.button_Clear_Table.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_Clear_Table.ForeColor = System.Drawing.SystemColors.Window;
             this.button_Clear_Table.Location = new System.Drawing.Point(11, 100);
             this.button_Clear_Table.Margin = new System.Windows.Forms.Padding(11, 7, 11, 7);
             this.button_Clear_Table.Name = "button_Clear_Table";
             this.button_Clear_Table.Size = new System.Drawing.Size(125, 63);
             this.button_Clear_Table.TabIndex = 6;
-            this.button_Clear_Table.Text = "Wyczyść tabelę";
+            this.button_Clear_Table.Text = "Wyczyść pamięć";
             this.button_Clear_Table.UseVisualStyleBackColor = false;
             this.button_Clear_Table.Click += new System.EventHandler(this.button_Clear_Table_Click);
             // 
             // button_Clear_Row
             // 
+            this.button_Clear_Row.FlatAppearance.BorderColor = System.Drawing.Color.Red;
+            this.button_Clear_Row.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Clear_Row.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button_Clear_Row.Location = new System.Drawing.Point(11, 22);
             this.button_Clear_Row.Margin = new System.Windows.Forms.Padding(11, 7, 11, 7);
@@ -453,7 +509,7 @@
             this.Property});
             dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -497,53 +553,6 @@
             // 
             this.open_File_Dialog.FileName = "open_File_Dialog";
             // 
-            // Adres
-            // 
-            this.Adres.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Adres.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Adres.HeaderText = "Adres";
-            this.Adres.Name = "Adres";
-            this.Adres.ReadOnly = true;
-            this.Adres.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Adres.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Adres.Width = 40;
-            // 
-            // Zawartosc
-            // 
-            this.Zawartosc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            this.Zawartosc.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Zawartosc.HeaderText = "Zawartość";
-            this.Zawartosc.Name = "Zawartosc";
-            this.Zawartosc.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Zawartosc.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Hex
-            // 
-            this.Hex.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            this.Hex.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Hex.HeaderText = "Hex";
-            this.Hex.MinimumWidth = 65;
-            this.Hex.Name = "Hex";
-            this.Hex.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Hex.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Hex.Width = 65;
-            // 
-            // Typ
-            // 
-            this.Typ.HeaderText = "Typ";
-            this.Typ.Name = "Typ";
-            this.Typ.ReadOnly = true;
-            this.Typ.Visible = false;
-            // 
             // MemView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -580,7 +589,7 @@
         private System.Windows.Forms.SaveFileDialog save_File_Dialog;
         private System.Windows.Forms.OpenFileDialog open_File_Dialog;
         private System.Windows.Forms.Panel panel_Right;
-        private System.Windows.Forms.Button button_Close;
+        private System.Windows.Forms.Button button_Edit;
         private System.Windows.Forms.Button button_Load_Table;
         private System.Windows.Forms.Button button_Save_Table;
         private System.Windows.Forms.Button button_Clear_Table;

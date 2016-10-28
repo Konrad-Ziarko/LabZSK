@@ -67,7 +67,6 @@ namespace LabZKT.Simulation
 
         internal bool isTestPositive = false;
         internal bool isOverflow = false;
-        internal bool inEditMode = false;
         internal bool buttonOKClicked = false;
         internal bool inMicroMode = false;
         internal bool isRunning = false;
@@ -657,7 +656,7 @@ namespace LabZKT.Simulation
                         if (lastRecordFromRRC.typ == 2)
                             testAndSet("RAPS", Convert.ToInt16(lastRecordFromRRC.OP, 2));
                         else if (lastRecordFromRRC.typ == 3)
-                            testAndSet("RAPS", (short)(Convert.ToInt16(lastRecordFromRRC.AOP, 2)+32));
+                            testAndSet("RAPS", (short)(Convert.ToInt16(lastRecordFromRRC.AOP, 2) + 32));
                         else
                             testAndSet("RAPS", (short)32);
                     }
@@ -772,7 +771,7 @@ namespace LabZKT.Simulation
                 }
 
                 //skip TEST if END is present
-                if(microOpMnemo == "END")
+                if (microOpMnemo == "END")
                     currentTact = 9;
                 cells[7, 7] = false;
                 AddText("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
@@ -1213,18 +1212,14 @@ namespace LabZKT.Simulation
                     short leftValue = 0, rightValue = 0;
                     if (lastRecordFromRRC != null)
                     {
-                        if (lastRecordFromRRC.typ == 2 && lastRecordFromRRC.XSI.Substring(2, 1) == "1" || lastRecordFromRRC.typ == 3)
+                        if (!lastRecordFromRRC.isComplex && lastRecordFromRRC.XSI.Substring(2, 1) == "1" || lastRecordFromRRC.isComplex)
                             indirectAdresation = true;
-                        if (lastRecordFromRRC.typ == 3)
+                        if (lastRecordFromRRC.isComplex)
                         {
                             leftValue = Convert.ToInt16(lastRecordFromRRC.N, 2);
                             indirectAdresation = true;
                         }
-                        else if (lastRecordFromRRC.typ == 1 && Convert.ToInt16(lastRecordFromRRC.value, 2) < 256)
-                        {
-                            leftValue = Convert.ToInt16(lastRecordFromRRC.value, 2);
-                        }
-                        else if (lastRecordFromRRC.typ == 2)
+                        else if (!lastRecordFromRRC.isComplex)
                         {
                             leftValue = Convert.ToInt16(lastRecordFromRRC.DA, 2);
                             if (lastRecordFromRRC.XSI.Substring(0, 2) == "11")
@@ -1464,6 +1459,7 @@ namespace LabZKT.Simulation
                     rtb.ReadOnly = true;
                     rtb.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
                     rtb.Text = File.ReadAllText(pathToLog, Encoding.Unicode);
+                    rtb.Text = rtb.Text.Remove(rtb.Text.Length - 2, 2);
                     log.AutoSize = true;
                     log.AutoSizeMode = AutoSizeMode.GrowAndShrink;
                     int width = 200;

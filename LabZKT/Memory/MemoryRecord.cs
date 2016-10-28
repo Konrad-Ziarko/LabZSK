@@ -43,6 +43,7 @@ namespace LabZKT.Memory
         /// String representing XSI bits
         /// </summary>
         public string XSI { get; private set; }
+        public bool isComplex { get; private set; }
         /// <summary>
         /// Initialize instance of MemoryRecord class
         /// </summary>
@@ -59,14 +60,33 @@ namespace LabZKT.Memory
             XSI = "000";
             if (t == 2)
             {
+                isComplex = false;
                 OP = value.Substring(0,5);
                 XSI = value.Substring(5, 3);
                 DA = value.Substring(8, 8);
             }
             else if (t == 3)
             {
+                isComplex = true;
                 AOP = value.Substring(5, 4);
                 N = value.Substring(9, 7);
+            }
+            else if (value != "")
+            {
+                if (value.Substring(0, 5) == "00000")
+                {
+                    isComplex = true;
+                    AOP = value.Substring(5, 4);
+                    N = value.Substring(9, 7);
+                }
+                else
+                {
+                    isComplex = false;
+                    XSI = value.Substring(5, 3);
+                    OP = value.Substring(0, 5);
+                    XSI = value.Substring(5, 3);
+                    DA = value.Substring(8, 8);
+                }
             }
         }
         /// <summary>

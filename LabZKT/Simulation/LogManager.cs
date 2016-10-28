@@ -4,7 +4,6 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
-using Trinet.Core.IO.Ntfs;
 
 namespace LabZKT.Simulation
 {
@@ -13,24 +12,6 @@ namespace LabZKT.Simulation
     /// </summary>
     public class LogManager
     {
-        #region ADS
-        private const int GENERIC_WRITE = 1073741824;
-        private const int FILE_SHARE_DELETE = 4;
-        private const int FILE_SHARE_WRITE = 2;
-        private const int FILE_SHARE_READ = 1;
-        private const int OPEN_ALWAYS = 4;
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern IntPtr CreateFile(string lpFileName,
-                                                uint dwDesiredAccess,
-                                                uint dwShareMode,
-                                                IntPtr lpSecurityAttributes,
-                                                uint dwCreationDisposition,
-                                                uint dwFlagsAndAttributes,
-                                                IntPtr hTemplateFile);
-        [DllImport("kernel32", SetLastError = true)]
-        private static extern bool CloseHandle(IntPtr handle);
-        #endregion
-
         private MemoryStream inMemoryLog = new MemoryStream();
         private static readonly LogManager instance;
         private string LogFile = string.Empty;
@@ -56,23 +37,11 @@ namespace LabZKT.Simulation
         /// <returns>Boolean indicating wheter log is valid</returns>
         public bool checkLogIntegrity(string pathToLog)
         {
-            //a jak nie ma ADS? inne sposoby sprawdzenia integralnosci logu robic!
             bool toReturn = false;
-            uint crcFromFile;
-            byte[] arr = new byte[4];
-            FileInfo fileInfo = new FileInfo(pathToLog);
             uint crc = CRC.ComputeChecksum(File.ReadAllBytes(pathToLog));
-            if (fileInfo.AlternateDataStreamExists("crc"))
-            {
-                using (FileStream fs = fileInfo.GetAlternateDataStream("crc").OpenRead())
-                {
-                    fs.Read(arr, 0, 4);
-                }
-                crcFromFile = BitConverter.ToUInt32(arr, 0);
-                if (crcFromFile == crc)
-                    toReturn = true;
-                else toReturn = false;
-            }
+            if (crc == 0x0)
+                toReturn = true;
+            else toReturn = false;
             return toReturn;
         }
         /// <summary>
@@ -88,27 +57,20 @@ namespace LabZKT.Simulation
                 byte[] bytes = Translator.GetBytes(v, out len);
                 inMemoryLog.Write(bytes, 0, len);
 
+                FileStream fs = fileInfo.Open(FileMode.Open);
+                long bytesToDelete = 4;
+                fs.SetLength(Math.Max(0, fileInfo.Length - bytesToDelete));
+                fs.Close();
+
                 using (BinaryWriter bw = new BinaryWriter(File.Open(LogFile, FileMode.Append), Encoding.UTF8))
                 {
                     bw.Write(bytes);
                 }
                 uint crc = CRC.ComputeChecksum(File.ReadAllBytes(LogFile));
-                if (!fileInfo.AlternateDataStreamExists("crc"))
+                using (BinaryWriter bw = new BinaryWriter(File.Open(LogFile, FileMode.Append), Encoding.UTF8))
                 {
-                    var stream = CreateFile(
-                    LogFile + ":crc",
-                    GENERIC_WRITE,
-                    FILE_SHARE_WRITE,
-                    IntPtr.Zero,
-                    OPEN_ALWAYS,
-                    0,
-                    IntPtr.Zero);
-                    if (stream != IntPtr.Zero)
-                        CloseHandle(stream);
+                    bw.Write(crc);
                 }
-                FileStream fs = fileInfo.GetAlternateDataStream("crc").OpenWrite();
-                fs.Write(BitConverter.GetBytes(crc), 0, 4);
-                fs.Close();
             }
         }
 

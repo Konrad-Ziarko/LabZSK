@@ -47,7 +47,7 @@ namespace LabZKT.Memory
 
         private void MemView_Load(object sender, EventArgs e)
         {
-            CancelButton = button_Close;
+            CancelButton = button_Edit;
 
             Size = new Size(800, 650);
             float horizontalRatio = 0.4f;
@@ -191,13 +191,17 @@ namespace LabZKT.Memory
 
         private void button_Clear_Table_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < 256; i++)
+            DialogResult dr = MessageBox.Show("Czy napewno chcesz wyczyścić całą pamięć?", "Tej operacji nie da się cofnąć!", MessageBoxButtons.OKCancel);
+            if (dr == DialogResult.OK)
             {
-                Grid_Mem.Rows[i].Cells[1].Value = "";
-                Grid_Mem.Rows[i].Cells[2].Value = "";
-                Grid_Mem.Rows[i].Cells[3].Value = "0";
+                for (int i = 0; i < 256; i++)
+                {
+                    Grid_Mem.Rows[i].Cells[1].Value = "";
+                    Grid_Mem.Rows[i].Cells[2].Value = "";
+                    Grid_Mem.Rows[i].Cells[3].Value = "0";
+                }
+                Grid_PO_SelectionChanged(sender, e);
             }
-            Grid_PO_SelectionChanged(sender, e);
         }
 
         private void button_Save_Table_Click(object sender, EventArgs e)
@@ -233,12 +237,25 @@ namespace LabZKT.Memory
             }
         }
 
-        private void button_Close_Click(object sender, EventArgs e)
+        private void button_Edit_Click(object sender, EventArgs e)
         {
-            Invoke((MethodInvoker)delegate ()
+            Grid_Mem.EndEdit();
+            if (Grid_Mem.CurrentCell.ColumnIndex > 0)
             {
-                Close();
-            });
+                using (theSubView = new MemSubmit())
+                {
+                    theSubView.Location = Cursor.Position;
+                    var result = theSubView.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Value = theSubView.binaryData;
+                        Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[2].Value = theSubView.hexData;
+                        Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[3].Value = theSubView.dataType;
+                        AUpdateForm(Grid_Mem.CurrentCell.RowIndex, theSubView.binaryData, theSubView.hexData, theSubView.dataType);
+                    }
+                }
+            }
+            Grid_PO_SelectionChanged(sender, e);
         }
 
         private void PO_FormClosing(object sender, FormClosingEventArgs e)
@@ -324,7 +341,7 @@ namespace LabZKT.Memory
 
                 if (cellType != "")
                     dataGridView_Basic.Rows[1].Cells[1].Value =
-                    Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString(), 2), 10);
+                    Convert.ToString(Convert.ToUInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString(), 2), 10);
             }
             else
             {
@@ -412,6 +429,19 @@ namespace LabZKT.Memory
         {
             if (e.KeyCode == Keys.Delete)
                 button_Clear_Row_Click(sender, e);
+            else if (char.IsLetterOrDigit((char)e.KeyCode) || e.KeyCode == Keys.OemMinus)
+            {
+                Grid_Mem.ReadOnly = false;
+                if ((char)e.KeyCode <= 90 && (char)e.KeyCode >= 65)
+                    Grid_Mem.CurrentCell.Value = (char)(e.KeyCode + 32);
+                else if (e.KeyCode == Keys.OemMinus)
+                    Grid_Mem.CurrentCell.Value = (char)45;
+                else
+                    Grid_Mem.CurrentCell.Value = (char)e.KeyCode;
+                Grid_Mem.BeginEdit(false);
+            }
+            else if (e.KeyCode == Keys.Enter)
+                Grid_Mem.EndEdit();
         }
 
         private void PO_SizeChanged(object sender, EventArgs e)
@@ -434,17 +464,13 @@ namespace LabZKT.Memory
                 x.Height = dataGridView_Decode_Complex.Height / 4;
             }
 
-            int startLocation = 12;
+            int startLocation = 8;
             int diffSize = (panel_Right.Height - startLocation - (5 * button_Clear_Row.Size.Height)) / 5;
             diffSize += button_Clear_Row.Size.Height;
             var bLocation = button_Clear_Row.Location;
             bLocation.Y = startLocation;
             bLocation.X = 15;
-            button_Clear_Row.Location = bLocation;
-
-            startLocation += diffSize;
-            bLocation.Y = startLocation;
-            button_Clear_Table.Location = bLocation;
+            button_Load_Table.Location = bLocation;
 
             startLocation += diffSize;
             bLocation.Y = startLocation;
@@ -452,15 +478,21 @@ namespace LabZKT.Memory
 
             startLocation += diffSize;
             bLocation.Y = startLocation;
-            button_Load_Table.Location = bLocation;
+            button_Edit.Location = bLocation;
 
-            startLocation += diffSize;
+
+            startLocation = panel_Right.Height-button_Clear_Table.Size.Height-8;
             bLocation.Y = startLocation;
-            button_Close.Location = bLocation;
+            button_Clear_Table.Location = bLocation;
+
+            startLocation -= diffSize;
+            bLocation.Y = startLocation;
+            button_Clear_Row.Location = bLocation;
         }
 
         private void Grid_Mem_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            Grid_Mem.ReadOnly = true;
             decimal tmp;
 
             try
