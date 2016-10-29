@@ -161,11 +161,17 @@ namespace LabZKT.Simulation
                                 ipAddrList += "\n".PadRight(43, ' ') + ip.Address.ToString();
             logManager.createNewLog(logFile);
             Settings.Default.Save();
-            logManager.addToMemory("Komputer w domenie: \"" + Environment.UserDomainName + "\"\nStacja \"" +
+            addTextToLogFile("Komputer w domenie: \"" + Environment.UserDomainName + "\"\nStacja \"" +
             Environment.MachineName + "\" " + sysType + " " + Environment.OSVersion + " OS\nZalogowano jako: \"" +
             Environment.UserName + "\"\n" + "Dostępne interfejsy sieciowe: " + ipAddrList + "\n\n\n");
         }
-
+        public void addTextToLogFile(string lineOfText)
+        {
+            if (logManager != null)
+            {
+                logManager.addToMemory(lineOfText);
+            }
+        }
         internal void addControlToDrawings(Control control)
         {
             panel_Sim_Control = control;
@@ -175,7 +181,6 @@ namespace LabZKT.Simulation
         /// <summary>
         /// Adjust register grid in parent control
         /// </summary>
-        /// <param name="panel_Sim_Control">Parent control to place registers</param>
         public void rearrangeTextBoxes()
         {
             int horizontalGap = Convert.ToInt32(0.25 * panel_Sim_Control.Width);
@@ -220,6 +225,13 @@ namespace LabZKT.Simulation
             registers["SUMA"].SetXY((registers["R"].Location.X - registers["L"].Location.X + 130) / 2
                 - 65 + registers["L"].Location.X, verticalGap * 4 + (verticalGap - 27) * 3 / 4);
         }
+
+        internal void ShowCurrentLog()
+        {
+            if (logFile != string.Empty && logFile != "")
+                ShowLog(logFile);
+        }
+
         /// <summary>
         /// Switch simulation background between 'standard' and 'sum' mode
         /// </summary>
@@ -245,7 +257,7 @@ namespace LabZKT.Simulation
             foreach (var oldReg in oldRegs)
             {
                 if (registers[oldReg.Key].innerValue != oldReg.Value)
-                    logManager.addToMemory("Zmiana zawartości rejestru: " + oldReg.Key.PadRight(6, ' ') +
+                    addTextToLogFile("Zmiana zawartości rejestru: " + oldReg.Key.PadRight(6, ' ') +
                         oldReg.Value + "=>" + registers[oldReg.Key].innerValue + "\n");
             }
             foreach (var reg in registers)
@@ -283,7 +295,7 @@ namespace LabZKT.Simulation
         /// </summary>
         public void clearRegisters()
         {
-            logManager.addToMemory("\n====Zerowanie rejestrów====\n");
+            addTextToLogFile("\n====Zerowanie rejestrów====\n");
             mark = 5;
             mistakes = currnetCycle = 0;
             foreach (var reg in registers)
@@ -300,7 +312,7 @@ namespace LabZKT.Simulation
         public void addToLog(string tact, string mnemo, string description)
         {
             //poprawić format logu
-            logManager.addToMemory("\t" + tact + " | " + mnemo + " : " + description + "\n");
+            addTextToLogFile("\t" + tact + " | " + mnemo + " : " + description + "\n");
         }
         /// <summary>
         /// Initialize simulation log and start simulation
@@ -320,9 +332,9 @@ namespace LabZKT.Simulation
                 {
                     logFile = dialog.FileName;
                     initLogInformation();
-                    logManager.addToMemory("========Start symulacji========\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(31, ' ') + "\n======Zawartość rejestrów======\n");
+                    addTextToLogFile("========Start symulacji========\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(31, ' ') + "\n======Zawartość rejestrów======\n");
                     foreach (var reg in registers.Values)
-                        logManager.addToMemory((reg.registerName + "=").PadLeft(5, ' ') + reg.Text + "\n");
+                        addTextToLogFile((reg.registerName + "=").PadLeft(5, ' ') + reg.Text + "\n");
                 }
             }
             simulateCPU();
@@ -330,7 +342,6 @@ namespace LabZKT.Simulation
         /// <summary>
         /// Initialize background draw
         /// </summary>
-        /// <param name="panel_Sim_Control"></param>
         public void DrawBackground()
         {
             panel_Sim_Control.Visible = false;
@@ -347,7 +358,7 @@ namespace LabZKT.Simulation
             if (!registers[registerToCheck].validateRegisterValue(out badValue))
             {
                 new Thread(SystemSounds.Beep.Play).Start();
-                logManager.addToMemory("\t\tBłąd(" + (mistakes + 1) + "): " + registerToCheck + "=" + badValue +
+                addTextToLogFile("\t\tBłąd(" + (mistakes + 1) + "): " + registerToCheck + "=" + badValue +
                     "(poprawna " + registerToCheck + "=" + registers[registerToCheck].innerValue + ")\n\n");
 
                 mistakes++;
@@ -363,7 +374,7 @@ namespace LabZKT.Simulation
             }
             else
             {
-                logManager.addToMemory("\t\t" + registerToCheck + "=" + registers[registerToCheck].innerValue + "\n");
+                addTextToLogFile("\t\t" + registerToCheck + "=" + registers[registerToCheck].innerValue + "\n");
             }
         }
         private void waitForButton()
@@ -384,7 +395,7 @@ namespace LabZKT.Simulation
         /// </summary>
         public void CloseCurrentLogFile()
         {
-            logManager.addToMemory("\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(29, ' ') + "\n=======Stop  symulacji=======\n" +
+            addTextToLogFile("\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(29, ' ') + "\n=======Stop  symulacji=======\n" +
                 "Ocena: " + mark + "   Błędy: " + mistakes + "\n");
             logManager.clearInMemoryLog();
             logFile = string.Empty;
@@ -401,25 +412,25 @@ namespace LabZKT.Simulation
         {
             indirectAdresation = false;
             if (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1]))
-                logManager.addToMemory("Takt1:\n");
+                addTextToLogFile("Takt1:\n");
             while (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1] || cells[8, 1]))
                 exeTact1();
             if (currentTact == 1)
                 nextTact();
             if (currentTact == 2 && cells[10, 2])
-                logManager.addToMemory("Takt2:\n");
+                addTextToLogFile("Takt2:\n");
             while (currentTact == 2 && cells[10, 2])
                 exeTact2();
             while (currentTact >= 2 && currentTact <= 5)
                 nextTact();
             if (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
-                logManager.addToMemory("Takt6:\n");
+                addTextToLogFile("Takt6:\n");
             while (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
                 exeTact6();
             if (currentTact == 6)
                 nextTact();
             if (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7] || cells[9, 7]))
-                logManager.addToMemory("Takt7:\n");
+                addTextToLogFile("Takt7:\n");
             while (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7]))
                 exeTact7();
             if (currentTact == 7 && cells[9, 7])
@@ -1303,7 +1314,7 @@ namespace LabZKT.Simulation
             long rbps = Translator.GetRbpsValue(Grid_PM.Rows[raps]) + na;
             RBPS.Text = rbps.ToString("X").PadLeft(12, '0');
 
-            logManager.addToMemory("===============================\n\nTakt0: RBPS=" + RBPS.Text + "\n");
+            addTextToLogFile("===============================\n\nTakt0: RBPS=" + RBPS.Text + "\n");
             for (int i = 1; i < 11; i++)
                 for (int j = 1; j < 8; j++)
                     cells[i, j] = row.Cells[i].Value.ToString() == "" ? false : true;

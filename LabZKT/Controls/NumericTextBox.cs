@@ -186,6 +186,10 @@ namespace LabZKT.Controls
         {
             Text = "";
         }
+        /// <summary>
+        /// Occures when register is clicked
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseClick(MouseEventArgs e)
         {
             base.OnMouseClick(e);
@@ -367,6 +371,10 @@ namespace LabZKT.Controls
             needCheck = false;
             setText();
         }
+        /// <summary>
+        /// Set register background color
+        /// </summary>
+        /// <param name="color">Color which should be set as background color</param>
         public void setCustomeBackColor(Color color)
         {
             BackColor = customeBackColor = color;

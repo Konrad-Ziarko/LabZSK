@@ -158,6 +158,7 @@ namespace LabZKT.Simulation
             theView.ALoadPAO += TheView_ALoadPAO;
             theView.ALoadPM += TheView_ALoadPM;
             theView.AUpdateForm += MemView_AUpdateForm;
+            theView.AShowCurrentLog += theModel.ShowCurrentLog;
 
             theModel.StartSim += startSim;
             theModel.StopSim += theView.stopSim;
@@ -185,11 +186,13 @@ namespace LabZKT.Simulation
 
         private void TheModel_ASelectionChanged()
         {
-            theView.grid_PO_SelectionChanged(this, new EventArgs());
+            theView.Grid_Mem_SelectionChanged(this, new EventArgs());
         }
 
         private void MemView_AUpdateForm(int row, string binary, string hex, int type)
         {
+            theModel.addTextToLogFile("\n\tZmiana zawartości pamięci operacyjnej:\n\tPAO[" 
+                + row + "] = 0x" + List_Memory[row].hex.PadLeft(4, '0') + "     =>     PAO[" + row+"] = 0x" + hex + "\n\n");
             List_Memory[row] = new MemoryRecord(row, binary, hex, type);
             theView.SetDataGridMem(List_Memory, row);
         }
@@ -212,6 +215,9 @@ namespace LabZKT.Simulation
 
         private void PmView_AUpdateData(int row, int col, string str)
         {
+            theModel.addTextToLogFile("\n\tZmiana zawartości pamięci mikroprogramów:\n\tPM[" 
+                + row + "][" + List_MicroOp[row].getColumnName(col) + "] = \"" + List_MicroOp[row].getColumn(col) 
+                + "\"     =>     PM[" + row + "][" + List_MicroOp[row].getColumnName(col) + "] = \"" + str + "\"\n\n");
             List_MicroOp[row].setValue(col, str);
             theView.SetDataGridPM(List_MicroOp, row, col);
         }

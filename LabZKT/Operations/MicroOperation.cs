@@ -139,6 +139,32 @@ namespace LabZKT.MicroOperations
                 return NA;
             return "";
         }
+        internal string getColumnName(int col)
+        {
+            if (col == 1)
+                return "S1";
+            else if (col == 2)
+                return "D1";
+            else if (col == 3)
+                return "S2";
+            else if (col == 4)
+                return "D2";
+            else if (col == 5)
+                return "S3";
+            else if (col == 6)
+                return "D3";
+            else if (col == 7)
+                return "C1";
+            else if (col == 8)
+                return "C2";
+            else if (col == 9)
+                return "Test";
+            else if (col == 10)
+                return "ALU";
+            else if (col == 11)
+                return "NA";
+            return "";
+        }
 
         /// <summary>
         /// Initialize microoperation class instance

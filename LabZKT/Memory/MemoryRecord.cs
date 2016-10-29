@@ -43,6 +43,9 @@ namespace LabZKT.Memory
         /// String representing XSI bits
         /// </summary>
         public string XSI { get; private set; }
+        /// <summary>
+        /// Boolean representing whether this record should be decoded as complex instruction
+        /// </summary>
         public bool isComplex { get; private set; }
         /// <summary>
         /// Initialize instance of MemoryRecord class
@@ -95,7 +98,10 @@ namespace LabZKT.Memory
         /// <returns>Int16 value representing memory record</returns>
         public short getInt16Value()
         {
-            return Convert.ToInt16(this.hex, 16);
+            if (hex == "")
+                return 0;
+            else
+                return Convert.ToInt16(this.hex, 16);
         }
     }
 }

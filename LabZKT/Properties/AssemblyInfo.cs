@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("LabZkt")]
 [assembly: AssemblyDescription("Symulator Komputera Sterowanego Mikroprogramowo LabZKT")]
 [assembly: AssemblyConfiguration("Ziarko Konrad")]
-[assembly: AssemblyCompany("Ziarko Konrad Tomasz @ Wojskowa Akademia Techniczna")]
+[assembly: AssemblyCompany("Ziarko Konrad Tomasz - Wojskowa Akademia Techniczna")]
 [assembly: AssemblyProduct("LABZKT")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]

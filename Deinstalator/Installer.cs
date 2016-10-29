@@ -11,9 +11,10 @@ namespace Deinstalator
         public Installer()
         {
             InitializeComponent();
-            DialogResult dr = MessageBox.Show("Czy instalator ma usunąć wszystkie pliki utworzone w 'Moje Dokumenty'?\nWykasowane zostaną WSZYSTKIE pliki wraz z folderem LabZkt.","Deinstalacja" ,MessageBoxButtons.YesNo);
-            if (dr == DialogResult.Yes)
-                Directory.Delete(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt", true);
+            Form frm = new Box();
+            frm.ShowDialog();
+            frm.BringToFront();
+            frm.Focus();
         }
     }
 }

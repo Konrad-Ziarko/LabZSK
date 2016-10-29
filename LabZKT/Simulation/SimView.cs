@@ -36,6 +36,7 @@ namespace LabZKT.Simulation
         internal event Action AEditPAO;
         internal event Action ALoadPM;
         internal event Action ALoadPAO;
+        internal event Action AShowCurrentLog;
 
         internal int currnetCycle { get; set; }
         internal int mark { get; set; }
@@ -93,6 +94,8 @@ namespace LabZKT.Simulation
         /// </summary>
         public void stopSim()
         {
+            button_Show_Log.Visible = true;
+            richTextBox_Log.Clear();
             isRunning = false;
             inMicroMode = false;
             toolStripMenu_Edit.Enabled = true;
@@ -145,7 +148,7 @@ namespace LabZKT.Simulation
         {
             Size = new Size(1024, 768);
             CenterToScreen();
-            grid_PO_SelectionChanged(sender, e);
+            Grid_Mem_SelectionChanged(sender, e);
             initUserInfoArea();
             SimView_ResizeEnd(sender, e);
             Focus();
@@ -192,27 +195,7 @@ namespace LabZKT.Simulation
         }
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (inEditMode)
-            {
-                panel_Control.Focus();
-                ALeaveEditMode();
-                toolStripMenu_Edit.Text = "Edytuj rejestry";
-                button_Makro.Visible = true;
-                button_Micro.Visible = true;
-                toolStripMenu_Clear.Enabled = true;
-                inEditMode = false;
-                label_Status.Text = "Stop";
-            }
-            else
-            {
-                AEnterEditMode();
-                toolStripMenu_Edit.Text = "Zakończ edycję";
-                button_Makro.Visible = false;
-                button_Micro.Visible = false;
-                toolStripMenu_Clear.Enabled = false;
-                inEditMode = true;
-                label_Status.Text = "Edycja";
-            }
+            SwitchEditMode();
         }
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -237,7 +220,7 @@ namespace LabZKT.Simulation
             Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Selected = false;
             Grid_Mem.Rows[row].Selected = true;
         }
-        internal void grid_PO_SelectionChanged(object sender, EventArgs e)
+        internal void Grid_Mem_SelectionChanged(object sender, EventArgs e)
         {
             int idxRow = Grid_Mem.CurrentCell.RowIndex;
             int idxCol = Grid_Mem.CurrentCell.ColumnIndex;
@@ -264,21 +247,25 @@ namespace LabZKT.Simulation
             cellDescription.Text += instructionDescription;
             Grid_Mem.Rows[idxRow].Cells[1].Selected = true;
         }
-        private void grid_PM_SelectionChanged(object sender, EventArgs e)
+        private void Grid_PM_SelectionChanged(object sender, EventArgs e)
         {
             if (Grid_PM.CurrentCell.ColumnIndex == 0)
                 Grid_PM.ClearSelection();
         }
         internal void button_Makro_Click(object sender, EventArgs e)
         {
-            toolStripMenu_Edit.Enabled = false;
-            toolStripMenu_Exit.Enabled = false;
-            button_Makro.Visible = false;
-            button_Micro.Visible = false;
-            toolStripMenu_Clear.Enabled = false;
-            label_Status.Text = "Start";
-            label_Status.ForeColor = Color.Red;
-            APrepareSimulation(false);
+            if (!isRunning)
+            {
+                toolStripMenu_Edit.Enabled = false;
+                toolStripMenu_Exit.Enabled = false;
+                button_Makro.Visible = false;
+                button_Micro.Visible = false;
+                toolStripMenu_Clear.Enabled = false;
+                label_Status.Text = "Start";
+                label_Status.ForeColor = Color.Red;
+                button_Show_Log.Visible = false;
+                APrepareSimulation(false);
+            }
         }
         private void button_Micro_Click(object sender, EventArgs e)
         {
@@ -289,6 +276,7 @@ namespace LabZKT.Simulation
             toolStripMenu_Clear.Enabled = false;
             label_Status.Text = "Start";
             label_Status.ForeColor = Color.Red;
+            button_Show_Log.Visible = false;
             APrepareSimulation(true);
         }
         private void button_Next_Tact_Click(object sender, EventArgs e)
@@ -343,7 +331,7 @@ namespace LabZKT.Simulation
             }
 
         }
-        private void grid_PO_KeyDown(object sender, KeyEventArgs e)
+        private void Grid_Mem_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -382,6 +370,7 @@ namespace LabZKT.Simulation
             {
                 ANewLog();
                 setNewLog(false);
+                button_Show_Log.Visible = false;
             }
         }
         private void RunSim_Paint(object sender, PaintEventArgs e)
@@ -457,30 +446,20 @@ namespace LabZKT.Simulation
             if (!windowSize.Equals(new Size(Width, Height)))
             {
                 windowSize = new Size(Width, Height);
-                float horizontalRatio = 0.2f, verticalRatio = 0.15f;
+                float horizontalRatio = 0.2f, verticalRatio = 0.25f;
 
                 int tempPoWidth = Convert.ToInt32(Width * horizontalRatio);
-                panel_PO.Height = Convert.ToInt32(Height * 1.0);
-                if (tempPoWidth > 280)
-                    panel_PO.Width = 280;
-                else
-                    panel_PO.Width = tempPoWidth;
-
                 panel_Left.Width = Convert.ToInt32(Width - panel_PO.Width - 20);
-                panel_Left.Height = Convert.ToInt32(Height * 1.0);
 
-                int tempPmHeight = Convert.ToInt32(panel_Left.Height * verticalRatio);
-                if (tempPmHeight < 400)
-                    panel_PM.Height = 400;
-                else
-                    panel_PM.Height = tempPmHeight;
-                panel_PM.Width = Convert.ToInt32(panel_Left.Width * 1.0);
+                panel_Sim.Height = Convert.ToInt32(panel_Left.Height * (1 - verticalRatio));
 
-                panel_Sim.Width = Convert.ToInt32(panel_Left.Width * 1.0);
-                panel_Sim.Height = Convert.ToInt32(panel_Left.Height - panel_PM.Height);
+                panel_PM.Height = Convert.ToInt32(panel_Left.Height - panel_Sim.Height);
 
-                //panel_Left.Visible = true;
-                //panel_PO.Visible = true;
+                int tempWidth = (Grid_PM.Width - 45) / 11;
+                foreach (DataGridViewColumn col in Grid_PM.Columns)
+                    if (col.Index > 0)
+                        col.Width = tempWidth;
+
                 ADrawBackground();
             }
         }
@@ -488,27 +467,7 @@ namespace LabZKT.Simulation
         private void panel_Sim_Control_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (!isRunning)
-                if (inEditMode)
-                {
-                    panel_Control.Focus();
-                    ALeaveEditMode();
-                    toolStripMenu_Edit.Text = "Edytuj rejestry";
-                    button_Makro.Visible = true;
-                    button_Micro.Visible = true;
-                    toolStripMenu_Clear.Enabled = true;
-                    inEditMode = false;
-                    label_Status.Text = "Stop";
-                }
-                else
-                {
-                    AEnterEditMode();
-                    toolStripMenu_Edit.Text = "Zakończ edycję";
-                    button_Makro.Visible = false;
-                    button_Micro.Visible = false;
-                    toolStripMenu_Clear.Enabled = false;
-                    inEditMode = true;
-                    label_Status.Text = "Edycja";
-                }
+                SwitchEditMode();
         }
 
         private void Grid_Mem_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -560,6 +519,49 @@ namespace LabZKT.Simulation
                 {
                     Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Value = "";
                 }
+            }
+        }
+
+        private void Grid_PM_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            //SolidBrush sb = new SolidBrush(Color.Red);
+            //e.Graphics.DrawRectangle(new Pen(sb, 5), e.CellBounds);
+        }
+
+        private void button_Show_Log_Click(object sender, EventArgs e)
+        {
+            AShowCurrentLog();
+        }
+
+        private void button_End_Edit_Click(object sender, EventArgs e)
+        {
+            SwitchEditMode();
+        }
+
+        private void SwitchEditMode()
+        {
+            if (inEditMode)
+            {
+                panel_Control.Focus();
+                ALeaveEditMode();
+                toolStripMenu_Edit.Text = "Edytuj rejestry";
+                button_Makro.Visible = true;
+                button_Micro.Visible = true;
+                toolStripMenu_Clear.Enabled = true;
+                inEditMode = false;
+                label_Status.Text = "Stop";
+                button_End_Edit.Visible = false;
+            }
+            else
+            {
+                AEnterEditMode();
+                toolStripMenu_Edit.Text = "Zakończ edycję";
+                button_Makro.Visible = false;
+                button_Micro.Visible = false;
+                toolStripMenu_Clear.Enabled = false;
+                inEditMode = true;
+                label_Status.Text = "Edycja";
+                button_End_Edit.Visible = true;
             }
         }
     }
