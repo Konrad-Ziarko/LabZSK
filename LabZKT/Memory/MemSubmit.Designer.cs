@@ -42,9 +42,9 @@
             this.button_Data_Cancel = new System.Windows.Forms.Button();
             this.button_Data_OK = new System.Windows.Forms.Button();
             this.panel_Simple = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelOP = new System.Windows.Forms.Label();
             this.numericUpDown_Simple = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelDA = new System.Windows.Forms.Label();
             this.button_Simple_Cancel = new System.Windows.Forms.Button();
             this.button_Simple_OK = new System.Windows.Forms.Button();
             this.checkBox_I = new System.Windows.Forms.CheckBox();
@@ -53,9 +53,9 @@
             this.numericUpDown_DA = new System.Windows.Forms.NumericUpDown();
             this.comboBox_Simple = new System.Windows.Forms.ComboBox();
             this.panel_Complex = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
+            this.labelAOP = new System.Windows.Forms.Label();
             this.numericUpDown_Complex = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelN = new System.Windows.Forms.Label();
             this.numericUpDown_N = new System.Windows.Forms.NumericUpDown();
             this.comboBox_Complex = new System.Windows.Forms.ComboBox();
             this.button_Complex_Cancel = new System.Windows.Forms.Button();
@@ -98,10 +98,10 @@
             // button_Choice_Complex
             // 
             this.button_Choice_Complex.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Choice_Complex.Location = new System.Drawing.Point(75, 110);
+            this.button_Choice_Complex.Location = new System.Drawing.Point(52, 110);
             this.button_Choice_Complex.Margin = new System.Windows.Forms.Padding(9, 10, 9, 10);
             this.button_Choice_Complex.Name = "button_Choice_Complex";
-            this.button_Choice_Complex.Size = new System.Drawing.Size(111, 27);
+            this.button_Choice_Complex.Size = new System.Drawing.Size(152, 27);
             this.button_Choice_Complex.TabIndex = 2;
             this.button_Choice_Complex.Text = "Rozkaz złożony";
             this.button_Choice_Complex.UseVisualStyleBackColor = true;
@@ -110,10 +110,10 @@
             // button_Choice_Simple
             // 
             this.button_Choice_Simple.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Choice_Simple.Location = new System.Drawing.Point(75, 63);
+            this.button_Choice_Simple.Location = new System.Drawing.Point(52, 63);
             this.button_Choice_Simple.Margin = new System.Windows.Forms.Padding(9, 10, 9, 10);
             this.button_Choice_Simple.Name = "button_Choice_Simple";
-            this.button_Choice_Simple.Size = new System.Drawing.Size(111, 27);
+            this.button_Choice_Simple.Size = new System.Drawing.Size(152, 27);
             this.button_Choice_Simple.TabIndex = 1;
             this.button_Choice_Simple.Text = "Rozkaz prosty";
             this.button_Choice_Simple.UseVisualStyleBackColor = true;
@@ -122,10 +122,10 @@
             // button_Choice_Data
             // 
             this.button_Choice_Data.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Choice_Data.Location = new System.Drawing.Point(75, 17);
+            this.button_Choice_Data.Location = new System.Drawing.Point(52, 17);
             this.button_Choice_Data.Margin = new System.Windows.Forms.Padding(9, 10, 9, 10);
             this.button_Choice_Data.Name = "button_Choice_Data";
-            this.button_Choice_Data.Size = new System.Drawing.Size(111, 27);
+            this.button_Choice_Data.Size = new System.Drawing.Size(152, 27);
             this.button_Choice_Data.TabIndex = 0;
             this.button_Choice_Data.Text = "Dana";
             this.button_Choice_Data.UseVisualStyleBackColor = true;
@@ -227,9 +227,9 @@
             // panel_Simple
             // 
             this.panel_Simple.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel_Simple.Controls.Add(this.label3);
+            this.panel_Simple.Controls.Add(this.labelOP);
             this.panel_Simple.Controls.Add(this.numericUpDown_Simple);
-            this.panel_Simple.Controls.Add(this.label2);
+            this.panel_Simple.Controls.Add(this.labelDA);
             this.panel_Simple.Controls.Add(this.button_Simple_Cancel);
             this.panel_Simple.Controls.Add(this.button_Simple_OK);
             this.panel_Simple.Controls.Add(this.checkBox_I);
@@ -243,16 +243,16 @@
             this.panel_Simple.Size = new System.Drawing.Size(260, 206);
             this.panel_Simple.TabIndex = 1;
             // 
-            // label3
+            // labelOP
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label3.Location = new System.Drawing.Point(69, 50);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(30, 19);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "OP";
+            this.labelOP.AutoSize = true;
+            this.labelOP.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelOP.Location = new System.Drawing.Point(69, 50);
+            this.labelOP.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelOP.Name = "labelOP";
+            this.labelOP.Size = new System.Drawing.Size(30, 19);
+            this.labelOP.TabIndex = 14;
+            this.labelOP.Text = "OP";
             // 
             // numericUpDown_Simple
             // 
@@ -278,16 +278,16 @@
             0});
             this.numericUpDown_Simple.ValueChanged += new System.EventHandler(this.numericUpDown_Simple_ValueChanged);
             // 
-            // label2
+            // labelDA
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.Location = new System.Drawing.Point(69, 128);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(31, 19);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "DA";
+            this.labelDA.AutoSize = true;
+            this.labelDA.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelDA.Location = new System.Drawing.Point(69, 128);
+            this.labelDA.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelDA.Name = "labelDA";
+            this.labelDA.Size = new System.Drawing.Size(31, 19);
+            this.labelDA.TabIndex = 12;
+            this.labelDA.Text = "DA";
             // 
             // button_Simple_Cancel
             // 
@@ -411,9 +411,9 @@
             // panel_Complex
             // 
             this.panel_Complex.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel_Complex.Controls.Add(this.label4);
+            this.panel_Complex.Controls.Add(this.labelAOP);
             this.panel_Complex.Controls.Add(this.numericUpDown_Complex);
-            this.panel_Complex.Controls.Add(this.label1);
+            this.panel_Complex.Controls.Add(this.labelN);
             this.panel_Complex.Controls.Add(this.numericUpDown_N);
             this.panel_Complex.Controls.Add(this.comboBox_Complex);
             this.panel_Complex.Controls.Add(this.button_Complex_Cancel);
@@ -424,16 +424,16 @@
             this.panel_Complex.Size = new System.Drawing.Size(260, 206);
             this.panel_Complex.TabIndex = 2;
             // 
-            // label4
+            // labelAOP
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label4.Location = new System.Drawing.Point(69, 51);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(41, 19);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "AOP";
+            this.labelAOP.AutoSize = true;
+            this.labelAOP.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelAOP.Location = new System.Drawing.Point(69, 51);
+            this.labelAOP.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelAOP.Name = "labelAOP";
+            this.labelAOP.Size = new System.Drawing.Size(41, 19);
+            this.labelAOP.TabIndex = 15;
+            this.labelAOP.Text = "AOP";
             // 
             // numericUpDown_Complex
             // 
@@ -449,16 +449,16 @@
             this.numericUpDown_Complex.TabIndex = 14;
             this.numericUpDown_Complex.ValueChanged += new System.EventHandler(this.numericUpDown_Complex_ValueChanged);
             // 
-            // label1
+            // labelN
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(76, 97);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(20, 19);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "N";
+            this.labelN.AutoSize = true;
+            this.labelN.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelN.Location = new System.Drawing.Point(76, 97);
+            this.labelN.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelN.Name = "labelN";
+            this.labelN.Size = new System.Drawing.Size(20, 19);
+            this.labelN.TabIndex = 11;
+            this.labelN.Text = "N";
             // 
             // numericUpDown_N
             // 
@@ -549,6 +549,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Edycja komórki";
             this.Load += new System.EventHandler(this.PAOSubmit_Load);
+            this.Shown += new System.EventHandler(this.MemSubmit_Shown);
             this.panel_Choice.ResumeLayout(false);
             this.panel_Data.ResumeLayout(false);
             this.panel_Data.PerformLayout();
@@ -591,11 +592,11 @@
         private System.Windows.Forms.ComboBox comboBox_Complex;
         private System.Windows.Forms.Button button_Complex_Cancel;
         private System.Windows.Forms.Button button_Complex_OK;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelDA;
+        private System.Windows.Forms.Label labelN;
         private System.Windows.Forms.NumericUpDown numericUpDown_Simple;
         private System.Windows.Forms.NumericUpDown numericUpDown_Complex;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelOP;
+        private System.Windows.Forms.Label labelAOP;
     }
 }

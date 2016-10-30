@@ -275,7 +275,7 @@ namespace LabZKT.Controls
             }
             catch (Exception)
             {
-                MessageBox.Show("Błędne dane D&D!", "LabZKT", MessageBoxButtons.OK);
+                MessageBox.Show(Simulation.Strings.dragError, "LabZKT", MessageBoxButtons.OK);
             }
         }
         #endregion

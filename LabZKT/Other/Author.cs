@@ -1,4 +1,7 @@
-﻿using System;
+﻿using LabZKT.Properties;
+using System;
+using System.Globalization;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace LabZKT.Other
@@ -14,8 +17,18 @@ namespace LabZKT.Other
         public Author()
         {
             InitializeComponent();
+            setAllStrings();
         }
+        internal void setAllStrings()
+        {
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
 
+            this.Text = Strings.AuthorTitle;
+            label1.Text = Strings.instituteName;
+            label2.Text = Strings.authorName;
+            label3.Text = Strings.promoterName;
+
+        }
         private void timer1_Tick(object sender, EventArgs e)
         {
 

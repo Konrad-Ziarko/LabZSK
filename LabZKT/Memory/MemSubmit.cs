@@ -1,6 +1,11 @@
-﻿using System;
+﻿using LabZKT.Properties;
+using LabZKT.StaticClasses;
+using System;
+using System.Collections.Specialized;
 using System.Data;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace LabZKT.Memory
@@ -41,6 +46,35 @@ namespace LabZKT.Memory
         {
             InitializeComponent();
             turnOffTabSwitchFocus(this);
+        }
+
+        internal void setAllStrings()
+        {
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
+
+            this.Text = Strings.MemSubmitTitle;
+            button_Choice_Cancel.Text = Strings.cancelChoiceButton;
+            button_Choice_Complex.Text = Strings.choiceComplexButton;
+            button_Choice_Simple.Text = Strings.choiceSimpleButton;
+            button_Choice_Data.Text = Strings.choiceDataButton;
+
+            button_Data_OK.Text = Strings.okDataButton;
+            button_Data_Cancel.Text = Strings.cancelDataButton;
+
+            button_Simple_OK.Text = Strings.okSimpleButton;
+            button_Simple_Cancel.Text = Strings.cancelSimpleButton;
+
+            button_Complex_OK.Text = Strings.okComplexButton;
+            button_Complex_Cancel.Text = Strings.cancelComplexButton;
+
+            labelN.Text = Strings.nLabel;
+            labelDA.Text = Strings.daLabel;
+            labelOP.Text = Strings.opLabel;
+            labelAOP.Text = Strings.aopLabel;
+
+            radioButton_Bin.Text = Strings.binRadioButton;
+            radioButton_Dec.Text = Strings.decRadioButton;
+            radioButton_Hex.Text = Strings.hexRadioButton;
         }
         private void PAOSubmit_Load(object sender, EventArgs e)
         {
@@ -115,45 +149,109 @@ namespace LabZKT.Memory
         #region Buttons
         private void button_Choice_Data_Click(object sender, EventArgs e)
         {
-                panel_Choice.Visible = false;
-                panel_Data.Visible = true;
-                AcceptButton = button_Data_OK;
-                textBox_Data.Focus();
+            panel_Choice.Visible = false;
+            panel_Data.Visible = true;
+            AcceptButton = button_Data_OK;
+            textBox_Data.Focus();
         }
         private void button_Choice_Simple_Click(object sender, EventArgs e)
         {
-                panel_Choice.Visible = false;
-                panel_Simple.Visible = true;
-                AcceptButton = button_Simple_OK;
-                comboBox_Simple.Focus();
+            StringCollection sc = new StringCollection();
+            sc.Add("ADS - " + Translator.GetInsrtuctionDescription("ADS"));
+            sc.Add("SUS - " + Translator.GetInsrtuctionDescription("SUS"));
+            sc.Add("MUL - " + Translator.GetInsrtuctionDescription("MUL"));
+            sc.Add("DIV - " + Translator.GetInsrtuctionDescription("DIV"));
+            sc.Add("STQ - " + Translator.GetInsrtuctionDescription("STQ"));
+            sc.Add("STA - " + Translator.GetInsrtuctionDescription("STA"));
+            sc.Add("STX - " + Translator.GetInsrtuctionDescription("STX"));
+            sc.Add("LDA - " + Translator.GetInsrtuctionDescription("LDA"));
+            sc.Add("LDX - " + Translator.GetInsrtuctionDescription("LDX"));
+            sc.Add("STC - " + Translator.GetInsrtuctionDescription("STC"));
+            sc.Add("TXA - " + Translator.GetInsrtuctionDescription("TXA"));
+            sc.Add("TMQ - " + Translator.GetInsrtuctionDescription("TMQ"));
+            sc.Add("ADX - " + Translator.GetInsrtuctionDescription("ADX"));
+            sc.Add("SIO - " + Translator.GetInsrtuctionDescription("SIO"));
+            sc.Add("LIO - " + Translator.GetInsrtuctionDescription("LIO"));
+            sc.Add("UNB - " + Translator.GetInsrtuctionDescription("UNB"));
+            sc.Add("BAO - " + Translator.GetInsrtuctionDescription("BAO"));
+            sc.Add("BXP - " + Translator.GetInsrtuctionDescription("BXP"));
+            sc.Add("BXZ - " + Translator.GetInsrtuctionDescription("BXZ"));
+            sc.Add("BXN - " + Translator.GetInsrtuctionDescription("BXN"));
+            sc.Add("TLD - " + Translator.GetInsrtuctionDescription("TLD"));
+            sc.Add("BAP - " + Translator.GetInsrtuctionDescription("BAP"));
+            sc.Add("BAZ - " + Translator.GetInsrtuctionDescription("BAZ"));
+            sc.Add("BAN - " + Translator.GetInsrtuctionDescription("BAN"));
+            sc.Add("LOR - " + Translator.GetInsrtuctionDescription("LOR"));
+            sc.Add("LPR - " + Translator.GetInsrtuctionDescription("LPR"));
+            sc.Add("LNG - " + Translator.GetInsrtuctionDescription("LNG"));
+            sc.Add("EOR - " + Translator.GetInsrtuctionDescription("EOR"));
+            sc.Add("SRJ - " + Translator.GetInsrtuctionDescription("SRJ"));
+            sc.Add("BDN - " + Translator.GetInsrtuctionDescription("BDN"));
+            sc.Add("NOP - " + Translator.GetInsrtuctionDescription("NOP"));
+            if (sc.Count == 31)
+            {
+                comboBox_Simple.Items.Clear();
+                foreach (string s in sc)
+                    comboBox_Simple.Items.Add(s);
+            }
+            comboBox_Simple.SelectedIndex = 0;
+            panel_Choice.Visible = false;
+            panel_Simple.Visible = true;
+            AcceptButton = button_Simple_OK;
+            comboBox_Simple.Focus();
         }
         private void button_Choice_Complex_Click(object sender, EventArgs e)
         {
-                panel_Choice.Visible = false;
-                panel_Complex.Visible = true;
-                AcceptButton = button_Complex_OK;
-                comboBox_Complex.Focus();
+
+            StringCollection sc = new StringCollection();
+            sc.Add("STP - " + Translator.GetInsrtuctionDescription("STP"));
+            sc.Add("CMA - " + Translator.GetInsrtuctionDescription("CMA"));
+            sc.Add("ALA - " + Translator.GetInsrtuctionDescription("ALA"));
+            sc.Add("ARA - " + Translator.GetInsrtuctionDescription("ARA"));
+            sc.Add("LRQ - " + Translator.GetInsrtuctionDescription("LRQ"));
+            sc.Add("LLQ - " + Translator.GetInsrtuctionDescription("LLQ"));
+            sc.Add("LLA - " + Translator.GetInsrtuctionDescription("LLA"));
+            sc.Add("LRA - " + Translator.GetInsrtuctionDescription("LRA"));
+            sc.Add("LCA - " + Translator.GetInsrtuctionDescription("LCA"));
+            sc.Add("LAI - " + Translator.GetInsrtuctionDescription("LAI"));
+            sc.Add("LXI - " + Translator.GetInsrtuctionDescription("LXI"));
+            sc.Add("INX - " + Translator.GetInsrtuctionDescription("INX"));
+            sc.Add("DEX - " + Translator.GetInsrtuctionDescription("DEX"));
+            sc.Add("CND - " + Translator.GetInsrtuctionDescription("CND"));
+            sc.Add("ENI - " + Translator.GetInsrtuctionDescription("ENI"));
+            sc.Add("LDS - " + Translator.GetInsrtuctionDescription("LDS"));
+            if (sc.Count == 16)
+            {
+                comboBox_Complex.Items.Clear();
+                foreach(string s in sc)
+                    comboBox_Complex.Items.Add(s);
+            }
+            comboBox_Complex.SelectedIndex = 0;
+            panel_Choice.Visible = false;
+            panel_Complex.Visible = true;
+            AcceptButton = button_Complex_OK;
+            comboBox_Complex.Focus();
         }
         private void button_Data_Cancel_Click(object sender, EventArgs e)
         {
-                panel_Choice.Visible = true;
-                panel_Data.Visible = false;
-                AcceptButton = null;
-                button_Choice_Data.Focus();
+            panel_Choice.Visible = true;
+            panel_Data.Visible = false;
+            AcceptButton = null;
+            button_Choice_Data.Focus();
         }
         private void button_Simple_Cancel_Click(object sender, EventArgs e)
         {
-                panel_Choice.Visible = true;
-                panel_Simple.Visible = false;
-                AcceptButton = null;
-                button_Choice_Data.Focus();
+            panel_Choice.Visible = true;
+            panel_Simple.Visible = false;
+            AcceptButton = null;
+            button_Choice_Data.Focus();
         }
         private void button_Complex_Cancel_Click(object sender, EventArgs e)
         {
-                panel_Choice.Visible = true;
-                panel_Complex.Visible = false;
-                AcceptButton = null;
-                button_Choice_Data.Focus();
+            panel_Choice.Visible = true;
+            panel_Complex.Visible = false;
+            AcceptButton = null;
+            button_Choice_Data.Focus();
         }
         private void button_Choice_Cancel_Click(object sender, EventArgs e)
         {
@@ -287,6 +385,11 @@ namespace LabZKT.Memory
                     radioButton_Hex.Enabled = false;
                 }
             }
+        }
+
+        private void MemSubmit_Shown(object sender, EventArgs e)
+        {
+            setAllStrings();
         }
     }
 }

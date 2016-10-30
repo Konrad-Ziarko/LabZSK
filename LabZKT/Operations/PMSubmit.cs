@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LabZKT.Operations;
+using LabZKT.StaticClasses;
+using System;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -32,6 +34,7 @@ namespace LabZKT.MicroOperations
             chosenInstruction = txt;
             c1Column = c1;
             InitializeComponent();
+            button_Cancel.Text = Operations.Strings.cancelButton;
         }
 
         private void RadioPM_Load(object sender, EventArgs e)
@@ -184,8 +187,8 @@ namespace LabZKT.MicroOperations
                 radioButton8.Text = "IMQ            BUS -> MQ";
                 radioButton9.Text = "OXE            X -> RALU";
                 radioButton10.Text = "NSI            LR+1 -> LR";
-                radioButton11.Text = "IAS            A0 -> ZNAK";
-                radioButton12.Text = "SGN            X0 -> ZNAK";
+                radioButton11.Text = Translator.GetMicroOpDescription("IAS");
+                radioButton12.Text = Translator.GetMicroOpDescription("SGN");
                 hide_RadioButtons_From(13);
             }
         }
@@ -193,13 +196,13 @@ namespace LabZKT.MicroOperations
         {
             groupBox1.Text = Text = "D2";
             radioButton1.Enabled = false;
-            radioButton2.Text = "ALA            arytmetyczne A w lewo";
-            radioButton3.Text = "ARA            arytmetyczne A w prawo";
-            radioButton4.Text = "LRQ            logiczne A i MQ w prawo";
-            radioButton5.Text = "LLQ            logiczne A i MQ w lewo";
-            radioButton6.Text = "LLA            logiczne A w lewo";
-            radioButton7.Text = "LRA            logiczne A w prawo";
-            radioButton8.Text = "LCA            cykliczne A w lewo";
+            radioButton2.Text = Translator.GetMicroOpDescription("ALA");
+            radioButton3.Text = Translator.GetMicroOpDescription("ARA");
+            radioButton4.Text = Translator.GetMicroOpDescription("LRQ");
+            radioButton5.Text = Translator.GetMicroOpDescription("LLQ");
+            radioButton6.Text = Translator.GetMicroOpDescription("LLA");
+            radioButton7.Text = Translator.GetMicroOpDescription("LRA");
+            radioButton8.Text = Translator.GetMicroOpDescription("LCA");
             button_Cancel.Enabled = false;
             hide_RadioButtons_From(9);
             radioButton2.Checked = true;
@@ -235,8 +238,8 @@ namespace LabZKT.MicroOperations
                 radioButton8.Text = "IMQ            BUS -> MQ";
                 radioButton9.Text = "OXE            X -> RALU";
                 radioButton10.Text = "NSI            LR+1 -> LR";
-                radioButton11.Text = "IAS            A0 -> ZNAK";
-                radioButton12.Text = "SGN            X0 -> ZNAK";
+                radioButton11.Text = Translator.GetMicroOpDescription("IAS");
+                radioButton12.Text = Translator.GetMicroOpDescription("SGN");
                 radioButton13.Text = "IRR            BUS -> RR";
                 radioButton14.Text = "IRBP           BUS -> RBP";
                 radioButton15.Text = "SRBP           BUS -> RBP";
@@ -248,13 +251,13 @@ namespace LabZKT.MicroOperations
         private void init_C1()
         {
             groupBox1.Text = Text = "C1";
-            radioButton2.Text = "CWC            Rozpoczęcie CWC";
-            radioButton3.Text = "RRC            Rozpoczęcie RRC";
+            radioButton2.Text = Translator.GetMicroOpDescription("CWC");
+            radioButton3.Text = Translator.GetMicroOpDescription("RRC");
             radioButton4.Text = "MUL            16 -> LK";
             radioButton5.Text = "DIV            15 -> LK";
-            radioButton6.Text = "SHT            Operacja przesunięcia";
-            radioButton7.Text = "IWC            Rozpoczęcie IWC";
-            radioButton8.Text = "END            Koniec mikroprogramu";
+            radioButton6.Text = Translator.GetMicroOpDescription("SHT");
+            radioButton7.Text = Translator.GetMicroOpDescription("IWC");
+            radioButton8.Text = Translator.GetMicroOpDescription("END");
             hide_RadioButtons_From(9);
         }
         private void init_C2()
@@ -270,25 +273,25 @@ namespace LabZKT.MicroOperations
             radioButton9.Text = "RMQ            MQ = 0";
             radioButton10.Text = "AQ15           NOT A0 -> MQ15";
             radioButton11.Text = "RINT           INT = 0";
-            radioButton12.Text = "OPC            OP lub AOP+32 -> RAPS";
-            radioButton13.Text = "CEA            Oblicz adres efektywny";
-            radioButton14.Text = "ENI            Odblokuj przerwania";
+            radioButton12.Text = Translator.GetMicroOpDescription("OPC");
+            radioButton13.Text = Translator.GetMicroOpDescription("CEA");
+            radioButton14.Text = Translator.GetMicroOpDescription("ENI");
             hide_RadioButtons_From(15);
         }
         private void init_Test()
         {
             groupBox1.Text = Text = "Test";
-            radioButton2.Text = "UNB            Zawsze pozytywny";
-            radioButton3.Text = "TINT           Brak przerwania";
-            radioButton4.Text = "TIND           Adresowanie pośrednie";
+            radioButton2.Text = Translator.GetMicroOpDescription("UNB");
+            radioButton3.Text = Translator.GetMicroOpDescription("TINT");
+            radioButton4.Text = Translator.GetMicroOpDescription("TIND");
             radioButton5.Text = "TAS            A >= 0";
             radioButton6.Text = "TXS            RI >= 0";
             radioButton7.Text = "TQ15           MQ15 = 0";
-            radioButton8.Text = "TLK            SHT, LK=0 || !SHT, LK!=0";
-            radioButton9.Text = "TSD            ZNAK = 0";
+            radioButton8.Text = Translator.GetMicroOpDescription("TLK");
+            radioButton9.Text = Translator.GetMicroOpDescription("TSD");
             radioButton10.Text = "TAO            OFF = 0";
             radioButton11.Text = "TXP            RI < 0";
-            radioButton12.Text = "TXZ            BXZ i RI <> 0 || TLD i RI = 0";
+            radioButton12.Text = Translator.GetMicroOpDescription("TXZ");
             radioButton13.Text = "TXRO           XRO = 0";
             radioButton14.Text = "TAP            A < 0";
             radioButton15.Text = "TAZ            A = 0";
@@ -321,26 +324,26 @@ namespace LabZKT.MicroOperations
             Label tmpLbl = new Label();
             numUpDown.Visible = true;
             groupBox1.Visible = false;
-            AutoSize = false;
 
             tmpLbl.AutoSize = true;
-            tmpLbl.Font = new System.Drawing.Font("Arial Narrow", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 238);
-            tmpLbl.Location = new System.Drawing.Point(60, 23);
+            tmpLbl.Font = new System.Drawing.Font("Tahoma", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 238);
+            tmpLbl.Text = "0 <= NA <= 255";
+            tmpLbl.Location = new System.Drawing.Point((Width-tmpLbl.Size.Width)/2, 23);
             tmpLbl.Name = "label1";
-            tmpLbl.Size = new System.Drawing.Size(196, 23);
             tmpLbl.TabIndex = 0;
-            tmpLbl.Text = "Podaj wartość 0 <= NA <= 255";
+            Controls.Add(tmpLbl);
 
-            numUpDown.Location = new System.Drawing.Point(110, 78);
-            numUpDown.Size = new System.Drawing.Size(150, 22);
+            numUpDown.Font = new System.Drawing.Font("Tahoma", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 238);
+            //numUpDown.Size = new System.Drawing.Size(80, 22);
+            numUpDown.Location = new System.Drawing.Point(tmpLbl.Location.X + (tmpLbl.Size.Width - numUpDown.Size.Width) / 2, 78);
             numUpDown.TabIndex = 1;
             numUpDown.Text = "";
 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(270, 200);
+            AutoScaleMode = AutoScaleMode.Font;
+            
             Controls.Add(numUpDown);
-            Controls.Add(tmpLbl);
+            
             Name = "NA";
             Text = "NA";
             ((System.ComponentModel.ISupportInitialize)(numUpDown)).EndInit();

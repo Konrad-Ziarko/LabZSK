@@ -32,11 +32,11 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SimView));
             this.panel_PO = new System.Windows.Forms.Panel();
             this.panel_View_PO = new System.Windows.Forms.Panel();
@@ -52,22 +52,36 @@
             this.toolStripMenu_Edit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenu_Clear = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.nowyLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenu_Show_Log = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.konsolaDevToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.opcjeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.devConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenu_Exit = new System.Windows.Forms.ToolStripMenuItem();
-            this.mikroprogramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.wczytajpmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.edytujpmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pamięćOperacyjnaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.wczytajpaoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.edytujpaoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.microToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadpmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editpmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.memToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadmemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editmemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.oAutorzeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel_Left = new System.Windows.Forms.Panel();
+            this.panel_PM = new System.Windows.Forms.Panel();
+            this.Grid_PM = new System.Windows.Forms.DataGridView();
+            this.addres = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.s1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.d1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.s2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.d2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.s3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.d3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.c1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.c2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Test = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ALU = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel_Sim = new System.Windows.Forms.Panel();
             this.panel_Sim_Control = new System.Windows.Forms.Panel();
             this.panel_User_Info = new System.Windows.Forms.Panel();
@@ -83,33 +97,19 @@
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.richTextBox_Log = new System.Windows.Forms.RichTextBox();
-            this.panel_PM = new System.Windows.Forms.Panel();
-            this.Grid_PM = new System.Windows.Forms.DataGridView();
             this.open_File_Dialog = new System.Windows.Forms.OpenFileDialog();
-            this.addres = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.s1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.d1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.s2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.d2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.s3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.d3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.c1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.c2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Test = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ALU = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel_PO.SuspendLayout();
             this.panel_View_PO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid_Mem)).BeginInit();
             this.panel_Decode_PO.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel_Left.SuspendLayout();
+            this.panel_PM.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Grid_PM)).BeginInit();
             this.panel_Sim.SuspendLayout();
             this.panel_User_Info.SuspendLayout();
             this.panel_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Info)).BeginInit();
-            this.panel_PM.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Grid_PM)).BeginInit();
             this.SuspendLayout();
             // 
             // panel_PO
@@ -268,8 +268,8 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenu_Main,
-            this.mikroprogramToolStripMenuItem,
-            this.pamięćOperacyjnaToolStripMenuItem,
+            this.microToolStripMenuItem,
+            this.memToolStripMenuItem,
             this.infoToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -286,11 +286,11 @@
             this.toolStripMenu_Edit,
             this.toolStripMenu_Clear,
             this.toolStripMenuItem1,
-            this.nowyLogToolStripMenuItem,
+            this.closeLogToolStripMenuItem,
             this.toolStripMenu_Show_Log,
             this.toolStripMenuItem2,
-            this.konsolaDevToolStripMenuItem,
-            this.opcjeToolStripMenuItem,
+            this.devConsoleToolStripMenuItem,
+            this.settingsToolStripMenuItem,
             this.toolStripMenuItem3,
             this.toolStripMenu_Exit});
             this.toolStripMenu_Main.Name = "toolStripMenu_Main";
@@ -316,12 +316,12 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(185, 6);
             // 
-            // nowyLogToolStripMenuItem
+            // closeLogToolStripMenuItem
             // 
-            this.nowyLogToolStripMenuItem.Name = "nowyLogToolStripMenuItem";
-            this.nowyLogToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.nowyLogToolStripMenuItem.Text = "Zamknij log";
-            this.nowyLogToolStripMenuItem.Click += new System.EventHandler(this.nowyLogToolStripMenuItem_Click);
+            this.closeLogToolStripMenuItem.Name = "closeLogToolStripMenuItem";
+            this.closeLogToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.closeLogToolStripMenuItem.Text = "Zamknij log";
+            this.closeLogToolStripMenuItem.Click += new System.EventHandler(this.nowyLogToolStripMenuItem_Click);
             // 
             // toolStripMenu_Show_Log
             // 
@@ -335,19 +335,19 @@
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(185, 6);
             // 
-            // konsolaDevToolStripMenuItem
+            // devConsoleToolStripMenuItem
             // 
-            this.konsolaDevToolStripMenuItem.Name = "konsolaDevToolStripMenuItem";
-            this.konsolaDevToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.konsolaDevToolStripMenuItem.Text = "Konsola developerska";
-            this.konsolaDevToolStripMenuItem.Click += new System.EventHandler(this.konsolaDevToolStripMenuItem_Click);
+            this.devConsoleToolStripMenuItem.Name = "devConsoleToolStripMenuItem";
+            this.devConsoleToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.devConsoleToolStripMenuItem.Text = "Konsola developerska";
+            this.devConsoleToolStripMenuItem.Click += new System.EventHandler(this.konsolaDevToolStripMenuItem_Click);
             // 
-            // opcjeToolStripMenuItem
+            // settingsToolStripMenuItem
             // 
-            this.opcjeToolStripMenuItem.Name = "opcjeToolStripMenuItem";
-            this.opcjeToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.opcjeToolStripMenuItem.Text = "Opcje...";
-            this.opcjeToolStripMenuItem.Click += new System.EventHandler(this.opcjeToolStripMenuItem_Click);
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.settingsToolStripMenuItem.Text = "Opcje...";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.opcjeToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
             // 
@@ -361,66 +361,66 @@
             this.toolStripMenu_Exit.Text = "Zakończ pracę";
             this.toolStripMenu_Exit.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
-            // mikroprogramToolStripMenuItem
+            // microToolStripMenuItem
             // 
-            this.mikroprogramToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.wczytajpmToolStripMenuItem,
-            this.edytujpmToolStripMenuItem});
-            this.mikroprogramToolStripMenuItem.Name = "mikroprogramToolStripMenuItem";
-            this.mikroprogramToolStripMenuItem.Size = new System.Drawing.Size(102, 20);
-            this.mikroprogramToolStripMenuItem.Text = "Mikroprogramy";
+            this.microToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadpmToolStripMenuItem,
+            this.editpmToolStripMenuItem});
+            this.microToolStripMenuItem.Name = "microToolStripMenuItem";
+            this.microToolStripMenuItem.Size = new System.Drawing.Size(102, 20);
+            this.microToolStripMenuItem.Text = "Mikroprogramy";
             // 
-            // wczytajpmToolStripMenuItem
+            // loadpmToolStripMenuItem
             // 
-            this.wczytajpmToolStripMenuItem.Name = "wczytajpmToolStripMenuItem";
-            this.wczytajpmToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
-            this.wczytajpmToolStripMenuItem.Text = "Wczytaj";
-            this.wczytajpmToolStripMenuItem.Click += new System.EventHandler(this.wczytajpmToolStripMenuItem_Click);
+            this.loadpmToolStripMenuItem.Name = "loadpmToolStripMenuItem";
+            this.loadpmToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.loadpmToolStripMenuItem.Text = "Wczytaj";
+            this.loadpmToolStripMenuItem.Click += new System.EventHandler(this.wczytajpmToolStripMenuItem_Click);
             // 
-            // edytujpmToolStripMenuItem
+            // editpmToolStripMenuItem
             // 
-            this.edytujpmToolStripMenuItem.Name = "edytujpmToolStripMenuItem";
-            this.edytujpmToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
-            this.edytujpmToolStripMenuItem.Text = "Edytuj";
-            this.edytujpmToolStripMenuItem.Click += new System.EventHandler(this.edytujpmToolStripMenuItem_Click);
+            this.editpmToolStripMenuItem.Name = "editpmToolStripMenuItem";
+            this.editpmToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.editpmToolStripMenuItem.Text = "Edytuj";
+            this.editpmToolStripMenuItem.Click += new System.EventHandler(this.edytujpmToolStripMenuItem_Click);
             // 
-            // pamięćOperacyjnaToolStripMenuItem
+            // memToolStripMenuItem
             // 
-            this.pamięćOperacyjnaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.wczytajpaoToolStripMenuItem1,
-            this.edytujpaoToolStripMenuItem1});
-            this.pamięćOperacyjnaToolStripMenuItem.Name = "pamięćOperacyjnaToolStripMenuItem";
-            this.pamięćOperacyjnaToolStripMenuItem.Size = new System.Drawing.Size(119, 20);
-            this.pamięćOperacyjnaToolStripMenuItem.Text = "Pamięć operacyjna";
+            this.memToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadmemToolStripMenuItem,
+            this.editmemToolStripMenuItem});
+            this.memToolStripMenuItem.Name = "memToolStripMenuItem";
+            this.memToolStripMenuItem.Size = new System.Drawing.Size(119, 20);
+            this.memToolStripMenuItem.Text = "Pamięć operacyjna";
             // 
-            // wczytajpaoToolStripMenuItem1
+            // loadmemToolStripMenuItem
             // 
-            this.wczytajpaoToolStripMenuItem1.Name = "wczytajpaoToolStripMenuItem1";
-            this.wczytajpaoToolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
-            this.wczytajpaoToolStripMenuItem1.Text = "Wczytaj";
-            this.wczytajpaoToolStripMenuItem1.Click += new System.EventHandler(this.wczytajpaoToolStripMenuItem1_Click);
+            this.loadmemToolStripMenuItem.Name = "loadmemToolStripMenuItem";
+            this.loadmemToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.loadmemToolStripMenuItem.Text = "Wczytaj";
+            this.loadmemToolStripMenuItem.Click += new System.EventHandler(this.wczytajpaoToolStripMenuItem1_Click);
             // 
-            // edytujpaoToolStripMenuItem1
+            // editmemToolStripMenuItem
             // 
-            this.edytujpaoToolStripMenuItem1.Name = "edytujpaoToolStripMenuItem1";
-            this.edytujpaoToolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
-            this.edytujpaoToolStripMenuItem1.Text = "Edytuj";
-            this.edytujpaoToolStripMenuItem1.Click += new System.EventHandler(this.edytujpaoToolStripMenuItem1_Click);
+            this.editmemToolStripMenuItem.Name = "editmemToolStripMenuItem";
+            this.editmemToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.editmemToolStripMenuItem.Text = "Edytuj";
+            this.editmemToolStripMenuItem.Click += new System.EventHandler(this.edytujpaoToolStripMenuItem1_Click);
             // 
             // infoToolStripMenuItem
             // 
             this.infoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.oAutorzeToolStripMenuItem});
+            this.aboutToolStripMenuItem});
             this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
             this.infoToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.infoToolStripMenuItem.Text = "Info";
             // 
-            // oAutorzeToolStripMenuItem
+            // aboutToolStripMenuItem
             // 
-            this.oAutorzeToolStripMenuItem.Name = "oAutorzeToolStripMenuItem";
-            this.oAutorzeToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
-            this.oAutorzeToolStripMenuItem.Text = "O autorze...";
-            this.oAutorzeToolStripMenuItem.Click += new System.EventHandler(this.oAutorzeToolStripMenuItem_Click);
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Text = "O autorze...";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.oAutorzeToolStripMenuItem_Click);
             // 
             // panel_Left
             // 
@@ -434,221 +434,6 @@
             this.panel_Left.Name = "panel_Left";
             this.panel_Left.Size = new System.Drawing.Size(572, 661);
             this.panel_Left.TabIndex = 3;
-            // 
-            // panel_Sim
-            // 
-            this.panel_Sim.BackColor = System.Drawing.SystemColors.Control;
-            this.panel_Sim.Controls.Add(this.panel_Sim_Control);
-            this.panel_Sim.Controls.Add(this.panel_User_Info);
-            this.panel_Sim.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel_Sim.Location = new System.Drawing.Point(0, 261);
-            this.panel_Sim.Margin = new System.Windows.Forms.Padding(2);
-            this.panel_Sim.MaximumSize = new System.Drawing.Size(0, 650);
-            this.panel_Sim.Name = "panel_Sim";
-            this.panel_Sim.Size = new System.Drawing.Size(572, 400);
-            this.panel_Sim.TabIndex = 1;
-            // 
-            // panel_Sim_Control
-            // 
-            this.panel_Sim_Control.BackColor = System.Drawing.SystemColors.Control;
-            this.panel_Sim_Control.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.panel_Sim_Control.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.panel_Sim_Control.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_Sim_Control.Location = new System.Drawing.Point(0, 102);
-            this.panel_Sim_Control.Margin = new System.Windows.Forms.Padding(2);
-            this.panel_Sim_Control.Name = "panel_Sim_Control";
-            this.panel_Sim_Control.Size = new System.Drawing.Size(572, 298);
-            this.panel_Sim_Control.TabIndex = 1;
-            this.panel_Sim_Control.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panel_Sim_Control_MouseDoubleClick);
-            // 
-            // panel_User_Info
-            // 
-            this.panel_User_Info.Controls.Add(this.button_Show_Log);
-            this.panel_User_Info.Controls.Add(this.panel_Control);
-            this.panel_User_Info.Controls.Add(this.dataGridView_Info);
-            this.panel_User_Info.Controls.Add(this.richTextBox_Log);
-            this.panel_User_Info.Cursor = System.Windows.Forms.Cursors.Default;
-            this.panel_User_Info.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel_User_Info.Location = new System.Drawing.Point(0, 0);
-            this.panel_User_Info.Margin = new System.Windows.Forms.Padding(2);
-            this.panel_User_Info.Name = "panel_User_Info";
-            this.panel_User_Info.Size = new System.Drawing.Size(572, 102);
-            this.panel_User_Info.TabIndex = 0;
-            // 
-            // button_Show_Log
-            // 
-            this.button_Show_Log.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Show_Log.Location = new System.Drawing.Point(11, 31);
-            this.button_Show_Log.Margin = new System.Windows.Forms.Padding(2);
-            this.button_Show_Log.Name = "button_Show_Log";
-            this.button_Show_Log.Size = new System.Drawing.Size(116, 28);
-            this.button_Show_Log.TabIndex = 5;
-            this.button_Show_Log.Text = "Pokaż Log";
-            this.button_Show_Log.UseVisualStyleBackColor = true;
-            this.button_Show_Log.Visible = false;
-            this.button_Show_Log.Click += new System.EventHandler(this.button_Show_Log_Click);
-            // 
-            // panel_Control
-            // 
-            this.panel_Control.BackColor = System.Drawing.SystemColors.Control;
-            this.panel_Control.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel_Control.Controls.Add(this.button_End_Edit);
-            this.panel_Control.Controls.Add(this.button_Micro);
-            this.panel_Control.Controls.Add(this.button_Makro);
-            this.panel_Control.Controls.Add(this.button_OK);
-            this.panel_Control.Controls.Add(this.button_Next_Tact);
-            this.panel_Control.Controls.Add(this.label_Status);
-            this.panel_Control.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel_Control.Location = new System.Drawing.Point(322, 0);
-            this.panel_Control.Margin = new System.Windows.Forms.Padding(2);
-            this.panel_Control.Name = "panel_Control";
-            this.panel_Control.Size = new System.Drawing.Size(150, 102);
-            this.panel_Control.TabIndex = 2;
-            // 
-            // button_End_Edit
-            // 
-            this.button_End_Edit.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_End_Edit.Location = new System.Drawing.Point(21, 11);
-            this.button_End_Edit.Margin = new System.Windows.Forms.Padding(2);
-            this.button_End_Edit.Name = "button_End_Edit";
-            this.button_End_Edit.Size = new System.Drawing.Size(116, 58);
-            this.button_End_Edit.TabIndex = 6;
-            this.button_End_Edit.Text = "Zakończ edycję";
-            this.button_End_Edit.UseVisualStyleBackColor = true;
-            this.button_End_Edit.Visible = false;
-            this.button_End_Edit.Click += new System.EventHandler(this.button_End_Edit_Click);
-            // 
-            // button_Micro
-            // 
-            this.button_Micro.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Micro.Location = new System.Drawing.Point(21, 41);
-            this.button_Micro.Margin = new System.Windows.Forms.Padding(2);
-            this.button_Micro.Name = "button_Micro";
-            this.button_Micro.Size = new System.Drawing.Size(116, 28);
-            this.button_Micro.TabIndex = 4;
-            this.button_Micro.Text = "Micro";
-            this.button_Micro.UseVisualStyleBackColor = true;
-            this.button_Micro.Click += new System.EventHandler(this.button_Micro_Click);
-            // 
-            // button_Makro
-            // 
-            this.button_Makro.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Makro.Location = new System.Drawing.Point(21, 11);
-            this.button_Makro.Margin = new System.Windows.Forms.Padding(2);
-            this.button_Makro.Name = "button_Makro";
-            this.button_Makro.Size = new System.Drawing.Size(116, 28);
-            this.button_Makro.TabIndex = 3;
-            this.button_Makro.Text = "Makro";
-            this.button_Makro.UseVisualStyleBackColor = true;
-            this.button_Makro.Click += new System.EventHandler(this.button_Makro_Click);
-            // 
-            // button_OK
-            // 
-            this.button_OK.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_OK.Location = new System.Drawing.Point(21, 11);
-            this.button_OK.Margin = new System.Windows.Forms.Padding(2);
-            this.button_OK.Name = "button_OK";
-            this.button_OK.Size = new System.Drawing.Size(116, 28);
-            this.button_OK.TabIndex = 2;
-            this.button_OK.Text = "Zatwierdź";
-            this.button_OK.UseVisualStyleBackColor = true;
-            this.button_OK.Visible = false;
-            this.button_OK.Click += new System.EventHandler(this.button_OK_Click);
-            // 
-            // button_Next_Tact
-            // 
-            this.button_Next_Tact.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Next_Tact.Location = new System.Drawing.Point(21, 41);
-            this.button_Next_Tact.Margin = new System.Windows.Forms.Padding(2);
-            this.button_Next_Tact.Name = "button_Next_Tact";
-            this.button_Next_Tact.Size = new System.Drawing.Size(116, 28);
-            this.button_Next_Tact.TabIndex = 1;
-            this.button_Next_Tact.Text = "Następny takt";
-            this.button_Next_Tact.UseVisualStyleBackColor = true;
-            this.button_Next_Tact.Visible = false;
-            this.button_Next_Tact.Click += new System.EventHandler(this.button_Next_Tact_Click);
-            // 
-            // label_Status
-            // 
-            this.label_Status.AutoSize = true;
-            this.label_Status.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label_Status.ForeColor = System.Drawing.Color.Green;
-            this.label_Status.Location = new System.Drawing.Point(4, 72);
-            this.label_Status.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label_Status.Name = "label_Status";
-            this.label_Status.Size = new System.Drawing.Size(48, 23);
-            this.label_Status.TabIndex = 0;
-            this.label_Status.Text = "Stop";
-            // 
-            // dataGridView_Info
-            // 
-            this.dataGridView_Info.AllowUserToAddRows = false;
-            this.dataGridView_Info.AllowUserToDeleteRows = false;
-            this.dataGridView_Info.AllowUserToResizeColumns = false;
-            this.dataGridView_Info.AllowUserToResizeRows = false;
-            this.dataGridView_Info.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dataGridView_Info.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Info.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
-            this.dataGridView_Info.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_Info.ColumnHeadersVisible = false;
-            this.dataGridView_Info.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2});
-            this.dataGridView_Info.Cursor = System.Windows.Forms.Cursors.No;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_Info.DefaultCellStyle = dataGridViewCellStyle9;
-            this.dataGridView_Info.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dataGridView_Info.Location = new System.Drawing.Point(472, 0);
-            this.dataGridView_Info.Margin = new System.Windows.Forms.Padding(2);
-            this.dataGridView_Info.MultiSelect = false;
-            this.dataGridView_Info.Name = "dataGridView_Info";
-            this.dataGridView_Info.ReadOnly = true;
-            this.dataGridView_Info.RowHeadersVisible = false;
-            this.dataGridView_Info.RowTemplate.Height = 25;
-            this.dataGridView_Info.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dataGridView_Info.Size = new System.Drawing.Size(100, 102);
-            this.dataGridView_Info.TabIndex = 1;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Column1";
-            this.Column1.MinimumWidth = 30;
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 30;
-            // 
-            // Column2
-            // 
-            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column2.HeaderText = "Column2";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            // 
-            // richTextBox_Log
-            // 
-            this.richTextBox_Log.Cursor = System.Windows.Forms.Cursors.No;
-            this.richTextBox_Log.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox_Log.Enabled = false;
-            this.richTextBox_Log.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.richTextBox_Log.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox_Log.Margin = new System.Windows.Forms.Padding(2);
-            this.richTextBox_Log.Name = "richTextBox_Log";
-            this.richTextBox_Log.Size = new System.Drawing.Size(572, 102);
-            this.richTextBox_Log.TabIndex = 0;
-            this.richTextBox_Log.Text = "";
             // 
             // panel_PM
             // 
@@ -862,6 +647,221 @@
             this.NA.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.NA.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // panel_Sim
+            // 
+            this.panel_Sim.BackColor = System.Drawing.SystemColors.Control;
+            this.panel_Sim.Controls.Add(this.panel_Sim_Control);
+            this.panel_Sim.Controls.Add(this.panel_User_Info);
+            this.panel_Sim.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel_Sim.Location = new System.Drawing.Point(0, 261);
+            this.panel_Sim.Margin = new System.Windows.Forms.Padding(2);
+            this.panel_Sim.MaximumSize = new System.Drawing.Size(0, 650);
+            this.panel_Sim.Name = "panel_Sim";
+            this.panel_Sim.Size = new System.Drawing.Size(572, 400);
+            this.panel_Sim.TabIndex = 1;
+            // 
+            // panel_Sim_Control
+            // 
+            this.panel_Sim_Control.BackColor = System.Drawing.SystemColors.Control;
+            this.panel_Sim_Control.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.panel_Sim_Control.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.panel_Sim_Control.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_Sim_Control.Location = new System.Drawing.Point(0, 102);
+            this.panel_Sim_Control.Margin = new System.Windows.Forms.Padding(2);
+            this.panel_Sim_Control.Name = "panel_Sim_Control";
+            this.panel_Sim_Control.Size = new System.Drawing.Size(572, 298);
+            this.panel_Sim_Control.TabIndex = 1;
+            this.panel_Sim_Control.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panel_Sim_Control_MouseDoubleClick);
+            // 
+            // panel_User_Info
+            // 
+            this.panel_User_Info.Controls.Add(this.button_Show_Log);
+            this.panel_User_Info.Controls.Add(this.panel_Control);
+            this.panel_User_Info.Controls.Add(this.dataGridView_Info);
+            this.panel_User_Info.Controls.Add(this.richTextBox_Log);
+            this.panel_User_Info.Cursor = System.Windows.Forms.Cursors.Default;
+            this.panel_User_Info.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel_User_Info.Location = new System.Drawing.Point(0, 0);
+            this.panel_User_Info.Margin = new System.Windows.Forms.Padding(2);
+            this.panel_User_Info.Name = "panel_User_Info";
+            this.panel_User_Info.Size = new System.Drawing.Size(572, 102);
+            this.panel_User_Info.TabIndex = 0;
+            // 
+            // button_Show_Log
+            // 
+            this.button_Show_Log.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_Show_Log.Location = new System.Drawing.Point(11, 31);
+            this.button_Show_Log.Margin = new System.Windows.Forms.Padding(2);
+            this.button_Show_Log.Name = "button_Show_Log";
+            this.button_Show_Log.Size = new System.Drawing.Size(116, 28);
+            this.button_Show_Log.TabIndex = 5;
+            this.button_Show_Log.Text = "Pokaż Log";
+            this.button_Show_Log.UseVisualStyleBackColor = true;
+            this.button_Show_Log.Visible = false;
+            this.button_Show_Log.Click += new System.EventHandler(this.button_Show_Log_Click);
+            // 
+            // panel_Control
+            // 
+            this.panel_Control.BackColor = System.Drawing.SystemColors.Control;
+            this.panel_Control.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel_Control.Controls.Add(this.button_End_Edit);
+            this.panel_Control.Controls.Add(this.button_Micro);
+            this.panel_Control.Controls.Add(this.button_Makro);
+            this.panel_Control.Controls.Add(this.button_OK);
+            this.panel_Control.Controls.Add(this.button_Next_Tact);
+            this.panel_Control.Controls.Add(this.label_Status);
+            this.panel_Control.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel_Control.Location = new System.Drawing.Point(301, 0);
+            this.panel_Control.Margin = new System.Windows.Forms.Padding(2);
+            this.panel_Control.Name = "panel_Control";
+            this.panel_Control.Size = new System.Drawing.Size(150, 102);
+            this.panel_Control.TabIndex = 2;
+            // 
+            // button_End_Edit
+            // 
+            this.button_End_Edit.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_End_Edit.Location = new System.Drawing.Point(21, 11);
+            this.button_End_Edit.Margin = new System.Windows.Forms.Padding(2);
+            this.button_End_Edit.Name = "button_End_Edit";
+            this.button_End_Edit.Size = new System.Drawing.Size(116, 58);
+            this.button_End_Edit.TabIndex = 6;
+            this.button_End_Edit.Text = "Zakończ edycję";
+            this.button_End_Edit.UseVisualStyleBackColor = true;
+            this.button_End_Edit.Visible = false;
+            this.button_End_Edit.Click += new System.EventHandler(this.button_End_Edit_Click);
+            // 
+            // button_Micro
+            // 
+            this.button_Micro.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_Micro.Location = new System.Drawing.Point(21, 41);
+            this.button_Micro.Margin = new System.Windows.Forms.Padding(2);
+            this.button_Micro.Name = "button_Micro";
+            this.button_Micro.Size = new System.Drawing.Size(116, 28);
+            this.button_Micro.TabIndex = 4;
+            this.button_Micro.Text = "Micro";
+            this.button_Micro.UseVisualStyleBackColor = true;
+            this.button_Micro.Click += new System.EventHandler(this.button_Micro_Click);
+            // 
+            // button_Makro
+            // 
+            this.button_Makro.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_Makro.Location = new System.Drawing.Point(21, 11);
+            this.button_Makro.Margin = new System.Windows.Forms.Padding(2);
+            this.button_Makro.Name = "button_Makro";
+            this.button_Makro.Size = new System.Drawing.Size(116, 28);
+            this.button_Makro.TabIndex = 3;
+            this.button_Makro.Text = "Makro";
+            this.button_Makro.UseVisualStyleBackColor = true;
+            this.button_Makro.Click += new System.EventHandler(this.button_Makro_Click);
+            // 
+            // button_OK
+            // 
+            this.button_OK.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_OK.Location = new System.Drawing.Point(21, 11);
+            this.button_OK.Margin = new System.Windows.Forms.Padding(2);
+            this.button_OK.Name = "button_OK";
+            this.button_OK.Size = new System.Drawing.Size(116, 28);
+            this.button_OK.TabIndex = 2;
+            this.button_OK.Text = "Zatwierdź";
+            this.button_OK.UseVisualStyleBackColor = true;
+            this.button_OK.Visible = false;
+            this.button_OK.Click += new System.EventHandler(this.button_OK_Click);
+            // 
+            // button_Next_Tact
+            // 
+            this.button_Next_Tact.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_Next_Tact.Location = new System.Drawing.Point(21, 41);
+            this.button_Next_Tact.Margin = new System.Windows.Forms.Padding(2);
+            this.button_Next_Tact.Name = "button_Next_Tact";
+            this.button_Next_Tact.Size = new System.Drawing.Size(116, 28);
+            this.button_Next_Tact.TabIndex = 1;
+            this.button_Next_Tact.Text = "Następny takt";
+            this.button_Next_Tact.UseVisualStyleBackColor = true;
+            this.button_Next_Tact.Visible = false;
+            this.button_Next_Tact.Click += new System.EventHandler(this.button_Next_Tact_Click);
+            // 
+            // label_Status
+            // 
+            this.label_Status.AutoSize = true;
+            this.label_Status.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label_Status.ForeColor = System.Drawing.Color.Green;
+            this.label_Status.Location = new System.Drawing.Point(4, 72);
+            this.label_Status.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_Status.Name = "label_Status";
+            this.label_Status.Size = new System.Drawing.Size(48, 23);
+            this.label_Status.TabIndex = 0;
+            this.label_Status.Text = "Stop";
+            // 
+            // dataGridView_Info
+            // 
+            this.dataGridView_Info.AllowUserToAddRows = false;
+            this.dataGridView_Info.AllowUserToDeleteRows = false;
+            this.dataGridView_Info.AllowUserToResizeColumns = false;
+            this.dataGridView_Info.AllowUserToResizeRows = false;
+            this.dataGridView_Info.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dataGridView_Info.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_Info.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            this.dataGridView_Info.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_Info.ColumnHeadersVisible = false;
+            this.dataGridView_Info.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2});
+            this.dataGridView_Info.Cursor = System.Windows.Forms.Cursors.No;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_Info.DefaultCellStyle = dataGridViewCellStyle9;
+            this.dataGridView_Info.Dock = System.Windows.Forms.DockStyle.Right;
+            this.dataGridView_Info.Location = new System.Drawing.Point(451, 0);
+            this.dataGridView_Info.Margin = new System.Windows.Forms.Padding(2);
+            this.dataGridView_Info.MultiSelect = false;
+            this.dataGridView_Info.Name = "dataGridView_Info";
+            this.dataGridView_Info.ReadOnly = true;
+            this.dataGridView_Info.RowHeadersVisible = false;
+            this.dataGridView_Info.RowTemplate.Height = 25;
+            this.dataGridView_Info.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.dataGridView_Info.Size = new System.Drawing.Size(121, 102);
+            this.dataGridView_Info.TabIndex = 1;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Column1";
+            this.Column1.MinimumWidth = 30;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 30;
+            // 
+            // Column2
+            // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column2.HeaderText = "Column2";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // richTextBox_Log
+            // 
+            this.richTextBox_Log.Cursor = System.Windows.Forms.Cursors.No;
+            this.richTextBox_Log.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox_Log.Enabled = false;
+            this.richTextBox_Log.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.richTextBox_Log.Location = new System.Drawing.Point(0, 0);
+            this.richTextBox_Log.Margin = new System.Windows.Forms.Padding(2);
+            this.richTextBox_Log.Name = "richTextBox_Log";
+            this.richTextBox_Log.Size = new System.Drawing.Size(572, 102);
+            this.richTextBox_Log.TabIndex = 0;
+            this.richTextBox_Log.Text = "";
+            // 
             // SimView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -896,14 +896,14 @@
             this.menuStrip1.PerformLayout();
             this.panel_Left.ResumeLayout(false);
             this.panel_Left.PerformLayout();
+            this.panel_PM.ResumeLayout(false);
+            this.panel_PM.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Grid_PM)).EndInit();
             this.panel_Sim.ResumeLayout(false);
             this.panel_User_Info.ResumeLayout(false);
             this.panel_Control.ResumeLayout(false);
             this.panel_Control.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Info)).EndInit();
-            this.panel_PM.ResumeLayout(false);
-            this.panel_PM.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Grid_PM)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -937,20 +937,20 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.Button button_Micro;
         private System.Windows.Forms.Button button_Makro;
-        private System.Windows.Forms.ToolStripMenuItem nowyLogToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeLogToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.OpenFileDialog open_File_Dialog;
-        private System.Windows.Forms.ToolStripMenuItem konsolaDevToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem opcjeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem devConsoleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem mikroprogramToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem wczytajpmToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem edytujpmToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem pamięćOperacyjnaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem wczytajpaoToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem edytujpaoToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem microToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadpmToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editpmToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem memToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadmemToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editmemToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem oAutorzeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Adres;
         private System.Windows.Forms.DataGridViewTextBoxColumn Zawartosc;

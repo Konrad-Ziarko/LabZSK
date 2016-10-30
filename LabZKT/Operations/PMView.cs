@@ -1,9 +1,13 @@
-﻿using LabZKT.StaticClasses;
+﻿using LabZKT.Properties;
+using LabZKT.StaticClasses;
+using LabZKT.Operations;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace LabZKT.MicroOperations
@@ -40,11 +44,24 @@ namespace LabZKT.MicroOperations
             InitializeComponent();
             this.List_MicroOps = List_MicroOps;
             LoadMicroOperations();
+            setAllStrings();
         }
+        internal void setAllStrings()
+        {
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
+            button_Clear_Row.Text = Operations.Strings.clearRowButton;
+            button_Clear_Table.Text = Operations.Strings.clearTableButton;
+            button_Edit.Text = Operations.Strings.editMemoryButton;
+            button_Load_Table.Text = Operations.Strings.loadTableButton;
+            button_Save_Table.Text = Operations.Strings.saveTableButton;
 
+            Grid_PM.Columns[0].HeaderText = Operations.Strings.cellAddressViewGrid;
+
+            this.Text = Operations.Strings.PMViewTitle;
+        }
         private void PM_Load(object sender, EventArgs e)
         {
-            CancelButton = button_Close;
+            CancelButton = button_Edit;
             Size = new Size(800, 650);
             CenterToScreen();
         }
@@ -165,7 +182,7 @@ namespace LabZKT.MicroOperations
                             }
                         }
                         else
-                            MessageBox.Show("To nie jest plik z poprawnym mikroprogramem!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
+                            MessageBox.Show(Operations.Strings.notValidMicrocodeFile, Operations.Strings.notValidMicrocodeFileTitle, MessageBoxButtons.OK);
                     }
                 else if (Regex.Match(extension, @"[sS][aA][gG]").Success)
                 //naucz czytania plikow labsaga
@@ -179,12 +196,12 @@ namespace LabZKT.MicroOperations
             catch (Exception)
             {
                 for (int i = 0; i < 256; ++i)
-                    for (int j = 0; j < 12; ++j)
+                    for (int j = 1; j < 12; ++j)
                     {
                         Grid_PM[j, i].Value = "";
                         AUpdateData(i, j, "");
                     }
-                MessageBox.Show("Wykryto niespójność pliku!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
+                MessageBox.Show(Operations.Strings.inconsistentMicrocodeFile, Operations.Strings.notValidMicrocodeFileTitle, MessageBoxButtons.OK);
             }
         }
         /// <summary>
@@ -267,7 +284,7 @@ namespace LabZKT.MicroOperations
         }
         private void button_Clear_Table_Click(object sender, EventArgs e)
         {
-            DialogResult dr = MessageBox.Show("Czy napewno chcesz wyczyścić całą pamięć?", "Tej operacji nie da się cofnąć!", MessageBoxButtons.OKCancel);
+            DialogResult dr = MessageBox.Show(Operations.Strings.areYouSureClearTable, Operations.Strings.areYouSureClearTableTitle, MessageBoxButtons.OKCancel);
             if (dr == DialogResult.OK)
                 for (int i = 0; i < 256; i++)
                     for (int j = 1; j < 12; j++)

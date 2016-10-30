@@ -94,17 +94,37 @@
     <Compile Include="Controls\BitTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Memory\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Other\Options.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Other\Options.Designer.cs">
       <DependentUpon>Options.cs</DependentUpon>
     </Compile>
+    <Compile Include="Other\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Simulation\DevConsole.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Simulation\DevConsole.Designer.cs">
       <DependentUpon>DevConsole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Simulation\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="StaticClasses\CRC.cs" />
     <Compile Include="Simulation\Drawings.cs" />
@@ -166,7 +186,32 @@
     <Compile Include="Operations\PMSubmit.Designer.cs">
       <DependentUpon>PMSubmit.cs</DependentUpon>
     </Compile>
+    <Compile Include="StaticClasses\Instructions.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Instructions.resx</DependentUpon>
+    </Compile>
+    <Compile Include="StaticClasses\Operations.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Operations.resx</DependentUpon>
+    </Compile>
+    <Compile Include="StaticClasses\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
     <Compile Include="StaticClasses\Translator.cs" />
+    <EmbeddedResource Include="Memory\Strings.en.resx" />
+    <EmbeddedResource Include="Memory\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Operations\Strings.en.resx" />
+    <EmbeddedResource Include="Operations\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Other\ErrorMessage.resx">
       <DependentUpon>ErrorMessage.cs</DependentUpon>
     </EmbeddedResource>
@@ -182,6 +227,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Other\Options.resx">
       <DependentUpon>Options.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Other\Strings.en.resx" />
+    <EmbeddedResource Include="Other\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Simulation\DevConsole.resx">
       <DependentUpon>DevConsole.cs</DependentUpon>
@@ -207,6 +257,26 @@
     </Compile>
     <EmbeddedResource Include="Operations\PMSubmit.resx">
       <DependentUpon>PMSubmit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Simulation\Strings.en.resx" />
+    <EmbeddedResource Include="Simulation\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StaticClasses\Instructions.en.resx" />
+    <EmbeddedResource Include="StaticClasses\Instructions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Instructions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StaticClasses\Operations.en.resx" />
+    <EmbeddedResource Include="StaticClasses\Operations.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Operations.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StaticClasses\Strings.en.resx" />
+    <EmbeddedResource Include="StaticClasses\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="labzkt.pfx" />

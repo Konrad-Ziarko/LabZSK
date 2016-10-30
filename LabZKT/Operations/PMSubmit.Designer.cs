@@ -59,6 +59,7 @@
             // 
             this.groupBox1.AutoSize = true;
             this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
             this.groupBox1.Controls.Add(this.radioButton18);
             this.groupBox1.Controls.Add(this.radioButton17);
             this.groupBox1.Controls.Add(this.radioButton16);

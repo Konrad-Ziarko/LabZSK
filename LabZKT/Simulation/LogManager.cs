@@ -97,7 +97,7 @@ namespace LabZKT.Simulation
             }
             catch
             {
-                MessageBox.Show("Wysątpił nieoczekiwany błąd podczas tworzenia logu!", "Ups", MessageBoxButtons.OK);
+                MessageBox.Show(Simulation.Strings.errorLogCreating, "Ups", MessageBoxButtons.OK);
             }
         }
         /// <summary>

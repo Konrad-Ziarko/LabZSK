@@ -130,5 +130,29 @@ namespace LabZKT.Properties {
                 this["ThirdMark"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("pl-PL")]
+        public string Culture {
+            get {
+                return ((string)(this["Culture"]));
+            }
+            set {
+                this["Culture"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int CultureIdx {
+            get {
+                return ((int)(this["CultureIdx"]));
+            }
+            set {
+                this["CultureIdx"] = value;
+            }
+        }
     }
 }

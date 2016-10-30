@@ -6,7 +6,9 @@ using LabZKT.StaticClasses;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace LabZKT.Simulation
@@ -37,6 +39,7 @@ namespace LabZKT.Simulation
         internal event Action ALoadPM;
         internal event Action ALoadPAO;
         internal event Action AShowCurrentLog;
+        internal event Action AChangeLanguage;
 
         internal int currnetCycle { get; set; }
         internal int mark { get; set; }
@@ -58,8 +61,42 @@ namespace LabZKT.Simulation
         public SimView(bool needsNewLog)
         {
             InitializeComponent();
-            konsolaDevToolStripMenuItem.Enabled = Properties.Settings.Default.IsDevConsole;
-            nowyLogToolStripMenuItem.Enabled = needsNewLog;
+            devConsoleToolStripMenuItem.Enabled = Properties.Settings.Default.IsDevConsole;
+            closeLogToolStripMenuItem.Enabled = needsNewLog;
+
+            setAllStrings();
+        }
+        internal void setAllStrings()
+        {
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
+            button_Show_Log.Text = Simulation.Strings.showLogButton;
+            button_End_Edit.Text = Simulation.Strings.endEditRegisters;
+            button_OK.Text = Simulation.Strings.okButton;
+            button_Next_Tact.Text = Simulation.Strings.nextTactButton;
+
+            toolStripMenu_Main.Text = Simulation.Strings.simulationToolStrip;
+            toolStripMenu_Exit.Text = Simulation.Strings.exitToolStrip;
+            toolStripMenu_Show_Log.Text = Simulation.Strings.showLogToolStrip;
+            if (inEditMode)
+                toolStripMenu_Edit.Text = Simulation.Strings.endEditRegisters;
+            else
+                toolStripMenu_Edit.Text = Simulation.Strings.editRegisters;
+            toolStripMenu_Clear.Text = Simulation.Strings.clearRegistersToolStrip;
+            closeLogToolStripMenuItem.Text = Simulation.Strings.closeLogToolStrip;
+            devConsoleToolStripMenuItem.Text = Simulation.Strings.devConsoleToolStrip;
+            settingsToolStripMenuItem.Text = Simulation.Strings.settingsToolStrip;
+
+            microToolStripMenuItem.Text = Simulation.Strings.microToolStrip;
+            editpmToolStripMenuItem.Text = Simulation.Strings.editPMToolStrip;
+            loadpmToolStripMenuItem.Text = Simulation.Strings.loadPMToolStrip;
+            memToolStripMenuItem.Text = Simulation.Strings.memToolStrip;
+            editmemToolStripMenuItem.Text = Simulation.Strings.editMemToolStrip;
+            loadmemToolStripMenuItem.Text = Simulation.Strings.loadMemToolStrip;
+            aboutToolStripMenuItem.Text = Simulation.Strings.authorToolStrip;
+
+            Grid_PM.Columns[0].HeaderText = Grid_Mem.Columns[0].HeaderText = Simulation.Strings.cellAddressViewGrid;
+            Grid_Mem.Columns[1].HeaderText = Simulation.Strings.cellValueViewGrid;
+            this.Text = Strings.SimulationTitle;
         }
 
         /// <summary>
@@ -103,9 +140,9 @@ namespace LabZKT.Simulation
             button_Makro.Visible = true;
             button_Micro.Visible = true;
             toolStripMenu_Clear.Enabled = true;
-            label_Status.Text = "Stop";
+            label_Status.Text = Simulation.Strings.stopMode;
             label_Status.ForeColor = Color.Green;
-            nowyLogToolStripMenuItem.Enabled = true;
+            closeLogToolStripMenuItem.Enabled = true;
         }
 
         internal void SwitchLayOut()
@@ -122,7 +159,7 @@ namespace LabZKT.Simulation
         }
         internal void setNewLog(bool b)
         {
-            nowyLogToolStripMenuItem.Enabled = b;
+            closeLogToolStripMenuItem.Enabled = b;
         }
         internal DataGridView GetDataGridPM()
         {
@@ -157,10 +194,10 @@ namespace LabZKT.Simulation
         private void initUserInfoArea()
         {
             ACheckProperties();
-            dataGridView_Info.Rows.Add(mark, "Ocena");
-            dataGridView_Info.Rows.Add(mistakes, "Błędy");
-            dataGridView_Info.Rows.Add("0", "Takt");
-            dataGridView_Info.Rows.Add(currnetCycle, "Cykl");
+            dataGridView_Info.Rows.Add(mark, Simulation.Strings.mark);
+            dataGridView_Info.Rows.Add(mistakes, Simulation.Strings.mistakes);
+            dataGridView_Info.Rows.Add("0", Simulation.Strings.tact);
+            dataGridView_Info.Rows.Add(currnetCycle, Simulation.Strings.cycle);
             dataGridView_Info.Enabled = false;
             dataGridView_Info.ClearSelection();
 
@@ -178,7 +215,7 @@ namespace LabZKT.Simulation
             if (isRunning)
                 e.Cancel = true;
             else
-                ASaveCurrentState(nowyLogToolStripMenuItem.Enabled);
+                ASaveCurrentState(closeLogToolStripMenuItem.Enabled);
 
         }
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
@@ -234,7 +271,7 @@ namespace LabZKT.Simulation
                 cellDescription.Text += "\n";
             if (selectedInstruction.typ == 1)
             {
-                cellDescription.Text += "DANA\n";
+                cellDescription.Text += Simulation.Strings.data+"\n";
                 cellDescription.Text += selectedInstruction.value.ToString() + "b\n";
                 cellDescription.Text += Convert.ToUInt16(selectedInstruction.value, 2) + "d\n";
                 cellDescription.Text += Convert.ToInt16(selectedInstruction.value, 2).ToString("X") + "h";
@@ -261,7 +298,7 @@ namespace LabZKT.Simulation
                 button_Makro.Visible = false;
                 button_Micro.Visible = false;
                 toolStripMenu_Clear.Enabled = false;
-                label_Status.Text = "Start";
+                label_Status.Text = Simulation.Strings.startMode;
                 label_Status.ForeColor = Color.Red;
                 button_Show_Log.Visible = false;
                 APrepareSimulation(false);
@@ -274,7 +311,7 @@ namespace LabZKT.Simulation
             button_Makro.Visible = false;
             button_Micro.Visible = false;
             toolStripMenu_Clear.Enabled = false;
-            label_Status.Text = "Start";
+            label_Status.Text = Simulation.Strings.startMode;
             label_Status.ForeColor = Color.Red;
             button_Show_Log.Visible = false;
             APrepareSimulation(true);
@@ -313,17 +350,17 @@ namespace LabZKT.Simulation
             {
                 panel_Control.Focus();
                 ALeaveEditMode();
-                toolStripMenu_Edit.Text = "Edytuj rejestry";
+                toolStripMenu_Edit.Text = Simulation.Strings.editRegisters;
                 button_Makro.Visible = true;
                 button_Micro.Visible = true;
                 toolStripMenu_Clear.Enabled = true;
                 inEditMode = false;
-                label_Status.Text = "Stop";
+                label_Status.Text = Simulation.Strings.stopMode;
             }
             else if (e.KeyChar == (char)Keys.Escape && isRunning)
             {
                 //przerwanie pracy
-                DialogResult dr = MessageBox.Show("Czy napewno chcesz zakończyć pracę?\n Uracisz cały postęp.", "Przerwanie pracy", MessageBoxButtons.OKCancel);
+                DialogResult dr = MessageBox.Show(Simulation.Strings.areYouSureExit, Simulation.Strings.areYouSureExitTitle, MessageBoxButtons.OKCancel);
                 if (dr == DialogResult.OK)
                 {
                     //
@@ -365,7 +402,7 @@ namespace LabZKT.Simulation
         }
         private void nowyLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Utracisz cały postęp symulacji.\nCzy chcesz zakończyć pracę z obecnym logiem?", "Nowa symulacja", MessageBoxButtons.OKCancel);
+            DialogResult result = MessageBox.Show(Simulation.Strings.areYouSureCloseLog, Simulation.Strings.areYouSureCloseLogTitle, MessageBoxButtons.OKCancel);
             if (result == DialogResult.OK)
             {
                 ANewLog();
@@ -421,8 +458,10 @@ namespace LabZKT.Simulation
             {
                 op.ACallUpdate += Op_ACallUpdate;
                 op.ShowDialog();
-                konsolaDevToolStripMenuItem.Enabled = Properties.Settings.Default.IsDevConsole;
+                devConsoleToolStripMenuItem.Enabled = Settings.Default.IsDevConsole;
             }
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
+            AChangeLanguage();
         }
 
         private void Op_ACallUpdate()
@@ -544,23 +583,23 @@ namespace LabZKT.Simulation
             {
                 panel_Control.Focus();
                 ALeaveEditMode();
-                toolStripMenu_Edit.Text = "Edytuj rejestry";
+                toolStripMenu_Edit.Text = Simulation.Strings.editRegisters;
                 button_Makro.Visible = true;
                 button_Micro.Visible = true;
                 toolStripMenu_Clear.Enabled = true;
                 inEditMode = false;
-                label_Status.Text = "Stop";
+                label_Status.Text = Simulation.Strings.stopMode;
                 button_End_Edit.Visible = false;
             }
             else
             {
                 AEnterEditMode();
-                toolStripMenu_Edit.Text = "Zakończ edycję";
+                toolStripMenu_Edit.Text = Simulation.Strings.endEditRegisters;
                 button_Makro.Visible = false;
                 button_Micro.Visible = false;
                 toolStripMenu_Clear.Enabled = false;
                 inEditMode = true;
-                label_Status.Text = "Edycja";
+                label_Status.Text = Simulation.Strings.editMode;
                 button_End_Edit.Visible = true;
             }
         }

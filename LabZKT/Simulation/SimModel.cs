@@ -6,6 +6,7 @@ using LabZKT.StaticClasses;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Media;
 using System.Net.NetworkInformation;
@@ -103,12 +104,14 @@ namespace LabZKT.Simulation
         /// <param name="lastRecordFromRRC">Operating memory record last used in RRC operation</param>
         public SimModel(ref List<MemoryRecord> List_Memory, ref List<MicroOperation> List_MicroOp, ref Dictionary<string, NumericTextBox> registers, ref Dictionary<string, BitTextBox> flags, ref TextBox RBPS, ref MemoryRecord lastRecordFromRRC)
         {
+            changeLanguage();
             this.List_Memory = List_Memory;
             this.List_MicroOp = List_MicroOp;
             this.registers = registers;
             this.flags = flags;
             this.RBPS = RBPS;
             this.lastRecordFromRRC = lastRecordFromRRC;
+
 
             currentTact = mistakes = 0;
             mark = 5;
@@ -161,9 +164,9 @@ namespace LabZKT.Simulation
                                 ipAddrList += "\n".PadRight(43, ' ') + ip.Address.ToString();
             logManager.createNewLog(logFile);
             Settings.Default.Save();
-            addTextToLogFile("Komputer w domenie: \"" + Environment.UserDomainName + "\"\nStacja \"" +
-            Environment.MachineName + "\" " + sysType + " " + Environment.OSVersion + " OS\nZalogowano jako: \"" +
-            Environment.UserName + "\"\n" + "Dostępne interfejsy sieciowe: " + ipAddrList + "\n\n\n");
+            addTextToLogFile(Simulation.Strings.pcInDomain + ": \"" + Environment.UserDomainName + "\"\n" + Simulation.Strings.machineName + " \"" +
+            Environment.MachineName + "\" " + sysType + " " + Environment.OSVersion + " OS\n" + Simulation.Strings.loggedAs + ": \"" +
+            Environment.UserName + "\"\n" + Simulation.Strings.networkInterfaces + ": " + ipAddrList + "\n\n\n");
         }
         public void addTextToLogFile(string lineOfText)
         {
@@ -226,6 +229,11 @@ namespace LabZKT.Simulation
                 - 65 + registers["L"].Location.X, verticalGap * 4 + (verticalGap - 27) * 3 / 4);
         }
 
+        internal void changeLanguage()
+        {
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
+        }
+
         internal void ShowCurrentLog()
         {
             if (logFile != string.Empty && logFile != "")
@@ -257,7 +265,7 @@ namespace LabZKT.Simulation
             foreach (var oldReg in oldRegs)
             {
                 if (registers[oldReg.Key].innerValue != oldReg.Value)
-                    addTextToLogFile("Zmiana zawartości rejestru: " + oldReg.Key.PadRight(6, ' ') +
+                    addTextToLogFile(Simulation.Strings.registerHasChanged + " " + oldReg.Key.PadRight(6, ' ') +
                         oldReg.Value + "=>" + registers[oldReg.Key].innerValue + "\n");
             }
             foreach (var reg in registers)
@@ -295,7 +303,7 @@ namespace LabZKT.Simulation
         /// </summary>
         public void clearRegisters()
         {
-            addTextToLogFile("\n====Zerowanie rejestrów====\n");
+            addTextToLogFile("\n" + Simulation.Strings.clearingRegister + "\n");
             mark = 5;
             mistakes = currnetCycle = 0;
             foreach (var reg in registers)
@@ -325,14 +333,14 @@ namespace LabZKT.Simulation
             dialog.InitialDirectory = envPath;
             while (logFile == "")
             {
-                dialog.Filter = "Log symulatora|*.log|Wszystko|*.*";
-                dialog.Title = "Utwórz log";
+                dialog.Filter = Simulation.Strings.simLog + "|*.log|" + Simulation.Strings.all + "|*.*";
+                dialog.Title = Simulation.Strings.createLog;
                 DialogResult saveFileDialogResult = dialog.ShowDialog();
                 if (saveFileDialogResult == DialogResult.OK && dialog.FileName != "")
                 {
                     logFile = dialog.FileName;
                     initLogInformation();
-                    addTextToLogFile("========Start symulacji========\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(31, ' ') + "\n======Zawartość rejestrów======\n");
+                    addTextToLogFile(Simulation.Strings.startingSimulation + "\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(31, ' ') + "\n" + Simulation.Strings.registersContent + "\n");
                     foreach (var reg in registers.Values)
                         addTextToLogFile((reg.registerName + "=").PadLeft(5, ' ') + reg.Text + "\n");
                 }
@@ -358,8 +366,8 @@ namespace LabZKT.Simulation
             if (!registers[registerToCheck].validateRegisterValue(out badValue))
             {
                 new Thread(SystemSounds.Beep.Play).Start();
-                addTextToLogFile("\t\tBłąd(" + (mistakes + 1) + "): " + registerToCheck + "=" + badValue +
-                    "(poprawna " + registerToCheck + "=" + registers[registerToCheck].innerValue + ")\n\n");
+                addTextToLogFile("\t\t" + Simulation.Strings.mistake + "(" + (mistakes + 1) + "): " + registerToCheck + "=" + badValue +
+                    " (" + Simulation.Strings.correct + " " + registerToCheck + "=" + registers[registerToCheck].innerValue + ")\n\n");
 
                 mistakes++;
 
@@ -395,8 +403,8 @@ namespace LabZKT.Simulation
         /// </summary>
         public void CloseCurrentLogFile()
         {
-            addTextToLogFile("\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(29, ' ') + "\n=======Stop  symulacji=======\n" +
-                "Ocena: " + mark + "   Błędy: " + mistakes + "\n");
+            addTextToLogFile("\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(29, ' ') + "\n" + Simulation.Strings.simStop + "\n" +
+                Simulation.Strings.mark + ": " + mark + "   " + Simulation.Strings.mistakes + ": " + mistakes + "\n");
             logManager.clearInMemoryLog();
             logFile = string.Empty;
         }
@@ -412,25 +420,25 @@ namespace LabZKT.Simulation
         {
             indirectAdresation = false;
             if (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1]))
-                addTextToLogFile("Takt1:\n");
+                addTextToLogFile(Simulation.Strings.tact + "1:\n");
             while (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1] || cells[8, 1]))
                 exeTact1();
             if (currentTact == 1)
                 nextTact();
             if (currentTact == 2 && cells[10, 2])
-                addTextToLogFile("Takt2:\n");
+                addTextToLogFile(Simulation.Strings.tact + "2:\n");
             while (currentTact == 2 && cells[10, 2])
                 exeTact2();
             while (currentTact >= 2 && currentTact <= 5)
                 nextTact();
             if (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
-                addTextToLogFile("Takt6:\n");
+                addTextToLogFile(Simulation.Strings.tact + "6:\n");
             while (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
                 exeTact6();
             if (currentTact == 6)
                 nextTact();
             if (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7] || cells[9, 7]))
-                addTextToLogFile("Takt7:\n");
+                addTextToLogFile(Simulation.Strings.tact + "7:\n");
             while (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7]))
                 exeTact7();
             if (currentTact == 7 && cells[9, 7])
@@ -1314,7 +1322,7 @@ namespace LabZKT.Simulation
             long rbps = Translator.GetRbpsValue(Grid_PM.Rows[raps]) + na;
             RBPS.Text = rbps.ToString("X").PadLeft(12, '0');
 
-            addTextToLogFile("===============================\n\nTakt0: RBPS=" + RBPS.Text + "\n");
+            addTextToLogFile("===============================\n\n" + Simulation.Strings.tact + "0: RBPS=" + RBPS.Text + "\n");
             for (int i = 1; i < 11; i++)
                 for (int j = 1; j < 8; j++)
                     cells[i, j] = row.Cells[i].Value.ToString() == "" ? false : true;

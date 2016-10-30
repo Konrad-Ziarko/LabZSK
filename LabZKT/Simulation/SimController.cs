@@ -1,9 +1,11 @@
 ﻿using LabZKT.Controls;
 using LabZKT.Memory;
 using LabZKT.MicroOperations;
+using LabZKT.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
@@ -63,7 +65,7 @@ namespace LabZKT.Simulation
             flags["MAV"] = new BitTextBox(130, 125, null, "MAV");
             flags["IA"] = new BitTextBox(140, 125, null, "IA");
             flags["INT"] = new BitTextBox(290, 125, null, "INT");
-            flags["ZNAK"] = new BitTextBox(450, 65, null, "ZNAK");
+            flags["ZNAK"] = new BitTextBox(450, 65, null, Simulation.Strings.sign);
             flags["XRO"] = new BitTextBox(460, 65, null, "XRO");
             flags["OFF"] = new BitTextBox(470, 65, null, "OFF");
             foreach (var sig in flags)
@@ -123,6 +125,7 @@ namespace LabZKT.Simulation
         /// </summary>
         public SimController()
         {
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
             initLists();
             initFlags();
             initRegisterTextBoxes();
@@ -159,6 +162,7 @@ namespace LabZKT.Simulation
             theView.ALoadPM += TheView_ALoadPM;
             theView.AUpdateForm += MemView_AUpdateForm;
             theView.AShowCurrentLog += theModel.ShowCurrentLog;
+            theView.AChangeLanguage += TheView_AChangeLanguage;
 
             theModel.StartSim += startSim;
             theModel.StopSim += theView.stopSim;
@@ -176,6 +180,15 @@ namespace LabZKT.Simulation
             memView.AUpdateForm += MemView_AUpdateForm;
 
             theView.ShowDialog();
+        }
+
+        private void TheView_AChangeLanguage()
+        {
+            flags["ZNAK"].flagName = Simulation.Strings.sign;
+            theModel.changeLanguage();
+            theView.setAllStrings();
+            pmView.setAllStrings();
+            memView.setAllStrings();
         }
 
         private void TheView_ACallDevConsole()

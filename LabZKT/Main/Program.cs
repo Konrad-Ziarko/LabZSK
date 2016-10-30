@@ -1,5 +1,6 @@
 ﻿using LabZKT.Properties;
 using LabZKT.Simulation;
+using LabZKT.StaticClasses;
 using System;
 using System.IO;
 using System.Threading;
@@ -21,7 +22,7 @@ namespace LabZKT
             {
                 if (Settings.Default.FirstRun)
                 {
-                    MessageBox.Show("Aplikacja wykorzystuje Moje Dokumenty/Dokumenty jako domyślny katalog dla plików!", "LabZKT", MessageBoxButtons.OK);
+                    MessageBox.Show(Simulation.Strings.defaultDirectoryMessage, "LabZKT", MessageBoxButtons.OK);
                     Settings.Default.FirstRun = false;
                     Settings.Default.Save();
                 }
@@ -37,7 +38,7 @@ namespace LabZKT
             }
             else
             {
-                MessageBox.Show("Aplikacja jest już uruchomina!", "LabZKT", MessageBoxButtons.OK);
+                MessageBox.Show(Simulation.Strings.appAlreadyRunning, "LabZKT", MessageBoxButtons.OK);
             }
         }
     }

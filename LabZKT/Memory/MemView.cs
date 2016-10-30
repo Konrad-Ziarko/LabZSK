@@ -1,7 +1,9 @@
-﻿using LabZKT.StaticClasses;
+﻿using LabZKT.Properties;
+using LabZKT.StaticClasses;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -55,9 +57,9 @@ namespace LabZKT.Memory
             panel_Edit_PO.Width = Convert.ToInt32(Width * (1 - horizontalRatio) - 10);
             CenterToScreen();
 
-            dataGridView_Basic.Rows[0].Cells[0].Value = "Typ Komórki";
-            dataGridView_Basic.Rows[1].Cells[0].Value = "Wartość dziesiętna";
-            dataGridView_Basic.Rows[2].Cells[0].Value = "Mnemonik";
+            dataGridView_Basic.Rows[0].Cells[0].Value = Strings.recordType;
+            dataGridView_Basic.Rows[1].Cells[0].Value = Strings.decimalValue;
+            dataGridView_Basic.Rows[2].Cells[0].Value = Strings.mnemonicName;
             dataGridView_Basic.Rows[0].Height = 46;
             dataGridView_Basic.Rows[1].Height = 46;
             dataGridView_Basic.Rows[2].Height = 46;
@@ -66,6 +68,28 @@ namespace LabZKT.Memory
         {
             foreach (MemoryRecord row in List_Memory)
                 Grid_Mem.Rows.Add(row.addr, row.value, row.hex, row.typ);
+            setAllStrings();
+        }
+        internal void setAllStrings()
+        {
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
+
+            button_Clear_Row.Text = Strings.clearRowButton;
+            button_Clear_Table.Text = Strings.clearTableButton;
+            button_Edit.Text = Strings.editMemoryButton;
+            button_Load_Table.Text = Strings.loadTableButton;
+            button_Save_Table.Text = Strings.saveTableButton;
+
+            Grid_Mem.Columns[0].HeaderText = Strings.cellAddressViewGrid;
+            Grid_Mem.Columns[1].HeaderText = Strings.cellValueViewGrid;
+
+            dataGridView_Basic.Rows[0].Cells[0].Value = Strings.recordType;
+            dataGridView_Basic.Rows[1].Cells[0].Value = Strings.decimalValue;
+            dataGridView_Basic.Rows[2].Cells[0].Value = Strings.mnemonicName;
+
+            dataGridView_Decode_Complex.Columns[0].HeaderText = Strings.field;
+            Grid_PO_SelectionChanged(this, new EventArgs());
+            this.Text = Strings.MemViewTitle;
         }
         /// <summary>
         /// Save internal memoryrecords list to file
@@ -134,7 +158,7 @@ namespace LabZKT.Memory
                             }
                         }
                         else
-                            MessageBox.Show("To nie jest plik z poprawnym mikroprogramem!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
+                            MessageBox.Show(Strings.memLoadError,Strings.memLoadErrorTitle, MessageBoxButtons.OK);
                     }
                 else if (Regex.Match(extension, @"[sS][aA][gG]").Success)
                 //naucz czytania plikow labsaga
@@ -148,9 +172,9 @@ namespace LabZKT.Memory
             catch (Exception)
             {
                 for (int i = 0; i < 256; ++i)
-                    for (int j = 0; j < 4; ++j)
+                    for (int j = 1; j < 4; ++j)
                         Grid_Mem.Rows[i].Cells[j].Value = "";
-                MessageBox.Show("Wykryto niespójność pliku!", "Ładowanie mikroprogramu przerwane", MessageBoxButtons.OK);
+                MessageBox.Show(Strings.memLoadNotValid, Strings.memLoadErrorTitle, MessageBoxButtons.OK);
             }
         }
 
@@ -191,7 +215,7 @@ namespace LabZKT.Memory
 
         private void button_Clear_Table_Click(object sender, EventArgs e)
         {
-            DialogResult dr = MessageBox.Show("Czy napewno chcesz wyczyścić całą pamięć?", "Tej operacji nie da się cofnąć!", MessageBoxButtons.OKCancel);
+            DialogResult dr = MessageBox.Show(Strings.areYouSureClearTable, Strings.areYouSureClearTableTitle, MessageBoxButtons.OKCancel);
             if (dr == DialogResult.OK)
             {
                 for (int i = 0; i < 256; i++)
@@ -271,97 +295,104 @@ namespace LabZKT.Memory
 
         private void Grid_PO_SelectionChanged(object sender, EventArgs e)
         {
-            int idxRow = Grid_Mem.CurrentCell.RowIndex;
-            string cellType = "";
-            string instructionMnemo = "";
-            dataGridView_Decode_Simple.Rows.Clear();
-            dataGridView_Decode_Complex.Rows.Clear();
-            short tmp = 0;
-            try
+            if (Grid_Mem.CurrentCell != null)
             {
-                tmp = Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[3].Value);
-            }
-            catch
-            {
-
-            }
-            if (tmp > 0)
-            {
-                dataGridView_Basic.Rows[2].Cells[1].Value = instructionMnemo;
-                if (Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[3].Value) == 1)
-                    cellType = "Dana";
-                else if (Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[3].Value) == 2)
+                int idxRow = Grid_Mem.CurrentCell.RowIndex;
+                string cellType = "";
+                string instructionMnemo = "";
+                dataGridView_Decode_Complex.Rows.Clear();
+                short tmp = 0;
+                try
                 {
-                    cellType = "Rozkaz prosty";
-                    instructionMnemo = Translator.DecodeInstruction(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(0, 5));
-                    dataGridView_Basic.Rows[2].Cells[1].Value = instructionMnemo + " - " + Translator.GetInsrtuctionDescription(instructionMnemo);
-                    //
-                    dataGridView_Decode_Simple.Rows.Add("OP",
-                        Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(0, 5), 2).ToString("X"),
-                        Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(0, 5), 2), 10),
-                        Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(0, 5));
-                    dataGridView_Decode_Simple.Rows.Add("X",
-                        Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(5, 1), 2).ToString("X"),
-                        Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(5, 1), 2), 10),
-                        Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(5, 1));
-                    dataGridView_Decode_Simple.Rows.Add("S",
-                        Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(6, 1), 2).ToString("X"),
-                        Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(6, 1), 2), 10),
-                        Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(6, 1));
-                    dataGridView_Decode_Simple.Rows.Add("I",
-                        Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(7, 1), 2).ToString("X"),
-                        Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(7, 1), 2), 10),
-                        Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(7, 1));
-                    dataGridView_Decode_Simple.Rows.Add("DA",
-                        Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(8, 8), 2).ToString("X"),
-                        Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(8, 8), 2), 10),
-                        Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(8, 8));
+                    tmp = Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[3].Value);
                 }
-                else if (Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[3].Value) == 3)
+                catch
                 {
-                    cellType = "Rozkaz rozszerzony";
-                    instructionMnemo = Translator.DecodeInstruction(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(5, 4));
-                    dataGridView_Basic.Rows[2].Cells[1].Value = instructionMnemo + " - " + Translator.GetInsrtuctionDescription(instructionMnemo);
-                    //
-                    dataGridView_Decode_Complex.Rows.Add("OP",
-                        Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(0, 5), 2).ToString("X"),
-                        Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(0, 5), 2), 10),
-                        Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(0, 5));
-                    dataGridView_Decode_Complex.Rows.Add("AOP",
-                        Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(5, 4), 2).ToString("X"),
-                        Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(5, 4), 2), 10),
-                        Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(5, 4));
-                    dataGridView_Decode_Complex.Rows.Add("N",
-                        Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(9, 7), 2).ToString("X"),
-                        Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(9, 7), 2), 10),
-                        Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(9, 7));
+
+                }
+                if (tmp > 0)
+                {
+                    dataGridView_Basic.Rows[2].Cells[1].Value = instructionMnemo;
+                    int dataType = 0;
+                    if (Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[3].Value) == 1)
+                    {
+                        cellType = Strings.dataType;
+                        if (Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(0, 5) == "00000")
+                            dataType = 3;
+                        else
+                            dataType = 2;
+                    }
+                    if (Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[3].Value) == 2 || dataType == 2)
+                    {
+                        if (dataType != 2)
+                        {
+                            cellType = Strings.simpleInstructionType;
+                            instructionMnemo = Translator.DecodeInstruction(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(0, 5));
+                            dataGridView_Basic.Rows[2].Cells[1].Value = instructionMnemo + " - " + Translator.GetInsrtuctionDescription(instructionMnemo);
+                        }
+                        //
+                        dataGridView_Decode_Complex.Rows.Add("OP",
+                            Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(0, 5), 2).ToString("X"),
+                            Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(0, 5), 2), 10),
+                            Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(0, 5));
+                        dataGridView_Decode_Complex.Rows.Add("XSI",
+                            Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(5, 3), 2).ToString("X"),
+                            Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(5, 3), 2), 10),
+                            Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(5, 3));
+                        dataGridView_Decode_Complex.Rows.Add("DA",
+                            Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(8, 8), 2).ToString("X"),
+                            Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(8, 8), 2), 10),
+                            Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(8, 8));
+                    }
+                    else if (Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[3].Value) == 3 || dataType == 3)
+                    {
+                        if (dataType != 3)
+                        {
+                            cellType = Strings.complexInstructionType;
+                            instructionMnemo = Translator.DecodeInstruction(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(5, 4));
+                            dataGridView_Basic.Rows[2].Cells[1].Value = instructionMnemo + " - " + Translator.GetInsrtuctionDescription(instructionMnemo);
+                        }
+                        //
+                        dataGridView_Decode_Complex.Rows.Add("OP",
+                            Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(0, 5), 2).ToString("X"),
+                            Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(0, 5), 2), 10),
+                            Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(0, 5));
+                        dataGridView_Decode_Complex.Rows.Add("AOP",
+                            Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(5, 4), 2).ToString("X"),
+                            Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(5, 4), 2), 10),
+                            Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(5, 4));
+                        dataGridView_Decode_Complex.Rows.Add("N",
+                            Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(9, 7), 2).ToString("X"),
+                            Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(9, 7), 2), 10),
+                            Grid_Mem.Rows[idxRow].Cells[1].Value.ToString().Substring(9, 7));
+                    }
+
+                    dataGridView_Basic.Rows[0].Cells[1].Value = cellType;
+
+                    if (cellType != "")
+                        dataGridView_Basic.Rows[1].Cells[1].Value =
+                        Convert.ToString(Convert.ToUInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString(), 2), 10);
+                }
+                else
+                {
+                    dataGridView_Basic.Rows[0].Cells[1].Value = dataGridView_Basic.Rows[1].Cells[1].Value
+                        = dataGridView_Basic.Rows[2].Cells[1].Value = "";
                 }
 
-                dataGridView_Basic.Rows[0].Cells[1].Value = cellType;
-
-                if (cellType != "")
-                    dataGridView_Basic.Rows[1].Cells[1].Value =
-                    Convert.ToString(Convert.ToUInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString(), 2), 10);
+                //dataGridView_Decode_Simple.Height = panel_Left.Size.Height * 6 / 10;
+                dataGridView_Decode_Complex.Height = panel_Left.Size.Height * 4 / 10;
+                //dataGridView_Decode_Simple.ColumnHeadersHeight = dataGridView_Decode_Simple.Height / 6;
+                //foreach (DataGridViewRow x in dataGridView_Decode_Simple.Rows)
+                //{
+                //    x.Height = dataGridView_Decode_Simple.Height / 6;
+                //}
+                dataGridView_Decode_Complex.ColumnHeadersHeight = dataGridView_Decode_Complex.Height / 4;
+                foreach (DataGridViewRow x in dataGridView_Decode_Complex.Rows)
+                {
+                    x.Height = dataGridView_Decode_Complex.Height / 4;
+                }
+                Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Selected = true;
             }
-            else
-            {
-                dataGridView_Basic.Rows[0].Cells[1].Value = dataGridView_Basic.Rows[1].Cells[1].Value
-                    = dataGridView_Basic.Rows[2].Cells[1].Value = "";
-            }
-
-            dataGridView_Decode_Simple.Height = panel_Left.Size.Height * 6 / 10;
-            dataGridView_Decode_Complex.Height = panel_Left.Size.Height * 4 / 10;
-            dataGridView_Decode_Simple.ColumnHeadersHeight = dataGridView_Decode_Simple.Height / 6;
-            foreach (DataGridViewRow x in dataGridView_Decode_Simple.Rows)
-            {
-                x.Height = dataGridView_Decode_Simple.Height / 6;
-            }
-            dataGridView_Decode_Complex.ColumnHeadersHeight = dataGridView_Decode_Complex.Height / 4;
-            foreach (DataGridViewRow x in dataGridView_Decode_Complex.Rows)
-            {
-                x.Height = dataGridView_Decode_Complex.Height / 4;
-            }
-            Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Selected = true;
         }
 
         private void Grid_PO_MouseMove(object sender, MouseEventArgs e)
@@ -417,7 +448,7 @@ namespace LabZKT.Memory
 
         private void dataGridView_Decode_Simple_SelectionChanged(object sender, EventArgs e)
         {
-            dataGridView_Decode_Simple.ClearSelection();
+            //dataGridView_Decode_Simple.ClearSelection();
         }
 
         private void dataGridView_Decode_Complex_SelectionChanged(object sender, EventArgs e)
@@ -451,13 +482,13 @@ namespace LabZKT.Memory
             panel_Left.Width = Convert.ToInt32(Width - panel_View_PO.Width - 20);
             panel_Left.Height = Convert.ToInt32(Height * 1.0);
 
-            dataGridView_Decode_Simple.Height = panel_Left.Size.Height * 6 / 10;
+            //dataGridView_Decode_Simple.Height = panel_Left.Size.Height * 6 / 10;
             dataGridView_Decode_Complex.Height = panel_Left.Size.Height * 4 / 10;
-            dataGridView_Decode_Simple.ColumnHeadersHeight = dataGridView_Decode_Simple.Height / 6;
-            foreach (DataGridViewRow x in dataGridView_Decode_Simple.Rows)
-            {
-                x.Height = dataGridView_Decode_Simple.Height / 6;
-            }
+            //dataGridView_Decode_Simple.ColumnHeadersHeight = dataGridView_Decode_Simple.Height / 6;
+            //foreach (DataGridViewRow x in dataGridView_Decode_Simple.Rows)
+            //{
+            //    x.Height = dataGridView_Decode_Simple.Height / 6;
+            //}
             dataGridView_Decode_Complex.ColumnHeadersHeight = dataGridView_Decode_Complex.Height / 4;
             foreach (DataGridViewRow x in dataGridView_Decode_Complex.Rows)
             {
@@ -481,7 +512,7 @@ namespace LabZKT.Memory
             button_Edit.Location = bLocation;
 
 
-            startLocation = panel_Right.Height-button_Clear_Table.Size.Height-8;
+            startLocation = panel_Right.Height - button_Clear_Table.Size.Height - 8;
             bLocation.Y = startLocation;
             button_Clear_Table.Location = bLocation;
 

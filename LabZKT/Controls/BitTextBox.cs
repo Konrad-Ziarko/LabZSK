@@ -13,7 +13,7 @@ namespace LabZKT.Controls
         /// <summary>
         /// String representing CPU flag name
         /// </summary>
-        public string flagName { get; private set; }
+        public string flagName { get; set; }
         /// <summary>
         /// Value stored in flag
         /// </summary>
