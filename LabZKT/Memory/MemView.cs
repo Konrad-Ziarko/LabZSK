@@ -49,8 +49,6 @@ namespace LabZKT.Memory
 
         private void MemView_Load(object sender, EventArgs e)
         {
-            CancelButton = button_Edit;
-
             Size = new Size(800, 650);
             float horizontalRatio = 0.4f;
             Grid_Mem.Width = panel_View_PO.Width = Convert.ToInt32(Width * horizontalRatio - 10);
@@ -566,6 +564,12 @@ namespace LabZKT.Memory
                 Grid_Mem[3, Grid_Mem.CurrentCell.RowIndex].Value = List_Memory[Grid_Mem.CurrentCell.RowIndex].typ;
             }
 
+        }
+
+        private void MemView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                this.Hide();
         }
     }
 }

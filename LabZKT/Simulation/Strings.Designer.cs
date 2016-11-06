@@ -97,7 +97,8 @@ namespace LabZKT.Simulation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Czy napewno chcesz zakończyć pracę?\n Utracisz cały postęp..
+        ///   Looks up a localized string similar to Czy napewno chcesz zakończyć pracę?
+        ///Utracisz cały postęp..
         /// </summary>
         internal static string areYouSureExit {
             get {

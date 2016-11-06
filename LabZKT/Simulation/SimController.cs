@@ -123,7 +123,7 @@ namespace LabZKT.Simulation
         /// <summary>
         /// Initialize controller instance
         /// </summary>
-        public SimController()
+        public SimController(string filename)
         {
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
             initLists();
@@ -179,6 +179,20 @@ namespace LabZKT.Simulation
             memView = new MemView(ref List_Memory);
             memView.AUpdateForm += MemView_AUpdateForm;
 
+            if (filename != string.Empty)
+            {
+                string[] split = filename.Split('.');
+                try
+                {
+                    if (split[split.Length - 1] == "pm" || split[split.Length - 1] == "PM")
+                        pmView.LoadTable(filename);
+                    else if (split[split.Length - 1] == "po" || split[split.Length - 1] == "PO")
+                        memView.LoadTable(filename);
+                }
+                catch { }
+            }
+                
+
             theView.ShowDialog();
         }
 
@@ -189,6 +203,10 @@ namespace LabZKT.Simulation
             theView.setAllStrings();
             pmView.setAllStrings();
             memView.setAllStrings();
+        }
+        public void startWithPM(string filename)
+        {
+            pmView.LoadTable(filename);
         }
 
         private void TheView_ACallDevConsole()

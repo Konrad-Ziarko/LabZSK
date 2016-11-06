@@ -189,14 +189,16 @@ namespace LabZKT.Simulation
             int horizontalGap = Convert.ToInt32(0.25 * panel_Sim_Control.Width);
             int verticalGap = Convert.ToInt32(0.2 * panel_Sim_Control.Height);
             var size = registers["LK"].Size;
-            registers["LK"].SetXY((horizontalGap - 130) / 2, (verticalGap - 27) / 2);
-            registers["A"].SetXY(horizontalGap + (horizontalGap - 130) / 2, (verticalGap - 27) / 2);
-            registers["MQ"].SetXY(horizontalGap * 2 + (horizontalGap - 130) / 2, (verticalGap - 27) / 2);
-            registers["X"].SetXY(horizontalGap * 3 + (horizontalGap - 130) / 2, (verticalGap - 27) / 2);
+            int locY = (verticalGap - 27) / 2;
+            registers["LK"].SetXY((horizontalGap - 130) / 2, locY);
+            registers["A"].SetXY(horizontalGap + (horizontalGap - 130) / 2, locY);
+            registers["MQ"].SetXY(horizontalGap * 2 + (horizontalGap - 130) / 2, locY);
+            registers["X"].SetXY(horizontalGap * 3 + (horizontalGap - 130) / 2, locY);
 
-            registers["RAP"].SetXY((horizontalGap - 130) / 2, verticalGap + (verticalGap - 27) / 4);
-            registers["LALU"].SetXY(horizontalGap + (horizontalGap - 130) / 2, verticalGap + (verticalGap - 27) / 4);
-            registers["RALU"].SetXY(horizontalGap * 2 + (horizontalGap - 130) / 2, verticalGap + (verticalGap - 27) / 4);
+            locY = verticalGap + (verticalGap - 27) / 4;
+            registers["RAP"].SetXY((horizontalGap - 130) / 2, locY);
+            registers["LALU"].SetXY(horizontalGap + (horizontalGap - 130) / 2, locY);
+            registers["RALU"].SetXY(horizontalGap * 2 + (horizontalGap - 130) / 2, locY);
 
             int gapFromRalu = panel_Sim_Control.Width - registers["RALU"].Location.X - registers["RALU"].Width - 60;
             flags["ZNAK"].SetXY(panel_Sim_Control.Width - gapFromRalu, verticalGap + (verticalGap - 27) / 4);
@@ -212,21 +214,25 @@ namespace LabZKT.Simulation
 
             registers["BUS"].SetXY((horizontalGap - 130) / 2, verticalGap * 3);
 
-            registers["RR"].SetXY(horizontalGap + (horizontalGap - 130) / 2, verticalGap * 3 + (verticalGap - 27) / 2);
-            registers["LR"].SetXY(horizontalGap * 2 + (horizontalGap - 130) / 2, verticalGap * 3 + (verticalGap - 27) / 2);
-            registers["RI"].SetXY(horizontalGap * 3 + (horizontalGap - 130) / 2, verticalGap * 3 + (verticalGap - 27) / 2);
+            locY = verticalGap * 3 + (verticalGap - 27) / 2;
+            locY = locY < registers["BUS"].Location.Y + registers["BUS"].Height*2 ? registers["BUS"].Location.Y + registers["BUS"].Height * 2 : locY;
+            registers["RR"].SetXY(horizontalGap + (horizontalGap - 130) / 2, locY);
+            registers["LR"].SetXY(horizontalGap * 2 + (horizontalGap - 130) / 2, locY);
+            registers["RI"].SetXY(horizontalGap * 3 + (horizontalGap - 130) / 2, locY);
 
             var loc = RBPS.Location;
             loc.X = horizontalGap + (horizontalGap - 130) / 2;
             loc.Y = verticalGap * 4 + (verticalGap - 27) / 2;
             RBPS.Location = loc;
-            registers["RAPS"].SetXY(horizontalGap * 2 + (horizontalGap - 130) / 2, verticalGap * 4 + (verticalGap - 27) / 2);
-            registers["RAE"].SetXY(horizontalGap * 3 + (horizontalGap - 130) / 2, verticalGap * 4 + (verticalGap - 27) / 2);
+            locY = verticalGap * 4 + (verticalGap - 27) / 2;
+            registers["RAPS"].SetXY(horizontalGap * 2 + (horizontalGap - 130) / 2, locY);
+            registers["RAE"].SetXY(horizontalGap * 3 + (horizontalGap - 130) / 2, locY);
 
-            registers["L"].SetXY(horizontalGap + (horizontalGap - 130) * 3 / 2, verticalGap * 4);
-            registers["R"].SetXY(horizontalGap * 2 + (horizontalGap - 130) * 3 / 2, verticalGap * 4);
+            locY = verticalGap * 4;
+            registers["L"].SetXY(horizontalGap + (horizontalGap - 130) * 3 / 2, locY);
+            registers["R"].SetXY(horizontalGap * 2 + (horizontalGap - 130) * 3 / 2, locY);
             registers["SUMA"].SetXY((registers["R"].Location.X - registers["L"].Location.X + 130) / 2
-                - 65 + registers["L"].Location.X, verticalGap * 4 + (verticalGap - 27) * 3 / 4);
+                - 65 + registers["L"].Location.X, locY + (verticalGap - 27) * 3 / 4);
         }
 
         internal void changeLanguage()

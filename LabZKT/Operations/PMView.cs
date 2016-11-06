@@ -61,7 +61,6 @@ namespace LabZKT.MicroOperations
         }
         private void PM_Load(object sender, EventArgs e)
         {
-            CancelButton = button_Edit;
             Size = new Size(800, 650);
             CenterToScreen();
         }
@@ -457,6 +456,12 @@ namespace LabZKT.MicroOperations
         internal void SetDataGrid(DataGridView Grid_PM)
         {
             this.Grid_PM = Grid_PM;
+        }
+
+        private void PMView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                this.Hide();
         }
     }
 }

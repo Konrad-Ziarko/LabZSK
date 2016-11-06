@@ -130,7 +130,8 @@
     <value>Nowa symulacja</value>
   </data>
   <data name="areYouSureExit" xml:space="preserve">
-    <value>Czy napewno chcesz zakończyć pracę?\n Utracisz cały postęp.</value>
+    <value>Czy napewno chcesz zakończyć pracę?
+Utracisz cały postęp.</value>
   </data>
   <data name="areYouSureExitTitle" xml:space="preserve">
     <value>Przerwanie pracy</value>

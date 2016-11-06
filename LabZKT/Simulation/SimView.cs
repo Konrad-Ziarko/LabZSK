@@ -215,8 +215,13 @@ namespace LabZKT.Simulation
             if (isRunning)
                 e.Cancel = true;
             else
-                ASaveCurrentState(closeLogToolStripMenuItem.Enabled);
-
+            {
+                DialogResult dr = MessageBox.Show(Strings.areYouSureExit, Strings.areYouSureExitTitle, MessageBoxButtons.OKCancel);
+                if (dr == DialogResult.OK)
+                    ASaveCurrentState(closeLogToolStripMenuItem.Enabled);
+                else
+                    e.Cancel = true;
+            }
         }
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -254,8 +259,12 @@ namespace LabZKT.Simulation
         {
             Grid_Mem[1, row].Value = list_Memory[row].value;
             Grid_Mem[2, row].Value = list_Memory[row].hex;
-            Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Selected = false;
-            Grid_Mem.Rows[row].Selected = true;
+            try
+            {
+                Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Selected = false;
+                Grid_Mem.Rows[row].Selected = true;
+            }
+            catch (NullReferenceException) { }
         }
         internal void Grid_Mem_SelectionChanged(object sender, EventArgs e)
         {
@@ -348,14 +357,7 @@ namespace LabZKT.Simulation
             }
             else if (e.KeyChar == (char)Keys.Escape && inEditMode)
             {
-                panel_Control.Focus();
-                ALeaveEditMode();
-                toolStripMenu_Edit.Text = Simulation.Strings.editRegisters;
-                button_Makro.Visible = true;
-                button_Micro.Visible = true;
-                toolStripMenu_Clear.Enabled = true;
-                inEditMode = false;
-                label_Status.Text = Simulation.Strings.stopMode;
+                SwitchEditMode();
             }
             else if (e.KeyChar == (char)Keys.Escape && isRunning)
             {

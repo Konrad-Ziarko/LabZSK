@@ -43,13 +43,13 @@ namespace LabZKT.Simulation
                     skin = drawSkin(Color.FromArgb(255, 27, 96, 51), Color.FromArgb(255, 133, 198, 72), Color.FromArgb(255, 249, 66, 239));
                     break;
                 case 1:
-                    skin = drawSkin(Color.FromArgb(255, 31, 18, 158), Color.FromArgb(255, 88, 77, 238), Color.FromArgb(255, 249, 239, 66));
+                    skin = drawSkin(Color.FromArgb(255, 31, 18, 158), Color.FromArgb(255, 2, 112, 223), Color.FromArgb(255, 249, 239, 66));
                     break;
                 case 2:
                     skin = drawSkin(Color.FromArgb(255, 177, 1, 5), Color.FromArgb(255, 254, 65, 69), Color.FromArgb(255, 5, 254, 177));
                     break;
                 case 3:
-                    skin = drawSkin(Color.FromArgb(255, 5, 5, 5), Color.FromArgb(255, 50, 50, 50), Color.FromArgb(255, 249, 239, 245));
+                    skin = drawSkin(Color.FromArgb(255, 5, 5, 5), Color.FromArgb(255, 60, 60, 60), Color.FromArgb(255, 249, 239, 245));
                     break;
                 default:
                     skin = drawSkin(Color.FromArgb(255, 27, 96, 51), Color.FromArgb(255, 133, 198, 72), Color.FromArgb(255, 249, 66, 239));
@@ -58,19 +58,20 @@ namespace LabZKT.Simulation
             controlToDrawOn.BackgroundImage = skin;
         }
 
-        private Bitmap drawSkin(Color backgroundColor, Color penColor, Color textColor)
+        private Bitmap drawSkin(Color backgroundColor, Color busColor, Color textColor)
         {
             Bitmap background = new Bitmap(controlToDrawOn.Width, controlToDrawOn.Height);
             Graphics g = Graphics.FromImage(background);
             g.Clear(backgroundColor);
             NumericTextBox ntb;
             if (registers.TryGetValue("BUS", out ntb))
-                ntb.setCustomeBackColor(ControlPaint.Light(backgroundColor, 0.5f));
+                //ntb.setCustomeColor(busColor, Color.FromArgb(busColor.ToArgb() ^ 0xffffff));
+            ntb.setCustomeColor(busColor, Color.FromArgb(255,255,255,255));
 
             GraphicsPath path = new GraphicsPath();
-            Pen pen = new Pen(penColor, 10);
-            Pen pen2 = new Pen(penColor, 5);
-            Pen pen3 = new Pen(penColor, 80);
+            Pen pen = new Pen(busColor, 10);
+            Pen pen2 = new Pen(busColor, 5);
+            Pen pen3 = new Pen(busColor, 80);
             pen.LineJoin = LineJoin.Bevel;
             Point p1 = registers["BUS"].Location;
             Point p2 = new Point();
@@ -141,7 +142,7 @@ namespace LabZKT.Simulation
             p1.X = registers["ALU"].Location.X + registers["ALU"].Size.Width / 2;
             p1.Y = registers["ALU"].Location.Y + registers["ALU"].Size.Height / 2;
             //ALU interior
-            SolidBrush aluBrush = new SolidBrush(penColor);
+            SolidBrush aluBrush = new SolidBrush(busColor);
             g.FillPolygon(aluBrush, new Point[]
             {
                 new Point(registers["LALU"].Location.X, registers["LALU"].Location.Y + registers["LALU"].Size.Height),
@@ -243,7 +244,7 @@ namespace LabZKT.Simulation
                 path.Reset();
                 path.StartFigure();
                 //
-                SolidBrush sumBrush = new SolidBrush(penColor);
+                SolidBrush sumBrush = new SolidBrush(busColor);
                 g.FillPolygon(aluBrush, new Point[]
                 {
                     new Point(registers["L"].Location.X, registers["L"].Location.Y + registers["L"].Size.Height),
@@ -287,7 +288,7 @@ namespace LabZKT.Simulation
             Font fnt = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
             SolidBrush sb = new SolidBrush(textColor);
             foreach (var flg in flags.Values)
-                g.DrawString(flg.flagName, fnt, sb, flg.Location.X, flg.Location.Y - 18);
+                g.DrawString(flg.flagName, fnt, sb, flg.Location.X + flg.Width/2 - g.MeasureString(flg.flagName, fnt).Width/2, flg.Location.Y - 18);
             foreach (var reg in registers.Values)
                 if (reg.Visible)
                     g.DrawString(reg.registerName, fnt, sb, reg.Location.X, reg.Location.Y - 18);

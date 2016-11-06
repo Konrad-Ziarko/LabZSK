@@ -130,7 +130,8 @@
     <value>New simulation</value>
   </data>
   <data name="areYouSureExit" xml:space="preserve">
-    <value>Are you sure to end work?\n You will lose all progress.</value>
+    <value>Are you sure to end work?
+You will lose all progress.</value>
   </data>
   <data name="areYouSureExitTitle" xml:space="preserve">
     <value>Exiting</value>

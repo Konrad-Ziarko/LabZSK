@@ -74,15 +74,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button2;
-            this.ClientSize = new System.Drawing.Size(546, 134);
+            this.ClientSize = new System.Drawing.Size(564, 134);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(562, 173);
+            this.MaximumSize = new System.Drawing.Size(580, 173);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(562, 173);
+            this.MinimumSize = new System.Drawing.Size(580, 173);
             this.Name = "Box";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Deinstalacja";

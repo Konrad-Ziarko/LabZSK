@@ -16,7 +16,7 @@ namespace LabZKT
         static Mutex singleton = new Mutex(true, "LABZKT");
         private static string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             if (singleton.WaitOne(TimeSpan.Zero, true))
             {
@@ -31,10 +31,17 @@ namespace LabZKT
                 //Application.Run(new SplashScreen());
                 if (File.Exists(envPath + @"\Env\LabZKT.ini"))
                 {
-
+                    //ustawienia ladowac
                     Settings.Default.Save();
                 }
-                SimController sc = new SimController();
+                string filename = string.Empty;
+                filename = @"C:\Users\Konrad\Documents\LabZkt\PO\1.po";
+                if (args != null && args.Length > 0)
+                {
+                    filename = args[0];
+                }
+                new SimController(filename);
+                
             }
             else
             {

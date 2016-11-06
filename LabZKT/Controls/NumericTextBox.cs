@@ -15,6 +15,7 @@ namespace LabZKT.Controls
         /// String representing register name
         /// </summary>
         public string registerName { get; private set; }
+        public string registerText { get; set; }
         /// <summary>
         /// Boolean value representing whether register value was changed and needs to be validated
         /// </summary>
@@ -29,7 +30,7 @@ namespace LabZKT.Controls
         public short valueWhichShouldBeMovedToRegister { get; private set; }
         private static short dragValue;
         private static Point hitTest;
-        private Color customeBackColor;
+        private Color customeBackColor, customeForeColor;
 
         /// <summary>
         /// Initialize new instance of NumericTextBox
@@ -40,7 +41,7 @@ namespace LabZKT.Controls
         /// <param name="c">Parent control for this instance</param>
         public NumericTextBox(string name, int x, int y, Control c)
         {
-            Color customeBackColor = SystemColors.Window;
+            customeBackColor = SystemColors.Window;
             innerValue = valueWhichShouldBeMovedToRegister = 0;
             registerName = name;
             ReadOnly = AllowDrop = true;
@@ -53,7 +54,7 @@ namespace LabZKT.Controls
             loc.Y = y;
             Location = loc;
             BackColor = Color.White;
-            Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
+            Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
         }
         /// <summary>
         /// Occurs when key was pressed
@@ -225,6 +226,18 @@ namespace LabZKT.Controls
 
             }
         }
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            this.ForeColor = customeForeColor;
+            this.BackColor = customeBackColor;
+            this.OnPaint(new PaintEventArgs(this.CreateGraphics(), ClientRectangle));
+        }
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            string tmp = Text;
+            //Text = string.Empty;
+            //TextRenderer.DrawText(e.Graphics, Text, Font, e.ClipRectangle, ForeColor);
+        }
         #region Drag&Drop
         /// <summary>
         /// Occures when mouse button is down
@@ -340,6 +353,7 @@ namespace LabZKT.Controls
             needCheck = false;
             ReadOnly = true;
             BackColor = customeBackColor;
+            ForeColor = customeForeColor;
             setText();
             if (valueWhichShouldBeMovedToRegister != innerValue)
             {
@@ -374,10 +388,12 @@ namespace LabZKT.Controls
         /// <summary>
         /// Set register background color
         /// </summary>
-        /// <param name="color">Color which should be set as background color</param>
-        public void setCustomeBackColor(Color color)
+        /// <param name="colorBack">Color which should be set as background color</param>
+        /// <param name="colorFore">Color which should be set as foreground color</param>
+        public void setCustomeColor(Color colorBack, Color colorFore)
         {
-            BackColor = customeBackColor = color;
+            BackColor = customeBackColor = colorBack;
+            this.ForeColor = customeForeColor = colorFore;
         }
         /// <summary>
         /// Protect registers from overflowing by clamping values
