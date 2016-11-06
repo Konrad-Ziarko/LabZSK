@@ -277,4 +277,7 @@ You will lose all progress.</value>
   <data name="sign" xml:space="preserve">
     <value>SIGN</value>
   </data>
+  <data name="simulationBreak" xml:space="preserve">
+    <value>*Simulation interrupted*</value>
+  </data>
 </root>

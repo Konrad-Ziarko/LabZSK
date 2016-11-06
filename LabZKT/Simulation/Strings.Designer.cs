@@ -485,6 +485,15 @@ namespace LabZKT.Simulation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to *Symulacja przerwana*.
+        /// </summary>
+        internal static string simulationBreak {
+            get {
+                return ResourceManager.GetString("simulationBreak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Praca procesora.
         /// </summary>
         internal static string SimulationTitle {

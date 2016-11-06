@@ -190,6 +190,7 @@ namespace LabZKT.Simulation
             int verticalGap = Convert.ToInt32(0.2 * panel_Sim_Control.Height);
             var size = registers["LK"].Size;
             int locY = (verticalGap - 27) / 2;
+            locY = locY < 32 ? 32 : locY;
             registers["LK"].SetXY((horizontalGap - 130) / 2, locY);
             registers["A"].SetXY(horizontalGap + (horizontalGap - 130) / 2, locY);
             registers["MQ"].SetXY(horizontalGap * 2 + (horizontalGap - 130) / 2, locY);
@@ -215,7 +216,7 @@ namespace LabZKT.Simulation
             registers["BUS"].SetXY((horizontalGap - 130) / 2, verticalGap * 3);
 
             locY = verticalGap * 3 + (verticalGap - 27) / 2;
-            locY = locY < registers["BUS"].Location.Y + registers["BUS"].Height*2 ? registers["BUS"].Location.Y + registers["BUS"].Height * 2 : locY;
+            locY = locY < registers["BUS"].Location.Y + 35 ? registers["BUS"].Location.Y + 35 : locY;
             registers["RR"].SetXY(horizontalGap + (horizontalGap - 130) / 2, locY);
             registers["LR"].SetXY(horizontalGap * 2 + (horizontalGap - 130) / 2, locY);
             registers["RI"].SetXY(horizontalGap * 3 + (horizontalGap - 130) / 2, locY);
@@ -240,6 +241,7 @@ namespace LabZKT.Simulation
             EnDisableButtons();
             currentTact = 0;
             stopSim();
+            logManager.addToMemory("\n"+Strings.simulationBreak+"\n");
         }
 
         internal void changeLanguage()

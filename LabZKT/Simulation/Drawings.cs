@@ -290,7 +290,10 @@ namespace LabZKT.Simulation
                 g.DrawString(flg.flagName, fnt, sb, flg.Location.X + flg.Width/2 - g.MeasureString(flg.flagName, fnt).Width/2, flg.Location.Y - 18);
             foreach (var reg in registers.Values)
                 if (reg.Visible)
-                    g.DrawString(reg.registerName, fnt, sb, reg.Location.X, reg.Location.Y - 18);
+                    if (reg.registerName == "L" || reg.registerName == "R" || reg.registerName == "ALU" || reg.registerName == "SUMA")
+                        g.DrawString(reg.registerName, fnt, sb, reg.Location.X + reg.Width / 2 - g.MeasureString(reg.registerName, fnt).Width / 2, reg.Location.Y - 18);
+                    else
+                        g.DrawString(reg.registerName, fnt, sb, reg.Location.X, reg.Location.Y - 18);
             if (!registers["SUMA"].Visible)
                 g.DrawString("RBPS", fnt, sb, RBPS.Location.X, RBPS.Location.Y - 18);
 

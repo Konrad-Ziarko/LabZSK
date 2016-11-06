@@ -277,4 +277,7 @@ Utracisz cały postęp.</value>
   <data name="sign" xml:space="preserve">
     <value>ZNAK</value>
   </data>
+  <data name="simulationBreak" xml:space="preserve">
+    <value>*Symulacja przerwana*</value>
+  </data>
 </root>

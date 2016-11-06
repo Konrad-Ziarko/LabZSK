@@ -64,7 +64,6 @@ namespace LabZKT.Simulation
             InitializeComponent();
             devConsoleToolStripMenuItem.Enabled = Properties.Settings.Default.IsDevConsole;
             closeLogToolStripMenuItem.Enabled = needsNewLog;
-
             setAllStrings();
         }
         internal void setAllStrings()
@@ -260,12 +259,11 @@ namespace LabZKT.Simulation
         {
             Grid_Mem[1, row].Value = list_Memory[row].value;
             Grid_Mem[2, row].Value = list_Memory[row].hex;
-            try
+            /*try
             {
-                Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Selected = false;
                 Grid_Mem.Rows[row].Selected = true;
             }
-            catch (NullReferenceException) { }
+            catch (NullReferenceException) { }*/
         }
         internal void Grid_Mem_SelectionChanged(object sender, EventArgs e)
         {
@@ -367,7 +365,6 @@ namespace LabZKT.Simulation
                 if (dr == DialogResult.OK)
                 {
                     ABreakSimulation();
-
                 }
             }
 

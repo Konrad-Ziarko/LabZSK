@@ -18,7 +18,6 @@ namespace LabZKT.MicroOperations
     public partial class PMView : Form
     {
         internal event Action<int, int, string> AUpdateData;
-        internal event Action<List<MicroOperation>> AUpdateGrid;
 
         private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
         internal PMSubmit theSubView;

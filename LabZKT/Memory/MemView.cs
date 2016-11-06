@@ -37,16 +37,6 @@ namespace LabZKT.Memory
             dataGridView_Basic.Rows.Add(3);
             LoadMemory();
         }
-
-        internal DataGridView GetDataGrid()
-        {
-            return Grid_Mem;
-        }
-        internal void SetDataGrid(DataGridView Grid_Mem)
-        {
-            this.Grid_Mem = Grid_Mem;
-        }
-
         private void MemView_Load(object sender, EventArgs e)
         {
             Size = new Size(800, 650);

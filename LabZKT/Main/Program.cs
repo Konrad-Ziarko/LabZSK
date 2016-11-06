@@ -35,7 +35,6 @@ namespace LabZKT
                     Settings.Default.Save();
                 }
                 string filename = string.Empty;
-                filename = @"C:\Users\Konrad\Documents\LabZkt\PO\1.po";
                 if (args != null && args.Length > 0)
                 {
                     filename = args[0];
