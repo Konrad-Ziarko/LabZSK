@@ -63,10 +63,9 @@ namespace LabZKT.Simulation
             Bitmap background = new Bitmap(controlToDrawOn.Width, controlToDrawOn.Height);
             Graphics g = Graphics.FromImage(background);
             g.Clear(backgroundColor);
-            NumericTextBox ntb;
-            if (registers.TryGetValue("BUS", out ntb))
+            //NumericTextBox ntb;
+            //if (registers.TryGetValue("BUS", out ntb))
                 //ntb.setCustomeColor(busColor, Color.FromArgb(busColor.ToArgb() ^ 0xffffff));
-            ntb.setCustomeColor(busColor, Color.FromArgb(255,255,255,255));
 
             GraphicsPath path = new GraphicsPath();
             Pen pen = new Pen(busColor, 10);

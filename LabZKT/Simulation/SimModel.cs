@@ -235,6 +235,13 @@ namespace LabZKT.Simulation
                 - 65 + registers["L"].Location.X, locY + (verticalGap - 27) * 3 / 4);
         }
 
+        internal void breakSimulation()
+        {
+            EnDisableButtons();
+            currentTact = 0;
+            stopSim();
+        }
+
         internal void changeLanguage()
         {
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);

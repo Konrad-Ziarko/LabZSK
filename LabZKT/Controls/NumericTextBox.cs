@@ -15,7 +15,6 @@ namespace LabZKT.Controls
         /// String representing register name
         /// </summary>
         public string registerName { get; private set; }
-        public string registerText { get; set; }
         /// <summary>
         /// Boolean value representing whether register value was changed and needs to be validated
         /// </summary>
@@ -228,15 +227,9 @@ namespace LabZKT.Controls
         }
         protected override void OnEnabledChanged(EventArgs e)
         {
-            this.ForeColor = customeForeColor;
-            this.BackColor = customeBackColor;
-            this.OnPaint(new PaintEventArgs(this.CreateGraphics(), ClientRectangle));
-        }
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            string tmp = Text;
-            //Text = string.Empty;
-            //TextRenderer.DrawText(e.Graphics, Text, Font, e.ClipRectangle, ForeColor);
+            base.OnEnabledChanged(e);
+            if (!Enabled)
+            BackColor = customeBackColor;
         }
         #region Drag&Drop
         /// <summary>

@@ -18,6 +18,7 @@ namespace LabZKT.MicroOperations
     public partial class PMView : Form
     {
         internal event Action<int, int, string> AUpdateData;
+        internal event Action<List<MicroOperation>> AUpdateGrid;
 
         private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
         internal PMSubmit theSubView;
@@ -163,6 +164,7 @@ namespace LabZKT.MicroOperations
                     {
                         int n = br.ReadInt32();
                         int m = br.ReadInt32();
+                        string lastString;
                         if (m == 256 && n == 12)
                         {
                             for (int i = 0; i < m; ++i)
@@ -171,9 +173,13 @@ namespace LabZKT.MicroOperations
                                 {
                                     if (br.ReadBoolean())
                                     {
-                                        Grid_PM[j, i].Value = br.ReadString();
+                                        lastString = br.ReadString();
                                         if (j > 0)
-                                            AUpdateData(i, j, Grid_PM[j, i].Value.ToString());
+                                            if (Grid_PM[j, i].Value.ToString() != lastString)
+                                            {
+                                                Grid_PM[j, i].Value = lastString;
+                                                AUpdateData(i, j, Grid_PM[j, i].Value.ToString());
+                                            }
                                     }
                                     else
                                         br.ReadBoolean();

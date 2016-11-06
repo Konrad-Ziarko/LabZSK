@@ -40,6 +40,7 @@ namespace LabZKT.Simulation
         internal event Action ALoadPAO;
         internal event Action AShowCurrentLog;
         internal event Action AChangeLanguage;
+        internal event Action ABreakSimulation;
 
         internal int currnetCycle { get; set; }
         internal int mark { get; set; }
@@ -365,7 +366,8 @@ namespace LabZKT.Simulation
                 DialogResult dr = MessageBox.Show(Simulation.Strings.areYouSureExit, Simulation.Strings.areYouSureExitTitle, MessageBoxButtons.OKCancel);
                 if (dr == DialogResult.OK)
                 {
-                    //
+                    ABreakSimulation();
+
                 }
             }
 
@@ -561,12 +563,6 @@ namespace LabZKT.Simulation
                     Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Value = "";
                 }
             }
-        }
-
-        private void Grid_PM_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-            //SolidBrush sb = new SolidBrush(Color.Red);
-            //e.Graphics.DrawRectangle(new Pen(sb, 5), e.CellBounds);
         }
 
         private void button_Show_Log_Click(object sender, EventArgs e)

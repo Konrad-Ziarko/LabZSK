@@ -163,6 +163,7 @@ namespace LabZKT.Simulation
             theView.AUpdateForm += MemView_AUpdateForm;
             theView.AShowCurrentLog += theModel.ShowCurrentLog;
             theView.AChangeLanguage += TheView_AChangeLanguage;
+            theView.ABreakSimulation += theModel.breakSimulation;
 
             theModel.StartSim += startSim;
             theModel.StopSim += theView.stopSim;
@@ -203,10 +204,6 @@ namespace LabZKT.Simulation
             theView.setAllStrings();
             pmView.setAllStrings();
             memView.setAllStrings();
-        }
-        public void startWithPM(string filename)
-        {
-            pmView.LoadTable(filename);
         }
 
         private void TheView_ACallDevConsole()

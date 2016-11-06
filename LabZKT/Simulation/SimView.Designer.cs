@@ -498,7 +498,6 @@
             this.Grid_PM.RowTemplate.Height = 24;
             this.Grid_PM.Size = new System.Drawing.Size(572, 237);
             this.Grid_PM.TabIndex = 2;
-            this.Grid_PM.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.Grid_PM_CellPainting);
             this.Grid_PM.SelectionChanged += new System.EventHandler(this.Grid_PM_SelectionChanged);
             // 
             // addres
