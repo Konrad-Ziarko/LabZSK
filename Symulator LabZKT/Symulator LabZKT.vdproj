@@ -45,12 +45,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7F1EE45884A34A3CB031030FE75E0562"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_CFC74500EEAF7746BC3661976B11CF12"
         "OwnerKey" = "8:_0F20B511CE494E2A8C58DE4686235A32"
         "MsmSig" = "8:_UNDEFINED"
@@ -265,26 +259,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7F1EE45884A34A3CB031030FE75E0562"
-            {
-            "SourcePath" = "8:..\\LabZKT\\Resources\\Zasady.rtf"
-            "TargetName" = "8:Zasady.rtf"
-            "Tag" = "8:"
-            "Folder" = "8:_B7ACF3CF31B944A39FE28535DB0ED715"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CFC74500EEAF7746BC3661976B11CF12"
             {
             "AssemblyRegister" = "3:1"
@@ -416,7 +390,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Symulator LabZKT"
         "ProductCode" = "8:{FBD0F683-13CC-431E-806E-37EE0B308CB7}"
-        "PackageCode" = "8:{50C4F0F0-D0CA-4B04-96B3-14228EDBA6A7}"
+        "PackageCode" = "8:{A5E99234-8C09-4938-9A8B-FC39CA3D9E4E}"
         "UpgradeCode" = "8:{C6C943D1-2C34-4EBC-BEDF-3480841123A4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -658,53 +632,6 @@
                             "Attributes" = "3:0"
                             "Setting" = "3:2"
                             "Value" = "8:_4C4F5C7B2F794EA1AA4BB536ED255831"
-                            "UsePlugInResources" = "11:TRUE"
-                            }
-                            "Sunken"
-                            {
-                            "Name" = "8:Sunken"
-                            "DisplayName" = "8:#1007"
-                            "Description" = "8:#1107"
-                            "Type" = "3:5"
-                            "ContextData" = "8:4;True=4;False=0"
-                            "Attributes" = "3:0"
-                            "Setting" = "3:0"
-                            "Value" = "3:4"
-                            "DefaultValue" = "3:4"
-                            "UsePlugInResources" = "11:TRUE"
-                            }
-                        }
-                    }
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_A6930F3A73BD48E091CE39182FD4EF51"
-                    {
-                    "Sequence" = "3:200"
-                    "DisplayName" = "8:License Agreement"
-                    "UseDynamicProperties" = "11:TRUE"
-                    "IsDependency" = "11:FALSE"
-                    "SourcePath" = "8:<VsdDialogDir>\\VsdLicenseDlg.wid"
-                        "Properties"
-                        {
-                            "BannerBitmap"
-                            {
-                            "Name" = "8:BannerBitmap"
-                            "DisplayName" = "8:#1001"
-                            "Description" = "8:#1101"
-                            "Type" = "3:8"
-                            "ContextData" = "8:Bitmap"
-                            "Attributes" = "3:4"
-                            "Setting" = "3:1"
-                            "UsePlugInResources" = "11:TRUE"
-                            }
-                            "EulaText"
-                            {
-                            "Name" = "8:EulaText"
-                            "DisplayName" = "8:#1008"
-                            "Description" = "8:#1108"
-                            "Type" = "3:6"
-                            "ContextData" = "8:"
-                            "Attributes" = "3:0"
-                            "Setting" = "3:2"
-                            "Value" = "8:_7F1EE45884A34A3CB031030FE75E0562"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "Sunken"

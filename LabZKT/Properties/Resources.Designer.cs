@@ -128,16 +128,5 @@ namespace LabZKT.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\adeflang1025\ansi\ansicpg1250\uc1\adeff31507\deff0\stshfdbch31506\stshfloch31506\stshfhich31506\stshfbi31507\deflang1045\deflangfe1045\themelang1045\themelangfe0\themelangcs0{\fonttbl{\f0\fbidi \froman\fcharset238\fprq2{\*\panose 02020603050405020304}Times New Roman;}
-        ///{\f2\fbidi \fmodern\fcharset238\fprq1{\*\panose 02070309020205020404}Courier New;}{\f34\fbidi \froman\fcharset1\fprq2{\*\panose 02040503050406030204}Cambria Math;}
-        ///{\flomajor\f31500\fbidi \froman\fcharset238\fprq2{\*\panose 0202060305 [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string Zasady {
-            get {
-                return ResourceManager.GetString("Zasady", resourceCulture);
-            }
-        }
     }
 }

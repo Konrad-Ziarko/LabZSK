@@ -46,7 +46,7 @@
     
     mimetype: application/x-microsoft.net.object.binary.base64
     value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : System.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
@@ -60,7 +60,6 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -69,10 +68,9 @@
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
               <xsd:attribute name="type" type="xsd:string" />
               <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
@@ -87,10 +85,9 @@
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -112,123 +109,9 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="aopLabel" xml:space="preserve">
-    <value>AOP</value>
-  </data>
-  <data name="binRadioButton" xml:space="preserve">
-    <value>binarnie</value>
-  </data>
-  <data name="cancelChoiceButton" xml:space="preserve">
-    <value>Anuluj</value>
-  </data>
-  <data name="cancelComplexButton" xml:space="preserve">
-    <value>Anuluj</value>
-  </data>
-  <data name="cancelDataButton" xml:space="preserve">
-    <value>Anuluj</value>
-  </data>
-  <data name="cancelSimpleButton" xml:space="preserve">
-    <value>Anuluj</value>
-  </data>
-  <data name="choiceComplexButton" xml:space="preserve">
-    <value>Rozkaz rozszerzony</value>
-  </data>
-  <data name="choiceDataButton" xml:space="preserve">
-    <value>Dana</value>
-  </data>
-  <data name="choiceSimpleButton" xml:space="preserve">
-    <value>Rozkaz prosty</value>
-  </data>
-  <data name="clearRowButton" xml:space="preserve">
-    <value>Wyczyść wiersz</value>
-  </data>
-  <data name="clearTableButton" xml:space="preserve">
-    <value>Wyczyść pamięć</value>
-  </data>
-  <data name="daLabel" xml:space="preserve">
-    <value>DA</value>
-  </data>
-  <data name="decRadioButton" xml:space="preserve">
-    <value>dziesiętnie</value>
-  </data>
-  <data name="editMemoryButton" xml:space="preserve">
-    <value>Edytuj komórkę</value>
-  </data>
-  <data name="hexRadioButton" xml:space="preserve">
-    <value>szesnastkowo</value>
-  </data>
-  <data name="loadTableButton" xml:space="preserve">
-    <value>Wczytaj pamięć</value>
-  </data>
-  <data name="MemSubmitTitle" xml:space="preserve">
-    <value>Edycja komórki</value>
-  </data>
-  <data name="nLabel" xml:space="preserve">
-    <value>N</value>
-  </data>
-  <data name="okComplexButton" xml:space="preserve">
-    <value>Zatwierdź</value>
-  </data>
-  <data name="okDataButton" xml:space="preserve">
-    <value>Zatwierdź</value>
-  </data>
-  <data name="okSimpleButton" xml:space="preserve">
-    <value>Zatwierdź</value>
-  </data>
-  <data name="opLabel" xml:space="preserve">
-    <value>OP</value>
-  </data>
-  <data name="saveTableButton" xml:space="preserve">
-    <value>Zapisz pamięć</value>
-  </data>
-  <data name="cellAddressViewGrid" xml:space="preserve">
-    <value>Adres</value>
-  </data>
-  <data name="cellValueViewGrid" xml:space="preserve">
-    <value>Zawartość</value>
-  </data>
-  <data name="MemViewTitle" xml:space="preserve">
-    <value>Pamięć Operacyjna</value>
-  </data>
-  <data name="complexInstructionType" xml:space="preserve">
-    <value>Rozkaz złożony</value>
-  </data>
-  <data name="dataType" xml:space="preserve">
-    <value>Dana</value>
-  </data>
-  <data name="simpleInstructionType" xml:space="preserve">
-    <value>Rozkaz prosty</value>
-  </data>
-  <data name="decimalValue" xml:space="preserve">
-    <value>Wartość dziesiętna</value>
-  </data>
-  <data name="mnemonicName" xml:space="preserve">
-    <value>Mnemonik</value>
-  </data>
-  <data name="recordType" xml:space="preserve">
-    <value>Typ Komórki</value>
-  </data>
-  <data name="field" xml:space="preserve">
-    <value>Pole</value>
-  </data>
-  <data name="memLoadError" xml:space="preserve">
-    <value>To nie jest poprawny plik pamięci operacyjnej!</value>
-  </data>
-  <data name="memLoadErrorTitle" xml:space="preserve">
-    <value>Ładowanie pamięci przerwane</value>
-  </data>
-  <data name="areYouSureClearTable" xml:space="preserve">
-    <value>Czy napewno chcesz wyczyścić całą pamięć?</value>
-  </data>
-  <data name="areYouSureClearTableTitle" xml:space="preserve">
-    <value>Tej operacji nie da się cofnąć!</value>
-  </data>
-  <data name="memLoadNotValid" xml:space="preserve">
-    <value>Wykryto niespójność pliku!</value>
-  </data>
 </root>

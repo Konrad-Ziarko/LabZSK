@@ -5,14 +5,19 @@ using LabZKT.Properties;
 using LabZKT.StaticClasses;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Media;
+using System.Net;
+using System.Net.Cache;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LabZKT.Simulation
@@ -148,11 +153,6 @@ namespace LabZKT.Simulation
         /// </summary>
         public void initLogInformation()
         {
-            string sysType;
-            if (Environment.Is64BitOperatingSystem)
-                sysType = "x64";
-            else
-                sysType = "x32";
             string ipAddrList = string.Empty;
             foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
                 if (item.NetworkInterfaceType == NetworkInterfaceType.Ethernet && item.OperationalStatus == OperationalStatus.Up)
@@ -161,12 +161,16 @@ namespace LabZKT.Simulation
                             if (ipAddrList == string.Empty)
                                 ipAddrList += ip.Address.ToString();
                             else
-                                ipAddrList += "\n".PadRight(43, ' ') + ip.Address.ToString();
+                                ipAddrList += "\n".PadRight(31, ' ') + ip.Address.ToString();
             logManager.createNewLog(logFile);
             Settings.Default.Save();
-            addTextToLogFile(Simulation.Strings.pcInDomain + ": \"" + Environment.UserDomainName + "\"\n" + Simulation.Strings.machineName + " \"" +
-            Environment.MachineName + "\" " + sysType + " " + Environment.OSVersion + " OS\n" + Simulation.Strings.loggedAs + ": \"" +
-            Environment.UserName + "\"\n" + Simulation.Strings.networkInterfaces + ": " + ipAddrList + "\n\n\n");
+            addTextToLogFile(Strings.pcInDomain + ": \"" + Environment.UserDomainName + "\"\n" + Strings.machineName + " \"" +
+            Environment.MachineName + "\" \n" + Strings.loggedAs + ": \"" +
+            Environment.UserName + "\"\n" + Strings.networkInterfaces + ": " + ipAddrList + "\n\n");
+            if (Settings.Default.CanEditOptions)
+                addTextToLogFile(Strings.canEditSettings+"\n");
+            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["ApplicationForStudents"]))
+                addTextToLogFile(Strings.notForStudents + "\n");
         }
         public void addTextToLogFile(string lineOfText)
         {
@@ -238,10 +242,13 @@ namespace LabZKT.Simulation
 
         internal void breakSimulation()
         {
+            buttonOKClicked = true;
+            if (registers["SUMA"].Visible)
+                switchLayOut();
             EnDisableButtons();
             currentTact = 0;
             stopSim();
-            logManager.addToMemory("\n"+Strings.simulationBreak+"\n");
+            logManager.addToMemory("\n" + Strings.simulationBreak + "\n");
         }
 
         internal void changeLanguage()
@@ -280,7 +287,7 @@ namespace LabZKT.Simulation
             foreach (var oldReg in oldRegs)
             {
                 if (registers[oldReg.Key].innerValue != oldReg.Value)
-                    addTextToLogFile(Simulation.Strings.registerHasChanged + " " + oldReg.Key.PadRight(6, ' ') +
+                    addTextToLogFile(Strings.registerHasChanged + " " + oldReg.Key.PadRight(6, ' ') +
                         oldReg.Value + "=>" + registers[oldReg.Key].innerValue + "\n");
             }
             foreach (var reg in registers)
@@ -318,7 +325,7 @@ namespace LabZKT.Simulation
         /// </summary>
         public void clearRegisters()
         {
-            addTextToLogFile("\n" + Simulation.Strings.clearingRegister + "\n");
+            addTextToLogFile("\n" + Strings.clearingRegister + "\n");
             mark = 5;
             mistakes = currnetCycle = 0;
             foreach (var reg in registers)
@@ -332,9 +339,8 @@ namespace LabZKT.Simulation
         /// <param name="tact">String representing current tack</param>
         /// <param name="mnemo">String representing operation mnemonic</param>
         /// <param name="description">String representing operation description</param>
-        public void addToLog(string tact, string mnemo, string description)
+        public void addToMiniLog(string tact, string mnemo, string description)
         {
-            //poprawić format logu
             addTextToLogFile("\t" + tact + " | " + mnemo + " : " + description + "\n");
         }
         /// <summary>
@@ -346,22 +352,74 @@ namespace LabZKT.Simulation
             inMicroMode = b;
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.InitialDirectory = envPath;
+            string internetTime = string.Empty;
             while (logFile == "")
             {
-                dialog.Filter = Simulation.Strings.simLog + "|*.log|" + Simulation.Strings.all + "|*.*";
-                dialog.Title = Simulation.Strings.createLog;
+                dialog.Filter = Strings.simLog + "|*.log|" + Strings.all + "|*.*";
+                dialog.Title = Strings.createLog;
                 DialogResult saveFileDialogResult = dialog.ShowDialog();
                 if (saveFileDialogResult == DialogResult.OK && dialog.FileName != "")
                 {
                     logFile = dialog.FileName;
                     initLogInformation();
-                    addTextToLogFile(Simulation.Strings.startingSimulation + "\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(31, ' ') + "\n" + Simulation.Strings.registersContent + "\n");
+
+                    CancellationTokenSource cts = new CancellationTokenSource();
+                    Task loop = Task.Factory.StartNew(() => GetNISTDate(cts.Token, out internetTime));
+                    if (Task.WaitAll(new Task[] { loop }, 5000))
+                    {
+                    }
+                    else
+                    {
+                        cts.Cancel();
+                    }
+                    addTextToLogFile(Strings.startingSimulation + "\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(20, ' ') + "\n" + internetTime.PadLeft(20, ' ') + "\n" + Strings.registersContent + "\n");
                     foreach (var reg in registers.Values)
-                        addTextToLogFile((reg.registerName + "=").PadLeft(5, ' ') + reg.Text + "\n");
+                        addTextToLogFile(reg.registerName.PadRight(6, ' ') + " = " + reg.Text + "\n");
+                    addTextToLogFile("\n");
                 }
+            }
+            if (DEVMODE)
+                addTextToLogFile("\nAuto: " + DEVREGISTER + " ?= " + DEVVALUE + "\n");
+            else
+            {
+                if (inMicroMode)
+                    addTextToLogFile("Micro\n");
+                else
+                    addTextToLogFile("Makro\n");
             }
             simulateCPU();
         }
+        private DateTime GetNISTDate(CancellationToken token, out string timeString)
+        {
+            DateTime dateTime = DateTime.MinValue;
+            timeString = "00:00:00";
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://nist.time.gov/actualtime.cgi?lzbc=siqm9b");
+                request.Method = "GET";
+                request.Accept = "text/html, application/xhtml+xml, */*";
+                request.UserAgent = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)";
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.CachePolicy = new RequestCachePolicy(RequestCacheLevel.NoCacheNoStore);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    StreamReader stream = new StreamReader(response.GetResponseStream());
+                    string html = stream.ReadToEnd();//<timestamp time=\"1395772696469995\" delay=\"1395772696469995\"/>
+                    string time = Regex.Match(html, @"(?<=\btime="")[^""]*").Value;
+                    double milliseconds = Convert.ToInt64(time) / 1000.0;
+                    dateTime = new DateTime(1970, 1, 1).AddMilliseconds(milliseconds).ToLocalTime();
+                }
+            }
+            catch
+            {
+                timeString = "";
+            }
+            if (timeString != "")
+            timeString = dateTime.ToString("HH:mm:ss");
+            return dateTime;
+        }
+
         /// <summary>
         /// Initialize background draw
         /// </summary>
@@ -381,8 +439,8 @@ namespace LabZKT.Simulation
             if (!registers[registerToCheck].validateRegisterValue(out badValue))
             {
                 new Thread(SystemSounds.Beep.Play).Start();
-                addTextToLogFile("\t\t" + Simulation.Strings.mistake + "(" + (mistakes + 1) + "): " + registerToCheck + "=" + badValue +
-                    " (" + Simulation.Strings.correct + " " + registerToCheck + "=" + registers[registerToCheck].innerValue + ")\n\n");
+                addTextToLogFile("\t\t" + Strings.mistake + "(" + (mistakes + 1) + "): " + registerToCheck + "=" + badValue +
+                    " (" + Strings.correct + " " + registerToCheck + "=" + registers[registerToCheck].innerValue + ")\n\n");
 
                 mistakes++;
 
@@ -418,8 +476,18 @@ namespace LabZKT.Simulation
         /// </summary>
         public void CloseCurrentLogFile()
         {
-            addTextToLogFile("\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(29, ' ') + "\n" + Simulation.Strings.simStop + "\n" +
-                Simulation.Strings.mark + ": " + mark + "   " + Simulation.Strings.mistakes + ": " + mistakes + "\n");
+            string internetTime = string.Empty;
+            CancellationTokenSource cts = new CancellationTokenSource();
+            Task loop = Task.Factory.StartNew(() => GetNISTDate(cts.Token, out internetTime));
+            if (Task.WaitAll(new Task[] { loop }, 5000))
+            {
+            }
+            else
+            {
+                cts.Cancel();
+            }
+            addTextToLogFile("\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(20, ' ') + "\n" + internetTime.PadLeft(20, ' ') + "\n" + Strings.simStop + "\n" +
+                Strings.mark + ": " + mark + "   " + Strings.mistakes + ": " + mistakes + "\n");
             logManager.clearInMemoryLog();
             logFile = string.Empty;
         }
@@ -435,25 +503,25 @@ namespace LabZKT.Simulation
         {
             indirectAdresation = false;
             if (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1]))
-                addTextToLogFile(Simulation.Strings.tact + "1:\n");
+                addTextToLogFile(Strings.tact + "1:\n");
             while (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1] || cells[8, 1]))
                 exeTact1();
             if (currentTact == 1)
                 nextTact();
             if (currentTact == 2 && cells[10, 2])
-                addTextToLogFile(Simulation.Strings.tact + "2:\n");
+                addTextToLogFile(Strings.tact + "2:\n");
             while (currentTact == 2 && cells[10, 2])
                 exeTact2();
             while (currentTact >= 2 && currentTact <= 5)
                 nextTact();
             if (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
-                addTextToLogFile(Simulation.Strings.tact + "6:\n");
+                addTextToLogFile(Strings.tact + "6:\n");
             while (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
                 exeTact6();
             if (currentTact == 6)
                 nextTact();
             if (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7] || cells[9, 7]))
-                addTextToLogFile(Simulation.Strings.tact + "7:\n");
+                addTextToLogFile(Strings.tact + "7:\n");
             while (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7]))
                 exeTact7();
             if (currentTact == 7 && cells[9, 7])
@@ -640,7 +708,7 @@ namespace LabZKT.Simulation
             }
             cells[9, 7] = false;
             AddText("TEST", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-            addToLog("TEST", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+            addToMiniLog("TEST", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
 
             if (isTestPositive)
             {
@@ -700,7 +768,7 @@ namespace LabZKT.Simulation
                 }
                 cells[8, 7] = false;
                 AddText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[5, 7])
             {
@@ -722,7 +790,7 @@ namespace LabZKT.Simulation
                     testAndSet("BUS", registers["RBP"].innerValue);
                 cells[5, 7] = false;
                 AddText("S3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToLog("S3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToMiniLog("S3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[6, 7])
             {
@@ -771,7 +839,7 @@ namespace LabZKT.Simulation
                 cells[6, 7] = false;
                 resetBus = true;
                 AddText("D3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToLog("D3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToMiniLog("D3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[7, 7])
             {
@@ -809,7 +877,7 @@ namespace LabZKT.Simulation
                     currentTact = 9;
                 cells[7, 7] = false;
                 AddText("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToLog("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToMiniLog("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             ButtonOKSetVisivle();
             if (registerToCheck != "")
@@ -858,7 +926,7 @@ namespace LabZKT.Simulation
                     testAndSet("BUS", registers["MQ"].innerValue);
                 cells[3, 6] = false;
                 AddText("S2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToLog("S2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToMiniLog("S2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[4, 6])
             {
@@ -901,7 +969,7 @@ namespace LabZKT.Simulation
                 cells[4, 6] = false;
                 resetBus = true;
                 AddText("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToLog("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToMiniLog("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[8, 6])
             {
@@ -928,7 +996,7 @@ namespace LabZKT.Simulation
                 }
                 cells[8, 6] = false;
                 AddText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             ButtonOKSetVisivle();
             if (registerToCheck != "")
@@ -1068,7 +1136,7 @@ namespace LabZKT.Simulation
                     testAndSet("ALU", 0);
                 cells[10, 2] = false;
                 AddText("ALU", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToLog("ALU", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToMiniLog("ALU", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
 
             ButtonOKSetVisivle();
@@ -1118,7 +1186,7 @@ namespace LabZKT.Simulation
                     testAndSet("BUS", registers["X"].innerValue);
                 cells[1, 1] = false;
                 AddText("S1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToLog("S1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToMiniLog("S1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[2, 1])
             {
@@ -1133,16 +1201,16 @@ namespace LabZKT.Simulation
                 cells[2, 1] = false;
                 resetBus = true;
                 AddText("D1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToLog("D1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToMiniLog("D1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[4, 1])
             {
                 Grid_PM.CurrentCell = Grid_PM[4, raps];
                 microOpMnemo = Grid_PM[4, raps].Value.ToString();
                 AddText("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToLog("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToMiniLog("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
                 AddText("C1", "SHT", Translator.GetMicroOpDescription("SHT"));
-                addToLog("C1", "SHT", Translator.GetMicroOpDescription("SHT"));
+                addToMiniLog("C1", "SHT", Translator.GetMicroOpDescription("SHT"));
                 int A = registers["A"].innerValue;
                 bool SignBit = (A & 0x8000) == 0x8000 ? true : false;
                 bool LastBit = (A & 0x0001) == 0x0001 ? true : false;
@@ -1233,7 +1301,7 @@ namespace LabZKT.Simulation
                 }
                 cells[7, 1] = false;
                 AddText("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToLog("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToMiniLog("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[8, 1])
             {
@@ -1276,7 +1344,7 @@ namespace LabZKT.Simulation
                 }
                 cells[8, 1] = false;
                 AddText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                addToMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             ButtonOKSetVisivle();
             EnDisableButtons();
@@ -1337,7 +1405,7 @@ namespace LabZKT.Simulation
             long rbps = Translator.GetRbpsValue(Grid_PM.Rows[raps]) + na;
             RBPS.Text = rbps.ToString("X").PadLeft(12, '0');
 
-            addTextToLogFile("===============================\n\n" + Simulation.Strings.tact + "0: RBPS=" + RBPS.Text + "\n");
+            addTextToLogFile("===============================\n" + Strings.tact + "0: RBPS=" + RBPS.Text + "\n");
             for (int i = 1; i < 11; i++)
                 for (int j = 1; j < 8; j++)
                     cells[i, j] = row.Cells[i].Value.ToString() == "" ? false : true;
@@ -1491,7 +1559,7 @@ namespace LabZKT.Simulation
                     RichTextBox rtb = new RichTextBox();
                     log.Controls.Add(rtb);
                     rtb.ReadOnly = true;
-                    rtb.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
+                    rtb.Font = new Font("Consolas", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
                     rtb.Text = File.ReadAllText(pathToLog, Encoding.Unicode);
                     rtb.Text = rtb.Text.Remove(rtb.Text.Length - 2, 2);
                     log.AutoSize = true;
@@ -1507,6 +1575,38 @@ namespace LabZKT.Simulation
                     rtb.Height = 600;
                     log.MaximizeBox = false;
                     log.SizeGripStyle = SizeGripStyle.Hide;
+
+                    Regex regExp = new Regex(@"(={2}.+==|" + Strings.mistake + @".+\s|" + Strings.canEditSettings + @"\s|" + Strings.notForStudents + @"\s)");
+                    foreach (Match match in regExp.Matches(rtb.Text))
+                    {
+                        rtb.Select(match.Index, match.Length);
+                        rtb.SelectionColor = Color.Red;
+                    }
+                    regExp = new Regex(@"Auto:.+\s");
+                    foreach (Match match in regExp.Matches(rtb.Text))
+                    {
+                        rtb.Select(match.Index, match.Length);
+                        rtb.SelectionColor = Color.MediumVioletRed;
+                    }
+                    regExp = new Regex(@"(" + Strings.registerHasChanged + @".+\s|" + Strings.microcodeHasChanged + @"\s|" + Strings.memHasChanged + @"\s)");
+                    foreach (Match match in regExp.Matches(rtb.Text))
+                    {
+                        rtb.Select(match.Index, match.Length);
+                        rtb.SelectionColor = Color.OrangeRed;
+                    }
+                    regExp = new Regex(@"={6}.+=");
+                    foreach (Match match in regExp.Matches(rtb.Text))
+                    {
+                        rtb.Select(match.Index, match.Length);
+                        rtb.SelectionColor = Color.Blue;
+                    }
+                    regExp = new Regex(@"(={8}.+=|Makro\s|Micro\s)");
+                    foreach (Match match in regExp.Matches(rtb.Text))
+                    {
+                        rtb.Select(match.Index, match.Length);
+                        rtb.SelectionColor = Color.Green;
+                    }
+                    rtb.Select(0, 0);
                     log.ShowDialog();
                 }
             }

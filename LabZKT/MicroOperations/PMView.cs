@@ -1,6 +1,5 @@
 ﻿using LabZKT.Properties;
 using LabZKT.StaticClasses;
-using LabZKT.Operations;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -49,15 +48,15 @@ namespace LabZKT.MicroOperations
         internal void setAllStrings()
         {
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
-            button_Clear_Row.Text = Operations.Strings.clearRowButton;
-            button_Clear_Table.Text = Operations.Strings.clearTableButton;
-            button_Edit.Text = Operations.Strings.editMemoryButton;
-            button_Load_Table.Text = Operations.Strings.loadTableButton;
-            button_Save_Table.Text = Operations.Strings.saveTableButton;
+            button_Clear_Row.Text = Strings.clearRowButton;
+            button_Clear_Table.Text = Strings.clearTableButton;
+            button_Edit.Text = Strings.editMemoryButton;
+            button_Load_Table.Text = Strings.loadTableButton;
+            button_Save_Table.Text = Strings.saveTableButton;
 
-            Grid_PM.Columns[0].HeaderText = Operations.Strings.cellAddressViewGrid;
+            Grid_PM.Columns[0].HeaderText = Strings.cellAddressViewGrid;
 
-            this.Text = Operations.Strings.PMViewTitle;
+            this.Text = Strings.PMViewTitle;
         }
         private void PM_Load(object sender, EventArgs e)
         {
@@ -186,7 +185,7 @@ namespace LabZKT.MicroOperations
                             }
                         }
                         else
-                            MessageBox.Show(Operations.Strings.notValidMicrocodeFile, Operations.Strings.notValidMicrocodeFileTitle, MessageBoxButtons.OK);
+                            MessageBox.Show(Strings.notValidMicrocodeFile, Strings.notValidMicrocodeFileTitle, MessageBoxButtons.OK);
                     }
                 else if (Regex.Match(extension, @"[sS][aA][gG]").Success)
                 //naucz czytania plikow labsaga
@@ -205,7 +204,7 @@ namespace LabZKT.MicroOperations
                         Grid_PM[j, i].Value = "";
                         AUpdateData(i, j, "");
                     }
-                MessageBox.Show(Operations.Strings.inconsistentMicrocodeFile, Operations.Strings.notValidMicrocodeFileTitle, MessageBoxButtons.OK);
+                MessageBox.Show(Strings.inconsistentMicrocodeFile, Strings.notValidMicrocodeFileTitle, MessageBoxButtons.OK);
             }
         }
         /// <summary>
@@ -288,7 +287,7 @@ namespace LabZKT.MicroOperations
         }
         private void button_Clear_Table_Click(object sender, EventArgs e)
         {
-            DialogResult dr = MessageBox.Show(Operations.Strings.areYouSureClearTable, Operations.Strings.areYouSureClearTableTitle, MessageBoxButtons.OKCancel);
+            DialogResult dr = MessageBox.Show(Strings.areYouSureClearTable, Strings.areYouSureClearTableTitle, MessageBoxButtons.OKCancel);
             if (dr == DialogResult.OK)
                 for (int i = 0; i < 256; i++)
                     for (int j = 1; j < 12; j++)

@@ -1,5 +1,4 @@
-﻿using LabZKT.Operations;
-using LabZKT.StaticClasses;
+﻿using LabZKT.StaticClasses;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -34,7 +33,7 @@ namespace LabZKT.MicroOperations
             chosenInstruction = txt;
             c1Column = c1;
             InitializeComponent();
-            button_Cancel.Text = Operations.Strings.cancelButton;
+            button_Cancel.Text = Strings.cancelButton;
         }
 
         private void RadioPM_Load(object sender, EventArgs e)

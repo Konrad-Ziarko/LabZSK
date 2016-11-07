@@ -49,7 +49,7 @@ namespace LabZKT.Simulation
                     skin = drawSkin(Color.FromArgb(255, 177, 1, 5), Color.FromArgb(255, 254, 65, 69), Color.FromArgb(255, 5, 254, 177));
                     break;
                 case 3:
-                    skin = drawSkin(Color.FromArgb(255, 5, 5, 5), Color.FromArgb(255, 60, 60, 60), Color.FromArgb(255, 249, 239, 245));
+                    skin = drawSkin(Color.FromArgb(255, 5, 5, 5), Color.FromArgb(255, 120, 120, 120), Color.FromArgb(255, 249, 239, 245));
                     break;
                 default:
                     skin = drawSkin(Color.FromArgb(255, 27, 96, 51), Color.FromArgb(255, 133, 198, 72), Color.FromArgb(255, 249, 66, 239));

@@ -65,7 +65,7 @@ namespace LabZKT.Simulation
             flags["MAV"] = new BitTextBox(130, 125, null, "MAV");
             flags["IA"] = new BitTextBox(140, 125, null, "IA");
             flags["INT"] = new BitTextBox(290, 125, null, "INT");
-            flags["ZNAK"] = new BitTextBox(450, 65, null, Simulation.Strings.sign);
+            flags["ZNAK"] = new BitTextBox(450, 65, null, Strings.sign);
             flags["XRO"] = new BitTextBox(460, 65, null, "XRO");
             flags["OFF"] = new BitTextBox(470, 65, null, "OFF");
             foreach (var sig in flags)
@@ -146,13 +146,12 @@ namespace LabZKT.Simulation
             theView.ALeaveEditMode += theModel.leaveEditMode;
             theView.AClearRegisters += theModel.clearRegisters;
             theView.AGetMemoryRecord += getMemoryRecord;
-            theView.ANewLog += theModel.CloseCurrentLogFile;
+            theView.ACloseLog += theModel.CloseCurrentLogFile;
             theView.APrepareSimulation += theModel.prepareSimulation;
             theView.ANextTact += nextTact;
             theView.ADrawBackground += theModel.DrawBackground;
             theView.ACheckProperties += checkProperties;
             theView.AButtonOKClicked += ButtonOKClicked;
-            theView.ASaveCurrentState += SaveState;
             theView.AShowLog += theModel.ShowLog;
             theView.ACallDevConsole += TheView_ACallDevConsole;
             theView.AStopDevConsole += TheView_AStopDevConsole;
@@ -192,14 +191,13 @@ namespace LabZKT.Simulation
                 }
                 catch { }
             }
-                
 
             theView.ShowDialog();
         }
 
         private void TheView_AChangeLanguage()
         {
-            flags["ZNAK"].flagName = Simulation.Strings.sign;
+            flags["ZNAK"].flagName = Strings.sign;
             theModel.changeLanguage();
             theView.setAllStrings();
             pmView.setAllStrings();
@@ -219,7 +217,7 @@ namespace LabZKT.Simulation
 
         private void MemView_AUpdateForm(int row, string binary, string hex, int type)
         {
-            theModel.addTextToLogFile("\n\tZmiana zawartości pamięci operacyjnej:\n\tPAO[" 
+            theModel.addTextToLogFile("\t"+ Strings.memHasChanged + "\n\tPAO[" 
                 + row + "] = 0x" + List_Memory[row].hex.PadLeft(4, '0') + "     =>     PAO[" + row+"] = 0x" + hex + "\n\n");
             List_Memory[row] = new MemoryRecord(row, binary, hex, type);
             theView.SetDataGridMem(List_Memory, row);
@@ -243,7 +241,7 @@ namespace LabZKT.Simulation
 
         private void PmView_AUpdateData(int row, int col, string str)
         {
-            theModel.addTextToLogFile("\n\tZmiana zawartości pamięci mikroprogramów:\n\tPM[" 
+            theModel.addTextToLogFile("\t"+ Strings.microcodeHasChanged +"\n\tPM[" 
                 + row + "][" + List_MicroOp[row].getColumnName(col) + "] = \"" + List_MicroOp[row].getColumn(col) 
                 + "\"     =>     PM[" + row + "][" + List_MicroOp[row].getColumnName(col) + "] = \"" + str + "\"\n\n");
             List_MicroOp[row].setValue(col, str);
@@ -264,11 +262,6 @@ namespace LabZKT.Simulation
                 theModel.DEVREGISTER = null;
                 theModel.DEVVALUE = 0;
             }
-        }
-
-        private void SaveState(bool b)
-        {
-            theModel.isNewLogEnabled = b;
         }
 
         private void ButtonOKClicked()

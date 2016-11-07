@@ -1,6 +1,5 @@
 ﻿using LabZKT.Properties;
 using LabZKT.Simulation;
-using LabZKT.StaticClasses;
 using System;
 using System.IO;
 using System.Threading;
@@ -22,13 +21,12 @@ namespace LabZKT
             {
                 if (Settings.Default.FirstRun)
                 {
-                    MessageBox.Show(Simulation.Strings.defaultDirectoryMessage, "LabZKT", MessageBoxButtons.OK);
+                    MessageBox.Show(Strings.defaultDirectoryMessage, "LabZKT", MessageBoxButtons.OK);
                     Settings.Default.FirstRun = false;
                     Settings.Default.Save();
                 }
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                //Application.Run(new SplashScreen());
                 if (File.Exists(envPath + @"\Env\LabZKT.ini"))
                 {
                     //ustawienia ladowac
@@ -39,12 +37,13 @@ namespace LabZKT
                 {
                     filename = args[0];
                 }
+                //Application.Run(new SplashScreen());
+                //usunąć kontroler?
                 new SimController(filename);
-                
             }
             else
             {
-                MessageBox.Show(Simulation.Strings.appAlreadyRunning, "LabZKT", MessageBoxButtons.OK);
+                MessageBox.Show(Strings.appAlreadyRunning, "LabZKT", MessageBoxButtons.OK);
             }
         }
     }

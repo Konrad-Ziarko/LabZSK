@@ -27,10 +27,9 @@ namespace LabZKT.Simulation
         internal event Action<bool> APrepareSimulation;
         internal event Action ANextTact;
         internal event Action ADrawBackground;
-        internal event Action ANewLog;
+        internal event Action ACloseLog;
         internal event Action ACheckProperties;
         internal event Action AButtonOKClicked;
-        internal event Action<bool> ASaveCurrentState;
         internal event Action<string> AShowLog;
         internal event Action ACallDevConsole;
         internal event Action AStopDevConsole;
@@ -69,33 +68,33 @@ namespace LabZKT.Simulation
         internal void setAllStrings()
         {
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
-            button_Show_Log.Text = Simulation.Strings.showLogButton;
-            button_End_Edit.Text = Simulation.Strings.endEditRegisters;
-            button_OK.Text = Simulation.Strings.okButton;
-            button_Next_Tact.Text = Simulation.Strings.nextTactButton;
+            button_Show_Log.Text = Strings.showLogButton;
+            button_End_Edit.Text = Strings.endEditRegisters;
+            button_OK.Text = Strings.okButton;
+            button_Next_Tact.Text = Strings.nextTactButton;
 
-            toolStripMenu_Main.Text = Simulation.Strings.simulationToolStrip;
-            toolStripMenu_Exit.Text = Simulation.Strings.exitToolStrip;
-            toolStripMenu_Show_Log.Text = Simulation.Strings.showLogToolStrip;
+            toolStripMenu_Main.Text = Strings.simulationToolStrip;
+            toolStripMenu_Exit.Text = Strings.exitToolStrip;
+            toolStripMenu_Show_Log.Text = Strings.showLogToolStrip;
             if (inEditMode)
-                toolStripMenu_Edit.Text = Simulation.Strings.endEditRegisters;
+                toolStripMenu_Edit.Text = Strings.endEditRegisters;
             else
-                toolStripMenu_Edit.Text = Simulation.Strings.editRegisters;
-            toolStripMenu_Clear.Text = Simulation.Strings.clearRegistersToolStrip;
-            closeLogToolStripMenuItem.Text = Simulation.Strings.closeLogToolStrip;
-            devConsoleToolStripMenuItem.Text = Simulation.Strings.devConsoleToolStrip;
-            settingsToolStripMenuItem.Text = Simulation.Strings.settingsToolStrip;
+                toolStripMenu_Edit.Text = Strings.editRegisters;
+            toolStripMenu_Clear.Text = Strings.clearRegistersToolStrip;
+            closeLogToolStripMenuItem.Text = Strings.closeLogToolStrip;
+            devConsoleToolStripMenuItem.Text = Strings.devConsoleToolStrip;
+            settingsToolStripMenuItem.Text = Strings.settingsToolStrip;
 
-            microToolStripMenuItem.Text = Simulation.Strings.microToolStrip;
-            editpmToolStripMenuItem.Text = Simulation.Strings.editPMToolStrip;
-            loadpmToolStripMenuItem.Text = Simulation.Strings.loadPMToolStrip;
-            memToolStripMenuItem.Text = Simulation.Strings.memToolStrip;
-            editmemToolStripMenuItem.Text = Simulation.Strings.editMemToolStrip;
-            loadmemToolStripMenuItem.Text = Simulation.Strings.loadMemToolStrip;
-            aboutToolStripMenuItem.Text = Simulation.Strings.authorToolStrip;
+            microToolStripMenuItem.Text = Strings.microToolStrip;
+            editpmToolStripMenuItem.Text = Strings.editPMToolStrip;
+            loadpmToolStripMenuItem.Text = Strings.loadPMToolStrip;
+            memToolStripMenuItem.Text = Strings.memToolStrip;
+            editmemToolStripMenuItem.Text = Strings.editMemToolStrip;
+            loadmemToolStripMenuItem.Text = Strings.loadMemToolStrip;
+            aboutToolStripMenuItem.Text = Strings.authorToolStrip;
 
-            Grid_PM.Columns[0].HeaderText = Grid_Mem.Columns[0].HeaderText = Simulation.Strings.cellAddressViewGrid;
-            Grid_Mem.Columns[1].HeaderText = Simulation.Strings.cellValueViewGrid;
+            Grid_PM.Columns[0].HeaderText = Grid_Mem.Columns[0].HeaderText = Strings.cellAddressViewGrid;
+            Grid_Mem.Columns[1].HeaderText = Strings.cellValueViewGrid;
             this.Text = Strings.SimulationTitle;
         }
 
@@ -140,7 +139,7 @@ namespace LabZKT.Simulation
             button_Makro.Visible = true;
             button_Micro.Visible = true;
             toolStripMenu_Clear.Enabled = true;
-            label_Status.Text = Simulation.Strings.stopMode;
+            label_Status.Text = Strings.stopMode;
             label_Status.ForeColor = Color.Green;
             closeLogToolStripMenuItem.Enabled = true;
         }
@@ -194,10 +193,10 @@ namespace LabZKT.Simulation
         private void initUserInfoArea()
         {
             ACheckProperties();
-            dataGridView_Info.Rows.Add(mark, Simulation.Strings.mark);
-            dataGridView_Info.Rows.Add(mistakes, Simulation.Strings.mistakes);
-            dataGridView_Info.Rows.Add("0", Simulation.Strings.tact);
-            dataGridView_Info.Rows.Add(currnetCycle, Simulation.Strings.cycle);
+            dataGridView_Info.Rows.Add(mark, Strings.mark);
+            dataGridView_Info.Rows.Add(mistakes, Strings.mistakes);
+            dataGridView_Info.Rows.Add("0", Strings.tact);
+            dataGridView_Info.Rows.Add(currnetCycle, Strings.cycle);
             dataGridView_Info.Enabled = false;
             dataGridView_Info.ClearSelection();
 
@@ -209,17 +208,18 @@ namespace LabZKT.Simulation
             dataGridView_Info.Rows[2].DefaultCellStyle = dgvcs2;
             dataGridView_Info.Rows[3].DefaultCellStyle = dgvcs2;
         }
-
         private void RunSim_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (isRunning)
                 e.Cancel = true;
             else
             {
-                DialogResult dr = MessageBox.Show(Strings.areYouSureExit, Strings.areYouSureExitTitle, MessageBoxButtons.OKCancel);
-                if (dr == DialogResult.OK)
-                    ASaveCurrentState(closeLogToolStripMenuItem.Enabled);
-                else
+                DialogResult dr = MessageBox.Show(Strings.areYouSureExit, Strings.areYouSureExitTitle, MessageBoxButtons.YesNo);
+                if (dr == DialogResult.Yes)
+                {
+                    ACloseLog();
+                }
+                else if (dr == DialogResult.No)
                     e.Cancel = true;
             }
         }
@@ -279,7 +279,7 @@ namespace LabZKT.Simulation
                 cellDescription.Text += "\n";
             if (selectedInstruction.typ == 1)
             {
-                cellDescription.Text += Simulation.Strings.data+"\n";
+                cellDescription.Text += Strings.data+"\n";
                 cellDescription.Text += selectedInstruction.value.ToString() + "b\n";
                 cellDescription.Text += Convert.ToUInt16(selectedInstruction.value, 2) + "d\n";
                 cellDescription.Text += Convert.ToInt16(selectedInstruction.value, 2).ToString("X") + "h";
@@ -306,7 +306,7 @@ namespace LabZKT.Simulation
                 button_Makro.Visible = false;
                 button_Micro.Visible = false;
                 toolStripMenu_Clear.Enabled = false;
-                label_Status.Text = Simulation.Strings.startMode;
+                label_Status.Text = Strings.startMode;
                 label_Status.ForeColor = Color.Red;
                 button_Show_Log.Visible = false;
                 APrepareSimulation(false);
@@ -314,15 +314,18 @@ namespace LabZKT.Simulation
         }
         private void button_Micro_Click(object sender, EventArgs e)
         {
-            toolStripMenu_Edit.Enabled = false;
-            toolStripMenu_Exit.Enabled = false;
-            button_Makro.Visible = false;
-            button_Micro.Visible = false;
-            toolStripMenu_Clear.Enabled = false;
-            label_Status.Text = Simulation.Strings.startMode;
-            label_Status.ForeColor = Color.Red;
-            button_Show_Log.Visible = false;
-            APrepareSimulation(true);
+            if (!isRunning)
+            {
+                toolStripMenu_Edit.Enabled = false;
+                toolStripMenu_Exit.Enabled = false;
+                button_Makro.Visible = false;
+                button_Micro.Visible = false;
+                toolStripMenu_Clear.Enabled = false;
+                label_Status.Text = Strings.startMode;
+                label_Status.ForeColor = Color.Red;
+                button_Show_Log.Visible = false;
+                APrepareSimulation(true);
+            }
         }
         private void button_Next_Tact_Click(object sender, EventArgs e)
         {
@@ -361,9 +364,11 @@ namespace LabZKT.Simulation
             else if (e.KeyChar == (char)Keys.Escape && isRunning)
             {
                 //przerwanie pracy
-                DialogResult dr = MessageBox.Show(Simulation.Strings.areYouSureExit, Simulation.Strings.areYouSureExitTitle, MessageBoxButtons.OKCancel);
+                DialogResult dr = MessageBox.Show(Strings.areYouSureExit, Strings.areYouSureExitTitle, MessageBoxButtons.OKCancel);
                 if (dr == DialogResult.OK)
                 {
+                    button_Next_Tact.Visible = false;
+                    button_Makro.Visible = false;
                     ABreakSimulation();
                 }
             }
@@ -403,10 +408,10 @@ namespace LabZKT.Simulation
         }
         private void nowyLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show(Simulation.Strings.areYouSureCloseLog, Simulation.Strings.areYouSureCloseLogTitle, MessageBoxButtons.OKCancel);
+            DialogResult result = MessageBox.Show(Strings.areYouSureCloseLog, Strings.areYouSureCloseLogTitle, MessageBoxButtons.OKCancel);
             if (result == DialogResult.OK)
             {
-                ANewLog();
+                ACloseLog();
                 setNewLog(false);
                 button_Show_Log.Visible = false;
             }
@@ -578,23 +583,23 @@ namespace LabZKT.Simulation
             {
                 panel_Control.Focus();
                 ALeaveEditMode();
-                toolStripMenu_Edit.Text = Simulation.Strings.editRegisters;
+                toolStripMenu_Edit.Text = Strings.editRegisters;
                 button_Makro.Visible = true;
                 button_Micro.Visible = true;
                 toolStripMenu_Clear.Enabled = true;
                 inEditMode = false;
-                label_Status.Text = Simulation.Strings.stopMode;
+                label_Status.Text = Strings.stopMode;
                 button_End_Edit.Visible = false;
             }
             else
             {
                 AEnterEditMode();
-                toolStripMenu_Edit.Text = Simulation.Strings.endEditRegisters;
+                toolStripMenu_Edit.Text = Strings.endEditRegisters;
                 button_Makro.Visible = false;
                 button_Micro.Visible = false;
                 toolStripMenu_Clear.Enabled = false;
                 inEditMode = true;
-                label_Status.Text = Simulation.Strings.editMode;
+                label_Status.Text = Strings.editMode;
                 button_End_Edit.Visible = true;
             }
         }

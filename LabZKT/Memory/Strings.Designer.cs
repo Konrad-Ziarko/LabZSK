@@ -250,7 +250,7 @@ namespace LabZKT.Memory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Field.
+        ///   Looks up a localized string similar to Pole.
         /// </summary>
         internal static string field {
             get {

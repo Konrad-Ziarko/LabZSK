@@ -125,6 +125,15 @@ namespace LabZKT.Simulation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edycja ustawień dozwolona!.
+        /// </summary>
+        internal static string canEditSettings {
+            get {
+                return ResourceManager.GetString("canEditSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adres.
         /// </summary>
         internal static string cellAddressViewGrid {
@@ -215,20 +224,11 @@ namespace LabZKT.Simulation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Konsola developerska....
+        ///   Looks up a localized string similar to Konsola deweloperska....
         /// </summary>
         internal static string devConsoleToolStrip {
             get {
                 return ResourceManager.GetString("devConsoleToolStrip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Błędne dane Drag&amp;Drop!.
-        /// </summary>
-        internal static string dragError {
-            get {
-                return ResourceManager.GetString("dragError", resourceCulture);
             }
         }
         
@@ -341,11 +341,29 @@ namespace LabZKT.Simulation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zmiana zawartości pamięci operacyjnej:.
+        /// </summary>
+        internal static string memHasChanged {
+            get {
+                return ResourceManager.GetString("memHasChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pamięć operacyjna.
         /// </summary>
         internal static string memToolStrip {
             get {
                 return ResourceManager.GetString("memToolStrip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zmiana zawartości pamięci mikroprogramów:.
+        /// </summary>
+        internal static string microcodeHasChanged {
+            get {
+                return ResourceManager.GetString("microcodeHasChanged", resourceCulture);
             }
         }
         
@@ -391,6 +409,15 @@ namespace LabZKT.Simulation {
         internal static string nextTactButton {
             get {
                 return ResourceManager.GetString("nextTactButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aplikacja nie jest w trybie dla studenta!.
+        /// </summary>
+        internal static string notForStudents {
+            get {
+                return ResourceManager.GetString("notForStudents", resourceCulture);
             }
         }
         
@@ -476,7 +503,7 @@ namespace LabZKT.Simulation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to =======Stop  symulacji=======.
+        ///   Looks up a localized string similar to ======Stop  symulacji======.
         /// </summary>
         internal static string simStop {
             get {
@@ -485,7 +512,7 @@ namespace LabZKT.Simulation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to *Symulacja przerwana*.
+        ///   Looks up a localized string similar to ==Symulacja przerwana==.
         /// </summary>
         internal static string simulationBreak {
             get {
@@ -512,7 +539,7 @@ namespace LabZKT.Simulation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ========Start symulacji========.
+        ///   Looks up a localized string similar to ======Start symulacji======.
         /// </summary>
         internal static string startingSimulation {
             get {

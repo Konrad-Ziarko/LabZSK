@@ -167,10 +167,7 @@ Utracisz cały postęp.</value>
     <value>Aplikacja wykorzystuje Moje Dokumenty/Dokumenty jako domyślny katalog dla plików!</value>
   </data>
   <data name="devConsoleToolStrip" xml:space="preserve">
-    <value>Konsola developerska...</value>
-  </data>
-  <data name="dragError" xml:space="preserve">
-    <value>Błędne dane Drag&amp;Drop!</value>
+    <value>Konsola deweloperska...</value>
   </data>
   <data name="editMemToolStrip" xml:space="preserve">
     <value>Edytuj</value>
@@ -251,7 +248,7 @@ Utracisz cały postęp.</value>
     <value>Log symulatora</value>
   </data>
   <data name="simStop" xml:space="preserve">
-    <value>=======Stop  symulacji=======</value>
+    <value>======Stop  symulacji======</value>
   </data>
   <data name="SimulationTitle" xml:space="preserve">
     <value>Praca procesora</value>
@@ -260,7 +257,7 @@ Utracisz cały postęp.</value>
     <value>Symulacja</value>
   </data>
   <data name="startingSimulation" xml:space="preserve">
-    <value>========Start symulacji========</value>
+    <value>======Start symulacji======</value>
   </data>
   <data name="startMode" xml:space="preserve">
     <value>Start</value>
@@ -278,6 +275,18 @@ Utracisz cały postęp.</value>
     <value>ZNAK</value>
   </data>
   <data name="simulationBreak" xml:space="preserve">
-    <value>*Symulacja przerwana*</value>
+    <value>==Symulacja przerwana==</value>
+  </data>
+  <data name="memHasChanged" xml:space="preserve">
+    <value>Zmiana zawartości pamięci operacyjnej:</value>
+  </data>
+  <data name="microcodeHasChanged" xml:space="preserve">
+    <value>Zmiana zawartości pamięci mikroprogramów:</value>
+  </data>
+  <data name="canEditSettings" xml:space="preserve">
+    <value>Edycja ustawień dozwolona!</value>
+  </data>
+  <data name="notForStudents" xml:space="preserve">
+    <value>Aplikacja nie jest w trybie dla studenta!</value>
   </data>
 </root>

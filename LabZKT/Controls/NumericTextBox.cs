@@ -281,7 +281,7 @@ namespace LabZKT.Controls
             }
             catch (Exception)
             {
-                MessageBox.Show(Simulation.Strings.dragError, "LabZKT", MessageBoxButtons.OK);
+                MessageBox.Show(Strings.dragError, "LabZKT", MessageBoxButtons.OK);
             }
         }
         #endregion

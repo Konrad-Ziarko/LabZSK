@@ -62,18 +62,6 @@ namespace LabZKT.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool IsDevConsole {
-            get {
-                return ((bool)(this["IsDevConsole"]));
-            }
-            set {
-                this["IsDevConsole"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool CanEditOptions {
             get {
                 return ((bool)(this["CanEditOptions"]));
@@ -152,6 +140,18 @@ namespace LabZKT.Properties {
             }
             set {
                 this["CultureIdx"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsDevConsole {
+            get {
+                return ((bool)(this["IsDevConsole"]));
+            }
+            set {
+                this["IsDevConsole"] = value;
             }
         }
     }

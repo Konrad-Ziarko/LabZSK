@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
@@ -23,19 +24,26 @@ namespace LabZKT.Other
         public Options()
         {
             InitializeComponent();
-            if (Settings.Default.CanEditOptions)
-                groupBox1.Enabled = true;
         }
 
         private void Options_Load(object sender, EventArgs e)
         {
             comboBox1.SelectedIndex = Settings.Default.SkinNum;
             comboBox2.SelectedIndex = Settings.Default.CultureIdx;
-            checkBox1.Checked = Settings.Default.IsDevConsole;
             numericUpDown1.Value = Settings.Default.Delay;
             numericUpDown4.Value = Settings.Default.FirstMark;
             numericUpDown3.Value = Settings.Default.SecondMark;
             numericUpDown2.Value = Settings.Default.ThirdMark;
+
+            //ustawienia użytkownika są nadpisywane przez aplikacji
+            groupBox1.Enabled = Settings.Default.CanEditOptions;
+            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["ApplicationForStudents"]))
+                groupBox1.Enabled = true;
+            else
+            {
+                checkBox1.Checked = false;
+                checkBox1.Enabled = false;
+            }
 
             setAllStrings();
         }
@@ -134,6 +142,11 @@ namespace LabZKT.Other
             }
 
             setAllStrings();
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

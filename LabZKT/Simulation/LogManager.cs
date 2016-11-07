@@ -97,7 +97,7 @@ namespace LabZKT.Simulation
             }
             catch
             {
-                MessageBox.Show(Simulation.Strings.errorLogCreating, "Ups", MessageBoxButtons.OK);
+                MessageBox.Show(Strings.errorLogCreating, "Ups", MessageBoxButtons.OK);
             }
         }
         /// <summary>

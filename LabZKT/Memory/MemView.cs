@@ -127,21 +127,30 @@ namespace LabZKT.Memory
                 if (dataChunk.Length >= 2974 && CRC.ComputeChecksum(File.ReadAllBytes(fileName)) == 0 && Regex.Match(extension, @"[pP][oO]").Success)
                     using (BinaryReader br = new BinaryReader(File.OpenRead(fileName)))
                     {
+                        bool isChanged = false;
+                        string lastString;
                         int n = br.ReadInt32();
                         int m = br.ReadInt32();
                         if (m == 256 && n == 4)
                         {
                             for (int i = 0; i < m; ++i)
                             {
+                                isChanged = false;
                                 for (int j = 0; j < n; ++j)
                                 {
                                     if (br.ReadBoolean())
                                     {
-                                        Grid_Mem.Rows[i].Cells[j].Value = br.ReadString();
+                                        lastString = br.ReadString();
+                                        if (Grid_Mem.Rows[i].Cells[j].Value.ToString() != lastString)
+                                        {
+                                            Grid_Mem.Rows[i].Cells[j].Value = lastString;
+                                            isChanged = true;
+                                        }
                                     }
                                     else
                                         br.ReadBoolean();
                                 }
+                                if (isChanged)
                                 AUpdateForm(i, Grid_Mem.Rows[i].Cells[1].Value.ToString(), Grid_Mem.Rows[i].Cells[2].Value.ToString(), Convert.ToInt32(Grid_Mem.Rows[i].Cells[3].Value));
                             }
                         }

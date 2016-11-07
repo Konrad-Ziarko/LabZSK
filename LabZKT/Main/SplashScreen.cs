@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LabZKT.Simulation;
+using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace LabZKT
@@ -18,9 +20,12 @@ namespace LabZKT
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            Opacity -= 0.05;
-            if (Opacity == 0)
+            if (Opacity <= 0.05)
+            {
                 Close();
+            }
+            else
+            Opacity -= 0.05;
         }
     }
 }
