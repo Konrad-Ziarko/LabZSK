@@ -1,12 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Markup;
+using System.Windows.Threading;
 
 namespace LabZSKServer
 {
@@ -15,18 +21,21 @@ namespace LabZSKServer
     /// </summary>
     public partial class MainWindow : Window
     {
+        //Serwer może generować klucze RSA i rozpoczynać od wysłania klucza publicznego
+        private static string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSKSerwer\\";
+        private static string currentDirectory;
+        DispatcherTimer refreshRichTextBox = new DispatcherTimer();
         private TcpListener _server;
         private bool _isRunning;
-        Thread runningThread;
-        public static string ipA = "";//do wywalenia
-        private class LogRecord
-        {
-            public int rowNumber { get; set; }
-            public string recordValue { get; set; }
-        }
+        private Thread handleNewClients;
+        private static string pass;
+        private static List<Client> allClients = new List<Client>();
         public MainWindow()
         {
             InitializeComponent();
+            listView.ItemsSource = allClients;
+            refreshRichTextBox.Tick += dispatcherTimer_Tick;
+            refreshRichTextBox.Interval = new TimeSpan(0, 0, 3);
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -34,13 +43,15 @@ namespace LabZSKServer
             if (_isRunning)
             {
                 _server.Stop();
-                runningThread.Abort();
+                handleNewClients.Abort();
                 _isRunning = false;
                 textBox_Addres.Text = "";
                 button_Start.Content = "Nasłuchuj";
             }
             else
             {
+                pass = textBox_Pass.Text;
+                currentDirectory = DateTime.Now.ToString("yyyy_MM_dd HH_mm_ss");
                 try
                 {
                     string ipAddress = "";
@@ -49,7 +60,7 @@ namespace LabZSKServer
                             foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
                                 if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
                                 {
-                                    ipA = ipAddress = ip.Address.ToString();
+                                    ipAddress = ip.Address.ToString();
                                     break;
                                 }
                     _server = new TcpListener(IPAddress.Parse(ipAddress), Convert.ToInt32(textBox_Port.Text));
@@ -59,15 +70,15 @@ namespace LabZSKServer
                     _isRunning = true;
                     button_Start.Content = "Stop";
 
-                    runningThread = new Thread(LoopClients);
-                    runningThread.Start();
+                    handleNewClients = new Thread(LoopClients);
+                    handleNewClients.Start();
                 }
                 catch
                 {
                     MessageBox.Show("Ustanowienie serwera zakończyło się niepowodzeniem!");
                 }
             }
-            
+
         }
         public void LoopClients()
         {
@@ -79,82 +90,91 @@ namespace LabZSKServer
                     Thread t = new Thread(new ParameterizedThreadStart(HandleClient));
                     t.Start(newClient);
                 }
-            }catch(ThreadAbortException)
-            { }
+            }
+            catch (ThreadAbortException)
+            {
+                //server wyłączony, przestań szukać klientów
+            }
         }
         public void HandleClient(object obj)
         {
             try
             {
-                TcpClient client = (TcpClient)obj;
-                StreamWriter sWriter = new StreamWriter(client.GetStream(), Encoding.Unicode);
-                StreamReader sReader = new StreamReader(client.GetStream(), Encoding.Unicode);
+                TcpClient tcpClient = (TcpClient)obj;
+                Client client;
+                StreamWriter sWriter = new StreamWriter(tcpClient.GetStream(), Encoding.Unicode);
+                StreamReader sReader = new StreamReader(tcpClient.GetStream(), Encoding.Unicode);
                 bool bClientConnected = true;
-                string sData = null;
-                while (bClientConnected)
+                string sData = sReader.ReadLine();
+                string[] split = sData.Split(':');
+                try
                 {
-                    sData = sReader.ReadLine();
+                    string path = envPath + "\\" + currentDirectory + "\\" + split[2] + split[1] + split[3] + ".log";
+                    if (split[0] == pass)
+                    {
+                        client = new Client(Thread.CurrentThread, split[1], split[2], split[3], split[4], Convert.ToInt32(split[5]), path);
+                        allClients.Add(client);
+                        Dispatcher.BeginInvoke(new Action(() => listView.Items.Refresh())).Wait();
 
-                    MessageBox.Show("Client: " + client.Client.RemoteEndPoint + "\n" + sData);
-
-                    // to write something back.
-                    // sWriter.WriteLine("Meaningfull things here");
-                    // sWriter.Flush();
+                        if (!Directory.Exists(envPath + "\\" + currentDirectory))
+                            Directory.CreateDirectory(envPath + "\\" + currentDirectory);
+                        try
+                        {
+                            while (bClientConnected)
+                            {
+                                sData = sReader.ReadLine();
+                                using (StreamWriter sw = new StreamWriter(File.Open(path, FileMode.Append), Encoding.Unicode))
+                                {
+                                    sw.Write(sData);
+                                }
+                                client.clientLog.Add(sData);
+                                // sWriter.WriteLine("");
+                                // sWriter.Flush();
+                            }
+                        }
+                        catch (IOException)
+                        {
+                            //host zerwał połączenie
+                        }
+                    }
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    ;//pierwsza paczka danych jest nie poprawna
                 }
             }
-            catch (ThreadAbortException) { }
+            catch (ThreadAbortException)
+            {
+                ;//serwer przerwał połączenie
+            }
+        }
+        private void textBox_Pass_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            textBox_Pass.Text = Regex.Replace(textBox_Pass.Text, @":", "");
+        }
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            refreshRichTextBox.Start();
         }
 
-        private void button_Start_Copy_Click(object sender, RoutedEventArgs e)
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            new Thread(() =>
+            Paragraph p;
+            FlowDocument document = new FlowDocument();
+            foreach (string logLine in allClients[listView.SelectedIndex].clientLog)
             {
-                new ClientDemo(ipA, 1234);
-            }).Start();
-        }
-        private class ClientDemo
-        {
-            private TcpClient _client;
-
-            private StreamReader _sReader;
-            private StreamWriter _sWriter;
-
-            private bool _isConnected;
-
-            public ClientDemo(string ipAddress, int portNum)
-            {
-                _client = new TcpClient();
-                _client.Connect(ipAddress, portNum);
-
-                HandleCommunication();
+                p = new Paragraph(new Run(logLine));
+                p.FontSize = 14;
+                p.TextAlignment = TextAlignment.Left;
+                document.Blocks.Add(p);
             }
-
-            public void HandleCommunication()
-            {
-                _sReader = new StreamReader(_client.GetStream(), Encoding.Unicode);
-                _sWriter = new StreamWriter(_client.GetStream(), Encoding.Unicode);
-
-                _isConnected = true;
-                string sData = "test";
-                while (_isConnected)//while (_isConnected)
-                {
-                    //Console.Write("&gt; ");
-                    //sData = Console.ReadLine();
-
-                    // write data and make sure to flush, or the buffer will continue to 
-                    // grow, and your data might not be sent when you want it, and will
-                    // only be sent once the buffer is filled.
-                    _sWriter.WriteLine(sData);
-                    _sWriter.Flush();
-                    Thread.Sleep(5000);
-                    // if you want to receive anything
-                    // String sDataIncomming = _sReader.ReadLine();
-                }
-            }
+            richTextBox.Document = document;
+            richTextBox.ScrollToEnd();
         }
     }
 }

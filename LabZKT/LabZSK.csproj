@@ -116,6 +116,12 @@
     <Compile Include="Other\Options.Designer.cs">
       <DependentUpon>Options.cs</DependentUpon>
     </Compile>
+    <Compile Include="Other\Server.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Other\Server.Designer.cs">
+      <DependentUpon>Server.cs</DependentUpon>
+    </Compile>
     <Compile Include="Other\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -238,6 +244,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Other\Options.resx">
       <DependentUpon>Options.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Other\Server.resx">
+      <DependentUpon>Server.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Other\Strings.en.resx" />
     <EmbeddedResource Include="Other\Strings.resx">

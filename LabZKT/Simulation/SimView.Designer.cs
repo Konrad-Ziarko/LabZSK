@@ -98,6 +98,7 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.richTextBox_Log = new System.Windows.Forms.RichTextBox();
             this.open_File_Dialog = new System.Windows.Forms.OpenFileDialog();
+            this.serwerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel_PO.SuspendLayout();
             this.panel_View_PO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid_Mem)).BeginInit();
@@ -270,7 +271,8 @@
             this.toolStripMenu_Main,
             this.microToolStripMenuItem,
             this.memToolStripMenuItem,
-            this.infoToolStripMenuItem});
+            this.infoToolStripMenuItem,
+            this.serwerToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
@@ -418,7 +420,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.aboutToolStripMenuItem.Text = "O autorze...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.oAutorzeToolStripMenuItem_Click);
             // 
@@ -861,6 +863,13 @@
             this.richTextBox_Log.TabIndex = 0;
             this.richTextBox_Log.Text = "";
             // 
+            // serwerToolStripMenuItem
+            // 
+            this.serwerToolStripMenuItem.Name = "serwerToolStripMenuItem";
+            this.serwerToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.serwerToolStripMenuItem.Text = "Serwer";
+            this.serwerToolStripMenuItem.Click += new System.EventHandler(this.serwerToolStripMenuItem_Click);
+            // 
             // SimView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -968,5 +977,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Test;
         private System.Windows.Forms.DataGridViewTextBoxColumn ALU;
         private System.Windows.Forms.DataGridViewTextBoxColumn NA;
+        private System.Windows.Forms.ToolStripMenuItem serwerToolStripMenuItem;
     }
 }

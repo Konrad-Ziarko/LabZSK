@@ -185,7 +185,6 @@ namespace LabZSK.Simulation
             panel_Sim_Control = control;
             draw.addControlToDrawOn(control);
         }
-
         /// <summary>
         /// Adjust register grid in parent control
         /// </summary>
@@ -240,7 +239,6 @@ namespace LabZSK.Simulation
             registers["SUMA"].SetXY((registers["R"].Location.X - registers["L"].Location.X + 130) / 2
                 - 65 + registers["L"].Location.X, locY + (verticalGap - 27) * 3 / 4);
         }
-
         internal void breakSimulation()
         {
             buttonOKClicked = true;
@@ -251,18 +249,15 @@ namespace LabZSK.Simulation
             stopSim();
             logManager.addToMemory("\n" + Strings.simulationBreak + "\n");
         }
-
         internal void changeLanguage()
         {
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
         }
-
         internal void ShowCurrentLog()
         {
             if (logFile != string.Empty && logFile != "")
                 ShowLog(logFile);
         }
-
         /// <summary>
         /// Switch simulation background between 'standard' and 'sum' mode
         /// </summary>
@@ -424,7 +419,6 @@ namespace LabZSK.Simulation
             timeString = dateTime.ToString("HH:mm:ss");
             return dateTime;
         }
-
         /// <summary>
         /// Initialize background draw
         /// </summary>
@@ -604,7 +598,6 @@ namespace LabZSK.Simulation
                 }
             }
         }
-
         #region Instruction Execution
         private void exeTest()
         {
@@ -1383,7 +1376,6 @@ namespace LabZSK.Simulation
             buttonOKClicked = false;
         }
         #endregion
-
         private void instructionFetch()
         {
             for (int i = 0; i < 8; i++)
@@ -1515,7 +1507,6 @@ namespace LabZSK.Simulation
             }
             nextTact();
         }
-
         private void startSim()
         {
             StartSim();
@@ -1544,7 +1535,6 @@ namespace LabZSK.Simulation
             SetNextTact(currentTact);
             buttonNextTactClicked = false;
         }
-
         private void EnDisableButtons()
         {
             foreach (var reg in registers)

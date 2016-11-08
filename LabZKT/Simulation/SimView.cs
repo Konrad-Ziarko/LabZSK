@@ -9,6 +9,8 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -50,6 +52,7 @@ namespace LabZSK.Simulation
         internal bool isRunning { get; set; }
         internal bool inMicroMode { get; set; }
         internal bool buttonOKClicked { get; set; }
+        private static bool _isConnected = false;
         private DataGridViewCellStyle dgvcs1;
         private bool inEditMode;
         private Size windowSize;
@@ -603,6 +606,74 @@ namespace LabZSK.Simulation
                 inEditMode = true;
                 label_Status.Text = Strings.editMode;
                 button_End_Edit.Visible = true;
+            }
+        }
+
+        private void serwerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string name, lastName, group, ipAddress, remotePort, password;
+            using (Server form = new Server(_isConnected))
+            {
+                form.ShowDialog();
+                name = form.name;
+                lastName = form.lastName;
+                group = form.group;
+                ipAddress = form.ipAddress;
+                remotePort = form.remotePort;
+                password = form.password;
+            }
+
+            new Thread(() =>
+            {
+                new ClientDemo(name, lastName, group, ipAddress, remotePort, password);
+            }).Start();
+        }
+        private class ClientDemo
+        {
+            private TcpClient _client;
+            private string name, lastName, group, ipAddress, remotePort, password;
+            private StreamReader _sReader;
+            private StreamWriter _sWriter;
+            public ClientDemo(string name, string lastName, string group, string ipAddress, string remotePort, string password)
+            {
+                _client = new TcpClient();
+                _client.Connect(ipAddress, Convert.ToInt32(remotePort));
+                this.name = name;
+                this.lastName = lastName;
+                this.group = group;
+                this.password = password;
+                this.ipAddress = ipAddress;
+                this.remotePort = remotePort;
+                HandleCommunication();
+            }
+
+            public void HandleCommunication()
+            {
+                try
+                {
+                    _sReader = new StreamReader(_client.GetStream(), Encoding.Unicode);
+                    _sWriter = new StreamWriter(_client.GetStream(), Encoding.Unicode);
+                    _isConnected = true;
+                    string sData = password + ":" + name + ":" + lastName + ":" + group + ":" + ipAddress + ":" + remotePort;
+                    _sWriter.WriteLine(sData);
+                    _sWriter.Flush();
+                    int rowNum = 0;
+                    while (_isConnected)
+                    {
+                        //Console.Write("&gt; ");
+                        //sData = Console.ReadLine();
+
+                        sData = rowNum++ + ":To jest log";
+                        _sWriter.WriteLine(sData);
+                        _sWriter.Flush();
+                        Thread.Sleep(2000);
+                        // String sDataIncomming = _sReader.ReadLine();
+                    }
+                }
+                catch (Exception)
+                {
+                    _isConnected = false;
+                }
             }
         }
     }
