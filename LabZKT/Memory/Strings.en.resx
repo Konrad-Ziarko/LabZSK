@@ -211,7 +211,7 @@
     <value>Mnemonic name</value>
   </data>
   <data name="recordType" xml:space="preserve">
-    <value>Record type</value>
+    <value>Record value</value>
   </data>
   <data name="field" xml:space="preserve">
     <value>Field</value>

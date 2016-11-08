@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LabZKT.Simulation {
+namespace LabZSK.Simulation {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace LabZKT.Simulation {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LabZKT.Simulation.Strings", typeof(Strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LabZSK.Simulation.Strings", typeof(Strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -323,6 +323,15 @@ namespace LabZKT.Simulation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log pracy programu jest niespójny.
+        /// </summary>
+        internal static string logInconsistent {
+            get {
+                return ResourceManager.GetString("logInconsistent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stacja.
         /// </summary>
         internal static string machineName {
@@ -571,6 +580,15 @@ namespace LabZKT.Simulation {
         internal static string tact {
             get {
                 return ResourceManager.GetString("tact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Podględ logu.
+        /// </summary>
+        internal static string viewLogFile {
+            get {
+                return ResourceManager.GetString("viewLogFile", resourceCulture);
             }
         }
     }

@@ -289,4 +289,10 @@ You will lose all progress.</value>
   <data name="notForStudents" xml:space="preserve">
     <value>Application in not for students mode!</value>
   </data>
+  <data name="logInconsistent" xml:space="preserve">
+    <value>Log file is inconsistent</value>
+  </data>
+  <data name="viewLogFile" xml:space="preserve">
+    <value>Log File</value>
+  </data>
 </root>

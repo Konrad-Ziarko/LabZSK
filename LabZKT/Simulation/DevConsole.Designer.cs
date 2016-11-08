@@ -1,4 +1,4 @@
-﻿namespace LabZKT.Simulation
+﻿namespace LabZSK.Simulation
 {
     partial class DevConsole
     {
@@ -37,6 +37,7 @@
             // 
             // registerName
             // 
+            this.registerName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.registerName.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.registerName.FormattingEnabled = true;
             this.registerName.Items.AddRange(new object[] {

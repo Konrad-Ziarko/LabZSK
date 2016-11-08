@@ -1,4 +1,4 @@
-﻿namespace LabZKT.Memory
+﻿namespace LabZSK.Memory
 {
     partial class MemView
     {

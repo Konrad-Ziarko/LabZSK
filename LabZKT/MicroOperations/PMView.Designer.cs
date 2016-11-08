@@ -1,4 +1,4 @@
-﻿namespace LabZKT.MicroOperations
+﻿namespace LabZSK.MicroOperations
 {
     partial class PMView
     {

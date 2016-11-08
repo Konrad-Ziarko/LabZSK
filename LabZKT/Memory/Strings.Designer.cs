@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LabZKT.Memory {
+namespace LabZSK.Memory {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace LabZKT.Memory {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LabZKT.Memory.Strings", typeof(Strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LabZSK.Memory.Strings", typeof(Strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -376,7 +376,7 @@ namespace LabZKT.Memory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Typ Komórki.
+        ///   Looks up a localized string similar to Zawartość Komórki.
         /// </summary>
         internal static string recordType {
             get {

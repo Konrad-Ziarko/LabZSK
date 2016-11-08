@@ -1,11 +1,10 @@
-﻿using LabZKT.StaticClasses;
+﻿using LabZSK.StaticClasses;
 using System;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
-namespace LabZKT.Simulation
+namespace LabZSK.Simulation
 {
     /// <summary>
     /// Class for logs creation and management
@@ -15,6 +14,7 @@ namespace LabZKT.Simulation
         private MemoryStream inMemoryLog = new MemoryStream();
         private static readonly LogManager instance;
         private string LogFile = string.Empty;
+        private int currentLogLine = 0;
         /// <summary>
         /// Initialize singleton instance
         /// </summary>
@@ -54,20 +54,24 @@ namespace LabZKT.Simulation
             {
                 FileInfo fileInfo = new FileInfo(LogFile);
                 int len = 0;
+                byte[] lineIndex = Translator.GetBytes("#!#" + currentLogLine++ + "#!#", out len);
+                inMemoryLog.Write(lineIndex, 0, len);
                 byte[] bytes = Translator.GetBytes(v, out len);
                 inMemoryLog.Write(bytes, 0, len);
 
                 FileStream fs = fileInfo.Open(FileMode.Open);
+                //usuwanie poprzedniego CRC
                 long bytesToDelete = 4;
                 fs.SetLength(Math.Max(0, fileInfo.Length - bytesToDelete));
                 fs.Close();
-
-                using (BinaryWriter bw = new BinaryWriter(File.Open(LogFile, FileMode.Append), Encoding.UTF8))
+                //zapisywanie nowej porcji danych
+                using (BinaryWriter bw = new BinaryWriter(File.Open(LogFile, FileMode.Append), Encoding.Unicode))
                 {
                     bw.Write(bytes);
                 }
+                //dopisywanie nowego CRC
                 uint crc = CRC.ComputeChecksum(File.ReadAllBytes(LogFile));
-                using (BinaryWriter bw = new BinaryWriter(File.Open(LogFile, FileMode.Append), Encoding.UTF8))
+                using (BinaryWriter bw = new BinaryWriter(File.Open(LogFile, FileMode.Append), Encoding.Unicode))
                 {
                     bw.Write(crc);
                 }
@@ -88,9 +92,10 @@ namespace LabZKT.Simulation
         /// <param name="logFile">String representing path to log file</param>
         public void createNewLog(string logFile)
         {
+            currentLogLine = 0;
             try
             {
-                using (BinaryWriter bw = new BinaryWriter(File.Open(logFile, FileMode.Create), Encoding.UTF8))
+                using (BinaryWriter bw = new BinaryWriter(File.Open(logFile, FileMode.Create), Encoding.Unicode))
                 {
                 }
                 LogFile = logFile;
@@ -106,6 +111,16 @@ namespace LabZKT.Simulation
         public void clearInMemoryLog()
         {
             inMemoryLog = new MemoryStream();
+            currentLogLine = 0;
+        }
+
+        public void showInMemoryLog()
+        {
+            byte[] arr = new byte[inMemoryLog.Length];
+            int len = Convert.ToInt32(inMemoryLog.Length);
+            inMemoryLog.Seek(0, SeekOrigin.Begin);
+            inMemoryLog.Read(arr, 0, len);
+            MessageBox.Show(Encoding.Unicode.GetString(arr));
         }
     }
 }

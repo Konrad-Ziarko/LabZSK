@@ -3,7 +3,7 @@ using System.Media;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace LabZKT.Other
+namespace LabZSK.Other
 {
     /// <summary>
     /// Windows form for errors
@@ -27,7 +27,7 @@ namespace LabZKT.Other
             FormBorderStyle = FormBorderStyle.None;
             BackgroundImageLayout = ImageLayout.Stretch;
             Cursor.Hide();
-            SoundPlayer audio = new SoundPlayer(LabZKT.Properties.Resources.BSoD);
+            SoundPlayer audio = new SoundPlayer(LabZSK.Properties.Resources.BSoD);
             audio.PlayLooping();
             getFocusCallBack = new DelegateGetFocus(getFocus);
             new Thread(keepFocus){

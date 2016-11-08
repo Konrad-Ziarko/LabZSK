@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace LabZKT.Controls
+namespace LabZSK.Controls
 {
     /// <summary>
     /// Class which represents single CPU register
@@ -281,7 +281,7 @@ namespace LabZKT.Controls
             }
             catch (Exception)
             {
-                MessageBox.Show(Strings.dragError, "LabZKT", MessageBoxButtons.OK);
+                MessageBox.Show(Strings.dragError, "LabZSK", MessageBoxButtons.OK);
             }
         }
         #endregion

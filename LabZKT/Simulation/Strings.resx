@@ -289,4 +289,10 @@ Utracisz cały postęp.</value>
   <data name="notForStudents" xml:space="preserve">
     <value>Aplikacja nie jest w trybie dla studenta!</value>
   </data>
+  <data name="logInconsistent" xml:space="preserve">
+    <value>Log pracy programu jest niespójny</value>
+  </data>
+  <data name="viewLogFile" xml:space="preserve">
+    <value>Podględ logu</value>
+  </data>
 </root>

@@ -87,7 +87,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\Symulator LabZKT.msi"
+        "OutputFilename" = "8:Debug\\Symulator LabZSK.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -119,7 +119,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\Symulator LabZKT.msi"
+        "OutputFilename" = "8:Release\\Symulator LabZSK.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -352,7 +352,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_B7ACF3CF31B944A39FE28535DB0ED715"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFilesFolder]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -388,9 +388,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Symulator LabZKT"
+        "ProductName" = "8:LabZSK"
         "ProductCode" = "8:{FBD0F683-13CC-431E-806E-37EE0B308CB7}"
-        "PackageCode" = "8:{A5E99234-8C09-4938-9A8B-FC39CA3D9E4E}"
+        "PackageCode" = "8:{099B5800-DC72-4E30-8B60-42B9A7A6AA2A}"
         "UpgradeCode" = "8:{C6C943D1-2C34-4EBC-BEDF-3480841123A4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -401,7 +401,7 @@
         "Manufacturer" = "8:Ziarko Konrad Tomasz"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:Symulator LabZKT"
+        "Title" = "8:Symulator LabZSK"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Ziarko Konrad Tomasz"
         "Keywords" = "8:"
@@ -512,7 +512,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_32AF6947DF7040A6B47E4865E290FC34"
             {
-            "Name" = "8:Symulator LabZkt"
+            "Name" = "8:Symulator LabZSK"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -1071,7 +1071,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_543EBA849B5040BBB927F025BA614495"
             {
-            "SourcePath" = "8:..\\LabZKT\\obj\\Debug\\LabZKT.exe"
+            "SourcePath" = "8:..\\LabZKT\\obj\\Debug\\LabZSK.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B7ACF3CF31B944A39FE28535DB0ED715"

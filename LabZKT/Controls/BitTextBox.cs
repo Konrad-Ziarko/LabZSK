@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace LabZKT.Controls
+namespace LabZSK.Controls
 {
     /// <summary>
     /// Class which represents CPU flag

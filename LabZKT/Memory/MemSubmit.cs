@@ -1,5 +1,5 @@
-﻿using LabZKT.Properties;
-using LabZKT.StaticClasses;
+﻿using LabZSK.Properties;
+using LabZSK.StaticClasses;
 using System;
 using System.Collections.Specialized;
 using System.Data;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace LabZKT.Memory
+namespace LabZSK.Memory
 {
     /// <summary>
     /// Displays form responsible for submiting new MemoryRecords

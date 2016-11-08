@@ -1,4 +1,4 @@
-﻿using LabZKT.Properties;
+﻿using LabZSK.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LabZKT.Other
+namespace LabZSK.Other
 {
     public partial class Options : Form
     {

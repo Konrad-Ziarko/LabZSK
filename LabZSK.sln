@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabZKT", "LabZKT\LabZKT.csproj", "{1B859384-6C72-4F67-A97D-ABB0AF560D36}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabZSK", "LabZKT\LabZSK.csproj", "{1B859384-6C72-4F67-A97D-ABB0AF560D36}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Symulator LabZKT", "Symulator LabZKT\Symulator LabZKT.vdproj", "{E589802F-3DF0-4B05-B41D-FDE73E74370A}"
 EndProject
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deinstalator", "Deinstalato
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabZKTTests", "LabZKTTests\LabZKTTests.csproj", "{CED4E64A-F7B3-4DBE-9F4C-A46188DB7334}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabZktServer", "LabZktServer\LabZktServer.csproj", "{6589C1A8-BDBF-4552-90C8-3DC634C85382}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabZSKServer", "LabZktServer\LabZSKServer.csproj", "{6589C1A8-BDBF-4552-90C8-3DC634C85382}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

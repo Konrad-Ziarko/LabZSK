@@ -1,7 +1,7 @@
-﻿using LabZKT.Controls;
-using LabZKT.Memory;
-using LabZKT.MicroOperations;
-using LabZKT.Properties;
+﻿using LabZSK.Controls;
+using LabZSK.Memory;
+using LabZSK.MicroOperations;
+using LabZSK.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,7 +10,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace LabZKT.Simulation
+namespace LabZSK.Simulation
 {
     /// <summary>
     /// Controls simulation view and model instances
@@ -20,7 +20,7 @@ namespace LabZKT.Simulation
         /// <summary>
         /// Strign representing default path for files
         /// </summary>
-        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
+        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK";
         /// <summary>
         /// Boolean representing whether debugger is attached or not
         /// </summary>
@@ -217,7 +217,7 @@ namespace LabZKT.Simulation
 
         private void MemView_AUpdateForm(int row, string binary, string hex, int type)
         {
-            theModel.addTextToLogFile("\t"+ Strings.memHasChanged + "\n\tPAO[" 
+            theModel.addTextToLog("\t"+ Strings.memHasChanged + "\n\tPAO[" 
                 + row + "] = 0x" + List_Memory[row].hex.PadLeft(4, '0') + "     =>     PAO[" + row+"] = 0x" + hex + "\n\n");
             List_Memory[row] = new MemoryRecord(row, binary, hex, type);
             theView.SetDataGridMem(List_Memory, row);
@@ -241,7 +241,7 @@ namespace LabZKT.Simulation
 
         private void PmView_AUpdateData(int row, int col, string str)
         {
-            theModel.addTextToLogFile("\t"+ Strings.microcodeHasChanged +"\n\tPM[" 
+            theModel.addTextToLog("\t"+ Strings.microcodeHasChanged +"\n\tPM[" 
                 + row + "][" + List_MicroOp[row].getColumnName(col) + "] = \"" + List_MicroOp[row].getColumn(col) 
                 + "\"     =>     PM[" + row + "][" + List_MicroOp[row].getColumnName(col) + "] = \"" + str + "\"\n\n");
             List_MicroOp[row].setValue(col, str);

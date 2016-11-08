@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LabZKT.MicroOperations
+namespace LabZSK.MicroOperations
 {
     /// <summary>
     /// Class representing single microoperation

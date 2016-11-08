@@ -211,7 +211,7 @@
     <value>Mnemonik</value>
   </data>
   <data name="recordType" xml:space="preserve">
-    <value>Typ Komórki</value>
+    <value>Zawartość Komórki</value>
   </data>
   <data name="field" xml:space="preserve">
     <value>Pole</value>

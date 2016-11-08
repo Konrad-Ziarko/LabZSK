@@ -1,10 +1,10 @@
-﻿using LabZKT.Properties;
+﻿using LabZSK.Properties;
 using System;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace LabZKT.Other
+namespace LabZSK.Other
 {
     /// <summary>
     /// Windows form for credentials

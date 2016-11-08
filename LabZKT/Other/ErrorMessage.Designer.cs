@@ -1,4 +1,4 @@
-﻿namespace LabZKT.Other
+﻿namespace LabZSK.Other
 {
     partial class ErrorMessage
     {
@@ -35,7 +35,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::LabZKT.Properties.Resources.maxresdefault;
+            this.BackgroundImage = global::LabZSK.Properties.Resources.maxresdefault;
             this.ClientSize = new System.Drawing.Size(1918, 1040);
             this.ControlBox = false;
             this.Cursor = System.Windows.Forms.Cursors.Default;

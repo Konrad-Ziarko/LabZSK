@@ -1,5 +1,5 @@
-﻿using LabZKT.Properties;
-using LabZKT.StaticClasses;
+﻿using LabZSK.Properties;
+using LabZSK.StaticClasses;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,14 +9,14 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace LabZKT.Memory
+namespace LabZSK.Memory
 {
     /// <summary>
     /// Displays memory and allows to modify data
     /// </summary>
     public partial class MemView : Form
     {
-        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
+        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK";
         internal event Action<int, string, string, int> AUpdateForm;
 
         /// <summary>
@@ -27,6 +27,7 @@ namespace LabZKT.Memory
         private Rectangle dragBoxFromMouseDown;
         private object valueFromMouseDown;
         private int idxDragRow;
+        private string[] copyRow = new string[3];
         /// <summary>
         /// Initialize instance of class
         /// </summary>
@@ -151,11 +152,11 @@ namespace LabZKT.Memory
                                         br.ReadBoolean();
                                 }
                                 if (isChanged)
-                                AUpdateForm(i, Grid_Mem.Rows[i].Cells[1].Value.ToString(), Grid_Mem.Rows[i].Cells[2].Value.ToString(), Convert.ToInt32(Grid_Mem.Rows[i].Cells[3].Value));
+                                    AUpdateForm(i, Grid_Mem.Rows[i].Cells[1].Value.ToString(), Grid_Mem.Rows[i].Cells[2].Value.ToString(), Convert.ToInt32(Grid_Mem.Rows[i].Cells[3].Value));
                             }
                         }
                         else
-                            MessageBox.Show(Strings.memLoadError,Strings.memLoadErrorTitle, MessageBoxButtons.OK);
+                            MessageBox.Show(Strings.memLoadError, Strings.memLoadErrorTitle, MessageBoxButtons.OK);
                     }
                 else if (Regex.Match(extension, @"[sS][aA][gG]").Success)
                 //naucz czytania plikow labsaga
@@ -318,7 +319,10 @@ namespace LabZKT.Memory
                             dataType = 3;
                         else
                             dataType = 2;
+                        dataGridView_Decode_Complex.DefaultCellStyle.ForeColor = Color.FromArgb(255, 150, 150, 150);
                     }
+                    else
+                        dataGridView_Decode_Complex.DefaultCellStyle.ForeColor = SystemColors.ControlText;
                     if (Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[3].Value) == 2 || dataType == 2)
                     {
                         if (dataType != 2)
@@ -438,7 +442,7 @@ namespace LabZKT.Memory
                     Grid_Mem.Rows[hitTestInfo.RowIndex].Cells[1].Value = Grid_Mem.Rows[idxDragRow].Cells[1].Value;
                     Grid_Mem.Rows[hitTestInfo.RowIndex].Cells[2].Value = Grid_Mem.Rows[idxDragRow].Cells[2].Value;
                     Grid_Mem.Rows[hitTestInfo.RowIndex].Cells[3].Value = Grid_Mem.Rows[idxDragRow].Cells[3].Value;
-                    AUpdateForm(hitTestInfo.RowIndex, Grid_Mem.Rows[idxDragRow].Cells[1].Value.ToString(), Grid_Mem.Rows[idxDragRow].Cells[1].Value.ToString(), Convert.ToInt16(Grid_Mem.Rows[idxDragRow].Cells[3].Value));
+                    AUpdateForm(hitTestInfo.RowIndex, Grid_Mem.Rows[idxDragRow].Cells[1].Value.ToString(), Grid_Mem.Rows[idxDragRow].Cells[2].Value.ToString(), Convert.ToInt16(Grid_Mem.Rows[idxDragRow].Cells[3].Value));
                 }
             }
         }
@@ -455,21 +459,38 @@ namespace LabZKT.Memory
 
         private void Grid_PO_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Delete)
-                button_Clear_Row_Click(sender, e);
-            else if (char.IsLetterOrDigit((char)e.KeyCode) || e.KeyCode == Keys.OemMinus)
+            if (!e.Control)
             {
-                Grid_Mem.ReadOnly = false;
-                if ((char)e.KeyCode <= 90 && (char)e.KeyCode >= 65)
-                    Grid_Mem.CurrentCell.Value = (char)(e.KeyCode + 32);
-                else if (e.KeyCode == Keys.OemMinus)
-                    Grid_Mem.CurrentCell.Value = (char)45;
-                else
-                    Grid_Mem.CurrentCell.Value = (char)e.KeyCode;
-                Grid_Mem.BeginEdit(false);
+                if (e.KeyCode == Keys.Delete)
+                    button_Clear_Row_Click(sender, e);
+                else if (char.IsLetterOrDigit((char)e.KeyCode) || e.KeyCode == Keys.OemMinus)
+                {
+                    Grid_Mem.ReadOnly = false;
+                    if ((char)e.KeyCode <= 90 && (char)e.KeyCode >= 65)
+                        Grid_Mem.CurrentCell.Value = (char)(e.KeyCode + 32);
+                    else if (e.KeyCode == Keys.OemMinus)
+                        Grid_Mem.CurrentCell.Value = (char)45;
+                    else
+                        Grid_Mem.CurrentCell.Value = (char)e.KeyCode;
+                    Grid_Mem.BeginEdit(false);
+                }
+                else if (e.KeyCode == Keys.Enter)
+                    Grid_Mem.EndEdit();
             }
-            else if (e.KeyCode == Keys.Enter)
-                Grid_Mem.EndEdit();
+            else if (e.KeyCode == Keys.C)
+            {
+                copyRow[0] = Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Value.ToString();
+                copyRow[1] = Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[2].Value.ToString();
+                copyRow[2] = Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[3].Value.ToString();
+
+            }
+            else if (e.KeyCode == Keys.V)
+            {
+                Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Value = copyRow[0];
+                Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[2].Value = copyRow[1];
+                Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[3].Value = copyRow[2];
+                AUpdateForm(Grid_Mem.CurrentCell.RowIndex, copyRow[0], copyRow[1], Convert.ToInt16(copyRow[2]));
+            }
         }
 
         private void PO_SizeChanged(object sender, EventArgs e)

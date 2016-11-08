@@ -56,9 +56,9 @@
     <Compile Include="StaticClasses\TranslatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LabZKT\LabZKT.csproj">
+    <ProjectReference Include="..\LabZKT\LabZSK.csproj">
       <Project>{1B859384-6C72-4F67-A97D-ABB0AF560D36}</Project>
-      <Name>LabZKT</Name>
+      <Name>LabZSK</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

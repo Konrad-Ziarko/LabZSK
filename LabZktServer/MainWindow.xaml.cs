@@ -1,24 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace LabZktServer
+namespace LabZSKServer
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -29,6 +19,11 @@ namespace LabZktServer
         private bool _isRunning;
         Thread runningThread;
         public static string ipA = "";//do wywalenia
+        private class LogRecord
+        {
+            public int rowNumber { get; set; }
+            public string recordValue { get; set; }
+        }
         public MainWindow()
         {
             InitializeComponent();

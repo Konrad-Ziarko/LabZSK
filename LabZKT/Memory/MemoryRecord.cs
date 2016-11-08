@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LabZKT.Memory
+namespace LabZSK.Memory
 {
     /// <summary>
     /// Class representing operating memory record

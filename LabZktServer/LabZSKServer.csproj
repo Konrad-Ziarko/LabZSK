@@ -7,8 +7,8 @@
     <ProjectGuid>{6589C1A8-BDBF-4552-90C8-3DC634C85382}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LabZktServer</RootNamespace>
-    <AssemblyName>LabZktServer</AssemblyName>
+    <RootNamespace>LabZSKServer</RootNamespace>
+    <AssemblyName>LabZSKServer</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -33,6 +33,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>LabZSKServer.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

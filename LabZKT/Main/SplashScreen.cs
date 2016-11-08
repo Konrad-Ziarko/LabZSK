@@ -1,9 +1,9 @@
-﻿using LabZKT.Simulation;
+﻿using LabZSK.Simulation;
 using System;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace LabZKT
+namespace LabZSK
 {
     partial class SplashScreen : Form
     {

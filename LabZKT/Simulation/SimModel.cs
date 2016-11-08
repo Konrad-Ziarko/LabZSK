@@ -1,8 +1,8 @@
-﻿using LabZKT.Controls;
-using LabZKT.Memory;
-using LabZKT.MicroOperations;
-using LabZKT.Properties;
-using LabZKT.StaticClasses;
+﻿using LabZSK.Controls;
+using LabZSK.Memory;
+using LabZSK.MicroOperations;
+using LabZSK.Properties;
+using LabZSK.StaticClasses;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -20,14 +20,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LabZKT.Simulation
+namespace LabZSK.Simulation
 {
     /// <summary>
     /// Model class
     /// </summary>
     public class SimModel
     {
-        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
+        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK";
         internal event Action StartSim;
         internal event Action StopSim;
         internal event Action<string, string, string> AddText;
@@ -97,6 +97,7 @@ namespace LabZKT.Simulation
         private bool[,] cells = new bool[11, 8];
         private string logFile = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty;
         private short raps = 0, na = 0;
+        private int nistTimeTimeout = 3000;
         private DataGridView Grid_Mem;
         /// <summary>
         /// Initialize instance of model for computes
@@ -164,15 +165,15 @@ namespace LabZKT.Simulation
                                 ipAddrList += "\n".PadRight(31, ' ') + ip.Address.ToString();
             logManager.createNewLog(logFile);
             Settings.Default.Save();
-            addTextToLogFile(Strings.pcInDomain + ": \"" + Environment.UserDomainName + "\"\n" + Strings.machineName + " \"" +
+            addTextToLog(Strings.pcInDomain + ": \"" + Environment.UserDomainName + "\"\n" + Strings.machineName + " \"" +
             Environment.MachineName + "\" \n" + Strings.loggedAs + ": \"" +
             Environment.UserName + "\"\n" + Strings.networkInterfaces + ": " + ipAddrList + "\n\n");
             if (Settings.Default.CanEditOptions)
-                addTextToLogFile(Strings.canEditSettings+"\n");
+                addTextToLog(Strings.canEditSettings+"\n");
             if (!Convert.ToBoolean(ConfigurationManager.AppSettings["ApplicationForStudents"]))
-                addTextToLogFile(Strings.notForStudents + "\n");
+                addTextToLog(Strings.notForStudents + "\n");
         }
-        public void addTextToLogFile(string lineOfText)
+        public void addTextToLog(string lineOfText)
         {
             if (logManager != null)
             {
@@ -287,7 +288,7 @@ namespace LabZKT.Simulation
             foreach (var oldReg in oldRegs)
             {
                 if (registers[oldReg.Key].innerValue != oldReg.Value)
-                    addTextToLogFile(Strings.registerHasChanged + " " + oldReg.Key.PadRight(6, ' ') +
+                    addTextToLog(Strings.registerHasChanged + " " + oldReg.Key.PadRight(6, ' ') +
                         oldReg.Value + "=>" + registers[oldReg.Key].innerValue + "\n");
             }
             foreach (var reg in registers)
@@ -325,7 +326,7 @@ namespace LabZKT.Simulation
         /// </summary>
         public void clearRegisters()
         {
-            addTextToLogFile("\n" + Strings.clearingRegister + "\n");
+            addTextToLog("\n" + Strings.clearingRegister + "\n");
             mark = 5;
             mistakes = currnetCycle = 0;
             foreach (var reg in registers)
@@ -341,7 +342,7 @@ namespace LabZKT.Simulation
         /// <param name="description">String representing operation description</param>
         public void addToMiniLog(string tact, string mnemo, string description)
         {
-            addTextToLogFile("\t" + tact + " | " + mnemo + " : " + description + "\n");
+            addTextToLog("\t" + tact + " | " + mnemo + " : " + description + "\n");
         }
         /// <summary>
         /// Initialize simulation log and start simulation
@@ -357,6 +358,10 @@ namespace LabZKT.Simulation
             {
                 dialog.Filter = Strings.simLog + "|*.log|" + Strings.all + "|*.*";
                 dialog.Title = Strings.createLog;
+                if (Directory.Exists(envPath + @"\Log\"))
+                    dialog.InitialDirectory = envPath + @"\Log\";
+                else
+                    dialog.InitialDirectory = envPath;
                 DialogResult saveFileDialogResult = dialog.ShowDialog();
                 if (saveFileDialogResult == DialogResult.OK && dialog.FileName != "")
                 {
@@ -365,27 +370,27 @@ namespace LabZKT.Simulation
 
                     CancellationTokenSource cts = new CancellationTokenSource();
                     Task loop = Task.Factory.StartNew(() => GetNISTDate(cts.Token, out internetTime));
-                    if (Task.WaitAll(new Task[] { loop }, 5000))
+                    if (Task.WaitAll(new Task[] { loop }, nistTimeTimeout))
                     {
                     }
                     else
                     {
                         cts.Cancel();
                     }
-                    addTextToLogFile(Strings.startingSimulation + "\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(20, ' ') + "\n" + internetTime.PadLeft(20, ' ') + "\n" + Strings.registersContent + "\n");
+                    addTextToLog(Strings.startingSimulation + "\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(20, ' ') + "\n" + internetTime.PadLeft(20, ' ') + "\n" + Strings.registersContent + "\n");
                     foreach (var reg in registers.Values)
-                        addTextToLogFile(reg.registerName.PadRight(6, ' ') + " = " + reg.Text + "\n");
-                    addTextToLogFile("\n");
+                        addTextToLog(reg.registerName.PadRight(6, ' ') + " = " + reg.Text + "\n");
+                    addTextToLog("\n");
                 }
             }
             if (DEVMODE)
-                addTextToLogFile("\nAuto: " + DEVREGISTER + " ?= " + DEVVALUE + "\n");
+                addTextToLog("\nAuto: " + DEVREGISTER + " ?= " + DEVVALUE + "\n");
             else
             {
                 if (inMicroMode)
-                    addTextToLogFile("Micro\n");
+                    addTextToLog("Micro\n");
                 else
-                    addTextToLogFile("Makro\n");
+                    addTextToLog("Makro\n");
             }
             simulateCPU();
         }
@@ -439,7 +444,7 @@ namespace LabZKT.Simulation
             if (!registers[registerToCheck].validateRegisterValue(out badValue))
             {
                 new Thread(SystemSounds.Beep.Play).Start();
-                addTextToLogFile("\t\t" + Strings.mistake + "(" + (mistakes + 1) + "): " + registerToCheck + "=" + badValue +
+                addTextToLog("\t\t" + Strings.mistake + "(" + (mistakes + 1) + "): " + registerToCheck + "=" + badValue +
                     " (" + Strings.correct + " " + registerToCheck + "=" + registers[registerToCheck].innerValue + ")\n\n");
 
                 mistakes++;
@@ -455,7 +460,7 @@ namespace LabZKT.Simulation
             }
             else
             {
-                addTextToLogFile("\t\t" + registerToCheck + "=" + registers[registerToCheck].innerValue + "\n");
+                addTextToLog("\t\t" + registerToCheck + "=" + registers[registerToCheck].innerValue + "\n");
             }
         }
         private void waitForButton()
@@ -479,14 +484,14 @@ namespace LabZKT.Simulation
             string internetTime = string.Empty;
             CancellationTokenSource cts = new CancellationTokenSource();
             Task loop = Task.Factory.StartNew(() => GetNISTDate(cts.Token, out internetTime));
-            if (Task.WaitAll(new Task[] { loop }, 5000))
+            if (Task.WaitAll(new Task[] { loop }, nistTimeTimeout))
             {
             }
             else
             {
                 cts.Cancel();
             }
-            addTextToLogFile("\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(20, ' ') + "\n" + internetTime.PadLeft(20, ' ') + "\n" + Strings.simStop + "\n" +
+            addTextToLog("\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(20, ' ') + "\n" + internetTime.PadLeft(20, ' ') + "\n" + Strings.simStop + "\n" +
                 Strings.mark + ": " + mark + "   " + Strings.mistakes + ": " + mistakes + "\n");
             logManager.clearInMemoryLog();
             logFile = string.Empty;
@@ -503,25 +508,25 @@ namespace LabZKT.Simulation
         {
             indirectAdresation = false;
             if (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1]))
-                addTextToLogFile(Strings.tact + "1:\n");
+                addTextToLog(Strings.tact + "1:\n");
             while (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1] || cells[8, 1]))
                 exeTact1();
             if (currentTact == 1)
                 nextTact();
             if (currentTact == 2 && cells[10, 2])
-                addTextToLogFile(Strings.tact + "2:\n");
+                addTextToLog(Strings.tact + "2:\n");
             while (currentTact == 2 && cells[10, 2])
                 exeTact2();
             while (currentTact >= 2 && currentTact <= 5)
                 nextTact();
             if (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
-                addTextToLogFile(Strings.tact + "6:\n");
+                addTextToLog(Strings.tact + "6:\n");
             while (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
                 exeTact6();
             if (currentTact == 6)
                 nextTact();
             if (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7] || cells[9, 7]))
-                addTextToLogFile(Strings.tact + "7:\n");
+                addTextToLog(Strings.tact + "7:\n");
             while (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7]))
                 exeTact7();
             if (currentTact == 7 && cells[9, 7])
@@ -1405,7 +1410,7 @@ namespace LabZKT.Simulation
             long rbps = Translator.GetRbpsValue(Grid_PM.Rows[raps]) + na;
             RBPS.Text = rbps.ToString("X").PadLeft(12, '0');
 
-            addTextToLogFile("===============================\n" + Strings.tact + "0: RBPS=" + RBPS.Text + "\n");
+            addTextToLog("===============================\n" + Strings.tact + "0: RBPS=" + RBPS.Text + "\n");
             for (int i = 1; i < 11; i++)
                 for (int j = 1; j < 8; j++)
                     cells[i, j] = row.Cells[i].Value.ToString() == "" ? false : true;
@@ -1556,14 +1561,18 @@ namespace LabZKT.Simulation
             {
                 {
                     Form log = new Form();
+                    log.Text = Strings.viewLogFile;
+                    log.Icon = Resources.Logo_WAT1;
+
                     RichTextBox rtb = new RichTextBox();
+                    rtb.WordWrap = false;
                     log.Controls.Add(rtb);
                     rtb.ReadOnly = true;
                     rtb.Font = new Font("Consolas", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
                     rtb.Text = File.ReadAllText(pathToLog, Encoding.Unicode);
                     rtb.Text = rtb.Text.Remove(rtb.Text.Length - 2, 2);
-                    log.AutoSize = true;
-                    log.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+                    //log.AutoSize = true;
+                    //log.AutoSizeMode = AutoSizeMode.GrowAndShrink;
                     int width = 200;
                     Graphics g = Graphics.FromHwnd(rtb.Handle);
                     foreach (var line in rtb.Lines)
@@ -1571,10 +1580,12 @@ namespace LabZKT.Simulation
                         SizeF f = g.MeasureString(line, rtb.Font);
                         width = (int)(f.Width) > width ? (int)(f.Width) : width;
                     }
-                    rtb.Width = width + 10;
-                    rtb.Height = 600;
+                    rtb.Dock = DockStyle.Fill;
+
+                    log.Width = width + 40;
+                    log.Height = 600;
                     log.MaximizeBox = false;
-                    log.SizeGripStyle = SizeGripStyle.Hide;
+                    //log.SizeGripStyle = SizeGripStyle.Hide;
 
                     Regex regExp = new Regex(@"(={2}.+==|" + Strings.mistake + @".+\s|" + Strings.canEditSettings + @"\s|" + Strings.notForStudents + @"\s)");
                     foreach (Match match in regExp.Matches(rtb.Text))
@@ -1610,6 +1621,8 @@ namespace LabZKT.Simulation
                     log.ShowDialog();
                 }
             }
+            else
+                MessageBox.Show(Strings.logInconsistent);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace LabZKT.StaticClasses
+﻿namespace LabZSK.StaticClasses
 {
     /// <summary>
     /// Class used for various CRC operations

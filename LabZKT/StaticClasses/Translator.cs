@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Resources;
 using System.Windows.Forms;
 
-namespace LabZKT.StaticClasses
+namespace LabZSK.StaticClasses
 {
     /// <summary>
     /// Static class with necessary descriptions
@@ -175,12 +175,12 @@ namespace LabZKT.StaticClasses
             string description = "";
             string instructionCode = "";
 
-            description += instructionMnemo;
+            //description += instructionMnemo;
             if (instructionCode != null)
                 if (instructionType == 2)
                 {
                     description += " - " + Strings.simpleInstruction + "\n";
-                    description += "OP = " + Convert.ToInt32(binaryData.Substring(0, 5), 2).ToString("X") + "h\n";
+                    description += "OP = " + Convert.ToInt32(binaryData.Substring(0, 5), 2).ToString("X") + "h ("+instructionMnemo+")\n";
                     description += "X = " + binaryData.Substring(5, 1) + "\n";
                     description += "S = " + binaryData.Substring(6, 1) + "\n";
                     description += "I = " + binaryData.Substring(7, 1) + "\n";
@@ -189,7 +189,7 @@ namespace LabZKT.StaticClasses
                 else if (instructionType == 3)
                 {
                     description += " - " + Strings.complexInstruction + "\n";
-                    description += "AOP = " + Convert.ToInt32(binaryData.Substring(5, 4), 2).ToString("X") + "h\n";
+                    description += "AOP = " + Convert.ToInt32(binaryData.Substring(5, 4), 2).ToString("X") + "h (" + instructionMnemo + ")\n";
                     description += "N = " + Convert.ToInt32(binaryData.Substring(9, 7), 2).ToString("X") + "h\n";
                 }
 

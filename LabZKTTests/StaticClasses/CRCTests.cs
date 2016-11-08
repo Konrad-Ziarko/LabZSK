@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using LabZKT.StaticClasses;
+using LabZSK.StaticClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LabZKT.StaticClasses.Tests
+namespace LabZSK.StaticClasses.Tests
 {
     [TestClass()]
     public class CRCTests

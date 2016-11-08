@@ -1,24 +1,25 @@
-﻿using LabZKT.Memory;
-using LabZKT.MicroOperations;
-using LabZKT.Other;
-using LabZKT.Properties;
-using LabZKT.StaticClasses;
+﻿using LabZSK.Memory;
+using LabZSK.MicroOperations;
+using LabZSK.Other;
+using LabZSK.Properties;
+using LabZSK.StaticClasses;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace LabZKT.Simulation
+namespace LabZSK.Simulation
 {
     /// <summary>
     /// Displays simulation interface
     /// </summary>
     public partial class SimView : Form
     {
-        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
+        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK";
         internal event Action<int, string, string, int> AUpdateForm;
         internal event Action AEnterEditMode;
         internal event Action ALeaveEditMode;
@@ -227,7 +228,10 @@ namespace LabZKT.Simulation
         {
             open_File_Dialog.Filter = "Logi symulatora|*.log|Wszystko|*.*";
             open_File_Dialog.Title = "Wczytaj log";
-            open_File_Dialog.InitialDirectory = envPath;
+            if (Directory.Exists(envPath + @"\Log\"))
+                open_File_Dialog.InitialDirectory = envPath + @"\Log\";
+            else
+                open_File_Dialog.InitialDirectory = envPath;
 
             DialogResult openFileDialogResult = open_File_Dialog.ShowDialog();
             if (openFileDialogResult == DialogResult.OK && open_File_Dialog.FileName != "")
@@ -275,11 +279,9 @@ namespace LabZKT.Simulation
             cellDescription.Text = "PAO[" + idxRow + "]";
             if (selectedInstruction.typ == 0)
                 cellDescription.Text += "=0";
-            else
-                cellDescription.Text += "\n";
             if (selectedInstruction.typ == 1)
             {
-                cellDescription.Text += Strings.data+"\n";
+                cellDescription.Text += " - " + Strings.data+"\n";
                 cellDescription.Text += selectedInstruction.value.ToString() + "b\n";
                 cellDescription.Text += Convert.ToUInt16(selectedInstruction.value, 2) + "d\n";
                 cellDescription.Text += Convert.ToInt16(selectedInstruction.value, 2).ToString("X") + "h";

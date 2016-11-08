@@ -1,10 +1,10 @@
-﻿using LabZKT.StaticClasses;
+﻿using LabZSK.StaticClasses;
 using System;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace LabZKT.MicroOperations
+namespace LabZSK.MicroOperations
 {
     /// <summary>
     /// Responsible for submiting new microoperations

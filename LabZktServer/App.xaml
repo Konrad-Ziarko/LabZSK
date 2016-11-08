@@ -1,7 +1,7 @@
-﻿<Application x:Class="LabZktServer.App"
+﻿<Application x:Class="LabZSKServer.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:LabZktServer"
+             xmlns:local="clr-namespace:LabZSKServer"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

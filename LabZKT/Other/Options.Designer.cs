@@ -1,4 +1,4 @@
-﻿namespace LabZKT.Other
+﻿namespace LabZSK.Other
 {
     /// <summary>
     /// Class representing settings menu

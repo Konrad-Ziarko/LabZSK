@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LabZKT.Simulation
+namespace LabZSK.Simulation
 {
     internal partial class DevConsole : Form
     {

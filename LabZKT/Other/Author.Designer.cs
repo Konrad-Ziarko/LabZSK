@@ -1,4 +1,4 @@
-﻿namespace LabZKT.Other
+﻿namespace LabZSK.Other
 {
     partial class Author
     {
@@ -68,7 +68,7 @@
             // 
             // panel3
             // 
-            this.panel3.BackgroundImage = global::LabZKT.Properties.Resources.FAakademia;
+            this.panel3.BackgroundImage = global::LabZSK.Properties.Resources.FAakademia;
             this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.panel3.Location = new System.Drawing.Point(19, 66);
             this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
@@ -100,7 +100,7 @@
             // 
             // panel2
             // 
-            this.panel2.BackgroundImage = global::LabZKT.Properties.Resources.Logo_WAT;
+            this.panel2.BackgroundImage = global::LabZSK.Properties.Resources.Logo_WAT;
             this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel2.Location = new System.Drawing.Point(252, 0);

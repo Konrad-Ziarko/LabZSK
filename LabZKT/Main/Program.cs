@@ -1,19 +1,19 @@
-﻿using LabZKT.Properties;
-using LabZKT.Simulation;
+﻿using LabZSK.Properties;
+using LabZSK.Simulation;
 using System;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace LabZKT
+namespace LabZSK
 {
     static class Program
     {
         /// <summary>
         /// Mutex used to detect if application is already running.
         /// </summary>
-        static Mutex singleton = new Mutex(true, "LABZKT");
-        private static string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
+        static Mutex singleton = new Mutex(true, "LabZSK");
+        private static string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK";
         [STAThread]
         static void Main(string[] args)
         {
@@ -21,13 +21,13 @@ namespace LabZKT
             {
                 if (Settings.Default.FirstRun)
                 {
-                    MessageBox.Show(Strings.defaultDirectoryMessage, "LabZKT", MessageBoxButtons.OK);
+                    MessageBox.Show(Strings.defaultDirectoryMessage, "LabZSK", MessageBoxButtons.OK);
                     Settings.Default.FirstRun = false;
                     Settings.Default.Save();
                 }
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                if (File.Exists(envPath + @"\Env\LabZKT.ini"))
+                if (File.Exists(envPath + @"\Env\LabZSK.ini"))
                 {
                     //ustawienia ladowac
                     Settings.Default.Save();
@@ -43,7 +43,7 @@ namespace LabZKT
             }
             else
             {
-                MessageBox.Show(Strings.appAlreadyRunning, "LabZKT", MessageBoxButtons.OK);
+                MessageBox.Show(Strings.appAlreadyRunning, "LabZSK", MessageBoxButtons.OK);
             }
         }
     }

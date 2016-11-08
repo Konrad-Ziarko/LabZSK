@@ -1,4 +1,4 @@
-﻿namespace LabZKT.Simulation
+﻿namespace LabZSK.Simulation
 {
     partial class SimView
     {

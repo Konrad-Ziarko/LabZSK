@@ -1,5 +1,5 @@
-﻿using LabZKT.Properties;
-using LabZKT.StaticClasses;
+﻿using LabZSK.Properties;
+using LabZSK.StaticClasses;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace LabZKT.MicroOperations
+namespace LabZSK.MicroOperations
 {
     /// <summary>
     /// Displays microoperations
@@ -18,7 +18,7 @@ namespace LabZKT.MicroOperations
     {
         internal event Action<int, int, string> AUpdateData;
 
-        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt";
+        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK";
         internal PMSubmit theSubView;
         private Rectangle dragBoxFromMouseDown;
         private object valueFromMouseDown;
