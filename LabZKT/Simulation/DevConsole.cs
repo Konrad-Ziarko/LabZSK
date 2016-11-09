@@ -12,22 +12,20 @@ namespace LabZSK.Simulation
 {
     internal partial class DevConsole : Form
     {
-        SimModel modelRef;
         SimView viewRef;
-        internal DevConsole(SimModel model, SimView view)
+        internal DevConsole(SimView view)
         {
-            this.modelRef = model;
             this.viewRef = view;
             InitializeComponent();
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
-            if (!modelRef.isRunning)
+            if (!viewRef.isRunning)
             {
-                modelRef.DEVMODE = true;
-                modelRef.DEVREGISTER = registerName.Text;
-                modelRef.DEVVALUE = Convert.ToInt16(registerValue.Value);
+                viewRef.DEVMODE = true;
+                viewRef.DEVREGISTER = registerName.Text;
+                viewRef.DEVVALUE = Convert.ToInt16(registerValue.Value);
                 viewRef.button_Makro_Click(this, new EventArgs());
             }
         }

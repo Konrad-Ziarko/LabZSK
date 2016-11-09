@@ -166,15 +166,23 @@ namespace LabZSKServer
         {
             Paragraph p;
             FlowDocument document = new FlowDocument();
+            document.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
             foreach (string logLine in allClients[listView.SelectedIndex].clientLog)
             {
                 p = new Paragraph(new Run(logLine));
-                p.FontSize = 14;
+                p.FontSize = 12;
                 p.TextAlignment = TextAlignment.Left;
                 document.Blocks.Add(p);
             }
             richTextBox.Document = document;
             richTextBox.ScrollToEnd();
+
+            
+        }
+
+        private void button_Stop_Click(object sender, RoutedEventArgs e)
+        {
+            refreshRichTextBox.Stop();
         }
     }
 }

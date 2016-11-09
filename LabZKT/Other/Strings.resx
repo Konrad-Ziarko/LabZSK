@@ -169,4 +169,31 @@ Instytut Teleinformatyki i Automatyki</value>
   <data name="promoterName" xml:space="preserve">
     <value>Opiekun pracy: dr inż. Witold Żorski</value>
   </data>
+  <data name="cancelButton" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
+  <data name="connectButton" xml:space="preserve">
+    <value>Połącz</value>
+  </data>
+  <data name="group" xml:space="preserve">
+    <value>Grupa</value>
+  </data>
+  <data name="ipAddress" xml:space="preserve">
+    <value>Adres serwera</value>
+  </data>
+  <data name="lastName" xml:space="preserve">
+    <value>Nazwisko</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Imie</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Hasło</value>
+  </data>
+  <data name="port" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="serverTitle" xml:space="preserve">
+    <value>Serwer</value>
+  </data>
 </root>

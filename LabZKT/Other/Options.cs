@@ -1,26 +1,17 @@
 ﻿using LabZSK.Properties;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Configuration;
-using System.Data;
-using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LabZSK.Other
 {
     public partial class Options : Form
     {
+        internal static bool IsDevConsole = false;
         private bool suppressReload = true;
         internal event Action ACallUpdate;
-        /// <summary>
-        /// Initialize instance of Settings Menu
-        /// </summary>
         public Options()
         {
             InitializeComponent();
@@ -38,7 +29,10 @@ namespace LabZSK.Other
             //ustawienia użytkownika są nadpisywane przez aplikacji
             groupBox1.Enabled = Settings.Default.CanEditOptions;
             if (!Convert.ToBoolean(ConfigurationManager.AppSettings["ApplicationForStudents"]))
+            {
                 groupBox1.Enabled = true;
+                checkBox1.Enabled = IsDevConsole;
+            }
             else
             {
                 checkBox1.Checked = false;
@@ -79,7 +73,7 @@ namespace LabZSK.Other
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            Settings.Default.IsDevConsole = checkBox1.Checked;
+            IsDevConsole = checkBox1.Checked;
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)

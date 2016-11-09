@@ -44,7 +44,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\LabZSK.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -133,6 +134,9 @@
     <Compile Include="Simulation\DevConsole.Designer.cs">
       <DependentUpon>DevConsole.cs</DependentUpon>
     </Compile>
+    <Compile Include="Simulation\Execution.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Simulation\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -177,8 +181,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Main\Program.cs" />
-    <Compile Include="Simulation\SimController.cs" />
-    <Compile Include="Simulation\SimModel.cs" />
     <Compile Include="Main\SplashScreen.cs">
       <SubType>Form</SubType>
     </Compile>

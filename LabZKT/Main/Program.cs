@@ -9,9 +9,6 @@ namespace LabZSK
 {
     static class Program
     {
-        /// <summary>
-        /// Mutex used to detect if application is already running.
-        /// </summary>
         static Mutex singleton = new Mutex(true, "LabZSK");
         private static string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK";
         [STAThread]
@@ -38,8 +35,7 @@ namespace LabZSK
                     filename = args[0];
                 }
                 //Application.Run(new SplashScreen());
-                //usunąć kontroler?
-                new SimController(filename);
+                Application.Run(new SimView(filename));
             }
             else
             {

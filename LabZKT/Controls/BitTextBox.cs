@@ -4,27 +4,10 @@ using System.Windows.Forms;
 
 namespace LabZSK.Controls
 {
-    /// <summary>
-    /// Class which represents CPU flag
-    /// </summary>
     public class BitTextBox : TextBox
     {
-        
-        /// <summary>
-        /// String representing CPU flag name
-        /// </summary>
         public string flagName { get; set; }
-        /// <summary>
-        /// Value stored in flag
-        /// </summary>
         public short innerValue { get; private set; }
-        /// <summary>
-        /// Initialize new instance of BitTextBox
-        /// </summary>
-        /// <param name="x">Position in X coordinate</param>
-        /// <param name="y">Position in Y coordinate</param>
-        /// <param name="c">Parent control for this instance</param>
-        /// <param name="name">String representing name of flag</param>
         public BitTextBox(int x, int y, Control c, string name)
         {
             flagName = name;
@@ -48,10 +31,6 @@ namespace LabZSK.Controls
             Location = loc;
             Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
         }
-        /// <summary>
-        /// Occurs when key was pressed
-        /// </summary>
-        /// <param name="e"></param>
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
             base.OnKeyPress(e);
@@ -70,10 +49,6 @@ namespace LabZSK.Controls
                 e.Handled = true;
             }
         }
-        /// <summary>
-        /// Occurs when control loses focus
-        /// </summary>
-        /// <param name="e"></param>
         protected override void OnLostFocus(EventArgs e)
         {
             base.OnLostFocus(e);
@@ -93,10 +68,6 @@ namespace LabZSK.Controls
             
             Text = innerValue.ToString();
         }
-        /// <summary>
-        /// Occurs when control got focus
-        /// </summary>
-        /// <param name="e"></param>
         protected override void OnGotFocus(EventArgs e)
         {
             base.OnGotFocus(e);
@@ -104,11 +75,6 @@ namespace LabZSK.Controls
             Text = "";
         }
 
-        /// <summary>
-        /// Set new position for this control
-        /// </summary>
-        /// <param name="x">new X position</param>
-        /// <param name="y">new Y position</param>
         public void SetXY(int x, int y)
         {
             var loc = Location;
@@ -116,9 +82,6 @@ namespace LabZSK.Controls
             loc.Y = y;
             Location = loc;
         }
-        /// <summary>
-        /// Reset flag inner value to default
-        /// </summary>
         public void resetValue()
         {
             if (flagName != "MAV")
@@ -132,10 +95,6 @@ namespace LabZSK.Controls
                 Text = "1";
             }
         }
-        /// <summary>
-        /// Set flag inner value and control text
-        /// </summary>
-        /// <param name="newVal">Value for control to store</param>
         public void setInnerValue(short newVal)
         {
             innerValue = newVal;

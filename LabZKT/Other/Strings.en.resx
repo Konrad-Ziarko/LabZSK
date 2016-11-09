@@ -169,4 +169,31 @@ Instytut Teleinformatyki i Automatyki</value>
   <data name="promoterName" xml:space="preserve">
     <value>Thesis supervisor: PhD Witold Żorski</value>
   </data>
+  <data name="cancelButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="connectButton" xml:space="preserve">
+    <value>Connect</value>
+  </data>
+  <data name="group" xml:space="preserve">
+    <value>Group</value>
+  </data>
+  <data name="ipAddress" xml:space="preserve">
+    <value>Remote server IP</value>
+  </data>
+  <data name="lastName" xml:space="preserve">
+    <value>LastName</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="port" xml:space="preserve">
+    <value>Remote port</value>
+  </data>
+  <data name="serverTitle" xml:space="preserve">
+    <value>Server</value>
+  </data>
 </root>

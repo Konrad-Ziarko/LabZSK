@@ -1,43 +1,20 @@
 ﻿using System;
 using System.Drawing;
-using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace LabZSK.Controls
 {
-    /// <summary>
-    /// Class which represents single CPU register
-    /// </summary>
     public class NumericTextBox : TextBox
     {
-        /// <summary>
-        /// String representing register name
-        /// </summary>
         public string registerName { get; private set; }
-        /// <summary>
-        /// Boolean value representing whether register value was changed and needs to be validated
-        /// </summary>
         public bool needCheck { get; set; }
-        /// <summary>
-        /// Value stored in register
-        /// </summary>
         public short innerValue { get; private set; }
-        /// <summary>
-        /// Value which should be moved to this register
-        /// </summary>
         public short valueWhichShouldBeMovedToRegister { get; private set; }
         private static short dragValue;
         private static Point hitTest;
         private Color customeBackColor, customeForeColor;
 
-        /// <summary>
-        /// Initialize new instance of NumericTextBox
-        /// </summary>
-        /// <param name="name">String representing register name</param>
-        /// <param name="x">Value representing control X position</param>
-        /// <param name="y">Value representing control Y position</param>
-        /// <param name="c">Parent control for this instance</param>
         public NumericTextBox(string name, int x, int y, Control c)
         {
             customeBackColor = SystemColors.Window;
@@ -55,10 +32,6 @@ namespace LabZSK.Controls
             BackColor = Color.White;
             Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
         }
-        /// <summary>
-        /// Occurs when key was pressed
-        /// </summary>
-        /// <param name="e"></param>
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
             base.OnKeyPress(e);
@@ -128,10 +101,6 @@ namespace LabZSK.Controls
             else
                 e.Handled = true;
         }
-        /// <summary>
-        /// Occurs when control loses focus
-        /// </summary>
-        /// <param name="e"></param>
         protected override void OnLostFocus(EventArgs e)
         {
             base.OnLostFocus(e);
@@ -162,10 +131,6 @@ namespace LabZSK.Controls
                 setText();
             }
         }
-        /// <summary>
-        /// Occures when control got focus
-        /// </summary>
-        /// <param name="e"></param>
         protected override void OnGotFocus(EventArgs e)
         {
             if (ReadOnly == true)
@@ -178,27 +143,15 @@ namespace LabZSK.Controls
                 Text = "";
             }
         }
-        /// <summary>
-        /// Occurses when control was double clicked
-        /// </summary>
-        /// <param name="e"></param>
         protected override void OnMouseDoubleClick(MouseEventArgs e)
         {
             Text = "";
         }
-        /// <summary>
-        /// Occures when register is clicked
-        /// </summary>
-        /// <param name="e"></param>
         protected override void OnMouseClick(MouseEventArgs e)
         {
             base.OnMouseClick(e);
             OnGotFocus(e);
         }
-        /// <summary>
-        /// Check if value in textbox is still valid
-        /// </summary>
-        /// <param name="e">Event args</param>
         protected override void OnTextChanged(EventArgs e)
         {
             base.OnTextChanged(e);
@@ -231,21 +184,19 @@ namespace LabZSK.Controls
             if (!Enabled)
             BackColor = customeBackColor;
         }
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            ToolTip tt = new ToolTip();
+            tt.Show(innerValue.ToString("X") + "h\t" + innerValue, this, 0, 30, 1000);
+        }
+
         #region Drag&Drop
-        /// <summary>
-        /// Occures when mouse button is down
-        /// </summary>
-        /// <param name="e"></param>
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
             hitTest = new Point(e.X, e.Y);
             OnGotFocus(e);
         }
-        /// <summary>
-        /// Occures when mouse was moved
-        /// </summary>
-        /// <param name="e"></param>
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseDown(e);
@@ -258,19 +209,11 @@ namespace LabZSK.Controls
                 OnLostFocus(e);
             }
         }
-        /// <summary>
-        /// Occures when drag started
-        /// </summary>
-        /// <param name="drgevent"></param>
         protected override void OnDragEnter(DragEventArgs drgevent)
         {
             base.OnDragEnter(drgevent);
             drgevent.Effect = DragDropEffects.Copy;
         }
-        /// <summary>
-        /// Occures when drag was ended
-        /// </summary>
-        /// <param name="drgevent"></param>
         protected override void OnDragDrop(DragEventArgs drgevent)
         {
             base.OnDragDrop(drgevent);
@@ -286,11 +229,6 @@ namespace LabZSK.Controls
         }
         #endregion
 
-        /// <summary>
-        /// Set location coordinates for this control
-        /// </summary>
-        /// <param name="x">New X position</param>
-        /// <param name="y">New Y position</param>
         public void SetXY(int x, int y)
         {
             Point loc = Location;
@@ -298,37 +236,22 @@ namespace LabZSK.Controls
             loc.Y = y;
             Location = loc;
         }
-        /// <summary>
-        /// Reset value stored in register to default
-        /// </summary>
         public void resetValue()
         {
             innerValue = 0;
             valueWhichShouldBeMovedToRegister = 0;
             setText();
         }
-        /// <summary>
-        /// Set value stored in register
-        /// </summary>
-        /// <param name="newVal">Value to store in register</param>
         public void setInnerValue(short newVal)
         {
             innerValue = newVal;
             setText();
         }
-        /// <summary>
-        /// Set what value should be moved to that register
-        /// </summary>
-        /// <param name="newVal">Expected register value</param>
         public void setActualValue(short newVal)
         {
             valueWhichShouldBeMovedToRegister = newVal;
             clampValue();
         }
-        /// <summary>
-        /// Set if register needs to be validated
-        /// </summary>
-        /// <param name="name">String representing register name</param>
         public void setNeedCheck(out string name)
         {
             needCheck = true;
@@ -336,11 +259,6 @@ namespace LabZSK.Controls
             BackColor = Color.Yellow;
             name = registerName;
         }
-        /// <summary>
-        /// Validate value moved to register
-        /// </summary>
-        /// <param name="badValue">Incorrect value moved to register or 0</param>
-        /// <returns>Boolean representing validation whether register was valid or not</returns>
         public bool validateRegisterValue(out short badValue)
         {
             needCheck = false;
@@ -360,37 +278,22 @@ namespace LabZSK.Controls
                 return true;
             }
         }
-        /// <summary>
-        /// Set register hexadecimal and decimal text representation of stored value
-        /// </summary>
         private void setText()
         {
             clampValue();
             Text = innerValue.ToString("X") + "h\t" + innerValue;
         }
-        /// <summary>
-        /// Set value stored and expected value for register
-        /// </summary>
-        /// <param name="newVal">New value to be stored</param>
         public void setInnerAndExpectedValue(short newVal)
         {
             innerValue = valueWhichShouldBeMovedToRegister = newVal;
             needCheck = false;
             setText();
         }
-        /// <summary>
-        /// Set register background color
-        /// </summary>
-        /// <param name="colorBack">Color which should be set as background color</param>
-        /// <param name="colorFore">Color which should be set as foreground color</param>
         public void setCustomeColor(Color colorBack, Color colorFore)
         {
             BackColor = customeBackColor = colorBack;
             this.ForeColor = customeForeColor = colorFore;
         }
-        /// <summary>
-        /// Protect registers from overflowing by clamping values
-        /// </summary>
         private void clampValue()
         {
             if (registerName == "LK")

@@ -236,7 +236,6 @@
             this.menuStrip2.Size = new System.Drawing.Size(270, 24);
             this.menuStrip2.TabIndex = 1;
             this.menuStrip2.Text = "menuStrip2";
-            this.menuStrip2.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip2_ItemClicked);
             // 
             // panel_Decode_PO
             // 
@@ -889,10 +888,8 @@
             this.Text = "Praca Procesora";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RunSim_FormClosing);
             this.Load += new System.EventHandler(this.RunSim_Load);
-            this.ResizeBegin += new System.EventHandler(this.SimView_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.SimView_ResizeEnd);
             this.SizeChanged += new System.EventHandler(this.RunSim_SizeChanged);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.RunSim_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SimView_KeyDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RunSim_KeyPress);
             this.panel_PO.ResumeLayout(false);

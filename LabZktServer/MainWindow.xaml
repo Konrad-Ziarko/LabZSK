@@ -27,10 +27,11 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <RichTextBox x:Name="richTextBox" Margin="292,54,10,10" FontFamily="Tahoma" IsReadOnly="True" VerticalScrollBarVisibility="Auto" AllowDrop="False" FontSize="11" Block.LineHeight="6">
+        <RichTextBox x:Name="richTextBox" Margin="292,54,10,10" FontFamily="Tahoma" IsReadOnly="True" VerticalScrollBarVisibility="Auto" AllowDrop="False" FontSize="11" Block.LineHeight="12">
             <FlowDocument/>
         </RichTextBox>
         <TextBox x:Name="textBox_Port" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Height="30" Margin="140,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" ToolTip="Port" FontFamily="Tahoma" FontSize="14"/>
+        <Button x:Name="button_Stop" Content="||" HorizontalAlignment="Left" Margin="322,10,0,0" VerticalAlignment="Top" Width="29" ToolTip="Uruchom serwer" Click="button_Stop_Click" FontFamily="Tahoma" Height="30"/>
 
     </Grid>
 </Window>

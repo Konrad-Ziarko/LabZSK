@@ -1,603 +1,19 @@
-﻿using LabZSK.Controls;
-using LabZSK.Memory;
-using LabZSK.MicroOperations;
-using LabZSK.Properties;
+﻿using LabZSK.Memory;
 using LabZSK.StaticClasses;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
-using System.Media;
-using System.Net;
-using System.Net.Cache;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
+using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LabZSK.Simulation
 {
-    /// <summary>
-    /// Model class
-    /// </summary>
-    public class SimModel
+    partial class SimView
     {
-        private string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK";
-        internal event Action StartSim;
-        internal event Action StopSim;
-        internal event Action<string, string, string> AddText;
-        internal event Action ButtonOKSetVisivle;
-        internal event Action ButtonNextTactSetVisible;
-        internal event Action<int> SetNextTact;
-        internal event Action ASwitchLayOut;
-        internal event Action ASelectionChanged;
-
-        /// <summary>
-        /// Represents whether new log can by created
-        /// </summary>
-        public bool isNewLogEnabled = false;
-        /// <summary>
-        /// Represents current CPU cycle
-        /// </summary>
-        public int currnetCycle { get; set; }
-        /// <summary>
-        /// Holds value representing current mark
-        /// </summary>
-        public int mark { get; set; }
-        /// <summary>
-        /// Holds value of made mistakes
-        /// </summary>
-        public int mistakes { get; set; }
-        /// <summary>
-        /// Represents CPU flags
-        /// </summary>
-        public Dictionary<string, BitTextBox> flags { get; set; }
-        /// <summary>
-        /// Represents RBPS register
-        /// </summary>
-        public TextBox RBPS { get; set; }
-
-        /// <summary>
-        /// Represents CPU registers
-        /// </summary>
-        public Dictionary<string, NumericTextBox> registers { get; set; }
-        /// <summary>
-        /// Represents CPU current tact
-        /// </summary>
-        public int currentTact = 0;
-
-        internal bool isTestPositive = false;
-        internal bool isOverflow = false;
-        internal bool buttonOKClicked = false;
-        internal bool inMicroMode = false;
-        internal bool isRunning = false;
-        internal bool buttonNextTactClicked = false;
-        #region DEV
-        internal bool DEVMODE = false;
-        internal int DEVVALUE;
-        internal string DEVREGISTER;
-        #endregion
-        private DataGridView Grid_PM;
-        private bool resetBus;
-        private bool layoutChanged;
-        private bool indirectAdresation = false;
-        private List<MicroOperation> List_MicroOp;
-        private List<MemoryRecord> List_Memory;
-        private MemoryRecord lastRecordFromRRC;
-        private Drawings draw;
-        private Control panel_Sim_Control;
-        private Dictionary<string, short> oldRegs;
-        private LogManager logManager;
-        private MemoryRecord selectedIntruction;
-        private bool[,] cells = new bool[11, 8];
-        private string logFile = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty;
-        private short raps = 0, na = 0;
-        private int nistTimeTimeout = 3000;
-        private DataGridView Grid_Mem;
-        /// <summary>
-        /// Initialize instance of model for computes
-        /// </summary>
-        /// <param name="List_Memory">List of operating memory records</param>
-        /// <param name="List_MicroOp">List of microoperations (microprogram)</param>
-        /// <param name="registers">Dictionary of registers</param>
-        /// <param name="flags">Dictionary of flags</param>
-        /// <param name="RBPS">TextBox representing RBPS register</param>
-        /// <param name="lastRecordFromRRC">Operating memory record last used in RRC operation</param>
-        public SimModel(ref List<MemoryRecord> List_Memory, ref List<MicroOperation> List_MicroOp, ref Dictionary<string, NumericTextBox> registers, ref Dictionary<string, BitTextBox> flags, ref TextBox RBPS, ref MemoryRecord lastRecordFromRRC)
-        {
-            changeLanguage();
-            this.List_Memory = List_Memory;
-            this.List_MicroOp = List_MicroOp;
-            this.registers = registers;
-            this.flags = flags;
-            this.RBPS = RBPS;
-            this.lastRecordFromRRC = lastRecordFromRRC;
-
-
-            currentTact = mistakes = 0;
-            mark = 5;
-            logManager = LogManager.Instance;
-            draw = new Drawings(ref registers, ref flags, ref RBPS);
-        }
-        /// <summary>
-        /// Returns pointed record from list which represents memory
-        /// </summary>
-        /// <param name="idxRow">Index of row representing memory addres</param>
-        /// <returns>Memory record object</returns>
-        public MemoryRecord getMemoryRecord(int idxRow)
-        {
-            selectedIntruction = List_Memory[idxRow];
-            return selectedIntruction;
-        }
-        /// <summary>
-        /// Load memory and microoperations in to passed DataGrid
-        /// </summary>
-        /// <param name="Grid_Mem">DataGrid for operating memory to load</param>
-        /// <param name="Grid_PM">DataGrid for microoperations to load</param>
-        public void LoadLists(DataGridView Grid_Mem, DataGridView Grid_PM)
-        {
-            this.Grid_Mem = Grid_Mem;
-            this.Grid_PM = Grid_PM;
-            foreach (MemoryRecord row in List_Memory)
-                Grid_Mem.Rows.Add(row.addr, row.value, row.hex);
-            foreach (MicroOperation row in List_MicroOp)
-                Grid_PM.Rows.Add(row.addr, row.S1, row.D1, row.S2, row.D2, row.S3,
-                    row.D3, row.C1, row.C2, row.Test, row.ALU, row.NA);
-        }
-        /// <summary>
-        /// Initialize simulation log
-        /// </summary>
-        public void initLogInformation()
-        {
-            string ipAddrList = string.Empty;
-            foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
-                if (item.NetworkInterfaceType == NetworkInterfaceType.Ethernet && item.OperationalStatus == OperationalStatus.Up)
-                    foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
-                        if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
-                            if (ipAddrList == string.Empty)
-                                ipAddrList += ip.Address.ToString();
-                            else
-                                ipAddrList += "\n".PadRight(31, ' ') + ip.Address.ToString();
-            logManager.createNewLog(logFile);
-            Settings.Default.Save();
-            addTextToLog(Strings.pcInDomain + ": \"" + Environment.UserDomainName + "\"\n" + Strings.machineName + " \"" +
-            Environment.MachineName + "\" \n" + Strings.loggedAs + ": \"" +
-            Environment.UserName + "\"\n" + Strings.networkInterfaces + ": " + ipAddrList + "\n\n");
-            if (Settings.Default.CanEditOptions)
-                addTextToLog(Strings.canEditSettings+"\n");
-            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["ApplicationForStudents"]))
-                addTextToLog(Strings.notForStudents + "\n");
-        }
-        public void addTextToLog(string lineOfText)
-        {
-            if (logManager != null)
-            {
-                logManager.addToMemory(lineOfText);
-            }
-        }
-        internal void addControlToDrawings(Control control)
-        {
-            panel_Sim_Control = control;
-            draw.addControlToDrawOn(control);
-        }
-        /// <summary>
-        /// Adjust register grid in parent control
-        /// </summary>
-        public void rearrangeTextBoxes()
-        {
-            int horizontalGap = Convert.ToInt32(0.25 * panel_Sim_Control.Width);
-            int verticalGap = Convert.ToInt32(0.2 * panel_Sim_Control.Height);
-            var size = registers["LK"].Size;
-            int locY = (verticalGap - 27) / 2;
-            locY = locY < 32 ? 32 : locY;
-            registers["LK"].SetXY((horizontalGap - 130) / 2, locY);
-            registers["A"].SetXY(horizontalGap + (horizontalGap - 130) / 2, locY);
-            registers["MQ"].SetXY(horizontalGap * 2 + (horizontalGap - 130) / 2, locY);
-            registers["X"].SetXY(horizontalGap * 3 + (horizontalGap - 130) / 2, locY);
-
-            locY = verticalGap + (verticalGap - 27) / 4;
-            registers["RAP"].SetXY((horizontalGap - 130) / 2, locY);
-            registers["LALU"].SetXY(horizontalGap + (horizontalGap - 130) / 2, locY);
-            registers["RALU"].SetXY(horizontalGap * 2 + (horizontalGap - 130) / 2, locY);
-
-            int gapFromRalu = panel_Sim_Control.Width - registers["RALU"].Location.X - registers["RALU"].Width - 60;
-            flags["ZNAK"].SetXY(panel_Sim_Control.Width - gapFromRalu, verticalGap + (verticalGap - 27) / 4);
-            flags["XRO"].SetXY(panel_Sim_Control.Width - gapFromRalu * 2 / 3, verticalGap + (verticalGap - 27) / 4);
-            flags["OFF"].SetXY(panel_Sim_Control.Width - gapFromRalu / 3, verticalGap + (verticalGap - 27) / 4);
-            flags["MAV"].SetXY(panel_Sim_Control.Width - gapFromRalu, verticalGap * 2 + (verticalGap - 27) * 1 / 4);
-            flags["IA"].SetXY(panel_Sim_Control.Width - gapFromRalu * 2 / 3, verticalGap * 2 + (verticalGap - 27) * 1 / 4);
-            flags["INT"].SetXY(panel_Sim_Control.Width - gapFromRalu / 3, verticalGap * 2 + (verticalGap - 27) * 1 / 4);
-
-            registers["RBP"].SetXY((horizontalGap - 130) / 2, verticalGap * 2 + (verticalGap - 27) * 1 / 4);
-            registers["ALU"].SetXY((registers["RALU"].Location.X - registers["LALU"].Location.X + 130) / 2
-                - 65 + registers["LALU"].Location.X, verticalGap * 2 + (verticalGap - 27) * 1 / 4);
-
-            registers["BUS"].SetXY((horizontalGap - 130) / 2, verticalGap * 3);
-
-            locY = verticalGap * 3 + (verticalGap - 27) / 2;
-            locY = locY < registers["BUS"].Location.Y + 35 ? registers["BUS"].Location.Y + 35 : locY;
-            registers["RR"].SetXY(horizontalGap + (horizontalGap - 130) / 2, locY);
-            registers["LR"].SetXY(horizontalGap * 2 + (horizontalGap - 130) / 2, locY);
-            registers["RI"].SetXY(horizontalGap * 3 + (horizontalGap - 130) / 2, locY);
-
-            var loc = RBPS.Location;
-            loc.X = horizontalGap + (horizontalGap - 130) / 2;
-            loc.Y = verticalGap * 4 + (verticalGap - 27) / 2;
-            RBPS.Location = loc;
-            locY = verticalGap * 4 + (verticalGap - 27) / 2;
-            registers["RAPS"].SetXY(horizontalGap * 2 + (horizontalGap - 130) / 2, locY);
-            registers["RAE"].SetXY(horizontalGap * 3 + (horizontalGap - 130) / 2, locY);
-
-            locY = verticalGap * 4;
-            registers["L"].SetXY(horizontalGap + (horizontalGap - 130) * 3 / 2, locY);
-            registers["R"].SetXY(horizontalGap * 2 + (horizontalGap - 130) * 3 / 2, locY);
-            registers["SUMA"].SetXY((registers["R"].Location.X - registers["L"].Location.X + 130) / 2
-                - 65 + registers["L"].Location.X, locY + (verticalGap - 27) * 3 / 4);
-        }
-        internal void breakSimulation()
-        {
-            buttonOKClicked = true;
-            if (registers["SUMA"].Visible)
-                switchLayOut();
-            EnDisableButtons();
-            currentTact = 0;
-            stopSim();
-            logManager.addToMemory("\n" + Strings.simulationBreak + "\n");
-        }
-        internal void changeLanguage()
-        {
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
-        }
-        internal void ShowCurrentLog()
-        {
-            if (logFile != string.Empty && logFile != "")
-                ShowLog(logFile);
-        }
-        /// <summary>
-        /// Switch simulation background between 'standard' and 'sum' mode
-        /// </summary>
-        public void switchLayOut()
-        {
-            if (registers["SUMA"].Visible)
-            {
-                registers["SUMA"].Visible = registers["L"].Visible = registers["R"].Visible = false;
-                RBPS.Visible = registers["RAPS"].Visible = registers["RAE"].Visible = true;
-            }
-            else
-            {
-                registers["SUMA"].Visible = registers["L"].Visible = registers["R"].Visible = true;
-                RBPS.Visible = registers["RAPS"].Visible = registers["RAE"].Visible = false;
-            }
-            ASwitchLayOut();
-        }
-        /// <summary>
-        /// Leave simulation edit mode
-        /// </summary>
-        public void leaveEditMode()
-        {
-            foreach (var oldReg in oldRegs)
-            {
-                if (registers[oldReg.Key].innerValue != oldReg.Value)
-                    addTextToLog(Strings.registerHasChanged + " " + oldReg.Key.PadRight(6, ' ') +
-                        oldReg.Value + "=>" + registers[oldReg.Key].innerValue + "\n");
-            }
-            foreach (var reg in registers)
-                reg.Value.Enabled = false;
-            foreach (var sig in flags)
-                sig.Value.Enabled = false;
-            foreach (var reg in registers)
-                reg.Value.ReadOnly = true;
-        }
-        /// <summary>
-        /// Enter simulation edit mode
-        /// </summary>
-        public void enterEditMode()
-        {
-            oldRegs = new Dictionary<string, short>();
-            foreach (var reg in registers)
-            {
-                oldRegs.Add(reg.Key, reg.Value.innerValue);
-            }
-            foreach (var reg in registers)
-            {
-                if (reg.Value.registerName == "BUS" || reg.Value.registerName == "LALU" || reg.Value.registerName == "RALU" ||
-                    reg.Value.registerName == "L" || reg.Value.registerName == "R" || reg.Value.registerName == "SUMA")
-                    reg.Value.Enabled = false;
-                else
-                    reg.Value.Enabled = true;
-            }
-            foreach (var sig in flags)
-                sig.Value.Enabled = true;
-            foreach (var reg in registers)
-                reg.Value.ReadOnly = false;
-        }
-        /// <summary>
-        /// Reset all registers and flags to default
-        /// </summary>
-        public void clearRegisters()
-        {
-            addTextToLog("\n" + Strings.clearingRegister + "\n");
-            mark = 5;
-            mistakes = currnetCycle = 0;
-            foreach (var reg in registers)
-                reg.Value.resetValue();
-            foreach (var flg in flags)
-                flg.Value.resetValue();
-        }
-        /// <summary>
-        /// Add data to current log file
-        /// </summary>
-        /// <param name="tact">String representing current tack</param>
-        /// <param name="mnemo">String representing operation mnemonic</param>
-        /// <param name="description">String representing operation description</param>
-        public void addToMiniLog(string tact, string mnemo, string description)
-        {
-            addTextToLog("\t" + tact + " | " + mnemo + " : " + description + "\n");
-        }
-        /// <summary>
-        /// Initialize simulation log and start simulation
-        /// </summary>
-        /// <param name="b"></param>
-        public void prepareSimulation(bool b)
-        {
-            inMicroMode = b;
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.InitialDirectory = envPath;
-            string internetTime = string.Empty;
-            while (logFile == "")
-            {
-                dialog.Filter = Strings.simLog + "|*.log|" + Strings.all + "|*.*";
-                dialog.Title = Strings.createLog;
-                if (Directory.Exists(envPath + @"\Log\"))
-                    dialog.InitialDirectory = envPath + @"\Log\";
-                else
-                    dialog.InitialDirectory = envPath;
-                DialogResult saveFileDialogResult = dialog.ShowDialog();
-                if (saveFileDialogResult == DialogResult.OK && dialog.FileName != "")
-                {
-                    logFile = dialog.FileName;
-                    initLogInformation();
-
-                    CancellationTokenSource cts = new CancellationTokenSource();
-                    Task loop = Task.Factory.StartNew(() => GetNISTDate(cts.Token, out internetTime));
-                    if (Task.WaitAll(new Task[] { loop }, nistTimeTimeout))
-                    {
-                    }
-                    else
-                    {
-                        cts.Cancel();
-                    }
-                    addTextToLog(Strings.startingSimulation + "\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(20, ' ') + "\n" + internetTime.PadLeft(20, ' ') + "\n" + Strings.registersContent + "\n");
-                    foreach (var reg in registers.Values)
-                        addTextToLog(reg.registerName.PadRight(6, ' ') + " = " + reg.Text + "\n");
-                    addTextToLog("\n");
-                }
-            }
-            if (DEVMODE)
-                addTextToLog("\nAuto: " + DEVREGISTER + " ?= " + DEVVALUE + "\n");
-            else
-            {
-                if (inMicroMode)
-                    addTextToLog("Micro\n");
-                else
-                    addTextToLog("Makro\n");
-            }
-            simulateCPU();
-        }
-        private DateTime GetNISTDate(CancellationToken token, out string timeString)
-        {
-            DateTime dateTime = DateTime.MinValue;
-            timeString = "00:00:00";
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://nist.time.gov/actualtime.cgi?lzbc=siqm9b");
-                request.Method = "GET";
-                request.Accept = "text/html, application/xhtml+xml, */*";
-                request.UserAgent = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.CachePolicy = new RequestCachePolicy(RequestCacheLevel.NoCacheNoStore);
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    StreamReader stream = new StreamReader(response.GetResponseStream());
-                    string html = stream.ReadToEnd();//<timestamp time=\"1395772696469995\" delay=\"1395772696469995\"/>
-                    string time = Regex.Match(html, @"(?<=\btime="")[^""]*").Value;
-                    double milliseconds = Convert.ToInt64(time) / 1000.0;
-                    dateTime = new DateTime(1970, 1, 1).AddMilliseconds(milliseconds).ToLocalTime();
-                }
-            }
-            catch
-            {
-                timeString = "";
-            }
-            if (timeString != "")
-            timeString = dateTime.ToString("HH:mm:ss");
-            return dateTime;
-        }
-        /// <summary>
-        /// Initialize background draw
-        /// </summary>
-        public void DrawBackground()
-        {
-            panel_Sim_Control.Visible = false;
-            rearrangeTextBoxes();
-            draw.drawBackground();
-        }
-        /// <summary>
-        /// Validate changed register inner value
-        /// </summary>
-        public void validateRegisters()
-        {
-            short badValue;
-
-            if (!registers[registerToCheck].validateRegisterValue(out badValue))
-            {
-                new Thread(SystemSounds.Beep.Play).Start();
-                addTextToLog("\t\t" + Strings.mistake + "(" + (mistakes + 1) + "): " + registerToCheck + "=" + badValue +
-                    " (" + Strings.correct + " " + registerToCheck + "=" + registers[registerToCheck].innerValue + ")\n\n");
-
-                mistakes++;
-
-                if (mistakes >= Settings.Default.ThirdMark)
-                    mark = 2;
-                else if (mistakes >= Settings.Default.SecondMark)
-                    mark = 3;
-                else if (mistakes >= Settings.Default.FirstMark)
-                    mark = 4;
-                else
-                    mark = 5;
-            }
-            else
-            {
-                addTextToLog("\t\t" + registerToCheck + "=" + registers[registerToCheck].innerValue + "\n");
-            }
-        }
-        private void waitForButton()
-        {
-            if (!DEVMODE)
-                while (buttonOKClicked == false)
-                    Application.DoEvents();
-            else
-            {
-                Application.DoEvents();
-                Thread.Sleep(Settings.Default.Delay);
-                registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
-                validateRegisters();
-            }
-        }
-        /// <summary>
-        /// Close current log and prepare for new log
-        /// </summary>
-        public void CloseCurrentLogFile()
-        {
-            string internetTime = string.Empty;
-            CancellationTokenSource cts = new CancellationTokenSource();
-            Task loop = Task.Factory.StartNew(() => GetNISTDate(cts.Token, out internetTime));
-            if (Task.WaitAll(new Task[] { loop }, nistTimeTimeout))
-            {
-            }
-            else
-            {
-                cts.Cancel();
-            }
-            addTextToLog("\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(20, ' ') + "\n" + internetTime.PadLeft(20, ' ') + "\n" + Strings.simStop + "\n" +
-                Strings.mark + ": " + mark + "   " + Strings.mistakes + ": " + mistakes + "\n");
-            logManager.clearInMemoryLog();
-            logFile = string.Empty;
-        }
-        private void simulateCPU()
-        {
-            startSim();
-            if (currentTact == 0)
-                instructionFetch();
-            while (isRunning && currentTact > 0)
-                executeInstruction();
-        }
-        private void executeInstruction()
-        {
-            indirectAdresation = false;
-            if (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1]))
-                addTextToLog(Strings.tact + "1:\n");
-            while (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1] || cells[8, 1]))
-                exeTact1();
-            if (currentTact == 1)
-                nextTact();
-            if (currentTact == 2 && cells[10, 2])
-                addTextToLog(Strings.tact + "2:\n");
-            while (currentTact == 2 && cells[10, 2])
-                exeTact2();
-            while (currentTact >= 2 && currentTact <= 5)
-                nextTact();
-            if (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
-                addTextToLog(Strings.tact + "6:\n");
-            while (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
-                exeTact6();
-            if (currentTact == 6)
-                nextTact();
-            if (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7] || cells[9, 7]))
-                addTextToLog(Strings.tact + "7:\n");
-            while (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7]))
-                exeTact7();
-            if (currentTact == 7 && cells[9, 7])
-                exeTest();
-            else if (currentTact == 7 && !isTestPositive)
-            {
-                testAndSet("RAPS", (short)(registers["RAPS"].innerValue + 1));
-                Grid_PM.CurrentCell = Grid_PM[11, registers["RAPS"].innerValue];
-                ButtonOKSetVisivle();
-                EnDisableButtons();
-                registers[registerToCheck].Focus();
-                waitForButton();
-                EnDisableButtons();
-                currentTact = 0;
-                SetNextTact(currentTact);
-                if (!DEVMODE)
-                {
-                    stopSim();
-                    buttonOKClicked = false;
-                }
-                else if (DEVMODE && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
-                {
-                    DEVMODE = false;
-                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
-                    stopSim();
-                    buttonOKClicked = false;
-                }
-                else if (DEVMODE)
-                {
-                    prepareSimulation(false);
-                }
-            }
-            else if (currentTact == 8)
-            {
-                registers["LALU"].setInnerAndExpectedValue(0);
-                registers["RALU"].setInnerAndExpectedValue(0);
-                currentTact = 0;
-                SetNextTact(currentTact);
-                if (!DEVMODE)
-                {
-                    stopSim();
-                    buttonOKClicked = false;
-                }
-                else if (DEVMODE && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
-                {
-                    DEVMODE = false;
-                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
-                    stopSim();
-                    buttonOKClicked = false;
-                }
-                else if (DEVMODE)
-                {
-                    prepareSimulation(false);
-                }
-            }
-            else if (currentTact == 9)
-            {
-                currentTact = 0;
-                SetNextTact(currentTact);
-                if (!DEVMODE)
-                {
-                    stopSim();
-                    buttonOKClicked = false;
-                }
-                else if (DEVMODE && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
-                {
-                    DEVMODE = false;
-                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
-                    stopSim();
-                    buttonOKClicked = false;
-                }
-                else if (DEVMODE)
-                {
-                    prepareSimulation(false);
-                }
-            }
-        }
         #region Instruction Execution
         private void exeTest()
         {
@@ -617,7 +33,7 @@ namespace LabZSK.Simulation
                     //czy tak test TINT?
                     registers["RAP"].setActualValue(255);
                     registers["RAP"].setNeedCheck(out registerToCheck);
-                    ButtonOKSetVisivle();
+                    button_OK.Visible = true;
                     EnDisableButtons();
                     registers[registerToCheck].Focus();
                     waitForButton();
@@ -705,8 +121,7 @@ namespace LabZSK.Simulation
                     isTestPositive = true;
             }
             cells[9, 7] = false;
-            AddText("TEST", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-            addToMiniLog("TEST", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+            AddToLogAndMiniLog("TEST", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
 
             if (isTestPositive)
             {
@@ -722,7 +137,7 @@ namespace LabZSK.Simulation
 
             Grid_PM.CurrentCell = Grid_PM[11, registers["RAPS"].innerValue];
 
-            ButtonOKSetVisivle();
+            button_OK.Visible = true;
             if (registerToCheck != "")
             {
                 EnDisableButtons();
@@ -734,7 +149,6 @@ namespace LabZSK.Simulation
                 EnDisableButtons();
             currentTact = 9;
         }
-
         private void exeTact7()
         {
             if (cells[8, 7])
@@ -765,8 +179,7 @@ namespace LabZSK.Simulation
                     currentTact = 8;
                 }
                 cells[8, 7] = false;
-                AddText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddToLogAndMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[5, 7])
             {
@@ -787,8 +200,7 @@ namespace LabZSK.Simulation
                 else if (microOpMnemo == "ORBP")
                     testAndSet("BUS", registers["RBP"].innerValue);
                 cells[5, 7] = false;
-                AddText("S3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToMiniLog("S3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddToLogAndMiniLog("S3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[6, 7])
             {
@@ -836,8 +248,7 @@ namespace LabZSK.Simulation
                     testAndSet("RBP", registers["BUS"].innerValue);
                 cells[6, 7] = false;
                 resetBus = true;
-                AddText("D3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToMiniLog("D3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddToLogAndMiniLog("D3", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[7, 7])
             {
@@ -874,10 +285,9 @@ namespace LabZSK.Simulation
                 if (microOpMnemo == "END")
                     currentTact = 9;
                 cells[7, 7] = false;
-                AddText("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToMiniLog("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddToLogAndMiniLog("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
-            ButtonOKSetVisivle();
+            button_OK.Visible = true;
             if (registerToCheck != "")
             {
                 EnDisableButtons();
@@ -893,7 +303,6 @@ namespace LabZSK.Simulation
             if (registerToCheck != "")
                 EnDisableButtons();
         }
-
         private void exeTact6()
         {
             if (cells[3, 6])
@@ -923,8 +332,7 @@ namespace LabZSK.Simulation
                 else if (microOpMnemo == "OMQ")
                     testAndSet("BUS", registers["MQ"].innerValue);
                 cells[3, 6] = false;
-                AddText("S2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToMiniLog("S2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddToLogAndMiniLog("S2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[4, 6])
             {
@@ -966,8 +374,7 @@ namespace LabZSK.Simulation
                 }
                 cells[4, 6] = false;
                 resetBus = true;
-                AddText("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToMiniLog("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddToLogAndMiniLog("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[8, 6])
             {
@@ -993,10 +400,9 @@ namespace LabZSK.Simulation
                         testAndSet("MQ", (short)(registers["MQ"].innerValue | 0x0001));
                 }
                 cells[8, 6] = false;
-                AddText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddToLogAndMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
-            ButtonOKSetVisivle();
+            button_OK.Visible = true;
             if (registerToCheck != "")
             {
                 EnDisableButtons();
@@ -1012,7 +418,6 @@ namespace LabZSK.Simulation
             if (registerToCheck != "")
                 EnDisableButtons();
         }
-
         private void exeTact2()
         {
             if (cells[10, 2])
@@ -1133,11 +538,10 @@ namespace LabZSK.Simulation
                 else if (microOpMnemo == "ZERO")
                     testAndSet("ALU", 0);
                 cells[10, 2] = false;
-                AddText("ALU", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToMiniLog("ALU", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddToLogAndMiniLog("ALU", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
 
-            ButtonOKSetVisivle();
+            button_OK.Visible = true;
             if (registerToCheck != "")
             {
                 EnDisableButtons();
@@ -1161,7 +565,6 @@ namespace LabZSK.Simulation
             registers["RALU"].setInnerValue(0);
             buttonOKClicked = false;
         }
-
         private void exeTact1()
         {
             if (cells[1, 1])
@@ -1183,8 +586,7 @@ namespace LabZSK.Simulation
                 else if (microOpMnemo == "OX")
                     testAndSet("BUS", registers["X"].innerValue);
                 cells[1, 1] = false;
-                AddText("S1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToMiniLog("S1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddToLogAndMiniLog("S1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[2, 1])
             {
@@ -1198,17 +600,14 @@ namespace LabZSK.Simulation
                     testAndSet("RALU", registers["X"].innerValue);
                 cells[2, 1] = false;
                 resetBus = true;
-                AddText("D1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToMiniLog("D1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddToLogAndMiniLog("D1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[4, 1])
             {
                 Grid_PM.CurrentCell = Grid_PM[4, raps];
                 microOpMnemo = Grid_PM[4, raps].Value.ToString();
-                AddText("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToMiniLog("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                AddText("C1", "SHT", Translator.GetMicroOpDescription("SHT"));
-                addToMiniLog("C1", "SHT", Translator.GetMicroOpDescription("SHT"));
+                AddToLogAndMiniLog("D2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddToLogAndMiniLog("C1", "SHT", Translator.GetMicroOpDescription("SHT"));
                 int A = registers["A"].innerValue;
                 bool SignBit = (A & 0x8000) == 0x8000 ? true : false;
                 bool LastBit = (A & 0x0001) == 0x0001 ? true : false;
@@ -1277,7 +676,7 @@ namespace LabZSK.Simulation
                     Grid_Mem.Rows[registers["RAP"].innerValue].Selected = true;
                     Grid_Mem.FirstDisplayedScrollingRowIndex = registers["RAP"].innerValue;
                     Grid_Mem.CurrentCell = Grid_Mem.Rows[registers["RAP"].innerValue].Cells[0];
-                    ASelectionChanged();
+                    Grid_Mem_SelectionChanged(this, new EventArgs());
                     try
                     {
                         testAndSet("RBP", List_Memory[registers["RAP"].innerValue].getInt16Value());
@@ -1298,8 +697,7 @@ namespace LabZSK.Simulation
                     testAndSet("LK", 15);
                 }
                 cells[7, 1] = false;
-                AddText("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToMiniLog("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddToLogAndMiniLog("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             else if (cells[8, 1])
             {
@@ -1341,10 +739,9 @@ namespace LabZSK.Simulation
                     testAndSet("SUMA", (short)(leftValue + rightValue));
                 }
                 cells[8, 1] = false;
-                AddText("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                addToMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                AddToLogAndMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
-            ButtonOKSetVisivle();
+            button_OK.Visible = true;
             EnDisableButtons();
             registers[registerToCheck].Focus();
             waitForButton();
@@ -1357,25 +754,168 @@ namespace LabZSK.Simulation
             flags["IA"].setInnerValue(0);
             flags["MAV"].setInnerValue(1);
             buttonOKClicked = false;
-            registers["SUMA"].Visible = registers["L"].Visible = registers["R"].Visible = false;
-            RBPS.Visible = registers["RAPS"].Visible = registers["RAE"].Visible = true;
             if (layoutChanged)
             {
-                ASwitchLayOut();
+                switchLayOut();
                 layoutChanged = false;
             }
         }
-
-        private void validateRegister()
-        {
-            ButtonOKSetVisivle();
-            EnDisableButtons();
-            registers[registerToCheck].Focus();
-            waitForButton();
-            EnDisableButtons();
-            buttonOKClicked = false;
-        }
         #endregion
+        #region StartSim
+        public void prepareSimulation(bool b)
+        {
+            inMicroMode = b;
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.InitialDirectory = _environmentPath;
+            string internetTime = string.Empty;
+            while (logFile == "")
+            {
+                dialog.Filter = Strings.simLog + "|*.log|" + Strings.all + "|*.*";
+                dialog.Title = Strings.createLog;
+                if (Directory.Exists(_environmentPath + @"\Log\"))
+                    dialog.InitialDirectory = _environmentPath + @"\Log\";
+                else
+                    dialog.InitialDirectory = _environmentPath;
+                DialogResult saveFileDialogResult = dialog.ShowDialog();
+                if (saveFileDialogResult == DialogResult.OK && dialog.FileName != "")
+                {
+                    logFile = dialog.FileName;
+                    initLogInformation();
+
+                    CancellationTokenSource cts = new CancellationTokenSource();
+                    Task loop = Task.Factory.StartNew(() => GetNISTDate(cts.Token, out internetTime));
+                    if (Task.WaitAll(new Task[] { loop }, nistTimeTimeout))
+                    {
+                    }
+                    else
+                    {
+                        cts.Cancel();
+                    }
+                    addTextToLog(Strings.startingSimulation + "\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(20, ' ') + "\n" + internetTime.PadLeft(20, ' ') + "\n" + Strings.registersContent + "\n");
+                    foreach (var reg in registers.Values)
+                        addTextToLog(reg.registerName.PadRight(6, ' ') + " = " + reg.Text + "\n");
+                    addTextToLog("\n");
+                }
+            }
+            if (DEVMODE)
+                addTextToLog("\nAuto: " + DEVREGISTER + " ?= " + DEVVALUE + "\n");
+            else
+            {
+                if (inMicroMode)
+                    addTextToLog("Micro\n");
+                else
+                    addTextToLog("Makro\n");
+            }
+            simulateCPU();
+        }
+        private void simulateCPU()
+        {
+            startSim();
+            if (currentTact == 0)
+                instructionFetch();
+            while (isRunning && currentTact > 0)
+                executeInstruction();
+        }
+        private void executeInstruction()
+        {
+            indirectAdresation = false;
+            if (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1]))
+                addTextToLog(Strings.tact + "1:\n");
+            while (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1] || cells[8, 1]))
+                exeTact1();
+            if (currentTact == 1)
+                nextTact();
+            if (currentTact == 2 && cells[10, 2])
+                addTextToLog(Strings.tact + "2:\n");
+            while (currentTact == 2 && cells[10, 2])
+                exeTact2();
+            while (currentTact >= 2 && currentTact <= 5)
+                nextTact();
+            if (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
+                addTextToLog(Strings.tact + "6:\n");
+            while (currentTact == 6 && (cells[3, 6] || cells[4, 6] || cells[8, 6]))
+                exeTact6();
+            if (currentTact == 6)
+                nextTact();
+            if (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7] || cells[9, 7]))
+                addTextToLog(Strings.tact + "7:\n");
+            while (currentTact == 7 && (cells[5, 7] || cells[6, 7] || cells[7, 7] || cells[8, 7]))
+                exeTact7();
+            if (currentTact == 7 && cells[9, 7])
+                exeTest();
+            else if (currentTact == 7 && !isTestPositive)
+            {
+                testAndSet("RAPS", (short)(registers["RAPS"].innerValue + 1));
+                Grid_PM.CurrentCell = Grid_PM[11, registers["RAPS"].innerValue];
+                button_OK.Visible = true;
+                EnDisableButtons();
+                registers[registerToCheck].Focus();
+                waitForButton();
+                EnDisableButtons();
+                currentTact = 0;
+                dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
+                if (!DEVMODE)
+                {
+                    stopSim();
+                    buttonOKClicked = false;
+                }
+                else if (DEVMODE && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
+                {
+                    DEVMODE = false;
+                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                    stopSim();
+                    buttonOKClicked = false;
+                }
+                else if (DEVMODE)
+                {
+                    prepareSimulation(false);
+                }
+            }
+            else if (currentTact == 8)
+            {
+                registers["LALU"].setInnerAndExpectedValue(0);
+                registers["RALU"].setInnerAndExpectedValue(0);
+                currentTact = 0;
+                dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
+                if (!DEVMODE)
+                {
+                    stopSim();
+                    buttonOKClicked = false;
+                }
+                else if (DEVMODE && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
+                {
+                    DEVMODE = false;
+                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                    stopSim();
+                    buttonOKClicked = false;
+                }
+                else if (DEVMODE)
+                {
+                    prepareSimulation(false);
+                }
+            }
+            else if (currentTact == 9)
+            {
+                currentTact = 0;
+                dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
+                if (!DEVMODE)
+                {
+                    stopSim();
+                    buttonOKClicked = false;
+                }
+                else if (DEVMODE && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
+                {
+                    DEVMODE = false;
+                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                    stopSim();
+                    buttonOKClicked = false;
+                }
+                else if (DEVMODE)
+                {
+                    prepareSimulation(false);
+                }
+            }
+        }
         private void instructionFetch()
         {
             for (int i = 0; i < 8; i++)
@@ -1509,110 +1049,42 @@ namespace LabZSK.Simulation
         }
         private void startSim()
         {
-            StartSim();
+            isRunning = true;
+            closeLogToolStripMenuItem.Enabled = false;
             for (int i = 0; i < 11; i++)
                 for (int j = 0; j < 8; j++)
                     cells[i, j] = true;
             foreach (var reg in registers)
                 reg.Value.setActualValue(reg.Value.innerValue);
         }
-        private void stopSim()
+        internal void stopSim()
         {
-            StopSim();
+            button_Show_Log.Visible = true;
+            richTextBox_Log.Clear();
             isRunning = false;
             inMicroMode = false;
+            toolStripMenu_Edit.Enabled = true;
+            toolStripMenu_Exit.Enabled = true;
+            button_Makro.Visible = true;
+            button_Micro.Visible = true;
+            toolStripMenu_Clear.Enabled = true;
+            label_Status.Text = Strings.stopMode;
+            label_Status.ForeColor = Color.Green;
+            closeLogToolStripMenuItem.Enabled = true;
         }
         private void nextTact()
         {
             if (inMicroMode)
             {
-                ButtonNextTactSetVisible();
+                button_Next_Tact.Visible = true;
                 if (!DEVMODE)
                     while (buttonNextTactClicked == false)
                         Application.DoEvents();
             }
             currentTact = (currentTact + 1) % 8;
-            SetNextTact(currentTact);
+            dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
             buttonNextTactClicked = false;
         }
-        private void EnDisableButtons()
-        {
-            foreach (var reg in registers)
-                reg.Value.Enabled = !reg.Value.Enabled;
-        }
-        private void testAndSet(string register, short setValue)
-        {
-            registers[register].setActualValue(setValue);
-            registers[register].setNeedCheck(out registerToCheck);
-        }
-        internal void ShowLog(string pathToLog)
-        {
-            if (logManager.checkLogIntegrity(pathToLog))
-            {
-                {
-                    Form log = new Form();
-                    log.Text = Strings.viewLogFile;
-                    log.Icon = Resources.Logo_WAT1;
-
-                    RichTextBox rtb = new RichTextBox();
-                    rtb.WordWrap = false;
-                    log.Controls.Add(rtb);
-                    rtb.ReadOnly = true;
-                    rtb.Font = new Font("Consolas", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
-                    rtb.Text = File.ReadAllText(pathToLog, Encoding.Unicode);
-                    rtb.Text = rtb.Text.Remove(rtb.Text.Length - 2, 2);
-                    //log.AutoSize = true;
-                    //log.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-                    int width = 200;
-                    Graphics g = Graphics.FromHwnd(rtb.Handle);
-                    foreach (var line in rtb.Lines)
-                    {
-                        SizeF f = g.MeasureString(line, rtb.Font);
-                        width = (int)(f.Width) > width ? (int)(f.Width) : width;
-                    }
-                    rtb.Dock = DockStyle.Fill;
-
-                    log.Width = width + 40;
-                    log.Height = 600;
-                    log.MaximizeBox = false;
-                    //log.SizeGripStyle = SizeGripStyle.Hide;
-
-                    Regex regExp = new Regex(@"(={2}.+==|" + Strings.mistake + @".+\s|" + Strings.canEditSettings + @"\s|" + Strings.notForStudents + @"\s)");
-                    foreach (Match match in regExp.Matches(rtb.Text))
-                    {
-                        rtb.Select(match.Index, match.Length);
-                        rtb.SelectionColor = Color.Red;
-                    }
-                    regExp = new Regex(@"Auto:.+\s");
-                    foreach (Match match in regExp.Matches(rtb.Text))
-                    {
-                        rtb.Select(match.Index, match.Length);
-                        rtb.SelectionColor = Color.MediumVioletRed;
-                    }
-                    regExp = new Regex(@"(" + Strings.registerHasChanged + @".+\s|" + Strings.microcodeHasChanged + @"\s|" + Strings.memHasChanged + @"\s)");
-                    foreach (Match match in regExp.Matches(rtb.Text))
-                    {
-                        rtb.Select(match.Index, match.Length);
-                        rtb.SelectionColor = Color.OrangeRed;
-                    }
-                    regExp = new Regex(@"={6}.+=");
-                    foreach (Match match in regExp.Matches(rtb.Text))
-                    {
-                        rtb.Select(match.Index, match.Length);
-                        rtb.SelectionColor = Color.Blue;
-                    }
-                    regExp = new Regex(@"(={8}.+=|Makro\s|Micro\s)");
-                    foreach (Match match in regExp.Matches(rtb.Text))
-                    {
-                        rtb.Select(match.Index, match.Length);
-                        rtb.SelectionColor = Color.Green;
-                    }
-                    rtb.Select(0, 0);
-                    log.ShowDialog();
-                }
-            }
-            else
-                MessageBox.Show(Strings.logInconsistent);
-        }
+        #endregion
     }
 }

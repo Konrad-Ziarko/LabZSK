@@ -88,6 +88,24 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Anuluj.
+        /// </summary>
+        internal static string cancelButton {
+            get {
+                return ResourceManager.GetString("cancelButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Połącz.
+        /// </summary>
+        internal static string connectButton {
+            get {
+                return ResourceManager.GetString("connectButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Konsola deweloperska.
         /// </summary>
         internal static string devConsoleLabel {
@@ -102,6 +120,15 @@ namespace LabZSK.Other {
         internal static string gradingScaleLabel {
             get {
                 return ResourceManager.GetString("gradingScaleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grupa.
+        /// </summary>
+        internal static string group {
+            get {
+                return ResourceManager.GetString("group", resourceCulture);
             }
         }
         
@@ -125,11 +152,29 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adres serwera.
+        /// </summary>
+        internal static string ipAddress {
+            get {
+                return ResourceManager.GetString("ipAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Język:.
         /// </summary>
         internal static string languageLabel {
             get {
                 return ResourceManager.GetString("languageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nazwisko.
+        /// </summary>
+        internal static string lastName {
+            get {
+                return ResourceManager.GetString("lastName", resourceCulture);
             }
         }
         
@@ -143,11 +188,38 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Imie.
+        /// </summary>
+        internal static string name {
+            get {
+                return ResourceManager.GetString("name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Opcje.
         /// </summary>
         internal static string OptionsTitle {
             get {
                 return ResourceManager.GetString("OptionsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hasło.
+        /// </summary>
+        internal static string password {
+            get {
+                return ResourceManager.GetString("password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port.
+        /// </summary>
+        internal static string port {
+            get {
+                return ResourceManager.GetString("port", resourceCulture);
             }
         }
         
@@ -166,6 +238,15 @@ namespace LabZSK.Other {
         internal static string saveConfigButton {
             get {
                 return ResourceManager.GetString("saveConfigButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serwer.
+        /// </summary>
+        internal static string serverTitle {
+            get {
+                return ResourceManager.GetString("serverTitle", resourceCulture);
             }
         }
         

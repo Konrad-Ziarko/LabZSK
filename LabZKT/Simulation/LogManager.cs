@@ -1,7 +1,9 @@
 ﻿using LabZSK.StaticClasses;
 using System;
 using System.IO;
+using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace LabZSK.Simulation
@@ -11,10 +13,12 @@ namespace LabZSK.Simulation
     /// </summary>
     public class LogManager
     {
+        public static ConnectedClient _TcpClient;//jak zamykanie logu to przerywanie polaczenia
         private MemoryStream inMemoryLog = new MemoryStream();
         private static readonly LogManager instance;
         private string LogFile = string.Empty;
         private int currentLogLine = 0;
+        public static bool isConnected { get; set; }
         /// <summary>
         /// Initialize singleton instance
         /// </summary>
@@ -52,6 +56,11 @@ namespace LabZSK.Simulation
         {
             if (LogFile != string.Empty)
             {
+                if (_TcpClient != null)
+                    new Thread(() =>
+                    {
+                        _TcpClient.SendData(currentLogLine, v);
+                    }).Start();
                 FileInfo fileInfo = new FileInfo(LogFile);
                 int len = 0;
                 byte[] lineIndex = Translator.GetBytes("#!#" + currentLogLine++ + "#!#", out len);
@@ -122,5 +131,92 @@ namespace LabZSK.Simulation
             inMemoryLog.Read(arr, 0, len);
             MessageBox.Show(Encoding.Unicode.GetString(arr));
         }
+
+        public void addTcpClient(string name, string lastName, string group, string ipAddress, string remotePort, string password)
+        {
+            _TcpClient = new ConnectedClient(name, lastName, group, ipAddress, remotePort, password);
+            new Thread(() =>
+            {
+                _TcpClient.TryRegisterOnServer();
+                //_TcpClient.HandleCommunication();
+            }).Start();
+        }
+
+
+
+        public class ConnectedClient
+        {
+            private TcpClient _client;
+            private string name, lastName, group, ipAddress, remotePort, password;
+            private StreamReader sReader;
+            private StreamWriter sWriter;
+            private string sData;
+            public ConnectedClient(string name, string lastName, string group, string ipAddress, string remotePort, string password)
+            {
+                _client = new TcpClient();
+                _client.Connect(ipAddress, Convert.ToInt32(remotePort));
+                this.name = name;
+                this.lastName = lastName;
+                this.group = group;
+                this.password = password;
+                this.ipAddress = ipAddress;
+                this.remotePort = remotePort;
+                sReader = new StreamReader(_client.GetStream(), Encoding.Unicode);
+                sWriter = new StreamWriter(_client.GetStream(), Encoding.Unicode);
+                isConnected = true;
+            }
+            public void TryRegisterOnServer()
+            {
+                try
+                {
+                    sData = password + ":" + name + ":" + lastName + ":" + group + ":" + ipAddress + ":" + remotePort;
+                    sWriter.WriteLine(sData);
+                    sWriter.Flush();
+                }
+                catch (Exception)
+                {
+                    ;
+                }
+            }
+            public void SendData(int rowIndex, string data)
+            {
+                sData = rowIndex + ":" + data;
+                sWriter.WriteLine(sData);
+                sWriter.Flush();
+            }
+            public void Disconnect()
+            {
+                _client.Close();
+                //_TcpClient = null;///
+            }
+            public void HandleCommunication()
+            {
+                try
+                {
+                    int rowNum = 0;
+                    while (isConnected)
+                    {
+                        //Console.Write("&gt; ");
+                        //sData = Console.ReadLine();
+                        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+                        //logManager musi dostac te metody, string są do niego wysłane i to on inicjuje wysyłanie pakietów
+
+                        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        sData = rowNum++ + ":To jest log";
+                        sWriter.WriteLine(sData);
+                        sWriter.Flush();
+                        Thread.Sleep(2000);
+                        // String sDataIncomming = _sReader.ReadLine();
+                    }
+                }
+                catch (Exception)
+                {
+                    isConnected = false;
+                }
+            }
+        }
+
     }
 }
