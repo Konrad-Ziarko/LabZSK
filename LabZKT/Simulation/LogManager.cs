@@ -1,5 +1,6 @@
 ﻿using LabZSK.StaticClasses;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
@@ -19,6 +20,7 @@ namespace LabZSK.Simulation
         private string LogFile = string.Empty;
         private int currentLogLine = 0;
         public static bool isConnected { get; set; }
+        private static List<Thread> allThreads = new List<Thread>();
         /// <summary>
         /// Initialize singleton instance
         /// </summary>
@@ -57,10 +59,30 @@ namespace LabZSK.Simulation
             if (LogFile != string.Empty)
             {
                 if (_TcpClient != null)
-                    new Thread(() =>
+                {
+                    Thread t = new Thread(() =>
                     {
-                        _TcpClient.SendData(currentLogLine, v);
-                    }).Start();
+                        try
+                        {
+                            _TcpClient.SendData(currentLogLine, v);
+                        }
+                        catch (ThreadAbortException)
+                        {
+                            
+                        }
+                        catch (Exception)
+                        {
+                            foreach (Thread th in allThreads)
+                                th.Abort();
+                            _TcpClient = null;
+                            isConnected = false;
+                        }
+                    });
+                    allThreads.Add(t);
+                    t.Start();
+                }
+                else
+                    isConnected = false;
                 FileInfo fileInfo = new FileInfo(LogFile);
                 int len = 0;
                 byte[] lineIndex = Translator.GetBytes("#!#" + currentLogLine++ + "#!#", out len);
@@ -135,15 +157,32 @@ namespace LabZSK.Simulation
         public void addTcpClient(string name, string lastName, string group, string ipAddress, string remotePort, string password)
         {
             _TcpClient = new ConnectedClient(name, lastName, group, ipAddress, remotePort, password);
-            new Thread(() =>
+            Thread t = new Thread(() =>
             {
-                _TcpClient.TryRegisterOnServer();
-                //_TcpClient.HandleCommunication();
-            }).Start();
+                try
+                {
+                    _TcpClient.TryRegisterOnServer();
+                }
+                catch (ThreadAbortException)
+                {
+
+                }
+                catch (Exception)
+                {
+
+                }
+            });
+            allThreads.Add(t);
+            t.Start();
         }
 
-
-
+        public void closeConnection()
+        {
+            if (_TcpClient != null)
+            {
+                _TcpClient.SendData(-1, "EOT");
+            }
+        }
         public class ConnectedClient
         {
             private TcpClient _client;

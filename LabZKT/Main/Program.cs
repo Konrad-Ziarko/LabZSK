@@ -35,6 +35,7 @@ namespace LabZSK
                     filename = args[0];
                 }
                 //Application.Run(new SplashScreen());
+                Settings.Default.IsDevConsole = false;
                 Application.Run(new SimView(filename));
             }
             else

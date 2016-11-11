@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace LabZSKServer
 {
@@ -21,6 +22,7 @@ namespace LabZSKServer
         public int switchCounter { get; set; }
         public int reconnectAttempts { get; set; }
         public string pathToLog { get; set; }
+        public string foreColor { get; set; }
         public Client(Thread operatedBy, string name, string lastName, string group, string iPAddress, int remotePort, string pathToLog)
         {
             this.operatedBy = operatedBy;
@@ -30,6 +32,7 @@ namespace LabZSKServer
             this.iPAddress = iPAddress;
             this.remotePort = remotePort;
             this.pathToLog = pathToLog;
+            this.foreColor = "Black";
             clientLog = new List<string>();
             whenWasClientConnected = DateTime.Now;
             reconnectAttempts = switchCounter = 0;

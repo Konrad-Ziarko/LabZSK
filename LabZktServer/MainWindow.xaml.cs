@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace LabZSKServer
@@ -25,11 +26,13 @@ namespace LabZSKServer
         private static string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSKSerwer\\";
         private static string currentDirectory;
         DispatcherTimer refreshRichTextBox = new DispatcherTimer();
+        private bool isRefreshing = true;
         private TcpListener _server;
         private bool _isRunning;
         private Thread handleNewClients;
         private static string pass;
         private static List<Client> allClients = new List<Client>();
+        private static List<Thread> allThreads = new List<Thread>();
         public MainWindow()
         {
             InitializeComponent();
@@ -44,6 +47,11 @@ namespace LabZSKServer
             {
                 _server.Stop();
                 handleNewClients.Abort();
+                foreach (Thread t in allThreads)
+                {
+                    t.Abort();
+                }
+                allThreads = new List<Thread>();
                 _isRunning = false;
                 textBox_Addres.Text = "";
                 button_Start.Content = "Nasłuchuj";
@@ -54,17 +62,22 @@ namespace LabZSKServer
                 currentDirectory = DateTime.Now.ToString("yyyy_MM_dd HH_mm_ss");
                 try
                 {
-                    string ipAddress = "";
-                    foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
-                        if (item.NetworkInterfaceType == NetworkInterfaceType.Ethernet && item.OperationalStatus == OperationalStatus.Up)
-                            foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
-                                if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
-                                {
-                                    ipAddress = ip.Address.ToString();
-                                    break;
-                                }
-                    _server = new TcpListener(IPAddress.Parse(ipAddress), Convert.ToInt32(textBox_Port.Text));
-                    textBox_Addres.Text = ipAddress;
+                    if (textBox_Addres.Text == "")
+                    {
+                        string ipAddress = "";
+                        foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
+                            if (item.NetworkInterfaceType == NetworkInterfaceType.Ethernet && item.OperationalStatus == OperationalStatus.Up)
+                                foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
+                                    if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                                    {
+                                        ipAddress = ip.Address.ToString();
+                                        break;
+                                    }
+                        _server = new TcpListener(IPAddress.Parse(ipAddress), Convert.ToInt32(textBox_Port.Text));
+                        _server.Server.ReceiveTimeout = _server.Server.ReceiveTimeout = 15000;
+                        _server.Server.Ttl = 255;
+                        textBox_Addres.Text = ipAddress;
+                    }
                     _server.Start();
 
                     _isRunning = true;
@@ -88,6 +101,7 @@ namespace LabZSKServer
                 {
                     TcpClient newClient = _server.AcceptTcpClient();
                     Thread t = new Thread(new ParameterizedThreadStart(HandleClient));
+                    allThreads.Add(t);
                     t.Start(newClient);
                 }
             }
@@ -98,10 +112,10 @@ namespace LabZSKServer
         }
         public void HandleClient(object obj)
         {
+            Client client = null;
             try
             {
                 TcpClient tcpClient = (TcpClient)obj;
-                Client client;
                 StreamWriter sWriter = new StreamWriter(tcpClient.GetStream(), Encoding.Unicode);
                 StreamReader sReader = new StreamReader(tcpClient.GetStream(), Encoding.Unicode);
                 bool bClientConnected = true;
@@ -128,6 +142,8 @@ namespace LabZSKServer
                                     sw.Write(sData);
                                 }
                                 client.clientLog.Add(sData);
+                                if (sData == "-1:EOT")
+                                    break;
                                 // sWriter.WriteLine("");
                                 // sWriter.Flush();
                             }
@@ -147,6 +163,10 @@ namespace LabZSKServer
             {
                 ;//serwer przerwał połączenie
             }
+            finally
+            {
+                client.foreColor = "Red";
+            }
         }
         private void textBox_Pass_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -159,30 +179,61 @@ namespace LabZSKServer
         }
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            StartStopRefreshing(true);
+            RefreshContent();
             refreshRichTextBox.Start();
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            Paragraph p;
-            FlowDocument document = new FlowDocument();
-            document.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
-            foreach (string logLine in allClients[listView.SelectedIndex].clientLog)
-            {
-                p = new Paragraph(new Run(logLine));
-                p.FontSize = 12;
-                p.TextAlignment = TextAlignment.Left;
-                document.Blocks.Add(p);
-            }
-            richTextBox.Document = document;
-            richTextBox.ScrollToEnd();
-
-            
+            RefreshContent();
         }
 
+        private void RefreshContent()
+        {
+            textBox.Text = "";
+            try
+            {
+                foreach (string logLine in allClients[listView.SelectedIndex].clientLog)
+                {
+                    textBox.Text += logLine + "\n";
+                }
+            }
+            catch { }
+            
+            
+            textBox.ScrollToEnd();
+        }
+
+        private void StartStopRefreshing(bool start)
+        {
+            isRefreshing = start;
+            if (start)
+            {
+                
+                refreshRichTextBox.Start();
+                button_Stop.Content = "||";
+            }
+            else
+            {
+                refreshRichTextBox.Stop();
+                button_Stop.Content = "|>";
+            }
+        }
         private void button_Stop_Click(object sender, RoutedEventArgs e)
         {
-            refreshRichTextBox.Stop();
+            StartStopRefreshing(!isRefreshing);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (_server != null)
+                _server.Stop();
+            if (handleNewClients != null)
+                handleNewClients.Abort();
+            foreach (Thread t in allThreads)
+                t.Abort();
+
         }
     }
 }

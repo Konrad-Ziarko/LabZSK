@@ -9,7 +9,6 @@ namespace LabZSK.Other
 {
     public partial class Options : Form
     {
-        internal static bool IsDevConsole = false;
         private bool suppressReload = true;
         internal event Action ACallUpdate;
         public Options()
@@ -28,17 +27,15 @@ namespace LabZSK.Other
 
             //ustawienia użytkownika są nadpisywane przez aplikacji
             groupBox1.Enabled = Settings.Default.CanEditOptions;
+            checkBox1.Checked = Settings.Default.IsDevConsole;
             if (!Convert.ToBoolean(ConfigurationManager.AppSettings["ApplicationForStudents"]))
             {
-                groupBox1.Enabled = true;
-                checkBox1.Enabled = IsDevConsole;
+                checkBox1.Enabled = groupBox1.Enabled = true;
             }
             else
             {
-                checkBox1.Checked = false;
-                checkBox1.Enabled = false;
+                checkBox1.Enabled = checkBox1.Checked = false;
             }
-
             setAllStrings();
         }
         internal void setAllStrings()
@@ -73,7 +70,7 @@ namespace LabZSK.Other
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            IsDevConsole = checkBox1.Checked;
+            Settings.Default.IsDevConsole = checkBox1.Checked;
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -96,6 +93,7 @@ namespace LabZSK.Other
             Settings.Default.FirstMark = Convert.ToInt32(numericUpDown4.Value);
             Settings.Default.SecondMark = Convert.ToInt32(numericUpDown3.Value);
             Settings.Default.ThirdMark = Convert.ToInt32(numericUpDown2.Value);
+            Settings.Default.IsDevConsole = checkBox1.Checked;
             Settings.Default.Save();
         }
 

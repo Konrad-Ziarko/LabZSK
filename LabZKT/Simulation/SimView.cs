@@ -122,7 +122,7 @@ namespace LabZSK.Simulation
                 }
                 catch { }
             }
-            devConsoleToolStripMenuItem.Enabled = Options.IsDevConsole;
+            devConsoleToolStripMenuItem.Enabled = false;
             closeLogToolStripMenuItem.Enabled = false;
             setAllStrings();
         }
@@ -496,6 +496,7 @@ namespace LabZSK.Simulation
             addTextToLog("\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(20, ' ') + "\n" + internetTime.PadLeft(20, ' ') + "\n" + Strings.simStop + "\n" +
                 Strings.mark + ": " + mark + "   " + Strings.mistakes + ": " + mistakes + "\n");
             logManager.clearInMemoryLog();
+            logManager.closeConnection();
             logFile = string.Empty;
         }
         public void initLogInformation()
@@ -979,6 +980,15 @@ namespace LabZSK.Simulation
             editmemToolStripMenuItem.Text = Strings.editMemToolStrip;
             loadmemToolStripMenuItem.Text = Strings.loadMemToolStrip;
             aboutToolStripMenuItem.Text = Strings.authorToolStrip;
+
+            try
+            {
+                dataGridView_Info.Rows[0].Cells[1].Value = Strings.mark;
+                dataGridView_Info.Rows[1].Cells[1].Value = Strings.mistakes;
+                dataGridView_Info.Rows[2].Cells[1].Value = Strings.tact;
+                dataGridView_Info.Rows[3].Cells[1].Value = Strings.cycle;
+            }
+            catch { }
 
             Grid_PM.Columns[0].HeaderText = Grid_Mem.Columns[0].HeaderText = Strings.cellAddressViewGrid;
             Grid_Mem.Columns[1].HeaderText = Strings.cellValueViewGrid;
