@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -9,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
@@ -25,8 +28,8 @@ namespace LabZSKServer
         //Serwer może generować klucze RSA i rozpoczynać od wysłania klucza publicznego
         private static string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSKSerwer\\";
         private static string currentDirectory;
-        DispatcherTimer refreshRichTextBox = new DispatcherTimer();
-        private bool isRefreshing = true;
+        DispatcherTimer refreshListView = new DispatcherTimer();
+        private static bool isRefreshing = true;
         private TcpListener _server;
         private bool _isRunning;
         private Thread handleNewClients;
@@ -37,8 +40,15 @@ namespace LabZSKServer
         {
             InitializeComponent();
             listView.ItemsSource = allClients;
-            refreshRichTextBox.Tick += dispatcherTimer_Tick;
-            refreshRichTextBox.Interval = new TimeSpan(0, 0, 3);
+            refreshListView.Tick += RefreshListView_Tick;
+            refreshListView.Interval = new TimeSpan(0, 0, 15);
+            refreshListView.Start();
+        }
+
+        private void RefreshListView_Tick(object sender, EventArgs e)
+        {
+            ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+            view.Refresh();
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -55,6 +65,8 @@ namespace LabZSKServer
                 _isRunning = false;
                 textBox_Addres.Text = "";
                 button_Start.Content = "Nasłuchuj";
+                _server = null;
+                handleNewClients = null;
             }
             else
             {
@@ -113,9 +125,10 @@ namespace LabZSKServer
         public void HandleClient(object obj)
         {
             Client client = null;
+            TcpClient tcpClient = null;
             try
             {
-                TcpClient tcpClient = (TcpClient)obj;
+                tcpClient = (TcpClient)obj;
                 StreamWriter sWriter = new StreamWriter(tcpClient.GetStream(), Encoding.Unicode);
                 StreamReader sReader = new StreamReader(tcpClient.GetStream(), Encoding.Unicode);
                 bool bClientConnected = true;
@@ -127,6 +140,7 @@ namespace LabZSKServer
                     if (split[0] == pass)
                     {
                         client = new Client(Thread.CurrentThread, split[1], split[2], split[3], split[4], Convert.ToInt32(split[5]), path);
+                        //Dispatcher.BeginInvoke(new Action(() => allClients.Add(client))).Wait();
                         allClients.Add(client);
                         Dispatcher.BeginInvoke(new Action(() => listView.Items.Refresh())).Wait();
 
@@ -137,15 +151,23 @@ namespace LabZSKServer
                             while (bClientConnected)
                             {
                                 sData = sReader.ReadLine();
-                                using (StreamWriter sw = new StreamWriter(File.Open(path, FileMode.Append), Encoding.Unicode))
+                                if (sData == "ping")
                                 {
-                                    sw.Write(sData);
+                                    //sWriter.WriteLine("ping");
+                                    //sWriter.Flush();
                                 }
-                                client.clientLog+=(sData)+"\n";
-                                if (sData == "-1:EOT")
-                                    break;
-                                // sWriter.WriteLine("");
-                                // sWriter.Flush();
+                                else
+                                {
+                                    using (StreamWriter sw = new StreamWriter(File.Open(path, FileMode.Append), Encoding.Unicode))
+                                    {
+                                        sw.Write(sData + "\n");
+                                    }
+                                    client.clientLog += (sData) + "\n";
+                                    if (sData == "-1:EOT")
+                                        break;
+                                    if(isRefreshing)
+                                        Dispatcher.BeginInvoke(new Action(() => RefreshContent()));
+                                }
                             }
                         }
                         catch (IOException)
@@ -165,6 +187,7 @@ namespace LabZSKServer
             }
             finally
             {
+                tcpClient.Close();
                 client.foreColor = "Red";
             }
         }
@@ -181,7 +204,6 @@ namespace LabZSKServer
         {
             StartStopRefreshing(true);
             RefreshContent();
-            refreshRichTextBox.Start();
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -205,13 +227,10 @@ namespace LabZSKServer
             isRefreshing = start;
             if (start)
             {
-                
-                refreshRichTextBox.Start();
                 button_Stop.Content = "||";
             }
             else
             {
-                refreshRichTextBox.Stop();
                 button_Stop.Content = "|>";
             }
         }
@@ -228,7 +247,6 @@ namespace LabZSKServer
                 handleNewClients.Abort();
             foreach (Thread t in allThreads)
                 t.Abort();
-
         }
     }
 }

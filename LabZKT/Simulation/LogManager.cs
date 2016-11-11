@@ -72,10 +72,10 @@ namespace LabZSK.Simulation
                         }
                         catch (Exception)
                         {
-                            foreach (Thread th in allThreads)
-                                th.Abort();
                             _TcpClient = null;
                             isConnected = false;
+                            foreach (Thread th in allThreads)
+                                th.Abort();
                         }
                     });
                     allThreads.Add(t);
@@ -156,24 +156,28 @@ namespace LabZSK.Simulation
 
         public void addTcpClient(string name, string lastName, string group, string ipAddress, string remotePort, string password)
         {
-            _TcpClient = new ConnectedClient(name, lastName, group, ipAddress, remotePort, password);
-            Thread t = new Thread(() =>
+            try
             {
-                try
+                _TcpClient = new ConnectedClient(name, lastName, group, ipAddress, remotePort, password);
+                Thread t = new Thread(() =>
                 {
-                    _TcpClient.TryRegisterOnServer();
-                }
-                catch (ThreadAbortException)
-                {
+                    try
+                    {
+                        _TcpClient.TryRegisterOnServer();
+                    }
+                    catch (ThreadAbortException)
+                    {
 
-                }
-                catch (Exception)
-                {
+                    }
+                    catch (Exception)
+                    {
 
-                }
-            });
-            allThreads.Add(t);
-            t.Start();
+                    }
+                });
+                allThreads.Add(t);
+                t.Start();
+            }
+            catch { }
         }
 
         public void closeConnection()
@@ -207,6 +211,8 @@ namespace LabZSK.Simulation
             {
                 _client = new TcpClient();
                 _client.Connect(ipAddress, Convert.ToInt32(remotePort));
+                _client.ReceiveTimeout = 15000;
+                _client.SendTimeout = 15000;
                 this.name = name;
                 this.lastName = lastName;
                 this.group = group;
@@ -236,39 +242,25 @@ namespace LabZSK.Simulation
                 sWriter.WriteLine(sData);
                 sWriter.Flush();
             }
-            public void Disconnect()
+            public bool pingServer()
             {
-                _client.Close();
-                //_TcpClient = null;///
-            }
-            public void HandleCommunication()
-            {
-                try
-                {
-                    int rowNum = 0;
-                    while (isConnected)
-                    {
-                        //Console.Write("&gt; ");
-                        //sData = Console.ReadLine();
-                        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-                        //logManager musi dostac te metody, string są do niego wysłane i to on inicjuje wysyłanie pakietów
-
-                        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                        sData = rowNum++ + ":To jest log";
-                        sWriter.WriteLine(sData);
-                        sWriter.Flush();
-                        Thread.Sleep(2000);
-                        // String sDataIncomming = _sReader.ReadLine();
-                    }
-                }
-                catch (Exception)
-                {
-                    isConnected = false;
-                }
+                sWriter.WriteLine("ping");
+                sWriter.Flush();
+                if (sReader.ReadLine() == "ping")
+                    return true;
+                else return false;
             }
         }
-
+        public void disconnect()
+        {
+            _TcpClient = null;
+            isConnected = false;
+            foreach (Thread th in allThreads)
+                th.Abort();
+        }
+        public bool ping()
+        {
+           return _TcpClient.pingServer();
+        }
     }
 }

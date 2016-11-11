@@ -28,6 +28,7 @@ namespace LabZSK.Simulation
     {
         internal event Action<int, string, string, int> AUpdateForm;
         private string _environmentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK";
+        private static Thread serverTimer;
         //private bool isDebuggerPresent;
         private MemoryRecord lastRecordFromRRC;//pamietaj aby nullowac po zerowaniu rejestrow albo nowej symulacji, to delete?
         #region Lists and Dictionary
@@ -1020,7 +1021,26 @@ namespace LabZSK.Simulation
             if (connect)
             {
                 logManager.addTcpClient(name, lastName, group, ipAddress, remotePort, password);
+                serverTimer = new Thread(()=> {
+                    bool isConnected = true;
+                    try
+                    {
+                        while (isConnected)
+                        {
+                            isConnected = logManager.ping();
+                            Thread.Sleep(5000);
+                        }
+                    }
+                    catch{}
+                    finally
+                    {
+                        logManager.disconnect();
+                        serverTimer = null;
+                    }
+                });
             }
         }
+
+
     }
 }
