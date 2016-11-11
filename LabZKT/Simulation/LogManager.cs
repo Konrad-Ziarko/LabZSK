@@ -180,7 +180,20 @@ namespace LabZSK.Simulation
         {
             if (_TcpClient != null)
             {
-                _TcpClient.SendData(-1, "EOT");
+                Thread t = new Thread(() =>
+                {
+                    try
+                    {
+                        _TcpClient.SendData(-1, "EOT");
+
+                    }
+                    catch { }
+                });
+                t.Start();
+
+                bool finished = t.Join(15000);
+                if (!finished)
+                    t.Abort();
             }
         }
         public class ConnectedClient

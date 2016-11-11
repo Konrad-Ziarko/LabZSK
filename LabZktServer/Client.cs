@@ -17,7 +17,7 @@ namespace LabZSKServer
         public string group { get; set; }
         public string iPAddress { get; set; }
         public int remotePort { get; set; }
-        public List<string> clientLog;
+        public string clientLog;
         public DateTime whenWasClientConnected;
         public int switchCounter { get; set; }
         public int reconnectAttempts { get; set; }
@@ -33,7 +33,7 @@ namespace LabZSKServer
             this.remotePort = remotePort;
             this.pathToLog = pathToLog;
             this.foreColor = "Black";
-            clientLog = new List<string>();
+            clientLog = "";
             whenWasClientConnected = DateTime.Now;
             reconnectAttempts = switchCounter = 0;
         }

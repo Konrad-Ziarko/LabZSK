@@ -141,7 +141,7 @@ namespace LabZSKServer
                                 {
                                     sw.Write(sData);
                                 }
-                                client.clientLog.Add(sData);
+                                client.clientLog+=(sData)+"\n";
                                 if (sData == "-1:EOT")
                                     break;
                                 // sWriter.WriteLine("");
@@ -194,14 +194,9 @@ namespace LabZSKServer
             textBox.Text = "";
             try
             {
-                foreach (string logLine in allClients[listView.SelectedIndex].clientLog)
-                {
-                    textBox.Text += logLine + "\n";
-                }
+                textBox.Text = allClients[listView.SelectedIndex].clientLog;
             }
             catch { }
-            
-            
             textBox.ScrollToEnd();
         }
 
