@@ -1,6 +1,7 @@
 ﻿using LabZSK.Properties;
 using System;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -13,6 +14,30 @@ namespace LabZSK.Other
         private void button2_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void textBox_IP_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Regex regExp = new Regex(@"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$");
+            if (!regExp.IsMatch(textBox_IP.Text))
+            {
+                textBox_IP.BackColor = System.Drawing.Color.Red;
+            }
+            else
+                textBox_IP.BackColor = System.Drawing.SystemColors.Window;
+        }
+
+        private void textBox_Port_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                if (Convert.ToUInt16(textBox_Port.Text) < 1024)
+                    throw new Exception();
+                textBox_Port.BackColor = System.Drawing.SystemColors.Window;
+            }
+            catch {
+                textBox_Port.BackColor = System.Drawing.Color.Red;
+            }
         }
 
         internal bool connect = false;

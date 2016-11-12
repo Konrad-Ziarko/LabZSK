@@ -117,6 +117,7 @@
             this.textBox_Port.Name = "textBox_Port";
             this.textBox_Port.Size = new System.Drawing.Size(144, 27);
             this.textBox_Port.TabIndex = 10;
+            this.textBox_Port.Validating += new System.ComponentModel.CancelEventHandler(this.textBox_Port_Validating);
             // 
             // label4
             // 
@@ -158,6 +159,7 @@
             this.textBox_IP.Name = "textBox_IP";
             this.textBox_IP.Size = new System.Drawing.Size(144, 27);
             this.textBox_IP.TabIndex = 6;
+            this.textBox_IP.Validating += new System.ComponentModel.CancelEventHandler(this.textBox_IP_Validating);
             // 
             // button1
             // 

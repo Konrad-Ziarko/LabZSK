@@ -1020,25 +1020,29 @@ namespace LabZSK.Simulation
             }
             if (connect)
             {
-                logManager.addTcpClient(name, lastName, group, ipAddress, remotePort, password);
-                serverTimer = new Thread(()=> {
-                    bool isConnected = true;
-                    try
-                    {
-                        while (isConnected)
+                try
+                {
+                    logManager.addTcpClient(name, lastName, group, ipAddress, remotePort, password);
+                    serverTimer = new Thread(() => {
+                        bool isConnected = true;
+                        try
                         {
-                            Thread.Sleep(5000);
-                            isConnected = logManager.ping();
+                            while (isConnected)
+                            {
+                                Thread.Sleep(5000);
+                                isConnected = logManager.ping();
+                            }
                         }
-                    }
-                    catch{}
-                    finally
-                    {
-                        logManager.disconnect();
-                        serverTimer = null;
-                    }
-                });
-                serverTimer.Start();
+                        catch { }
+                        finally
+                        {
+                            logManager.disconnect();
+                            serverTimer = null;
+                        }
+                    });
+                    serverTimer.Start();
+                }
+                catch { }//błędne dane po stronie klienta - literowka ip:port itp
             }
         }
 
