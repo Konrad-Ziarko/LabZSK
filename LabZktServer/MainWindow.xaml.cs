@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -248,6 +249,11 @@ namespace LabZSKServer
                 handleNewClients.Abort();
             foreach (Thread t in allThreads)
                 t.Abort();
+        }
+        protected void HandleDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (listView.SelectedIndex >= 0)
+            new LogView(allClients[listView.SelectedIndex].clientLog).Show();
         }
     }
 }
