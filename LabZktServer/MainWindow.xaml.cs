@@ -126,13 +126,14 @@ namespace LabZSKServer
         {
             Client client = null;
             TcpClient tcpClient = null;
+            string sData = "";
             try
             {
                 tcpClient = (TcpClient)obj;
                 StreamWriter sWriter = new StreamWriter(tcpClient.GetStream(), Encoding.Unicode);
                 StreamReader sReader = new StreamReader(tcpClient.GetStream(), Encoding.Unicode);
                 bool bClientConnected = true;
-                string sData = sReader.ReadLine();
+                sData = sReader.ReadLine();
                 string[] split = sData.Split(':');
                 try
                 {
@@ -153,8 +154,8 @@ namespace LabZSKServer
                                 sData = sReader.ReadLine();
                                 if (sData == "ping")
                                 {
-                                    //sWriter.WriteLine("ping");
-                                    //sWriter.Flush();
+                                    sWriter.WriteLine("ping");
+                                    sWriter.Flush();
                                 }
                                 else
                                 {
@@ -164,7 +165,7 @@ namespace LabZSKServer
                                     }
                                     client.clientLog += (sData) + "\n";
                                     if (sData == "-1:EOT")
-                                        break;
+                                        bClientConnected = false;
                                     if(isRefreshing)
                                         Dispatcher.BeginInvoke(new Action(() => RefreshContent()));
                                 }

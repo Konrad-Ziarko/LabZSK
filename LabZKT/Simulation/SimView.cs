@@ -1027,8 +1027,8 @@ namespace LabZSK.Simulation
                     {
                         while (isConnected)
                         {
-                            isConnected = logManager.ping();
                             Thread.Sleep(5000);
+                            isConnected = logManager.ping();
                         }
                     }
                     catch{}
@@ -1038,6 +1038,7 @@ namespace LabZSK.Simulation
                         serverTimer = null;
                     }
                 });
+                serverTimer.Start();
             }
         }
 
