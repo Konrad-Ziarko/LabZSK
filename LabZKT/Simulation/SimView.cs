@@ -6,6 +6,7 @@ using LabZSK.Properties;
 using LabZSK.StaticClasses;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Drawing;
 using System.Globalization;
@@ -16,6 +17,7 @@ using System.Net;
 using System.Net.Cache;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -534,8 +536,7 @@ namespace LabZSK.Simulation
                     Form log = new Form();
                     log.Text = Strings.viewLogFile;
                     log.Icon = Resources.Logo_WAT1;
-
-                    RichTextBox rtb = new RichTextBox();
+                    RichTextBox rtb = new FastTextBox();
                     rtb.WordWrap = false;
                     log.Controls.Add(rtb);
                     rtb.ReadOnly = true;
