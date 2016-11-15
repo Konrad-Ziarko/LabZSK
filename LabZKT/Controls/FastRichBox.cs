@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 
 namespace LabZSK.Controls
 {
-    public partial class FastTextBox : RichTextBox
+    public partial class FastRichBox : RichTextBox
     {
         protected override CreateParams CreateParams
         {

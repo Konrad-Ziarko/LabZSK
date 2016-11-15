@@ -1,6 +1,6 @@
 ﻿namespace LabZSK.Controls
 {
-    partial class FastTextBox
+    partial class FastRichBox
     {
         /// <summary> 
         /// Required designer variable.

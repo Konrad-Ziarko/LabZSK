@@ -97,11 +97,11 @@
     <Compile Include="Controls\BitTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\FastTextBox.cs">
+    <Compile Include="Controls\FastRichBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\FastTextBox.Designer.cs">
-      <DependentUpon>FastTextBox.cs</DependentUpon>
+    <Compile Include="Controls\FastRichBox.Designer.cs">
+      <DependentUpon>FastRichBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Strings.Designer.cs">
       <AutoGen>True</AutoGen>

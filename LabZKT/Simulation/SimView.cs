@@ -535,7 +535,7 @@ namespace LabZSK.Simulation
                     Form log = new Form();
                     log.Text = Strings.viewLogFile;
                     log.Icon = Resources.Logo_WAT1;
-                    RichTextBox rtb = new FastTextBox();
+                    RichTextBox rtb = new FastRichBox();
                     rtb.WordWrap = false;
                     log.Controls.Add(rtb);
                     rtb.ReadOnly = true;
