@@ -15,6 +15,9 @@ namespace LabZSK.Memory
     /// </summary>
     public partial class MemSubmit : Form
     {
+        private string prevHex;
+        private string prevTyp;
+        private int prevComboIndex;
         /// <summary>
         /// String representing memory record in binary
         /// </summary>
@@ -42,8 +45,10 @@ namespace LabZSK.Memory
         /// <summary>
         /// Initialize instance of class
         /// </summary>
-        public MemSubmit()
+        public MemSubmit(string hex, string typ)
         {
+            prevHex = hex;
+            prevTyp = typ;
             InitializeComponent();
             turnOffTabSwitchFocus(this);
         }
@@ -85,6 +90,30 @@ namespace LabZSK.Memory
             panel_Complex.Visible = false;
             panel_Data.Visible = false;
             panel_Simple.Visible = false;
+            if(prevHex != "")
+            {
+                string tmp = Convert.ToString(Convert.ToInt16(prevHex, 16), 2).PadLeft(16, '0');
+                if (prevTyp == "1")
+                {
+                    textBox_Data.Text = prevHex;
+                }
+                else if (prevTyp == "2")
+                {
+                    if (tmp.Substring(5, 1) == "1")
+                        checkBox_X.Checked = true;
+                    if (tmp.Substring(6, 1) == "1")
+                        checkBox_S.Checked = true;
+                    if (tmp.Substring(7, 1) == "1")
+                        checkBox_I.Checked = true;
+                    prevComboIndex = Convert.ToInt32(tmp.Substring(0, 5), 2);
+                    numericUpDown_DA.Value = Convert.ToInt16(tmp.Substring(8, 8), 2);
+                }
+                else if (prevTyp == "3")
+                {
+                    prevComboIndex = Convert.ToInt16(tmp.Substring(5, 4), 2);
+                    numericUpDown_N.Value = Convert.ToInt16(tmp.Substring(9, 7), 2);
+                }
+            }
         }
         private void setAndClose(DataType type)
         {
@@ -198,6 +227,8 @@ namespace LabZSK.Memory
             panel_Choice.Visible = false;
             panel_Simple.Visible = true;
             AcceptButton = button_Simple_OK;
+            if (prevTyp == "2")
+                comboBox_Simple.SelectedIndex = prevComboIndex-1;
             comboBox_Simple.Focus();
         }
         private void button_Choice_Complex_Click(object sender, EventArgs e)
@@ -230,6 +261,8 @@ namespace LabZSK.Memory
             panel_Choice.Visible = false;
             panel_Complex.Visible = true;
             AcceptButton = button_Complex_OK;
+            if(prevTyp == "3")
+                comboBox_Complex.SelectedIndex = prevComboIndex;
             comboBox_Complex.Focus();
         }
         private void button_Data_Cancel_Click(object sender, EventArgs e)

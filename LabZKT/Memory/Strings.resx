@@ -145,7 +145,7 @@
     <value>Rozkaz prosty</value>
   </data>
   <data name="clearRowButton" xml:space="preserve">
-    <value>Wyczyść wiersz</value>
+    <value>Wyczyść komórkę</value>
   </data>
   <data name="clearTableButton" xml:space="preserve">
     <value>Wyczyść pamięć</value>

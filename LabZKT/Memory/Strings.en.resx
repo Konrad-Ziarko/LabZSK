@@ -151,7 +151,7 @@
     <value>Simple instruction</value>
   </data>
   <data name="clearRowButton" xml:space="preserve">
-    <value>Clear row</value>
+    <value>Clear cell</value>
   </data>
   <data name="clearTableButton" xml:space="preserve">
     <value>Clear memory</value>

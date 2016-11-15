@@ -32,7 +32,7 @@ namespace LabZSK.Simulation
         private string _environmentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK";
         private static Thread serverTimer;
         //private bool isDebuggerPresent;
-        private MemoryRecord lastRecordFromRRC;//pamietaj aby nullowac po zerowaniu rejestrow albo nowej symulacji, to delete?
+        //private MemoryRecord lastRecordFromRRC;//pamietaj aby nullowac po zerowaniu rejestrow albo nowej symulacji, to delete?
         #region Lists and Dictionary
         private List<MemoryRecord> List_Memory = new List<MemoryRecord>();
         private List<MicroOperation> List_MicroOp = new List<MicroOperation>();
@@ -62,8 +62,7 @@ namespace LabZSK.Simulation
         private bool inMicroMode = false;
         private bool buttonNextTactClicked = false;
         private bool resetBus;
-        private bool layoutChanged;
-        private bool indirectAdresation = false;
+        private bool layoutChange = false;
         private bool[,] cells = new bool[11, 8];
         private string logFile = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty;
         private short raps = 0, na = 0;
@@ -577,7 +576,7 @@ namespace LabZSK.Simulation
                         rtb.Select(match.Index, match.Length);
                         rtb.SelectionColor = Color.OrangeRed;
                     }
-                    regExp = new Regex(@"={6}.+=");
+                    regExp = new Regex(@"(={6}.+=|" + @".+CEA.+\s|" + @".+RRC.+\s|" + @".+END.+\s+)");
                     foreach (Match match in regExp.Matches(rtb.Text))
                     {
                         rtb.Select(match.Index, match.Length);
@@ -689,7 +688,7 @@ namespace LabZSK.Simulation
                     button_Next_Tact.Visible = false;
                     button_Makro.Visible = false;
                     buttonOKClicked = true;
-                    if (registers["SUMA"].Visible)
+                    //if (registers["SUMA"].Visible)
                         switchLayOut();
                     EnDisableButtons();
                     currentTact = 0;
@@ -943,17 +942,22 @@ namespace LabZSK.Simulation
         #region Other
         internal void switchLayOut()
         {
-            if (registers["SUMA"].Visible)
+            bool needRefresh = false;
+            if (layoutChange)
             {
-                registers["SUMA"].Visible = registers["L"].Visible = registers["R"].Visible = false;
-                RBPS.Visible = registers["RAPS"].Visible = registers["RAE"].Visible = true;
-            }
-            else
-            {
+                needRefresh = RBPS.Visible;
                 registers["SUMA"].Visible = registers["L"].Visible = registers["R"].Visible = true;
                 RBPS.Visible = registers["RAPS"].Visible = registers["RAE"].Visible = false;
             }
-            ADrawBackground();
+            else
+            {
+                needRefresh = registers["SUMA"].Visible;
+                registers["SUMA"].Visible = registers["L"].Visible = registers["R"].Visible = false;
+                RBPS.Visible = registers["RAPS"].Visible = registers["RAE"].Visible = true;
+            }
+            layoutChange = false;
+            if (needRefresh)
+                ADrawBackground();
         }
         internal void setAllStrings()
         {

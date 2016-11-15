@@ -85,6 +85,7 @@ namespace LabZSK.Simulation
                     isConnected = false;
                 FileInfo fileInfo = new FileInfo(LogFile);
                 int len = 0;
+                //zapis logu do RAM'u
                 byte[] lineIndex = Translator.GetBytes("#!#" + currentLogLine++ + "#!#", out len);
                 inMemoryLog.Write(lineIndex, 0, len);
                 byte[] bytes = Translator.GetBytes(v, out len);

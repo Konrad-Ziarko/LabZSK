@@ -178,7 +178,7 @@ namespace LabZSK.Memory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wyczyść wiersz.
+        ///   Looks up a localized string similar to Wyczyść komórkę.
         /// </summary>
         internal static string clearRowButton {
             get {

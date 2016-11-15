@@ -75,22 +75,26 @@ namespace LabZSKServer
                 currentDirectory = DateTime.Now.ToString("yyyy_MM_dd HH_mm_ss");
                 try
                 {
+                    bool isSearching = true;
                     if (textBox_Addres.Text == "")
                     {
                         string ipAddress = "";
                         foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
-                            if (item.NetworkInterfaceType == NetworkInterfaceType.Ethernet && item.OperationalStatus == OperationalStatus.Up)
+                            if (item.NetworkInterfaceType == NetworkInterfaceType.Ethernet && item.OperationalStatus == OperationalStatus.Up && isSearching)
                                 foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
-                                    if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                                    if (ip.Address.AddressFamily == AddressFamily.InterNetwork && !IPAddress.IsLoopback(ip.Address) && isSearching)
                                     {
                                         ipAddress = ip.Address.ToString();
-                                        break;
+                                        isSearching = false;
                                     }
                         _server = new TcpListener(IPAddress.Parse(ipAddress), Convert.ToInt32(textBox_Port.Text));
                         _server.Server.ReceiveTimeout = _server.Server.ReceiveTimeout = 15000;
                         _server.Server.Ttl = 255;
                         textBox_Addres.Text = ipAddress;
                     }
+                    _server = new TcpListener(IPAddress.Parse(textBox_Addres.Text), Convert.ToInt32(textBox_Port.Text));
+                    _server.Server.ReceiveTimeout = _server.Server.ReceiveTimeout = 15000;
+                    _server.Server.Ttl = 255;
                     _server.Start();
 
                     _isRunning = true;

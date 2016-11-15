@@ -14,6 +14,25 @@ namespace LabZSK.Simulation
 {
     partial class SimView
     {
+        private bool getRRRegisterOP(out short a)
+        {
+            string tmp = Convert.ToString(registers["RR"].innerValue, 2).PadLeft(16, '0');
+            if (tmp.Substring(0, 5) == "00000")
+            {
+                a = (short)(Convert.ToInt16(tmp.Substring(5, 4), 2) + 32);
+                return true;
+            }
+            else if (tmp.Substring(0, 5) != "00000" && tmp.Substring(7, 1) == "1")
+            {
+                a = Convert.ToInt16(tmp.Substring(0, 5), 2);
+                return true;
+            }
+            else
+            {
+                a = Convert.ToInt16(tmp.Substring(0, 5), 2);
+                return false;
+            }
+        }
         #region Instruction Execution
         private void exeTest()
         {
@@ -44,6 +63,8 @@ namespace LabZSK.Simulation
             }
             else if (microOpMnemo == "TIND")
             {
+                short a;
+                bool indirectAdresation = getRRRegisterOP(out a);
                 if (indirectAdresation)
                 {
                     isTestPositive = true;
@@ -51,10 +72,7 @@ namespace LabZSK.Simulation
                 else
                 {
                     otherValue = true;
-                    if (lastRecordFromRRC != null)
-                        registers["RAPS"].setActualValue(Convert.ToInt16(lastRecordFromRRC.OP, 2));
-                    else
-                        otherValue = false;
+                    registers["RAPS"].setActualValue(a);
                 }
             }
             else if (microOpMnemo == "TAS")
@@ -165,17 +183,9 @@ namespace LabZSK.Simulation
                     flags["INT"].setInnerValue(1);
                 else if (microOpMnemo == "OPC")
                 {
-                    if (lastRecordFromRRC != null)
-                    {
-                        if (lastRecordFromRRC.typ == 2)
-                            testAndSet("RAPS", Convert.ToInt16(lastRecordFromRRC.OP, 2));
-                        else if (lastRecordFromRRC.typ == 3)
-                            testAndSet("RAPS", (short)(Convert.ToInt16(lastRecordFromRRC.AOP, 2) + 32));
-                        else
-                            testAndSet("RAPS", (short)32);
-                    }
-                    else
-                        testAndSet("RAPS", (short)32);
+                    short a;
+                    bool isIndirect = getRRRegisterOP(out a);
+                    testAndSet("RAPS", a);
                     currentTact = 8;
                 }
                 cells[8, 7] = false;
@@ -672,7 +682,6 @@ namespace LabZSK.Simulation
                 microOpMnemo = Grid_PM[7, raps].Value.ToString();
                 if (microOpMnemo == "RRC")
                 {
-                    lastRecordFromRRC = List_Memory[registers["RAP"].innerValue];
                     Grid_Mem.Rows[registers["RAP"].innerValue].Selected = true;
                     Grid_Mem.FirstDisplayedScrollingRowIndex = registers["RAP"].innerValue;
                     Grid_Mem.CurrentCell = Grid_Mem.Rows[registers["RAP"].innerValue].Cells[0];
@@ -705,33 +714,28 @@ namespace LabZSK.Simulation
                 microOpMnemo = Grid_PM[8, raps].Value.ToString();
                 if (microOpMnemo == "CEA")
                 {
-                    layoutChanged = true;
+                    layoutChange = true;
                     switchLayOut();
                     short leftValue = 0, rightValue = 0;
-                    if (lastRecordFromRRC != null)
+                    short a;
+
+                    string tmp = Convert.ToString(registers["RR"].innerValue, 2).PadLeft(16, '0');
+                    if (tmp.Substring(0, 5) != "00000")
                     {
-                        if (!lastRecordFromRRC.isComplex && lastRecordFromRRC.XSI.Substring(2, 1) == "1" || lastRecordFromRRC.isComplex)
-                            indirectAdresation = true;
-                        if (lastRecordFromRRC.isComplex)
-                        {
-                            leftValue = Convert.ToInt16(lastRecordFromRRC.N, 2);
-                            indirectAdresation = true;
-                        }
-                        else if (!lastRecordFromRRC.isComplex)
-                        {
-                            leftValue = Convert.ToInt16(lastRecordFromRRC.DA, 2);
-                            if (lastRecordFromRRC.XSI.Substring(0, 2) == "11")
-                                leftValue = rightValue = 0;
-                            else if (lastRecordFromRRC.XSI.Substring(1, 1) == "1")
-                                rightValue = registers["LR"].innerValue;
-                            else if (lastRecordFromRRC.XSI.Substring(0, 1) == "1")
-                                rightValue = registers["RI"].innerValue;
-                        }
+                        string xsi = tmp.Substring(5, 3);
+                        if (xsi == "110" || xsi == "111")
+                            leftValue = rightValue = 0;
+                        else if (xsi == "010" || xsi == "011")
+                            rightValue = registers["LR"].innerValue;
+                        else if (xsi == "100" || xsi == "101")
+                            rightValue = registers["RI"].innerValue;
+                        leftValue = Convert.ToInt16(tmp.Substring(8, 8), 2);
                     }
                     else
                     {
-                        leftValue = (short)(registers["RR"].innerValue & 256);
+                        leftValue = Convert.ToInt16(tmp.Substring(9, 7), 2);
                     }
+
                     testAndSet("L", leftValue);
                     validateRegister();
                     testAndSet("R", rightValue);
@@ -754,11 +758,7 @@ namespace LabZSK.Simulation
             flags["IA"].setInnerValue(0);
             flags["MAV"].setInnerValue(1);
             buttonOKClicked = false;
-            if (layoutChanged)
-            {
-                switchLayOut();
-                layoutChanged = false;
-            }
+            switchLayOut();
         }
         #endregion
         #region StartSim
@@ -813,12 +813,12 @@ namespace LabZSK.Simulation
             startSim();
             if (currentTact == 0)
                 instructionFetch();
+            switchLayOut();
             while (isRunning && currentTact > 0)
                 executeInstruction();
         }
         private void executeInstruction()
         {
-            indirectAdresation = false;
             if (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1]))
                 addTextToLog(Strings.tact + "1:\n");
             while (currentTact == 1 && (cells[1, 1] || cells[2, 1] || cells[4, 1] || cells[7, 1] || cells[8, 1]))
@@ -1067,6 +1067,7 @@ namespace LabZSK.Simulation
             toolStripMenu_Exit.Enabled = true;
             button_Makro.Visible = true;
             button_Micro.Visible = true;
+            button_Next_Tact.Visible = false;
             toolStripMenu_Clear.Enabled = true;
             label_Status.Text = Strings.stopMode;
             label_Status.ForeColor = Color.Green;
@@ -1076,6 +1077,8 @@ namespace LabZSK.Simulation
         {
             if (inMicroMode)
             {
+                button_Makro.Visible = false;
+                button_Micro.Visible = false;
                 button_Next_Tact.Visible = true;
                 if (!DEVMODE)
                     while (buttonNextTactClicked == false)

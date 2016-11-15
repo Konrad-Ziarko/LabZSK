@@ -182,12 +182,7 @@ namespace LabZSK.Controls
         {
             base.OnEnabledChanged(e);
             if (!Enabled)
-            BackColor = customeBackColor;
-        }
-        protected override void OnMouseEnter(EventArgs e)
-        {
-            ToolTip tt = new ToolTip();
-            tt.Show(innerValue.ToString("X") + "h\t" + innerValue, this, 0, 30, 1000);
+                BackColor = customeBackColor;
         }
 
         #region Drag&Drop
@@ -265,16 +260,18 @@ namespace LabZSK.Controls
             ReadOnly = true;
             BackColor = customeBackColor;
             ForeColor = customeForeColor;
-            setText();
+            clampValue();
             if (valueWhichShouldBeMovedToRegister != innerValue)
             {
                 badValue = innerValue;
                 innerValue = valueWhichShouldBeMovedToRegister;
+                setText();
                 return false;
             }
             else
             {
                 badValue = 0;
+                setText();
                 return true;
             }
         }

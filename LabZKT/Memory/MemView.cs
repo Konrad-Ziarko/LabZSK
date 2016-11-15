@@ -181,7 +181,7 @@ namespace LabZSK.Memory
             Grid_Mem.EndEdit();
             if (Grid_Mem.CurrentCell.ColumnIndex > 0)
             {
-                using (theSubView = new MemSubmit())
+                using (theSubView = new MemSubmit(Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[2].Value.ToString(), Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[3].Value.ToString()))
                 {
                     theSubView.Location = Cursor.Position;
                     var result = theSubView.ShowDialog();
@@ -264,7 +264,7 @@ namespace LabZSK.Memory
             Grid_Mem.EndEdit();
             if (Grid_Mem.CurrentCell.ColumnIndex > 0)
             {
-                using (theSubView = new MemSubmit())
+                using (theSubView = new MemSubmit(Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[2].Value.ToString(), Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[3].Value.ToString()))
                 {
                     theSubView.Location = Cursor.Position;
                     var result = theSubView.ShowDialog();
@@ -500,14 +500,7 @@ namespace LabZSK.Memory
             panel_Left.Width = Convert.ToInt32(Width - panel_View_PO.Width - 20);
             panel_Left.Height = Convert.ToInt32(Height * 1.0);
 
-            //dataGridView_Decode_Simple.Height = panel_Left.Size.Height * 6 / 10;
             dataGridView_Decode_Complex.Height = panel_Left.Size.Height * 4 / 10;
-            //dataGridView_Decode_Simple.ColumnHeadersHeight = dataGridView_Decode_Simple.Height / 6;
-            //foreach (DataGridViewRow x in dataGridView_Decode_Simple.Rows)
-            //{
-            //    x.Height = dataGridView_Decode_Simple.Height / 6;
-            //}
-            dataGridView_Decode_Complex.ColumnHeadersHeight = dataGridView_Decode_Complex.Height / 4;
             foreach (DataGridViewRow x in dataGridView_Decode_Complex.Rows)
             {
                 x.Height = dataGridView_Decode_Complex.Height / 4;
