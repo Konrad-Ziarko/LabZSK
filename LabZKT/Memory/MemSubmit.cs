@@ -95,7 +95,8 @@ namespace LabZSK.Memory
                 string tmp = Convert.ToString(Convert.ToInt16(prevHex, 16), 2).PadLeft(16, '0');
                 if (prevTyp == "1")
                 {
-                    textBox_Data.Text = prevHex;
+                    radioButton_Hex.Checked = true;
+                    textBox_Data.Text = prevHex.TrimStart('0');
                 }
                 else if (prevTyp == "2")
                 {

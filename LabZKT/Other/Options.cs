@@ -24,7 +24,7 @@ namespace LabZSK.Other
             numericUpDown4.Value = Settings.Default.FirstMark;
             numericUpDown3.Value = Settings.Default.SecondMark;
             numericUpDown2.Value = Settings.Default.ThirdMark;
-
+            checkBox2.Checked = Settings.Default.CanCloseLog;
             //ustawienia użytkownika są nadpisywane przez aplikacji
             groupBox1.Enabled = Settings.Default.CanEditOptions;
             checkBox1.Checked = Settings.Default.IsDevConsole;
@@ -48,6 +48,7 @@ namespace LabZSK.Other
             label3.Text = Strings.gradingScaleLabel;
             label6.Text = Strings.languageLabel;
             label7.Text = Strings.devConsoleLabel;
+            label8.Text = Strings.logClosing;
 
             button1.Text = Strings.saveConfigButton;
             button2.Text = Strings.loadConfigButton;
@@ -136,9 +137,9 @@ namespace LabZSK.Other
             setAllStrings();
         }
 
-        private void label6_Click(object sender, EventArgs e)
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-
+            Settings.Default.CanCloseLog = checkBox2.Checked;
         }
     }
 }

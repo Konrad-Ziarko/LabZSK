@@ -44,7 +44,7 @@ namespace LabZSK.Simulation
         public bool checkLogIntegrity(string pathToLog)
         {
             bool toReturn = false;
-            uint crc = CRC.ComputeChecksum(File.ReadAllBytes(pathToLog));
+            uint crc = CRC.ComputeLogChecksum(File.ReadAllBytes(pathToLog));
             if (crc == 0x0)
                 toReturn = true;
             else toReturn = false;
@@ -91,22 +91,28 @@ namespace LabZSK.Simulation
                 byte[] bytes = Translator.GetBytes(v, out len);
                 inMemoryLog.Write(bytes, 0, len);
 
-                FileStream fs = fileInfo.Open(FileMode.Open);
-                //usuwanie poprzedniego CRC
-                long bytesToDelete = 4;
-                fs.SetLength(Math.Max(0, fileInfo.Length - bytesToDelete));
-                fs.Close();
-                //zapisywanie nowej porcji danych
-                using (BinaryWriter bw = new BinaryWriter(File.Open(LogFile, FileMode.Append), Encoding.Unicode))
+
+                if (checkLogIntegrity(LogFile))
                 {
-                    bw.Write(bytes);
+                    FileStream fs = fileInfo.Open(FileMode.Open);
+                    //usuwanie poprzedniego CRC
+                    long bytesToDelete = 4;
+                    fs.SetLength(Math.Max(0, fileInfo.Length - bytesToDelete));
+                    fs.Close();
+                    //zapisywanie nowej porcji danych
+                    using (BinaryWriter bw = new BinaryWriter(File.Open(LogFile, FileMode.Append), Encoding.Unicode))
+                    {
+                        bw.Write(bytes);
+                    }
+                    //dopisywanie nowego CRC
+                    uint crc = CRC.ComputeLogChecksum(File.ReadAllBytes(LogFile));
+                    using (BinaryWriter bw = new BinaryWriter(File.Open(LogFile, FileMode.Append), Encoding.Unicode))
+                    {
+                        bw.Write(crc);
+                    }
                 }
-                //dopisywanie nowego CRC
-                uint crc = CRC.ComputeChecksum(File.ReadAllBytes(LogFile));
-                using (BinaryWriter bw = new BinaryWriter(File.Open(LogFile, FileMode.Append), Encoding.Unicode))
-                {
-                    bw.Write(crc);
-                }
+                else
+                    MessageBox.Show(Strings.logModified);
             }
         }
 

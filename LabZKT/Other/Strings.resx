@@ -196,4 +196,7 @@ Instytut Teleinformatyki i Automatyki</value>
   <data name="serverTitle" xml:space="preserve">
     <value>Serwer</value>
   </data>
+  <data name="logClosing" xml:space="preserve">
+    <value>Zamykanie logu</value>
+  </data>
 </root>

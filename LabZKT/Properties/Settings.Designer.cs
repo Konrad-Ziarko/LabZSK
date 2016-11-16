@@ -154,5 +154,39 @@ namespace LabZSK.Properties {
                 this["IsDevConsole"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CanCloseLog {
+            get {
+                return ((bool)(this["CanCloseLog"]));
+            }
+            set {
+                this["CanCloseLog"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime simStart {
+            get {
+                return ((global::System.DateTime)(this["simStart"]));
+            }
+            set {
+                this["simStart"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime simStop {
+            get {
+                return ((global::System.DateTime)(this["simStop"]));
+            }
+            set {
+                this["simStop"] = value;
+            }
+        }
     }
 }

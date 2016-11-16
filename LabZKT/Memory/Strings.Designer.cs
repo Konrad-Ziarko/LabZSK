@@ -250,6 +250,15 @@ namespace LabZSK.Memory {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zamknij.
+        /// </summary>
+        internal static string exitButton {
+            get {
+                return ResourceManager.GetString("exitButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pole.
         /// </summary>
         internal static string field {

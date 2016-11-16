@@ -134,6 +134,15 @@ namespace LabZSK.Simulation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nie posiadasz uprawnień do wykonania tej operacji.
+        /// </summary>
+        internal static string cantCloseLogFile {
+            get {
+                return ResourceManager.GetString("cantCloseLogFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adres.
         /// </summary>
         internal static string cellAddressViewGrid {
@@ -314,6 +323,15 @@ namespace LabZSK.Simulation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Można zamykać log.
+        /// </summary>
+        internal static string logClosingAllowed {
+            get {
+                return ResourceManager.GetString("logClosingAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zalogowano jako.
         /// </summary>
         internal static string loggedAs {
@@ -328,6 +346,15 @@ namespace LabZSK.Simulation {
         internal static string logInconsistent {
             get {
                 return ResourceManager.GetString("logInconsistent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log został zmodyfikowany w trakcie pracy.
+        /// </summary>
+        internal static string logModified {
+            get {
+                return ResourceManager.GetString("logModified", resourceCulture);
             }
         }
         
@@ -445,6 +472,15 @@ namespace LabZSK.Simulation {
         internal static string pcInDomain {
             get {
                 return ResourceManager.GetString("pcInDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start symulatora.
+        /// </summary>
+        internal static string programStart {
+            get {
+                return ResourceManager.GetString("programStart", resourceCulture);
             }
         }
         

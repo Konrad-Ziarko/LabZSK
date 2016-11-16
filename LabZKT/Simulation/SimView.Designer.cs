@@ -36,6 +36,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SimView));
             this.panel_PO = new System.Windows.Forms.Panel();
@@ -67,6 +68,7 @@
             this.editmemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.serwerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel_Left = new System.Windows.Forms.Panel();
             this.panel_PM = new System.Windows.Forms.Panel();
             this.Grid_PM = new System.Windows.Forms.DataGridView();
@@ -94,11 +96,10 @@
             this.button_Next_Tact = new System.Windows.Forms.Button();
             this.label_Status = new System.Windows.Forms.Label();
             this.dataGridView_Info = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.richTextBox_Log = new System.Windows.Forms.RichTextBox();
             this.open_File_Dialog = new System.Windows.Forms.OpenFileDialog();
-            this.serwerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel_PO.SuspendLayout();
             this.panel_View_PO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid_Mem)).BeginInit();
@@ -423,6 +424,13 @@
             this.aboutToolStripMenuItem.Text = "O autorze...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.oAutorzeToolStripMenuItem_Click);
             // 
+            // serwerToolStripMenuItem
+            // 
+            this.serwerToolStripMenuItem.Name = "serwerToolStripMenuItem";
+            this.serwerToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.serwerToolStripMenuItem.Text = "Serwer";
+            this.serwerToolStripMenuItem.Click += new System.EventHandler(this.serwerToolStripMenuItem_Click);
+            // 
             // panel_Left
             // 
             this.panel_Left.AllowDrop = true;
@@ -711,7 +719,7 @@
             this.panel_Control.Controls.Add(this.button_Next_Tact);
             this.panel_Control.Controls.Add(this.label_Status);
             this.panel_Control.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel_Control.Location = new System.Drawing.Point(301, 0);
+            this.panel_Control.Location = new System.Drawing.Point(286, 0);
             this.panel_Control.Margin = new System.Windows.Forms.Padding(2);
             this.panel_Control.Name = "panel_Control";
             this.panel_Control.Size = new System.Drawing.Size(150, 102);
@@ -814,16 +822,16 @@
             this.Column1,
             this.Column2});
             this.dataGridView_Info.Cursor = System.Windows.Forms.Cursors.No;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_Info.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_Info.DefaultCellStyle = dataGridViewCellStyle10;
             this.dataGridView_Info.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dataGridView_Info.Location = new System.Drawing.Point(451, 0);
+            this.dataGridView_Info.Location = new System.Drawing.Point(436, 0);
             this.dataGridView_Info.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView_Info.MultiSelect = false;
             this.dataGridView_Info.Name = "dataGridView_Info";
@@ -831,23 +839,8 @@
             this.dataGridView_Info.RowHeadersVisible = false;
             this.dataGridView_Info.RowTemplate.Height = 25;
             this.dataGridView_Info.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dataGridView_Info.Size = new System.Drawing.Size(121, 102);
+            this.dataGridView_Info.Size = new System.Drawing.Size(136, 102);
             this.dataGridView_Info.TabIndex = 1;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Column1";
-            this.Column1.MinimumWidth = 30;
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 30;
-            // 
-            // Column2
-            // 
-            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column2.HeaderText = "Column2";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
             // 
             // richTextBox_Log
             // 
@@ -862,12 +855,22 @@
             this.richTextBox_Log.TabIndex = 0;
             this.richTextBox_Log.Text = "";
             // 
-            // serwerToolStripMenuItem
+            // Column1
             // 
-            this.serwerToolStripMenuItem.Name = "serwerToolStripMenuItem";
-            this.serwerToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
-            this.serwerToolStripMenuItem.Text = "Serwer";
-            this.serwerToolStripMenuItem.Click += new System.EventHandler(this.serwerToolStripMenuItem_Click);
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle9;
+            this.Column1.HeaderText = "Column1";
+            this.Column1.MinimumWidth = 40;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 40;
+            // 
+            // Column2
+            // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column2.HeaderText = "Column2";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
             // 
             // SimView
             // 
@@ -938,8 +941,6 @@
         private System.Windows.Forms.Button button_OK;
         private System.Windows.Forms.Button button_Next_Tact;
         private System.Windows.Forms.Label label_Status;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.Button button_Micro;
         private System.Windows.Forms.Button button_Makro;
         private System.Windows.Forms.ToolStripMenuItem closeLogToolStripMenuItem;
@@ -975,5 +976,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ALU;
         private System.Windows.Forms.DataGridViewTextBoxColumn NA;
         private System.Windows.Forms.ToolStripMenuItem serwerToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
     }
 }

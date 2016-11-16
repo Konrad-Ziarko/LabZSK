@@ -40,7 +40,7 @@ namespace LabZSK.Memory
         }
         private void MemView_Load(object sender, EventArgs e)
         {
-            Size = new Size(800, 650);
+            //Size = new Size(800, 650);
             float horizontalRatio = 0.4f;
             Grid_Mem.Width = panel_View_PO.Width = Convert.ToInt32(Width * horizontalRatio - 10);
             panel_Edit_PO.Width = Convert.ToInt32(Width * (1 - horizontalRatio) - 10);
@@ -49,9 +49,10 @@ namespace LabZSK.Memory
             dataGridView_Basic.Rows[0].Cells[0].Value = Strings.recordType;
             dataGridView_Basic.Rows[1].Cells[0].Value = Strings.decimalValue;
             dataGridView_Basic.Rows[2].Cells[0].Value = Strings.mnemonicName;
-            dataGridView_Basic.Rows[0].Height = 46;
-            dataGridView_Basic.Rows[1].Height = 46;
-            dataGridView_Basic.Rows[2].Height = 46;
+            dataGridView_Basic.Rows[0].Height = 66;
+            dataGridView_Basic.Rows[1].Height = 66;
+            dataGridView_Basic.Rows[2].Height = 66;
+            PO_SizeChanged(this, new EventArgs());
         }
         private void LoadMemory()
         {
@@ -68,6 +69,7 @@ namespace LabZSK.Memory
             button_Edit.Text = Strings.editMemoryButton;
             button_Load_Table.Text = Strings.loadTableButton;
             button_Save_Table.Text = Strings.saveTableButton;
+            button_Exit.Text = Strings.exitButton;
 
             Grid_Mem.Columns[0].HeaderText = Strings.cellAddressViewGrid;
             Grid_Mem.Columns[1].HeaderText = Strings.cellValueViewGrid;
@@ -103,7 +105,7 @@ namespace LabZSK.Memory
                     }
                 }
             }
-            uint crc = CRC.ComputeChecksum(File.ReadAllBytes(fileName));
+            uint crc = CRC.ComputePAOChecksum(File.ReadAllBytes(fileName));
             using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Append)))
             {
                 bw.Write(crc);
@@ -125,7 +127,7 @@ namespace LabZSK.Memory
             try
             {
                 byte[] dataChunk = File.ReadAllBytes(fileName);
-                if (dataChunk.Length >= 2974 && CRC.ComputeChecksum(File.ReadAllBytes(fileName)) == 0 && Regex.Match(extension, @"[pP][oO]").Success)
+                if (dataChunk.Length >= 2974 && CRC.ComputePAOChecksum(File.ReadAllBytes(fileName)) == 0 && Regex.Match(extension, @"[pP][oO]").Success)
                     using (BinaryReader br = new BinaryReader(File.OpenRead(fileName)))
                     {
                         bool isChanged = false;
@@ -183,7 +185,10 @@ namespace LabZSK.Memory
             {
                 using (theSubView = new MemSubmit(Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[2].Value.ToString(), Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[3].Value.ToString()))
                 {
-                    theSubView.Location = Cursor.Position;
+                    Point startPosition = Cursor.Position;
+                    startPosition.Y -= theSubView.Height / 2;
+                    startPosition.X -= theSubView.Width / 2;
+                    theSubView.Location = startPosition;
                     var result = theSubView.ShowDialog();
                     if (result == DialogResult.OK)
                     {
@@ -208,6 +213,7 @@ namespace LabZSK.Memory
             Grid_Mem.Rows[idxRowToClear].Cells[1].Value = "";
             Grid_Mem.Rows[idxRowToClear].Cells[2].Value = "";
             Grid_Mem.Rows[idxRowToClear].Cells[3].Value = "0";
+            AUpdateForm(idxRowToClear, "", "", 0);
             Grid_PO_SelectionChanged(sender, e);
         }
 
@@ -218,9 +224,14 @@ namespace LabZSK.Memory
             {
                 for (int i = 0; i < 256; i++)
                 {
-                    Grid_Mem.Rows[i].Cells[1].Value = "";
-                    Grid_Mem.Rows[i].Cells[2].Value = "";
-                    Grid_Mem.Rows[i].Cells[3].Value = "0";
+                    if(Grid_Mem.Rows[i].Cells[2].Value.ToString() != "")
+                    {
+                        Grid_Mem.Rows[i].Cells[1].Value = "";
+                        Grid_Mem.Rows[i].Cells[2].Value = "";
+                        Grid_Mem.Rows[i].Cells[3].Value = "0";
+                        AUpdateForm(i, "", "", 0);
+                    }
+                    
                 }
                 Grid_PO_SelectionChanged(sender, e);
             }
@@ -380,17 +391,17 @@ namespace LabZSK.Memory
                         = dataGridView_Basic.Rows[2].Cells[1].Value = "";
                 }
 
-                //dataGridView_Decode_Simple.Height = panel_Left.Size.Height * 6 / 10;
-                dataGridView_Decode_Complex.Height = panel_Left.Size.Height * 4 / 10;
-                //dataGridView_Decode_Simple.ColumnHeadersHeight = dataGridView_Decode_Simple.Height / 6;
-                //foreach (DataGridViewRow x in dataGridView_Decode_Simple.Rows)
-                //{
-                //    x.Height = dataGridView_Decode_Simple.Height / 6;
-                //}
                 dataGridView_Decode_Complex.ColumnHeadersHeight = dataGridView_Decode_Complex.Height / 4;
                 foreach (DataGridViewRow x in dataGridView_Decode_Complex.Rows)
                 {
                     x.Height = dataGridView_Decode_Complex.Height / 4;
+                }
+                int i = 0;
+                foreach (DataGridViewColumn x in dataGridView_Decode_Complex.Columns)
+                {
+                    if(i++ == 3)
+                        x.Width = dataGridView_Decode_Complex.Width / 2;
+                    x.Width = dataGridView_Decode_Complex.Width / 6;
                 }
                 Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Selected = true;
             }
@@ -447,11 +458,6 @@ namespace LabZSK.Memory
             }
         }
 
-        private void dataGridView_Decode_Simple_SelectionChanged(object sender, EventArgs e)
-        {
-            //dataGridView_Decode_Simple.ClearSelection();
-        }
-
         private void dataGridView_Decode_Complex_SelectionChanged(object sender, EventArgs e)
         {
             dataGridView_Decode_Complex.ClearSelection();
@@ -495,17 +501,21 @@ namespace LabZSK.Memory
 
         private void PO_SizeChanged(object sender, EventArgs e)
         {
-            float horizontalRatio = 0.4f;
+            float horizontalRatio = 0.35f;
             panel_View_PO.Width = Convert.ToInt32(Width * horizontalRatio);
             panel_Left.Width = Convert.ToInt32(Width - panel_View_PO.Width - 20);
-            panel_Left.Height = Convert.ToInt32(Height * 1.0);
+            //panel_Left.Height = Convert.ToInt32(Height * 1.0);
 
-            dataGridView_Decode_Complex.Height = panel_Left.Size.Height * 4 / 10;
+
+            dataGridView_Decode_Complex.Height = panel_Left.Size.Height - 90;
+            //panel_Bottom_Right.Height = panel_Right.Height - dataGridView_Decode_Complex.Height;
+
+            panel_Bottom_Right.Height = panel_Down.Height = 90;
             foreach (DataGridViewRow x in dataGridView_Decode_Complex.Rows)
             {
                 x.Height = dataGridView_Decode_Complex.Height / 4;
             }
-
+            /*
             int startLocation = 8;
             int diffSize = (panel_Right.Height - startLocation - (5 * button_Clear_Row.Size.Height)) / 5;
             diffSize += button_Clear_Row.Size.Height;
@@ -521,15 +531,17 @@ namespace LabZSK.Memory
             startLocation += diffSize;
             bLocation.Y = startLocation;
             button_Edit.Location = bLocation;
-
-
+            */
+            /*
             startLocation = panel_Right.Height - button_Clear_Table.Size.Height - 8;
             bLocation.Y = startLocation;
             button_Clear_Table.Location = bLocation;
 
             startLocation -= diffSize;
             bLocation.Y = startLocation;
-            button_Clear_Row.Location = bLocation;
+            button_Clear_Row.Location = bLocation;*/
+
+            Grid_PO_SelectionChanged(this, new EventArgs());
         }
 
         private void Grid_Mem_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -583,6 +595,11 @@ namespace LabZSK.Memory
         {
             if (e.KeyCode == Keys.Escape)
                 this.Hide();
+        }
+
+        private void panel_Right_Click(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }

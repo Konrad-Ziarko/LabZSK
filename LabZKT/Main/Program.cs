@@ -14,6 +14,7 @@ namespace LabZSK
         [STAThread]
         static void Main(string[] args)
         {
+            
             if (true/*singleton.WaitOne(TimeSpan.Zero, true)*/)
             {
                 if (Settings.Default.FirstRun)

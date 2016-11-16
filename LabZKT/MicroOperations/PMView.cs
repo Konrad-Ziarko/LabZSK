@@ -53,7 +53,7 @@ namespace LabZSK.MicroOperations
             button_Edit.Text = Strings.editMemoryButton;
             button_Load_Table.Text = Strings.loadTableButton;
             button_Save_Table.Text = Strings.saveTableButton;
-
+            button_Exit.Text = Strings.exitButton;
             Grid_PM.Columns[0].HeaderText = Strings.cellAddressViewGrid;
 
             this.Text = Strings.PMViewTitle;
@@ -130,7 +130,7 @@ namespace LabZSK.MicroOperations
                     }
                 }
             }
-            uint crc = CRC.ComputeChecksum(File.ReadAllBytes(fileName));
+            uint crc = CRC.ComputePMChecksum(File.ReadAllBytes(fileName));
             using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Append)))
             {
                 bw.Write(crc);
@@ -157,7 +157,7 @@ namespace LabZSK.MicroOperations
             try
             {
                 byte[] dataChunk = File.ReadAllBytes(fileName);
-                if (dataChunk.Length >= 6814 && CRC.ComputeChecksum(File.ReadAllBytes(fileName)) == 0 && Regex.Match(extension, @"[pP][mM]").Success)
+                if (dataChunk.Length >= 6814 && CRC.ComputePMChecksum(File.ReadAllBytes(fileName)) == 0 && Regex.Match(extension, @"[pP][mM]").Success)
                     using (BinaryReader br = new BinaryReader(File.OpenRead(fileName)))
                     {
                         int n = br.ReadInt32();
@@ -228,10 +228,13 @@ namespace LabZSK.MicroOperations
             string currentRadioButtonText = (string)Grid_PM.CurrentCell.Value;
             string currentMicroInstruction = currentRadioButtonText.Split()[0];
 
+            
+
             using (theSubView = new PMSubmit(Convert.ToInt32(Grid_PM.CurrentCell.ColumnIndex),
                 currentMicroInstruction, Grid_PM[7, Grid_PM.CurrentCell.RowIndex].Value.ToString()))
             {
-                theSubView.StartPosition = FormStartPosition.CenterScreen;
+                //theSubView.StartPosition = FormStartPosition.CenterScreen;
+                theSubView.startPosition = Cursor.Position;
                 var result = theSubView.ShowDialog();
                 if (result == DialogResult.OK)
                 {
@@ -249,6 +252,7 @@ namespace LabZSK.MicroOperations
             NewMicroInstruction(newMicroInstruction, currentMicroInstruction);
             if (newMicroInstruction == "SHT")
             {
+                theSubView.startPosition = Cursor.Position;
                 using (theSubView = new PMSubmit(4, Grid_PM[4, idxRow].Value.ToString(), Grid_PM[7, idxRow].Value.ToString()))
                 {
                     var result = theSubView.ShowDialog();
@@ -395,8 +399,12 @@ namespace LabZSK.MicroOperations
         }
         private void CallSubView(int idx)
         {
+            Point startPosition = Cursor.Position;
+            startPosition.Y -= theSubView.Height / 2;
+            startPosition.X -= theSubView.Width / 2;
             using (theSubView = new PMSubmit(4, Grid_PM[4, idx].Value.ToString(), Grid_PM[7, idx].Value.ToString()))
             {
+                theSubView.startPosition = Cursor.Position;
                 var result = theSubView.ShowDialog();
                 if (result == DialogResult.OK)
                 {
@@ -440,18 +448,21 @@ namespace LabZSK.MicroOperations
 
         private void PM_SizeChanged(object sender, EventArgs e)
         {
+            /*
             int cos = button_Clear_Row.Size.Width;
             panel_Control.Width = 145;
             panel_View_PM.Width = Convert.ToInt32(Width - panel_Control.Width - 20);
             foreach (DataGridViewColumn c in Grid_PM.Columns)
                 c.Width = panel_View_PM.Width / 12;
 
-            int diffSize = (panel_Control.Height - (5 * button_Clear_Row.Size.Height)) / 5;
-            diffSize += button_Clear_Row.Size.Height;
+            
             var bLocation = button_Clear_Row.Location;
-            int startLocation = startLocation = panel_Control.Height - button_Clear_Table.Size.Height - 15;
+            int startLocation = panel_Control.Height - button_Clear_Table.Size.Height - 15;
             bLocation.Y = startLocation;
+            button_Exit.Location = bLocation;
+            bLocation.Y -= button_Clear_Table.Size.Height + 15;
             button_Clear_Table.Location = bLocation;
+            */
         }
         internal DataGridView GetDataGrid()
         {
@@ -466,6 +477,11 @@ namespace LabZSK.MicroOperations
         {
             if (e.KeyCode == Keys.Escape)
                 this.Hide();
+        }
+
+        private void button_Exit_Click(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }

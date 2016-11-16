@@ -1,5 +1,6 @@
 ﻿using LabZSK.StaticClasses;
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -21,6 +22,7 @@ namespace LabZSK.MicroOperations
         /// String representing microoperation name
         /// </summary>
         public string SelectedInstruction { get; set; }
+        public Point startPosition { get; set; }
         /// <summary>
         /// Initialize instance of subview
         /// </summary>
@@ -81,6 +83,10 @@ namespace LabZSK.MicroOperations
                     init_NA();
             }
             aligneButtons();
+            Point startLocation = startPosition;
+            startLocation.Y -= this.Height / 2;
+            startLocation.X -= this.Width / 2;
+            Location = startLocation;
             radioButton1.Focus();
         }
         private void aligneButtons()

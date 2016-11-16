@@ -188,6 +188,15 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zamykanie logu.
+        /// </summary>
+        internal static string logClosing {
+            get {
+                return ResourceManager.GetString("logClosing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Imie.
         /// </summary>
         internal static string name {

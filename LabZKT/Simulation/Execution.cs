@@ -1,4 +1,5 @@
 ﻿using LabZSK.Memory;
+using LabZSK.Properties;
 using LabZSK.StaticClasses;
 using System;
 using System.Collections.Generic;
@@ -785,12 +786,9 @@ namespace LabZSK.Simulation
                     CancellationTokenSource cts = new CancellationTokenSource();
                     Task loop = Task.Factory.StartNew(() => GetNISTDate(cts.Token, out internetTime));
                     if (Task.WaitAll(new Task[] { loop }, nistTimeTimeout))
-                    {
-                    }
+                        ;
                     else
-                    {
                         cts.Cancel();
-                    }
                     addTextToLog(Strings.startingSimulation + "\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(20, ' ') + "\n" + internetTime.PadLeft(20, ' ') + "\n" + Strings.registersContent + "\n");
                     foreach (var reg in registers.Values)
                         addTextToLog(reg.registerName.PadRight(6, ' ') + " = " + reg.Text + "\n");
@@ -806,6 +804,7 @@ namespace LabZSK.Simulation
                 else
                     addTextToLog("Makro\n");
             }
+            dataGridView_Info.Rows[3].Cells[0].Value = (int)dataGridView_Info.Rows[3].Cells[0].Value + 1;
             simulateCPU();
         }
         private void simulateCPU()
@@ -942,7 +941,7 @@ namespace LabZSK.Simulation
             long rbps = Translator.GetRbpsValue(Grid_PM.Rows[raps]) + na;
             RBPS.Text = rbps.ToString("X").PadLeft(12, '0');
 
-            addTextToLog("===============================\n" + Strings.tact + "0: RBPS=" + RBPS.Text + "\n");
+            addTextToLog("===============" + raps + "================\n" + Strings.tact + "0: RBPS=" + RBPS.Text + "\n");
             for (int i = 1; i < 11; i++)
                 for (int j = 1; j < 8; j++)
                     cells[i, j] = row.Cells[i].Value.ToString() == "" ? false : true;

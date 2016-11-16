@@ -295,4 +295,16 @@ Utracisz cały postęp.</value>
   <data name="viewLogFile" xml:space="preserve">
     <value>Podględ logu</value>
   </data>
+  <data name="cantCloseLogFile" xml:space="preserve">
+    <value>Nie posiadasz uprawnień do wykonania tej operacji</value>
+  </data>
+  <data name="logModified" xml:space="preserve">
+    <value>Log został zmodyfikowany w trakcie pracy</value>
+  </data>
+  <data name="logClosingAllowed" xml:space="preserve">
+    <value>Można zamykać log</value>
+  </data>
+  <data name="programStart" xml:space="preserve">
+    <value>Start symulatora</value>
+  </data>
 </root>

@@ -295,4 +295,16 @@ You will lose all progress.</value>
   <data name="viewLogFile" xml:space="preserve">
     <value>Log File</value>
   </data>
+  <data name="cantCloseLogFile" xml:space="preserve">
+    <value>You are not allowed to close log file</value>
+  </data>
+  <data name="logModified" xml:space="preserve">
+    <value>The log file was modified</value>
+  </data>
+  <data name="logClosingAllowed" xml:space="preserve">
+    <value>The log can be closed</value>
+  </data>
+  <data name="programStart" xml:space="preserve">
+    <value>Application started</value>
+  </data>
 </root>

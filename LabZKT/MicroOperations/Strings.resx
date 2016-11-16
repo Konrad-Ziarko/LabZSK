@@ -156,4 +156,7 @@
   <data name="notValidMicrocodeFileTitle" xml:space="preserve">
     <value>Ładowanie mikroprogramu przerwane</value>
   </data>
+  <data name="exitButton" xml:space="preserve">
+    <value>Zamknij</value>
+  </data>
 </root>

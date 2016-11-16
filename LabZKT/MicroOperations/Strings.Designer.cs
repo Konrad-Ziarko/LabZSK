@@ -124,6 +124,15 @@ namespace LabZSK.MicroOperations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zamknij.
+        /// </summary>
+        internal static string exitButton {
+            get {
+                return ResourceManager.GetString("exitButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wykryto niespójność pliku!.
         /// </summary>
         internal static string inconsistentMicrocodeFile {

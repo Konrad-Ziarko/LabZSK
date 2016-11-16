@@ -66,7 +66,7 @@ namespace LabZSK.Simulation
         private bool[,] cells = new bool[11, 8];
         private string logFile = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty;
         private short raps = 0, na = 0;
-        private int nistTimeTimeout = 3000;
+        private int nistTimeTimeout = 1200;
         private int currnetCycle;
         private int mark;
         private int mistakes;
@@ -137,6 +137,16 @@ namespace LabZSK.Simulation
             SimView_ResizeEnd(sender, e);
             Focus();
             windowSize = new Size(Width, Height);
+
+            if (Settings.Default.simStop > DateTime.Now)
+            {
+                Settings.Default.simStart = Settings.Default.simStop;
+            }
+            else
+            {
+                Settings.Default.simStart = DateTime.Now;
+            }
+            Settings.Default.Save();
         }
         private void RunSim_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -147,6 +157,15 @@ namespace LabZSK.Simulation
                 DialogResult dr = MessageBox.Show(Strings.areYouSureExit, Strings.areYouSureExitTitle, MessageBoxButtons.YesNo);
                 if (dr == DialogResult.Yes)
                 {
+                    if (Settings.Default.simStart > DateTime.Now)
+                    {
+                        Settings.Default.simStop = Settings.Default.simStart;
+                    }
+                    else
+                    {
+                        Settings.Default.simStop = DateTime.Now;
+                    }
+                    Settings.Default.Save();
                     ACloseLog();
                 }
                 else if (dr == DialogResult.No)
@@ -514,9 +533,14 @@ namespace LabZSK.Simulation
                                 ipAddrList += "\n".PadRight(31, ' ') + ip.Address.ToString();
             logManager.createNewLog(logFile);
             Settings.Default.Save();
-            addTextToLog(Strings.pcInDomain + ": \"" + Environment.UserDomainName + "\"\n" + Strings.machineName + " \"" +
-            Environment.MachineName + "\" \n" + Strings.loggedAs + ": \"" +
-            Environment.UserName + "\"\n" + Strings.networkInterfaces + ": " + ipAddrList + "\n\n");
+            addTextToLog(Strings.programStart + " " + Settings.Default.simStart + "\n");
+            addTextToLog(
+                //Strings.pcInDomain + ": \"" + Environment.UserDomainName + "\"\n" +
+                Strings.machineName + " \"" + Environment.MachineName + "\" \n" + 
+                Strings.loggedAs + ": \"" + Environment.UserName + "\"\n" +
+                Strings.networkInterfaces + ": " + ipAddrList + "\n\n");
+            if (Settings.Default.CanCloseLog)
+                addTextToLog(Strings.logClosingAllowed + "\n");
             if (Settings.Default.CanEditOptions)
                 addTextToLog(Strings.canEditSettings + "\n");
             if (!Convert.ToBoolean(ConfigurationManager.AppSettings["ApplicationForStudents"]))
@@ -598,7 +622,7 @@ namespace LabZSK.Simulation
         private DateTime GetNISTDate(CancellationToken token, out string timeString)
         {
             DateTime dateTime = DateTime.MinValue;
-            timeString = "00:00:00";
+            timeString = "";
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://nist.time.gov/actualtime.cgi?lzbc=siqm9b");
@@ -930,13 +954,18 @@ namespace LabZSK.Simulation
         }
         private void nowyLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show(Strings.areYouSureCloseLog, Strings.areYouSureCloseLogTitle, MessageBoxButtons.OKCancel);
-            if (result == DialogResult.OK)
+            if (Settings.Default.CanCloseLog)
             {
-                ACloseLog();
-                closeLogToolStripMenuItem.Enabled = false;
-                button_Show_Log.Visible = false;
+                DialogResult result = MessageBox.Show(Strings.areYouSureCloseLog, Strings.areYouSureCloseLogTitle, MessageBoxButtons.OKCancel);
+                if (result == DialogResult.OK)
+                {
+                    ACloseLog();
+                    closeLogToolStripMenuItem.Enabled = false;
+                    button_Show_Log.Visible = false;
+                }
             }
+            else
+                MessageBox.Show(Strings.cantCloseLogFile);
         }
         #endregion
         #region Other

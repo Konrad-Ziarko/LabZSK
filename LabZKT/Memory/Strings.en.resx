@@ -231,4 +231,7 @@
   <data name="memLoadNotValid" xml:space="preserve">
     <value>File is inconsistent!</value>
   </data>
+  <data name="exitButton" xml:space="preserve">
+    <value>Exit</value>
+  </data>
 </root>

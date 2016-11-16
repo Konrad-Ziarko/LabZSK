@@ -231,4 +231,7 @@
   <data name="memLoadNotValid" xml:space="preserve">
     <value>Wykryto niespójność pliku!</value>
   </data>
+  <data name="exitButton" xml:space="preserve">
+    <value>Zamknij</value>
+  </data>
 </root>
