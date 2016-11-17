@@ -597,7 +597,7 @@ namespace LabZSK.Memory
                 this.Hide();
         }
 
-        private void panel_Right_Click(object sender, EventArgs e)
+        private void button_Exit_Click(object sender, EventArgs e)
         {
             this.Hide();
         }

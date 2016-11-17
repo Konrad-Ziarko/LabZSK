@@ -46,16 +46,20 @@
             this.Hex = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Typ = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel_Edit_PO = new System.Windows.Forms.Panel();
+            this.panel_Down = new System.Windows.Forms.Panel();
+            this.button_Clear_Row = new System.Windows.Forms.Button();
+            this.button_Clear_Table = new System.Windows.Forms.Button();
             this.dataGridView_Decode_Complex = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel_Right = new System.Windows.Forms.Panel();
             this.button_Edit = new System.Windows.Forms.Button();
             this.button_Load_Table = new System.Windows.Forms.Button();
+            this.panel_Bottom_Right = new System.Windows.Forms.Panel();
+            this.button_Exit = new System.Windows.Forms.Button();
             this.button_Save_Table = new System.Windows.Forms.Button();
-            this.button_Clear_Table = new System.Windows.Forms.Button();
-            this.button_Clear_Row = new System.Windows.Forms.Button();
             this.panel_Left = new System.Windows.Forms.Panel();
             this.panel_Top = new System.Windows.Forms.Panel();
             this.dataGridView_Basic = new System.Windows.Forms.DataGridView();
@@ -63,19 +67,15 @@
             this.Property = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.save_File_Dialog = new System.Windows.Forms.SaveFileDialog();
             this.open_File_Dialog = new System.Windows.Forms.OpenFileDialog();
-            this.panel_Down = new System.Windows.Forms.Panel();
-            this.panel_Right = new System.Windows.Forms.Panel();
-            this.panel_Bottom_Right = new System.Windows.Forms.Panel();
-            this.button_Exit = new System.Windows.Forms.Button();
             this.panel_View_PO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid_Mem)).BeginInit();
             this.panel_Edit_PO.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Decode_Complex)).BeginInit();
-            this.panel_Top.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Basic)).BeginInit();
             this.panel_Down.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Decode_Complex)).BeginInit();
             this.panel_Right.SuspendLayout();
             this.panel_Bottom_Right.SuspendLayout();
+            this.panel_Top.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Basic)).BeginInit();
             this.SuspendLayout();
             // 
             // panel_View_PO
@@ -197,6 +197,45 @@
             this.panel_Edit_PO.Size = new System.Drawing.Size(648, 586);
             this.panel_Edit_PO.TabIndex = 1;
             // 
+            // panel_Down
+            // 
+            this.panel_Down.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel_Down.Controls.Add(this.button_Clear_Row);
+            this.panel_Down.Controls.Add(this.button_Clear_Table);
+            this.panel_Down.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_Down.Location = new System.Drawing.Point(2, 332);
+            this.panel_Down.Name = "panel_Down";
+            this.panel_Down.Size = new System.Drawing.Size(497, 254);
+            this.panel_Down.TabIndex = 5;
+            // 
+            // button_Clear_Row
+            // 
+            this.button_Clear_Row.FlatAppearance.BorderColor = System.Drawing.Color.Red;
+            this.button_Clear_Row.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_Clear_Row.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_Clear_Row.Location = new System.Drawing.Point(13, 9);
+            this.button_Clear_Row.Margin = new System.Windows.Forms.Padding(11, 7, 11, 7);
+            this.button_Clear_Row.Name = "button_Clear_Row";
+            this.button_Clear_Row.Size = new System.Drawing.Size(125, 63);
+            this.button_Clear_Row.TabIndex = 5;
+            this.button_Clear_Row.Text = "Wyczyść wiersz";
+            this.button_Clear_Row.UseVisualStyleBackColor = true;
+            this.button_Clear_Row.Click += new System.EventHandler(this.button_Clear_Row_Click);
+            // 
+            // button_Clear_Table
+            // 
+            this.button_Clear_Table.BackColor = System.Drawing.Color.Red;
+            this.button_Clear_Table.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_Clear_Table.ForeColor = System.Drawing.SystemColors.Window;
+            this.button_Clear_Table.Location = new System.Drawing.Point(160, 7);
+            this.button_Clear_Table.Margin = new System.Windows.Forms.Padding(11, 7, 11, 7);
+            this.button_Clear_Table.Name = "button_Clear_Table";
+            this.button_Clear_Table.Size = new System.Drawing.Size(125, 63);
+            this.button_Clear_Table.TabIndex = 6;
+            this.button_Clear_Table.Text = "Wyczyść pamięć";
+            this.button_Clear_Table.UseVisualStyleBackColor = false;
+            this.button_Clear_Table.Click += new System.EventHandler(this.button_Clear_Table_Click);
+            // 
             // dataGridView_Decode_Complex
             // 
             this.dataGridView_Decode_Complex.AllowUserToAddRows = false;
@@ -294,6 +333,20 @@
             this.dataGridViewTextBoxColumn6.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // panel_Right
+            // 
+            this.panel_Right.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel_Right.Controls.Add(this.button_Edit);
+            this.panel_Right.Controls.Add(this.button_Load_Table);
+            this.panel_Right.Controls.Add(this.panel_Bottom_Right);
+            this.panel_Right.Controls.Add(this.button_Save_Table);
+            this.panel_Right.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel_Right.Location = new System.Drawing.Point(499, 205);
+            this.panel_Right.Margin = new System.Windows.Forms.Padding(2);
+            this.panel_Right.Name = "panel_Right";
+            this.panel_Right.Size = new System.Drawing.Size(149, 381);
+            this.panel_Right.TabIndex = 2;
+            // 
             // button_Edit
             // 
             this.button_Edit.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -323,6 +376,32 @@
             this.button_Load_Table.UseVisualStyleBackColor = true;
             this.button_Load_Table.Click += new System.EventHandler(this.button_Load_Table_Click);
             // 
+            // panel_Bottom_Right
+            // 
+            this.panel_Bottom_Right.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel_Bottom_Right.Controls.Add(this.button_Exit);
+            this.panel_Bottom_Right.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel_Bottom_Right.Location = new System.Drawing.Point(0, 248);
+            this.panel_Bottom_Right.Name = "panel_Bottom_Right";
+            this.panel_Bottom_Right.Size = new System.Drawing.Size(147, 131);
+            this.panel_Bottom_Right.TabIndex = 10;
+            // 
+            // button_Exit
+            // 
+            this.button_Exit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_Exit.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.button_Exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_Exit.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_Exit.Location = new System.Drawing.Point(10, 7);
+            this.button_Exit.Margin = new System.Windows.Forms.Padding(11, 7, 11, 0);
+            this.button_Exit.Name = "button_Exit";
+            this.button_Exit.Size = new System.Drawing.Size(125, 63);
+            this.button_Exit.TabIndex = 7;
+            this.button_Exit.Text = "Exit";
+            this.button_Exit.UseVisualStyleBackColor = true;
+            this.button_Exit.Click += new System.EventHandler(this.button_Exit_Click);
+            // 
             // button_Save_Table
             // 
             this.button_Save_Table.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -335,35 +414,6 @@
             this.button_Save_Table.Text = "Zapisz pamięć";
             this.button_Save_Table.UseVisualStyleBackColor = true;
             this.button_Save_Table.Click += new System.EventHandler(this.button_Save_Table_Click);
-            // 
-            // button_Clear_Table
-            // 
-            this.button_Clear_Table.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_Clear_Table.BackColor = System.Drawing.Color.Red;
-            this.button_Clear_Table.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Clear_Table.ForeColor = System.Drawing.SystemColors.Window;
-            this.button_Clear_Table.Location = new System.Drawing.Point(358, 7);
-            this.button_Clear_Table.Margin = new System.Windows.Forms.Padding(11, 7, 11, 7);
-            this.button_Clear_Table.Name = "button_Clear_Table";
-            this.button_Clear_Table.Size = new System.Drawing.Size(125, 63);
-            this.button_Clear_Table.TabIndex = 6;
-            this.button_Clear_Table.Text = "Wyczyść pamięć";
-            this.button_Clear_Table.UseVisualStyleBackColor = false;
-            this.button_Clear_Table.Click += new System.EventHandler(this.button_Clear_Table_Click);
-            // 
-            // button_Clear_Row
-            // 
-            this.button_Clear_Row.FlatAppearance.BorderColor = System.Drawing.Color.Red;
-            this.button_Clear_Row.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_Clear_Row.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Clear_Row.Location = new System.Drawing.Point(13, 9);
-            this.button_Clear_Row.Margin = new System.Windows.Forms.Padding(11, 7, 11, 7);
-            this.button_Clear_Row.Name = "button_Clear_Row";
-            this.button_Clear_Row.Size = new System.Drawing.Size(125, 63);
-            this.button_Clear_Row.TabIndex = 5;
-            this.button_Clear_Row.Text = "Wyczyść wiersz";
-            this.button_Clear_Row.UseVisualStyleBackColor = true;
-            this.button_Clear_Row.Click += new System.EventHandler(this.button_Clear_Row_Click);
             // 
             // panel_Left
             // 
@@ -444,57 +494,6 @@
             // 
             this.open_File_Dialog.FileName = "open_File_Dialog";
             // 
-            // panel_Down
-            // 
-            this.panel_Down.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel_Down.Controls.Add(this.button_Clear_Row);
-            this.panel_Down.Controls.Add(this.button_Clear_Table);
-            this.panel_Down.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_Down.Location = new System.Drawing.Point(2, 332);
-            this.panel_Down.Name = "panel_Down";
-            this.panel_Down.Size = new System.Drawing.Size(497, 254);
-            this.panel_Down.TabIndex = 5;
-            // 
-            // panel_Right
-            // 
-            this.panel_Right.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel_Right.Controls.Add(this.button_Edit);
-            this.panel_Right.Controls.Add(this.button_Load_Table);
-            this.panel_Right.Controls.Add(this.panel_Bottom_Right);
-            this.panel_Right.Controls.Add(this.button_Save_Table);
-            this.panel_Right.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel_Right.Location = new System.Drawing.Point(499, 205);
-            this.panel_Right.Margin = new System.Windows.Forms.Padding(2);
-            this.panel_Right.Name = "panel_Right";
-            this.panel_Right.Size = new System.Drawing.Size(149, 381);
-            this.panel_Right.TabIndex = 2;
-            this.panel_Right.Click += new System.EventHandler(this.panel_Right_Click);
-            // 
-            // panel_Bottom_Right
-            // 
-            this.panel_Bottom_Right.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel_Bottom_Right.Controls.Add(this.button_Exit);
-            this.panel_Bottom_Right.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel_Bottom_Right.Location = new System.Drawing.Point(0, 248);
-            this.panel_Bottom_Right.Name = "panel_Bottom_Right";
-            this.panel_Bottom_Right.Size = new System.Drawing.Size(147, 131);
-            this.panel_Bottom_Right.TabIndex = 10;
-            // 
-            // button_Exit
-            // 
-            this.button_Exit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_Exit.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.button_Exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_Exit.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Exit.Location = new System.Drawing.Point(10, 7);
-            this.button_Exit.Margin = new System.Windows.Forms.Padding(11, 7, 11, 0);
-            this.button_Exit.Name = "button_Exit";
-            this.button_Exit.Size = new System.Drawing.Size(125, 63);
-            this.button_Exit.TabIndex = 7;
-            this.button_Exit.Text = "Exit";
-            this.button_Exit.UseVisualStyleBackColor = true;
-            // 
             // MemView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -516,12 +515,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.Grid_Mem)).EndInit();
             this.panel_Edit_PO.ResumeLayout(false);
             this.panel_Edit_PO.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Decode_Complex)).EndInit();
-            this.panel_Top.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Basic)).EndInit();
             this.panel_Down.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Decode_Complex)).EndInit();
             this.panel_Right.ResumeLayout(false);
             this.panel_Bottom_Right.ResumeLayout(false);
+            this.panel_Top.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Basic)).EndInit();
             this.ResumeLayout(false);
 
         }

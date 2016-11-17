@@ -131,7 +131,7 @@
   </data>
   <data name="areYouSureExit" xml:space="preserve">
     <value>Czy napewno chcesz zakończyć pracę?
-Utracisz cały postęp.</value>
+Log symulacji zostanie zamknięty.</value>
   </data>
   <data name="areYouSureExitTitle" xml:space="preserve">
     <value>Przerwanie pracy</value>

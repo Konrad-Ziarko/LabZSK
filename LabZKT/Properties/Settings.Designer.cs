@@ -169,6 +169,7 @@ namespace LabZSK.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1970-01-01")]
         public global::System.DateTime simStart {
             get {
                 return ((global::System.DateTime)(this["simStart"]));
@@ -180,6 +181,7 @@ namespace LabZSK.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1970-01-02")]
         public global::System.DateTime simStop {
             get {
                 return ((global::System.DateTime)(this["simStop"]));

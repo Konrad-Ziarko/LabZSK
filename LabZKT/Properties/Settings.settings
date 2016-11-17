@@ -39,10 +39,10 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="simStart" Type="System.DateTime" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">1970-01-01</Value>
     </Setting>
     <Setting Name="simStop" Type="System.DateTime" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">1970-01-02</Value>
     </Setting>
   </Settings>
 </SettingsFile>

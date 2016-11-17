@@ -789,7 +789,7 @@ namespace LabZSK.Simulation
                         ;
                     else
                         cts.Cancel();
-                    addTextToLog(Strings.startingSimulation + "\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(20, ' ') + "\n" + internetTime.PadLeft(20, ' ') + "\n" + Strings.registersContent + "\n");
+                    addTextToLog(Strings.startingSimulation + "\n" + DateTime.Now.ToString("HH:mm.ss").PadLeft(20, ' ') + "\n" + internetTime.PadLeft(20, ' ') + "\n" + Strings.registersContent + "\n");
                     foreach (var reg in registers.Values)
                         addTextToLog(reg.registerName.PadRight(6, ' ') + " = " + reg.Text + "\n");
                     addTextToLog("\n");

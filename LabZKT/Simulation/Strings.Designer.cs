@@ -98,7 +98,7 @@ namespace LabZSK.Simulation {
         
         /// <summary>
         ///   Looks up a localized string similar to Czy napewno chcesz zakończyć pracę?
-        ///Utracisz cały postęp..
+        ///Log symulacji zostanie zamknięty..
         /// </summary>
         internal static string areYouSureExit {
             get {

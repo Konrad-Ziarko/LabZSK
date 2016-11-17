@@ -514,7 +514,7 @@ namespace LabZSK.Simulation
             {
                 cts.Cancel();
             }
-            addTextToLog("\n" + DateTime.Now.ToString("HH:mm:ss").PadLeft(20, ' ') + "\n" + internetTime.PadLeft(20, ' ') + "\n" + Strings.simStop + "\n" +
+            addTextToLog("\n" + DateTime.Now.ToString("HH:mm.ss").PadLeft(20, ' ') + "\n" + internetTime.PadLeft(20, ' ') + "\n" + Strings.simStop + "\n" +
                 Strings.mark + ": " + mark + "   " + Strings.mistakes + ": " + mistakes + "\n");
             logManager.clearInMemoryLog();
             logManager.closeConnection();
@@ -646,7 +646,7 @@ namespace LabZSK.Simulation
                 timeString = "";
             }
             if (timeString != "")
-                timeString = dateTime.ToString("HH:mm:ss");
+                timeString = dateTime.ToString("HH:mm.ss");
             return dateTime;
         }
         private void addTextToLog(string lineOfText)
@@ -658,7 +658,10 @@ namespace LabZSK.Simulation
         }
         internal void AddToLogAndMiniLog(string tact, string mnemo, string description)
         {
-            addTextToLog("\t" + tact + " | " + mnemo + " : " + description + "\n");
+            if (mnemo == "END")
+                addTextToLog("\t" + tact + " | " + mnemo + " : " + description + " ("+ DateTime.Now.ToString("HH:mm.ss") + ")\n");
+            else
+                addTextToLog("\t" + tact + " | " + mnemo + " : " + description + "\n");
             string text;
             if (richTextBox_Log.Lines.Count() == 0)
                 text = tact.PadRight(5, ' ');

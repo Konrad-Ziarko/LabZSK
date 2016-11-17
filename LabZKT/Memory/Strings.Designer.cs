@@ -250,7 +250,7 @@ namespace LabZSK.Memory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Zamknij.
+        ///   Looks up a localized string similar to Wyjście.
         /// </summary>
         internal static string exitButton {
             get {
