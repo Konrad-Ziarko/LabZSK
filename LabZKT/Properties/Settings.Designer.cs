@@ -190,5 +190,17 @@ namespace LabZSK.Properties {
                 this["simStop"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isServerVisible {
+            get {
+                return ((bool)(this["isServerVisible"]));
+            }
+            set {
+                this["isServerVisible"] = value;
+            }
+        }
     }
 }

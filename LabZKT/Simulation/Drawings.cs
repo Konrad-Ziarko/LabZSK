@@ -63,10 +63,6 @@ namespace LabZSK.Simulation
             Bitmap background = new Bitmap(controlToDrawOn.Width, controlToDrawOn.Height);
             Graphics g = Graphics.FromImage(background);
             g.Clear(backgroundColor);
-            //NumericTextBox ntb;
-            //if (registers.TryGetValue("BUS", out ntb))
-                //ntb.setCustomeColor(busColor, Color.FromArgb(busColor.ToArgb() ^ 0xffffff));
-
             GraphicsPath path = new GraphicsPath();
             Pen pen = new Pen(busColor, 10);
             Pen pen2 = new Pen(busColor, 5);
@@ -88,14 +84,21 @@ namespace LabZSK.Simulation
             drawJoint(ref p1, ref p2, "RI");
             g.DrawLine(pen, p2, p1);
             //
+            path.Reset();
+            path.StartFigure();
+            //
             p2.X = p1.X = controlToDrawOn.Location.X + (registers["BUS"].Location.X / 2);
-            p2.Y = registers["LK"].Location.Y * 3 / 4 + 5;
+            p2.Y = registers["LK"].Location.Y ;
             p1.Y = controlToDrawOn.Size.Height;
             //
-            path.StartFigure();
             path.AddLine(p1, p2);
+            g.DrawPath(pen, path);
             //
-            p2.X = registers["LK"].Location.X * 3 / 4 + 5;
+            path.Reset();
+            path.StartFigure();
+            path.AddLine(p1, new Point(p1.X, (int)pen.Width));
+            //
+            p2.X = registers["LK"].Location.X;
             p1.Y = p2.Y = (int)pen.Width;
             p1.X = controlToDrawOn.Size.Width;
             //
@@ -111,8 +114,18 @@ namespace LabZSK.Simulation
             drawJoint(ref p1, ref p2, "MQ");
             g.DrawLine(pen, p2, p1);
             //
-            drawJoint(ref p1, ref p2, "X");
-            g.DrawLine(pen, p2, p1);
+            //
+            path.Reset();
+            path.StartFigure();
+            p1.X = registers["X"].Location.X;
+            p2.X = registers["X"].Location.X + registers["X"].Size.Width / 2;
+            p2.Y = registers["X"].Location.Y + registers["X"].Size.Height / 2;
+            Point tmp = new Point();
+            tmp.Y = p1.Y;
+            tmp.X = p2.X;
+            path.AddLine(p1, tmp);
+            path.AddLine(tmp, p2);
+            g.DrawPath(pen, path);
             //
             p1.X = registers["RAP"].Location.X + 10;
             p1.Y = registers["RAP"].Location.Y + registers["RAP"].Size.Height / 2;
@@ -167,14 +180,17 @@ namespace LabZSK.Simulation
             p2.Y = registers["MQ"].Location.Y + registers["MQ"].Size.Height / 2;
             g.DrawLine(pen2, p2, p1);
             //
+
             p1.X = registers["RALU"].Location.X + registers["RALU"].Size.Width / 2;
             p1.Y = registers["RALU"].Location.Y + registers["RALU"].Size.Height / 2;
             p2.Y = p1.Y - (registers["RALU"].Location.Y - registers["X"].Location.Y) / 2;
             p2.X = p1.X + (registers["RALU"].Location.Y - registers["X"].Location.Y) / 2;
+            //p2.X = registers["X"].Location.Y;
             path.Reset();
             path.StartFigure();
             path.AddLine(p1, new Point(p1.X, p2.Y));
             path.AddLine(new Point(p1.X, p2.Y), p2);
+
             //
             p1.X = registers["X"].Location.X + registers["X"].Size.Width / 2;
             p1.Y = p2.Y;
@@ -182,16 +198,10 @@ namespace LabZSK.Simulation
             p2.X = registers["X"].Location.X + registers["X"].Size.Width / 2;
             p2.Y = registers["X"].Location.Y + registers["X"].Size.Height / 2;
             path.AddLine(p1, p2);
+
             g.DrawPath(pen, path);
             //
-            path.Reset();
-            path.StartFigure();
-            p2.Y = p1.Y;
-            p1.X = p2.X = controlToDrawOn.Width;
-            path.AddLine(p2, calculateTriangle(p2, p1, false));
-            path.AddLine(p2, p3);
-            g.DrawPath(pen, path);
-            //
+           
             controlToDrawOn.Visible = true;
             if (registers["SUMA"].Visible)
             {

@@ -137,7 +137,7 @@ Log symulacji zostanie zamknięty.</value>
     <value>Przerwanie pracy</value>
   </data>
   <data name="authorToolStrip" xml:space="preserve">
-    <value>O autorze...</value>
+    <value>O programie LabZSK</value>
   </data>
   <data name="cellAddressViewGrid" xml:space="preserve">
     <value>Adres</value>
@@ -251,7 +251,7 @@ Log symulacji zostanie zamknięty.</value>
     <value>======Stop  symulacji======</value>
   </data>
   <data name="SimulationTitle" xml:space="preserve">
-    <value>Praca procesora</value>
+    <value>Komputer LabZSK</value>
   </data>
   <data name="simulationToolStrip" xml:space="preserve">
     <value>Symulacja</value>
@@ -293,7 +293,7 @@ Log symulacji zostanie zamknięty.</value>
     <value>Log pracy programu jest niespójny</value>
   </data>
   <data name="viewLogFile" xml:space="preserve">
-    <value>Podględ logu</value>
+    <value>Podgląd logu</value>
   </data>
   <data name="cantCloseLogFile" xml:space="preserve">
     <value>Nie posiadasz uprawnień do wykonania tej operacji</value>
@@ -306,5 +306,11 @@ Log symulacji zostanie zamknięty.</value>
   </data>
   <data name="programStart" xml:space="preserve">
     <value>Start symulatora</value>
+  </data>
+  <data name="micro" xml:space="preserve">
+    <value>Mikro</value>
+  </data>
+  <data name="logFileName" xml:space="preserve">
+    <value>Konieczne jest utworzenie pliku LOG</value>
   </data>
 </root>

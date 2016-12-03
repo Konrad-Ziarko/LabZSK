@@ -169,7 +169,7 @@ namespace LabZSK.Memory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rozkaz prosty.
+        ///   Looks up a localized string similar to Rozkaz zwykły.
         /// </summary>
         internal static string choiceSimpleButton {
             get {
@@ -196,7 +196,7 @@ namespace LabZSK.Memory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rozkaz złożony.
+        ///   Looks up a localized string similar to Rozkaz rozszerzony.
         /// </summary>
         internal static string complexInstructionType {
             get {
@@ -403,7 +403,7 @@ namespace LabZSK.Memory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rozkaz prosty.
+        ///   Looks up a localized string similar to Rozkaz zwykły.
         /// </summary>
         internal static string simpleInstructionType {
             get {

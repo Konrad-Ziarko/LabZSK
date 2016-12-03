@@ -27,6 +27,7 @@ namespace LabZSK.Other
             label1.Text = Strings.instituteName;
             label2.Text = Strings.authorName;
             label3.Text = Strings.promoterName;
+            label4.Text = Strings.theOtherGuy;
 
         }
         private void timer1_Tick(object sender, EventArgs e)

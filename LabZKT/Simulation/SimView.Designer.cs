@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -96,10 +97,11 @@
             this.button_Next_Tact = new System.Windows.Forms.Button();
             this.label_Status = new System.Windows.Forms.Label();
             this.dataGridView_Info = new System.Windows.Forms.DataGridView();
-            this.richTextBox_Log = new System.Windows.Forms.RichTextBox();
-            this.open_File_Dialog = new System.Windows.Forms.OpenFileDialog();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.richTextBox_Log = new System.Windows.Forms.RichTextBox();
+            this.open_File_Dialog = new System.Windows.Forms.OpenFileDialog();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel_PO.SuspendLayout();
             this.panel_View_PO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid_Mem)).BeginInit();
@@ -420,8 +422,8 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
-            this.aboutToolStripMenuItem.Text = "O autorze...";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.aboutToolStripMenuItem.Text = "O programie LabZSK...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.oAutorzeToolStripMenuItem_Click);
             // 
             // serwerToolStripMenuItem
@@ -758,7 +760,7 @@
             this.button_Makro.Name = "button_Makro";
             this.button_Makro.Size = new System.Drawing.Size(116, 28);
             this.button_Makro.TabIndex = 3;
-            this.button_Makro.Text = "Makro";
+            this.button_Makro.Text = "MAKRO";
             this.button_Makro.UseVisualStyleBackColor = true;
             this.button_Makro.Click += new System.EventHandler(this.button_Makro_Click);
             // 
@@ -842,19 +844,6 @@
             this.dataGridView_Info.Size = new System.Drawing.Size(136, 102);
             this.dataGridView_Info.TabIndex = 1;
             // 
-            // richTextBox_Log
-            // 
-            this.richTextBox_Log.Cursor = System.Windows.Forms.Cursors.No;
-            this.richTextBox_Log.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox_Log.Enabled = false;
-            this.richTextBox_Log.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.richTextBox_Log.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox_Log.Margin = new System.Windows.Forms.Padding(2);
-            this.richTextBox_Log.Name = "richTextBox_Log";
-            this.richTextBox_Log.Size = new System.Drawing.Size(572, 102);
-            this.richTextBox_Log.TabIndex = 0;
-            this.richTextBox_Log.Text = "";
-            // 
             // Column1
             // 
             dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
@@ -872,6 +861,24 @@
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
             // 
+            // richTextBox_Log
+            // 
+            this.richTextBox_Log.Cursor = System.Windows.Forms.Cursors.No;
+            this.richTextBox_Log.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox_Log.Enabled = false;
+            this.richTextBox_Log.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.richTextBox_Log.Location = new System.Drawing.Point(0, 0);
+            this.richTextBox_Log.Margin = new System.Windows.Forms.Padding(2);
+            this.richTextBox_Log.Name = "richTextBox_Log";
+            this.richTextBox_Log.Size = new System.Drawing.Size(572, 102);
+            this.richTextBox_Log.TabIndex = 0;
+            this.richTextBox_Log.Text = "";
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // SimView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -888,7 +895,9 @@
             this.MaximumSize = new System.Drawing.Size(1200, 9999);
             this.MinimumSize = new System.Drawing.Size(950, 700);
             this.Name = "SimView";
-            this.Text = "Praca Procesora";
+            this.Text = "Komputer LabZSK";
+            this.Activated += new System.EventHandler(this.SimView_Activated);
+            this.Deactivate += new System.EventHandler(this.SimView_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RunSim_FormClosing);
             this.Load += new System.EventHandler(this.RunSim_Load);
             this.ResizeEnd += new System.EventHandler(this.SimView_ResizeEnd);
@@ -978,5 +987,6 @@
         private System.Windows.Forms.ToolStripMenuItem serwerToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.Timer timer1;
     }
 }

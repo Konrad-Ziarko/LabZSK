@@ -351,6 +351,7 @@
             // 
             this.button_Edit.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.button_Edit.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            this.button_Edit.FlatAppearance.BorderSize = 2;
             this.button_Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Edit.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button_Edit.Location = new System.Drawing.Point(11, 162);
@@ -366,6 +367,9 @@
             // 
             this.button_Load_Table.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_Load_Table.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
+            this.button_Load_Table.FlatAppearance.BorderSize = 2;
+            this.button_Load_Table.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Load_Table.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button_Load_Table.Location = new System.Drawing.Point(11, 8);
             this.button_Load_Table.Margin = new System.Windows.Forms.Padding(11, 7, 11, 7);
@@ -378,7 +382,6 @@
             // 
             // panel_Bottom_Right
             // 
-            this.panel_Bottom_Right.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel_Bottom_Right.Controls.Add(this.button_Exit);
             this.panel_Bottom_Right.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel_Bottom_Right.Location = new System.Drawing.Point(0, 248);
@@ -391,12 +394,13 @@
             this.button_Exit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button_Exit.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.button_Exit.FlatAppearance.BorderSize = 3;
             this.button_Exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Exit.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button_Exit.Location = new System.Drawing.Point(10, 7);
             this.button_Exit.Margin = new System.Windows.Forms.Padding(11, 7, 11, 0);
             this.button_Exit.Name = "button_Exit";
-            this.button_Exit.Size = new System.Drawing.Size(125, 63);
+            this.button_Exit.Size = new System.Drawing.Size(127, 63);
             this.button_Exit.TabIndex = 7;
             this.button_Exit.Text = "Exit";
             this.button_Exit.UseVisualStyleBackColor = true;
@@ -405,6 +409,9 @@
             // button_Save_Table
             // 
             this.button_Save_Table.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.button_Save_Table.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
+            this.button_Save_Table.FlatAppearance.BorderSize = 2;
+            this.button_Save_Table.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Save_Table.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button_Save_Table.Location = new System.Drawing.Point(11, 85);
             this.button_Save_Table.Margin = new System.Windows.Forms.Padding(11, 7, 11, 7);

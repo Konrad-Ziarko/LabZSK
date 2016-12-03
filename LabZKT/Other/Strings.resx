@@ -157,17 +157,17 @@
     <value>Czarna</value>
   </data>
   <data name="authorName" xml:space="preserve">
-    <value>Autor programu: Konrad Tomasz Ziarko</value>
+    <value>Autor: Konrad Tomasz Ziarko</value>
   </data>
   <data name="AuthorTitle" xml:space="preserve">
-    <value>O programie</value>
+    <value>LabZSK</value>
   </data>
   <data name="instituteName" xml:space="preserve">
     <value>Wydział Cybernetyki
 Instytut Teleinformatyki i Automatyki</value>
   </data>
   <data name="promoterName" xml:space="preserve">
-    <value>Opiekun pracy: dr inż. Witold Żorski</value>
+    <value>Kierownik: dr inż. Witold Żorski</value>
   </data>
   <data name="cancelButton" xml:space="preserve">
     <value>Anuluj</value>
@@ -198,5 +198,8 @@ Instytut Teleinformatyki i Automatyki</value>
   </data>
   <data name="logClosing" xml:space="preserve">
     <value>Zamykanie logu</value>
+  </data>
+  <data name="theOtherGuy" xml:space="preserve">
+    <value>Konsultant: mgr inż. Artur Miktus</value>
   </data>
 </root>

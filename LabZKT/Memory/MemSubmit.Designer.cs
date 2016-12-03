@@ -103,7 +103,7 @@
             this.button_Choice_Complex.Name = "button_Choice_Complex";
             this.button_Choice_Complex.Size = new System.Drawing.Size(152, 27);
             this.button_Choice_Complex.TabIndex = 2;
-            this.button_Choice_Complex.Text = "Rozkaz złożony";
+            this.button_Choice_Complex.Text = "Rozkaz rozszerzony";
             this.button_Choice_Complex.UseVisualStyleBackColor = true;
             this.button_Choice_Complex.Click += new System.EventHandler(this.button_Choice_Complex_Click);
             // 
@@ -115,7 +115,7 @@
             this.button_Choice_Simple.Name = "button_Choice_Simple";
             this.button_Choice_Simple.Size = new System.Drawing.Size(152, 27);
             this.button_Choice_Simple.TabIndex = 1;
-            this.button_Choice_Simple.Text = "Rozkaz prosty";
+            this.button_Choice_Simple.Text = "Rozkaz zwykły";
             this.button_Choice_Simple.UseVisualStyleBackColor = true;
             this.button_Choice_Simple.Click += new System.EventHandler(this.button_Choice_Simple_Click);
             // 
@@ -317,25 +317,27 @@
             // 
             this.checkBox_I.AutoSize = true;
             this.checkBox_I.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.checkBox_I.Location = new System.Drawing.Point(133, 85);
+            this.checkBox_I.Location = new System.Drawing.Point(174, 85);
             this.checkBox_I.Margin = new System.Windows.Forms.Padding(15, 2, 15, 2);
             this.checkBox_I.Name = "checkBox_I";
-            this.checkBox_I.Size = new System.Drawing.Size(35, 21);
+            this.checkBox_I.Size = new System.Drawing.Size(57, 21);
             this.checkBox_I.TabIndex = 4;
-            this.checkBox_I.Text = " I";
+            this.checkBox_I.Text = "I = 0";
             this.checkBox_I.UseVisualStyleBackColor = true;
+            this.checkBox_I.CheckedChanged += new System.EventHandler(this.checkBox_I_CheckedChanged);
             // 
             // checkBox_S
             // 
             this.checkBox_S.AutoSize = true;
             this.checkBox_S.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.checkBox_S.Location = new System.Drawing.Point(72, 85);
+            this.checkBox_S.Location = new System.Drawing.Point(92, 85);
             this.checkBox_S.Margin = new System.Windows.Forms.Padding(15, 2, 15, 2);
             this.checkBox_S.Name = "checkBox_S";
-            this.checkBox_S.Size = new System.Drawing.Size(35, 21);
+            this.checkBox_S.Size = new System.Drawing.Size(61, 21);
             this.checkBox_S.TabIndex = 3;
-            this.checkBox_S.Text = "S";
+            this.checkBox_S.Text = "S = 0";
             this.checkBox_S.UseVisualStyleBackColor = true;
+            this.checkBox_S.CheckedChanged += new System.EventHandler(this.checkBox_S_CheckedChanged);
             // 
             // checkBox_X
             // 
@@ -344,10 +346,11 @@
             this.checkBox_X.Location = new System.Drawing.Point(10, 85);
             this.checkBox_X.Margin = new System.Windows.Forms.Padding(15, 2, 15, 2);
             this.checkBox_X.Name = "checkBox_X";
-            this.checkBox_X.Size = new System.Drawing.Size(35, 21);
+            this.checkBox_X.Size = new System.Drawing.Size(61, 21);
             this.checkBox_X.TabIndex = 2;
-            this.checkBox_X.Text = "X";
+            this.checkBox_X.Text = "X = 0";
             this.checkBox_X.UseVisualStyleBackColor = true;
+            this.checkBox_X.CheckedChanged += new System.EventHandler(this.checkBox_X_CheckedChanged);
             // 
             // numericUpDown_DA
             // 
@@ -365,7 +368,7 @@
             // 
             // comboBox_Simple
             // 
-            this.comboBox_Simple.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.comboBox_Simple.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.comboBox_Simple.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_Simple.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.comboBox_Simple.FormattingEnabled = true;
@@ -476,7 +479,7 @@
             // 
             // comboBox_Complex
             // 
-            this.comboBox_Complex.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.comboBox_Complex.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.comboBox_Complex.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_Complex.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.comboBox_Complex.FormattingEnabled = true;

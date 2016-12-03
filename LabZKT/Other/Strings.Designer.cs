@@ -61,7 +61,7 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Autor programu: Konrad Tomasz Ziarko.
+        ///   Looks up a localized string similar to Autor: Konrad Tomasz Ziarko.
         /// </summary>
         internal static string authorName {
             get {
@@ -70,7 +70,7 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O programie.
+        ///   Looks up a localized string similar to LabZSK.
         /// </summary>
         internal static string AuthorTitle {
             get {
@@ -233,7 +233,7 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Opiekun pracy: dr inż. Witold Żorski.
+        ///   Looks up a localized string similar to Kierownik: dr inż. Witold Żorski.
         /// </summary>
         internal static string promoterName {
             get {
@@ -301,6 +301,15 @@ namespace LabZSK.Other {
         internal static string themeLabel {
             get {
                 return ResourceManager.GetString("themeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Konsultant: mgr inż. Artur Miktus.
+        /// </summary>
+        internal static string theOtherGuy {
+            get {
+                return ResourceManager.GetString("theOtherGuy", resourceCulture);
             }
         }
     }

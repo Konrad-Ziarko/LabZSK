@@ -141,5 +141,10 @@ namespace LabZSK.Other
         {
             Settings.Default.CanCloseLog = checkBox2.Checked;
         }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.isServerVisible = checkBox3.Checked;
+        }
     }
 }

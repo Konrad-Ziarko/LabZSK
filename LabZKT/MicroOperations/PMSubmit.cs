@@ -133,21 +133,21 @@ namespace LabZSK.MicroOperations
         private void init_S1()
         {
             groupBox1.Text = Text = "S1";
-            radioButton2.Text = "IXRE           RI -> LALU";
-            radioButton3.Text = "OLR            LR -> BUS";
-            radioButton4.Text = "ORR            RR -> BUS";
-            radioButton5.Text = "ORAE           RAE -> BUS";
-            radioButton6.Text = "IALU           A -> LALU";
-            radioButton7.Text = "OXE            X -> RALU";
-            radioButton8.Text = "OX             X -> BUS";
+            radioButton2.Text = Translator.GetMicroOpExtendedDescription("IXRE");
+            radioButton3.Text = Translator.GetMicroOpExtendedDescription("OLR");
+            radioButton4.Text = Translator.GetMicroOpExtendedDescription("ORR");
+            radioButton5.Text = Translator.GetMicroOpExtendedDescription("ORAE");
+            radioButton6.Text = Translator.GetMicroOpExtendedDescription("IALU");
+            radioButton7.Text = Translator.GetMicroOpExtendedDescription("OXE");
+            radioButton8.Text = Translator.GetMicroOpExtendedDescription("OX");
             hide_RadioButtons_From(9);
         }
         private void init_D1()
         {
             groupBox1.Text = Text = "D1";
-            radioButton2.Text = "ILK            BUS -> LK";
-            radioButton3.Text = "IRAP           BUS -> RAP";
-            radioButton4.Text = "OXE            X -> RALU";
+            radioButton2.Text = Translator.GetMicroOpExtendedDescription("ILK");
+            radioButton3.Text = Translator.GetMicroOpExtendedDescription("IRAP");
+            radioButton4.Text = Translator.GetMicroOpExtendedDescription("OXE");
             hide_RadioButtons_From(5);
         }
         private void init_S2()
@@ -155,17 +155,17 @@ namespace LabZSK.MicroOperations
             groupBox1.Text = Text = "S2";
             if (c1Column != "SHT")
             {
-                radioButton2.Text = "IRAE           SUMA -> RAE";
-                radioButton3.Text = "ORR            RR -> BUS";
-                radioButton4.Text = "ORI            RI -> BUS";
-                radioButton5.Text = "ORAE           RAE -> BUS";
-                radioButton6.Text = "OA             A -> BUS";
-                radioButton7.Text = "OMQ            MQ -> BUS";
-                radioButton8.Text = "OX             X -> BUS";
-                radioButton9.Text = "OBE            ALU -> BUS";
-                radioButton10.Text = "IXRE           RI -> LALU";
-                radioButton11.Text = "IALU           A -> LALU";
-                radioButton12.Text = "OXE            X -> RALU";
+                radioButton2.Text = Translator.GetMicroOpExtendedDescription("IRAE");
+                radioButton3.Text = Translator.GetMicroOpExtendedDescription("ORR");
+                radioButton4.Text = Translator.GetMicroOpExtendedDescription("ORI");
+                radioButton5.Text = Translator.GetMicroOpExtendedDescription("ORAE");
+                radioButton6.Text = Translator.GetMicroOpExtendedDescription("OA");
+                radioButton7.Text = Translator.GetMicroOpExtendedDescription("OMQ");
+                radioButton8.Text = Translator.GetMicroOpExtendedDescription("OX");
+                radioButton9.Text = Translator.GetMicroOpExtendedDescription("OBE");
+                radioButton10.Text = Translator.GetMicroOpExtendedDescription("IXRE");
+                radioButton11.Text = Translator.GetMicroOpExtendedDescription("IALU");
+                radioButton12.Text = Translator.GetMicroOpExtendedDescription("OXE");
                 hide_RadioButtons_From(13);
             }
             else
@@ -183,17 +183,17 @@ namespace LabZSK.MicroOperations
             }
             else
             {
-                radioButton2.Text = "ILR            BUS -> LR";
-                radioButton3.Text = "IX             BUS -> X";
-                radioButton4.Text = "IBE            BUS -> RALU";
-                radioButton5.Text = "IRI            BUS -> RI";
-                radioButton6.Text = "IBI            BUS -> RAE";
-                radioButton7.Text = "IA             BUS -> A";
-                radioButton8.Text = "IMQ            BUS -> MQ";
-                radioButton9.Text = "OXE            X -> RALU";
-                radioButton10.Text = "NSI            LR+1 -> LR";
-                radioButton11.Text = Translator.GetMicroOpDescription("IAS");
-                radioButton12.Text = Translator.GetMicroOpDescription("SGN");
+                radioButton2.Text = Translator.GetMicroOpExtendedDescription("ILR");
+                radioButton3.Text = Translator.GetMicroOpExtendedDescription("IX");
+                radioButton4.Text = Translator.GetMicroOpExtendedDescription("IBE");
+                radioButton5.Text = Translator.GetMicroOpExtendedDescription("IRI");
+                radioButton6.Text = Translator.GetMicroOpExtendedDescription("IBI");
+                radioButton7.Text = Translator.GetMicroOpExtendedDescription("IA");
+                radioButton8.Text = Translator.GetMicroOpExtendedDescription("IMQ");
+                radioButton9.Text = Translator.GetMicroOpExtendedDescription("OXE");
+                radioButton10.Text = Translator.GetMicroOpExtendedDescription("NSI");
+                radioButton11.Text = Translator.GetMicroOpExtendedDescription("IAS");
+                radioButton12.Text = Translator.GetMicroOpExtendedDescription("SGN");
                 hide_RadioButtons_From(13);
             }
         }
@@ -201,13 +201,13 @@ namespace LabZSK.MicroOperations
         {
             groupBox1.Text = Text = "D2";
             radioButton1.Enabled = false;
-            radioButton2.Text = Translator.GetMicroOpDescription("ALA");
-            radioButton3.Text = Translator.GetMicroOpDescription("ARA");
-            radioButton4.Text = Translator.GetMicroOpDescription("LRQ");
-            radioButton5.Text = Translator.GetMicroOpDescription("LLQ");
-            radioButton6.Text = Translator.GetMicroOpDescription("LLA");
-            radioButton7.Text = Translator.GetMicroOpDescription("LRA");
-            radioButton8.Text = Translator.GetMicroOpDescription("LCA");
+            radioButton2.Text = Translator.GetMicroOpExtendedDescription("ALA");
+            radioButton3.Text = Translator.GetMicroOpExtendedDescription("ARA");
+            radioButton4.Text = Translator.GetMicroOpExtendedDescription("LRQ");
+            radioButton5.Text = Translator.GetMicroOpExtendedDescription("LLQ");
+            radioButton6.Text = Translator.GetMicroOpExtendedDescription("LLA");
+            radioButton7.Text = Translator.GetMicroOpExtendedDescription("LRA");
+            radioButton8.Text = Translator.GetMicroOpExtendedDescription("LCA");
             button_Cancel.Enabled = false;
             hide_RadioButtons_From(9);
             radioButton2.Checked = true;
@@ -217,13 +217,13 @@ namespace LabZSK.MicroOperations
             groupBox1.Text = Text = "S3";
             if (c1Column != "SHT")
             {
-                radioButton2.Text = "ORI            RI -> BUS";
-                radioButton3.Text = "OLR            LR -> BUS";
-                radioButton4.Text = "OA             A -> BUS";
-                radioButton5.Text = "ORAE           RAE -> BUS";
-                radioButton6.Text = "OMQ            MQ -> BUS";
-                radioButton7.Text = "ORBP           RBP -> BUS";
-                radioButton8.Text = "OXE            X -> RALU";
+                radioButton2.Text = Translator.GetMicroOpExtendedDescription("ORI");
+                radioButton3.Text = Translator.GetMicroOpExtendedDescription("OLR");
+                radioButton4.Text = Translator.GetMicroOpExtendedDescription("OA");
+                radioButton5.Text = Translator.GetMicroOpExtendedDescription("ORAE");
+                radioButton6.Text = Translator.GetMicroOpExtendedDescription("OMQ");
+                radioButton7.Text = Translator.GetMicroOpExtendedDescription("ORBP");
+                radioButton8.Text = Translator.GetMicroOpExtendedDescription("OXE");
                 hide_RadioButtons_From(9);
             }
             else
@@ -234,20 +234,20 @@ namespace LabZSK.MicroOperations
             groupBox1.Text = Text = "D3";
             if (c1Column != "SHT")
             {
-                radioButton2.Text = "ILR            BUS -> LR";
-                radioButton3.Text = "IX             BUS -> X";
-                radioButton4.Text = "IBE            BUS -> RALU";
-                radioButton5.Text = "IRI            BUS -> RI";
-                radioButton6.Text = "IBI            BUS -> RAE";
-                radioButton7.Text = "IA             BUS -> A";
-                radioButton8.Text = "IMQ            BUS -> MQ";
-                radioButton9.Text = "OXE            X -> RALU";
-                radioButton10.Text = "NSI            LR+1 -> LR";
-                radioButton11.Text = Translator.GetMicroOpDescription("IAS");
-                radioButton12.Text = Translator.GetMicroOpDescription("SGN");
-                radioButton13.Text = "IRR            BUS -> RR";
-                radioButton14.Text = "IRBP           BUS -> RBP";
-                radioButton15.Text = "SRBP           BUS -> RBP";
+                radioButton2.Text = Translator.GetMicroOpExtendedDescription("ILR");
+                radioButton3.Text = Translator.GetMicroOpExtendedDescription("IX");
+                radioButton4.Text = Translator.GetMicroOpExtendedDescription("IBE");
+                radioButton5.Text = Translator.GetMicroOpExtendedDescription("IRI");
+                radioButton6.Text = Translator.GetMicroOpExtendedDescription("IBI");
+                radioButton7.Text = Translator.GetMicroOpExtendedDescription("IA");
+                radioButton8.Text = Translator.GetMicroOpExtendedDescription("IMQ");
+                radioButton9.Text = Translator.GetMicroOpExtendedDescription("OXE");
+                radioButton10.Text = Translator.GetMicroOpExtendedDescription("NSI");
+                radioButton11.Text = Translator.GetMicroOpExtendedDescription("IAS");
+                radioButton12.Text = Translator.GetMicroOpExtendedDescription("SGN");
+                radioButton13.Text = Translator.GetMicroOpExtendedDescription("IRR");
+                radioButton14.Text = Translator.GetMicroOpExtendedDescription("IRBP");
+                radioButton15.Text = Translator.GetMicroOpExtendedDescription("SRBP");
                 hide_RadioButtons_From(16);
             }
             else
@@ -256,72 +256,72 @@ namespace LabZSK.MicroOperations
         private void init_C1()
         {
             groupBox1.Text = Text = "C1";
-            radioButton2.Text = Translator.GetMicroOpDescription("CWC");
-            radioButton3.Text = Translator.GetMicroOpDescription("RRC");
-            radioButton4.Text = "MUL            16 -> LK";
-            radioButton5.Text = "DIV            15 -> LK";
-            radioButton6.Text = Translator.GetMicroOpDescription("SHT");
-            radioButton7.Text = Translator.GetMicroOpDescription("IWC");
-            radioButton8.Text = Translator.GetMicroOpDescription("END");
+            radioButton2.Text = Translator.GetMicroOpExtendedDescription("CWC");
+            radioButton3.Text = Translator.GetMicroOpExtendedDescription("RRC");
+            radioButton4.Text = Translator.GetMicroOpExtendedDescription("MUL");
+            radioButton5.Text = Translator.GetMicroOpExtendedDescription("DIV");
+            radioButton6.Text = Translator.GetMicroOpExtendedDescription("SHT");
+            radioButton7.Text = Translator.GetMicroOpExtendedDescription("IWC");
+            radioButton8.Text = Translator.GetMicroOpExtendedDescription("END");
             hide_RadioButtons_From(9);
         }
         private void init_C2()
         {
             groupBox1.Text = Text = "C2";
-            radioButton2.Text = "DLK            LK = [LK]-1";
-            radioButton3.Text = "SOFF           OFF = 1";
-            radioButton4.Text = "ROFF           OFF = 0";
-            radioButton5.Text = "SXRO           XRO = 1";
-            radioButton6.Text = "RXRO           XRO = 0";
-            radioButton7.Text = "DRI            RI = RI-1";
-            radioButton8.Text = "RA             A = 0";
-            radioButton9.Text = "RMQ            MQ = 0";
-            radioButton10.Text = "AQ15           NOT A0 -> MQ15";
-            radioButton11.Text = "RINT           INT = 0";
-            radioButton12.Text = Translator.GetMicroOpDescription("OPC");
-            radioButton13.Text = Translator.GetMicroOpDescription("CEA");
-            radioButton14.Text = Translator.GetMicroOpDescription("ENI");
+            radioButton2.Text = Translator.GetMicroOpExtendedDescription("DLK");
+            radioButton3.Text = Translator.GetMicroOpExtendedDescription("SOFF");
+            radioButton4.Text = Translator.GetMicroOpExtendedDescription("ROFF");
+            radioButton5.Text = Translator.GetMicroOpExtendedDescription("SXRO");
+            radioButton6.Text = Translator.GetMicroOpExtendedDescription("RXRO");
+            radioButton7.Text = Translator.GetMicroOpExtendedDescription("DRI");
+            radioButton8.Text = Translator.GetMicroOpExtendedDescription("RA");
+            radioButton9.Text = Translator.GetMicroOpExtendedDescription("RMQ");
+            radioButton10.Text = Translator.GetMicroOpExtendedDescription("AQ15");
+            radioButton11.Text = Translator.GetMicroOpExtendedDescription("RINT");
+            radioButton12.Text = Translator.GetMicroOpExtendedDescription("OPC");
+            radioButton13.Text = Translator.GetMicroOpExtendedDescription("CEA");
+            radioButton14.Text = Translator.GetMicroOpExtendedDescription("ENI");
             hide_RadioButtons_From(15);
         }
         private void init_Test()
         {
             groupBox1.Text = Text = "Test";
-            radioButton2.Text = Translator.GetMicroOpDescription("UNB");
-            radioButton3.Text = Translator.GetMicroOpDescription("TINT");
-            radioButton4.Text = Translator.GetMicroOpDescription("TIND");
-            radioButton5.Text = "TAS            A >= 0";
-            radioButton6.Text = "TXS            RI >= 0";
-            radioButton7.Text = "TQ15           MQ15 = 0";
-            radioButton8.Text = Translator.GetMicroOpDescription("TLK");
-            radioButton9.Text = Translator.GetMicroOpDescription("TSD");
-            radioButton10.Text = "TAO            OFF = 0";
-            radioButton11.Text = "TXP            RI < 0";
-            radioButton12.Text = Translator.GetMicroOpDescription("TXZ");
-            radioButton13.Text = "TXRO           XRO = 0";
-            radioButton14.Text = "TAP            A < 0";
-            radioButton15.Text = "TAZ            A = 0";
+            radioButton2.Text = Translator.GetMicroOpExtendedDescription("UNB");
+            radioButton3.Text = Translator.GetMicroOpExtendedDescription("TINT");
+            radioButton4.Text = Translator.GetMicroOpExtendedDescription("TIND");
+            radioButton5.Text = Translator.GetMicroOpExtendedDescription("TAS");
+            radioButton6.Text = Translator.GetMicroOpExtendedDescription("TXS");
+            radioButton7.Text = Translator.GetMicroOpExtendedDescription("TQ15");
+            radioButton8.Text = Translator.GetMicroOpExtendedDescription("TLK");
+            radioButton9.Text = Translator.GetMicroOpExtendedDescription("TSD");
+            radioButton10.Text = Translator.GetMicroOpExtendedDescription("TAO");
+            radioButton11.Text = Translator.GetMicroOpExtendedDescription("TXP");
+            radioButton12.Text = Translator.GetMicroOpExtendedDescription("TXZ");
+            radioButton13.Text = Translator.GetMicroOpExtendedDescription("TXRO");
+            radioButton14.Text = Translator.GetMicroOpExtendedDescription("TAP");
+            radioButton15.Text = Translator.GetMicroOpExtendedDescription("TAZ");
             hide_RadioButtons_From(16);
         }
         private void init_ALU()
         {
             groupBox1.Text = Text = "ALU";
-            radioButton2.Text = "ADS            ALU = LALU + RALU";
-            radioButton3.Text = "SUS            ALU = LALU - RALU";
-            radioButton4.Text = "CMX            ALU = (NOT RALU)+1";
-            radioButton5.Text = "CMA            ALU = (NOT LALU)+1";
-            radioButton6.Text = "OR             ALU = LALU OR RALU";
-            radioButton7.Text = "AND            ALU = LALU AND RALU";
-            radioButton8.Text = "EOR            ALU = LALU XOR RALU";
-            radioButton9.Text = "NOTL           ALU = NOT LALU";
-            radioButton10.Text = "NOTR           ALU = NOT RALU";
-            radioButton11.Text = "L              ALU = LALU";
-            radioButton12.Text = "R              ALU = RALU";
-            radioButton13.Text = "INCL           ALU = LALU + 1";
-            radioButton14.Text = "INCR           ALU = RALU + 1";
-            radioButton15.Text = "DECL           ALU = LALU - 1";
-            radioButton16.Text = "DECR           ALU = RALU - 1";
-            radioButton17.Text = "ONE            ALU = 1";
-            radioButton18.Text = "ZERO           ALU = 0";
+            radioButton2.Text = Translator.GetMicroOpExtendedDescription("ADS");
+            radioButton3.Text = Translator.GetMicroOpExtendedDescription("SUS");
+            radioButton4.Text = Translator.GetMicroOpExtendedDescription("CMX");
+            radioButton5.Text = Translator.GetMicroOpExtendedDescription("CMA");
+            radioButton6.Text = Translator.GetMicroOpExtendedDescription("OR");
+            radioButton7.Text = Translator.GetMicroOpExtendedDescription("AND");
+            radioButton8.Text = Translator.GetMicroOpExtendedDescription("EOR");
+            radioButton9.Text = Translator.GetMicroOpExtendedDescription("NOTL");
+            radioButton10.Text = Translator.GetMicroOpExtendedDescription("NOTR");
+            radioButton11.Text = Translator.GetMicroOpExtendedDescription("L");
+            radioButton12.Text = Translator.GetMicroOpExtendedDescription("R");
+            radioButton13.Text = Translator.GetMicroOpExtendedDescription("INCL");
+            radioButton14.Text = Translator.GetMicroOpExtendedDescription("INCR");
+            radioButton15.Text = Translator.GetMicroOpExtendedDescription("DECL");
+            radioButton16.Text = Translator.GetMicroOpExtendedDescription("DECR");
+            radioButton17.Text = Translator.GetMicroOpExtendedDescription("ONE");
+            radioButton18.Text = Translator.GetMicroOpExtendedDescription("ZERO");
         }
         private void init_NA()
         {

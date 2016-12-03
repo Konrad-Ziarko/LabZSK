@@ -50,6 +50,7 @@ namespace LabZSK.Simulation
                 {
                     otherValue = true;
                     flags["INT"].setInnerValue(0);
+                    //addTextToLog("\t\tINT = " + 0);
                     //czy tak test TINT?
                     registers["RAP"].setActualValue(255);
                     registers["RAP"].setNeedCheck(out registerToCheck);
@@ -175,13 +176,23 @@ namespace LabZSK.Simulation
                 Grid_PM.CurrentCell = Grid_PM[8, raps];
                 microOpMnemo = Grid_PM[8, raps].Value.ToString();
                 if (microOpMnemo == "RA")
+                {
                     testAndSet("A", 0);
+                }
                 else if (microOpMnemo == "RMQ")
+                {
                     testAndSet("MQ", 0);
+                }
                 else if (microOpMnemo == "RINT")
+                {
                     flags["INT"].setInnerValue(0);
+                    //addTextToLog("\t\tINT = " + 0 + "\n");
+                }
                 else if (microOpMnemo == "ENI")
+                {
                     flags["INT"].setInnerValue(1);
+                    //addTextToLog("\t\tINT = " + 1 + "\n");
+                }
                 else if (microOpMnemo == "OPC")
                 {
                     short a;
@@ -236,16 +247,28 @@ namespace LabZSK.Simulation
                 else if (microOpMnemo == "IAS")
                 {
                     if ((registers["A"].innerValue & 0x8000) == 0x8000)
+                    {
                         flags["ZNAK"].setInnerValue(1);
+                        addTextToLog("\t\tZNAK = " + 1 + "\n");
+                    }
                     else
+                    {
                         flags["ZNAK"].setInnerValue(0);
+                        addTextToLog("\t\tZNAK = " + 0 + "\n");
+                    }
                 }
                 else if (microOpMnemo == "SGN")
                 {
                     if ((registers["X"].innerValue & 0x8000) == 0x8000)
+                    {
                         flags["ZNAK"].setInnerValue(1);
+                        addTextToLog("\t\tZNAK = " + 1 + "\n");
+                    }
                     else
+                    {
                         flags["ZNAK"].setInnerValue(0);
+                        addTextToLog("\t\tZNAK = " + 0 + "\n");
+                    }
                 }
                 else if (microOpMnemo == "IX")
                     testAndSet("X", registers["BUS"].innerValue);
@@ -270,7 +293,9 @@ namespace LabZSK.Simulation
                 else if (microOpMnemo == "CWC")
                 {
                     flags["MAV"].setInnerValue(0);
+                    //addTextToLog("\t\tMAV = " + 0 + "\n");
                     flags["IA"].setInnerValue(1);
+                    //addTextToLog("\t\tIA = " + 1 + "\n");
                     MemoryRecord mr = new MemoryRecord(registers["RAP"].innerValue, Convert.ToString(registers["RBP"].innerValue, 2).PadLeft(16, '0'), Convert.ToString(registers["RBP"].innerValue, 16).PadLeft(4, '0'), 1);
                     List_Memory[registers["RAP"].innerValue] = mr;
                     Grid_Mem.Rows[registers["RAP"].innerValue].Cells[0].Value = mr.addr;
@@ -281,7 +306,9 @@ namespace LabZSK.Simulation
                 else if (microOpMnemo == "IWC")
                 {
                     flags["MAV"].setInnerValue(0);
+                    //addTextToLog("\t\tMAV = " + 0 + "\n");
                     flags["IA"].setInnerValue(1);
+                    //addTextToLog("\t\tIA = " + 1 + "\n");
                     registers["RAP"].setInnerAndExpectedValue(255);
                     MemoryRecord mr = new MemoryRecord(255, Convert.ToString(registers["LR"].innerValue, 2).PadLeft(16, '0'), Convert.ToString(registers["LR"].innerValue, 16).PadLeft(4, '0'), 1);
                     List_Memory[255] = mr;
@@ -372,16 +399,28 @@ namespace LabZSK.Simulation
                 else if (microOpMnemo == "IAS")
                 {
                     if ((registers["A"].innerValue & 0x8000) == 0x8000)
+                    {
                         flags["ZNAK"].setInnerValue(1);
+                        addTextToLog("\t\tZNAK = " + 1 + "\n");
+                    }
                     else
+                    {
                         flags["ZNAK"].setInnerValue(0);
+                        addTextToLog("\t\tZNAK = " + 0 + "\n");
+                    }
                 }
                 else if (microOpMnemo == "SGN")
                 {
                     if ((registers["X"].innerValue & 0x8000) == 0x8000)
+                    {
                         flags["ZNAK"].setInnerValue(1);
+                        addTextToLog("\t\tZNAK = " + 1 + "\n");
+                    }
                     else
+                    {
                         flags["ZNAK"].setInnerValue(0);
+                        addTextToLog("\t\tZNAK = " + 0 + "\n");
+                    }
                 }
                 cells[4, 6] = false;
                 resetBus = true;
@@ -392,17 +431,33 @@ namespace LabZSK.Simulation
                 Grid_PM.CurrentCell = Grid_PM[8, raps];
                 microOpMnemo = Grid_PM[8, raps].Value.ToString();
                 if (microOpMnemo == "DLK")
+                {
                     testAndSet("LK", (short)(registers["LK"].innerValue - 1));
+                }
                 else if (microOpMnemo == "DRI")
+                {
                     testAndSet("RI", (short)(registers["RI"].innerValue - 1));
+                }
                 else if (microOpMnemo == "SOFF")
+                {
                     flags["OFF"].setInnerValue(1);
+                    addTextToLog("\t\tOFF = " + 1 + "\n");
+                }
                 else if (microOpMnemo == "ROFF")
+                {
                     flags["OFF"].setInnerValue(0);
+                    addTextToLog("\t\tOFF = " + 0 + "\n");
+                }
                 else if (microOpMnemo == "SXRO")
+                {
                     flags["XRO"].setInnerValue(1);
+                    addTextToLog("\t\tXRO = " + 1 + "\n");
+                }
                 else if (microOpMnemo == "RXRO")
+                {
                     flags["XRO"].setInnerValue(0);
+                    addTextToLog("\t\tXRO = " + 0 + "\n");
+                }
                 else if (microOpMnemo == "AQ15")
                 {
                     if ((registers["A"].innerValue & 0x8000) == 0x8000)
@@ -562,22 +617,34 @@ namespace LabZSK.Simulation
             if (registerToCheck != "")
                 EnDisableButtons();
             if ((registers["ALU"].valueWhichShouldBeMovedToRegister & 0x8000) == 0x8000)
+            {
                 flags["ZNAK"].setInnerValue(1);
+                addTextToLog("\t\tZNAK = " + 1 + ", ");
+            }
             else
+            {
                 flags["ZNAK"].setInnerValue(0);
+                addTextToLog("\t\tZNAK = " + 0 + ", ");
+            }
             if (isOverflow)
             {
                 flags["OFF"].setInnerValue(1);
+                addTextToLog("OFF = " + 1 + "\n");
                 isOverflow = false;
             }
             else
+            {
                 flags["OFF"].setInnerValue(0);
+                addTextToLog("OFF = " + 0 + "\n");
+            }
+
             registers["LALU"].setInnerValue(0);
             registers["RALU"].setInnerValue(0);
             buttonOKClicked = false;
         }
         private void exeTact1()
         {
+            short setXro = -1;
             if (cells[1, 1])
             {
                 Grid_PM.CurrentCell = Grid_PM[1, raps];
@@ -696,7 +763,9 @@ namespace LabZSK.Simulation
                         testAndSet("RBP", 0);
                     }
                     flags["MAV"].setInnerValue(0);
+                    //addTextToLog("\t\tMAV = " + 0 + "\n");
                     flags["IA"].setInnerValue(1);
+                    //addTextToLog("\t\tIA = " + 1 + "\n");
                 }
                 else if (microOpMnemo == "MUL")
                 {
@@ -718,14 +787,17 @@ namespace LabZSK.Simulation
                     layoutChange = true;
                     switchLayOut();
                     short leftValue = 0, rightValue = 0;
-                    short a;
 
                     string tmp = Convert.ToString(registers["RR"].innerValue, 2).PadLeft(16, '0');
                     if (tmp.Substring(0, 5) != "00000")
                     {
                         string xsi = tmp.Substring(5, 3);
+                        setXro = 0;
                         if (xsi == "110" || xsi == "111")
+                        {
                             leftValue = rightValue = 0;
+                            setXro = 1;
+                        }
                         else if (xsi == "010" || xsi == "011")
                             rightValue = registers["LR"].innerValue;
                         else if (xsi == "100" || xsi == "101")
@@ -736,12 +808,18 @@ namespace LabZSK.Simulation
                     {
                         leftValue = Convert.ToInt16(tmp.Substring(9, 7), 2);
                     }
-
                     testAndSet("L", leftValue);
                     validateRegister();
                     testAndSet("R", rightValue);
                     validateRegister();
-                    testAndSet("SUMA", (short)(leftValue + rightValue));
+                    testAndSet("SUMA", (short)((leftValue + rightValue) & 255));
+
+                    if (leftValue + rightValue > 255 || leftValue + rightValue < 0)
+                    {
+                        setXro = 1;
+                    }
+                    else
+                        setXro = 0;
                 }
                 cells[8, 1] = false;
                 AddToLogAndMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
@@ -751,13 +829,20 @@ namespace LabZSK.Simulation
             registers[registerToCheck].Focus();
             waitForButton();
             EnDisableButtons();
+            if (setXro == 0 || setXro == 1)
+            {
+                flags["XRO"].setInnerValue(setXro);
+                addTextToLog("\t\tXRO = " + setXro + "\n");
+            }
             if (resetBus)
             {
                 registers["BUS"].setInnerAndExpectedValue(0);
                 resetBus = false;
             }
             flags["IA"].setInnerValue(0);
+            //addTextToLog("\t\tIA = " + 0 + "\n");
             flags["MAV"].setInnerValue(1);
+            //addTextToLog("\t\tMAV = " + 1 + "\n");
             buttonOKClicked = false;
             switchLayOut();
         }
@@ -777,6 +862,7 @@ namespace LabZSK.Simulation
                     dialog.InitialDirectory = _environmentPath + @"\Log\";
                 else
                     dialog.InitialDirectory = _environmentPath;
+                MessageBox.Show(Strings.logFileName);
                 DialogResult saveFileDialogResult = dialog.ShowDialog();
                 if (saveFileDialogResult == DialogResult.OK && dialog.FileName != "")
                 {
@@ -800,11 +886,11 @@ namespace LabZSK.Simulation
             else
             {
                 if (inMicroMode)
-                    addTextToLog("Micro\n");
+                    addTextToLog(Strings.micro + "\n");
                 else
                     addTextToLog("Makro\n");
             }
-            dataGridView_Info.Rows[3].Cells[0].Value = (int)dataGridView_Info.Rows[3].Cells[0].Value + 1;
+            dataGridView_Info.Rows[3].Cells[0].Value = (++currnetCycle);
             simulateCPU();
         }
         private void simulateCPU()

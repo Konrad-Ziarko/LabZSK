@@ -31,6 +31,7 @@ namespace LabZSK.Simulation
         internal event Action<int, string, string, int> AUpdateForm;
         private string _environmentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK";
         private static Thread serverTimer;
+        internal static int appLostFocusCounter = 0;
         //private bool isDebuggerPresent;
         //private MemoryRecord lastRecordFromRRC;//pamietaj aby nullowac po zerowaniu rejestrow albo nowej symulacji, to delete?
         #region Lists and Dictionary
@@ -138,6 +139,7 @@ namespace LabZSK.Simulation
             Focus();
             windowSize = new Size(Width, Height);
 
+            serwerToolStripMenuItem.Visible = Settings.Default.isServerVisible;
             if (Settings.Default.simStop > DateTime.Now)
             {
                 Settings.Default.simStart = Settings.Default.simStop;
@@ -147,6 +149,8 @@ namespace LabZSK.Simulation
                 Settings.Default.simStart = DateTime.Now;
             }
             Settings.Default.Save();
+
+            AUpdateForm += memView.MemUpadateFromSimView;
         }
         private void RunSim_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -323,6 +327,8 @@ namespace LabZSK.Simulation
             List_Memory[row] = new MemoryRecord(row, binary, hex, type);
             Grid_Mem[1, row].Value = List_Memory[row].value;
             Grid_Mem[2, row].Value = List_Memory[row].hex;
+            Grid_Mem.ClearSelection();
+            Grid_Mem.CurrentCell.Selected = true;
         }
         #endregion
         #region Buttons
@@ -415,8 +421,9 @@ namespace LabZSK.Simulation
             if (!registers[registerToCheck].validateRegisterValue(out badValue))
             {
                 new Thread(SystemSounds.Beep.Play).Start();
-                addTextToLog("\t\t" + Strings.mistake + "(" + (mistakes + 1) + "): " + registerToCheck + "=" + badValue +
-                    " (" + Strings.correct + " " + registerToCheck + "=" + registers[registerToCheck].innerValue + ")\n\n");
+                addTextToLog("\t\t" + Strings.mistake + "(" + (mistakes + 1) + "): " + registerToCheck + " = " + badValue + " / " + Convert.ToString(badValue, 16).ToUpper() +
+                    "h (" + Strings.correct + " " + registerToCheck + " = " + registers[registerToCheck].innerValue + " / " +
+                    Convert.ToString(registers[registerToCheck].innerValue, 16).ToUpper() + "h)\n\n");
 
                 mistakes++;
 
@@ -431,7 +438,8 @@ namespace LabZSK.Simulation
             }
             else
             {
-                addTextToLog("\t\t" + registerToCheck + "=" + registers[registerToCheck].innerValue + "\n");
+                addTextToLog("\t\t" + registerToCheck + " = " + registers[registerToCheck].innerValue +
+                    " / " + Convert.ToString(registers[registerToCheck].innerValue, 16).ToUpper() + "h\n");
             }
         }
         private void testAndSet(string register, short setValue)
@@ -536,7 +544,7 @@ namespace LabZSK.Simulation
             addTextToLog(Strings.programStart + " " + Settings.Default.simStart + "\n");
             addTextToLog(
                 //Strings.pcInDomain + ": \"" + Environment.UserDomainName + "\"\n" +
-                Strings.machineName + " \"" + Environment.MachineName + "\" \n" + 
+                Strings.machineName + " \"" + Environment.MachineName + "\" \n" +
                 Strings.loggedAs + ": \"" + Environment.UserName + "\"\n" +
                 Strings.networkInterfaces + ": " + ipAddrList + "\n\n");
             if (Settings.Default.CanCloseLog)
@@ -606,7 +614,7 @@ namespace LabZSK.Simulation
                         rtb.Select(match.Index, match.Length);
                         rtb.SelectionColor = Color.Blue;
                     }
-                    regExp = new Regex(@"(={8}.+=|Makro\s|Micro\s)");
+                    regExp = new Regex(@"(={8}.+=|Makro\s|" + Strings.micro + @"\s)");
                     foreach (Match match in regExp.Matches(rtb.Text))
                     {
                         rtb.Select(match.Index, match.Length);
@@ -659,7 +667,7 @@ namespace LabZSK.Simulation
         internal void AddToLogAndMiniLog(string tact, string mnemo, string description)
         {
             if (mnemo == "END")
-                addTextToLog("\t" + tact + " | " + mnemo + " : " + description + " ("+ DateTime.Now.ToString("HH:mm.ss") + ")\n");
+                addTextToLog("\t" + tact + " | " + mnemo + " : (" + Strings.cycle + " " + currnetCycle + ") " + description + " (" + DateTime.Now.ToString("HH:mm.ss") + ")\n");
             else
                 addTextToLog("\t" + tact + " | " + mnemo + " : " + description + "\n");
             string text;
@@ -716,7 +724,7 @@ namespace LabZSK.Simulation
                     button_Makro.Visible = false;
                     buttonOKClicked = true;
                     //if (registers["SUMA"].Visible)
-                        switchLayOut();
+                    switchLayOut();
                     EnDisableButtons();
                     currentTact = 0;
                     stopSim();
@@ -908,6 +916,7 @@ namespace LabZSK.Simulation
                 op.ACallUpdate += ADrawBackground;
                 op.ShowDialog();
                 devConsoleToolStripMenuItem.Enabled = Settings.Default.IsDevConsole;
+                serwerToolStripMenuItem.Visible = Settings.Default.isServerVisible;
             }
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
             flags["ZNAK"].flagName = Strings.sign;
@@ -957,16 +966,22 @@ namespace LabZSK.Simulation
         }
         private void nowyLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Settings.Default.CanCloseLog)
-            {
-                DialogResult result = MessageBox.Show(Strings.areYouSureCloseLog, Strings.areYouSureCloseLogTitle, MessageBoxButtons.OKCancel);
-                if (result == DialogResult.OK)
+            if (false)//tymczasowe
+                if (Settings.Default.CanCloseLog)
                 {
-                    ACloseLog();
-                    closeLogToolStripMenuItem.Enabled = false;
-                    button_Show_Log.Visible = false;
+                    DialogResult result = MessageBox.Show(Strings.areYouSureCloseLog, Strings.areYouSureCloseLogTitle, MessageBoxButtons.OKCancel);
+                    if (result == DialogResult.OK)
+                    {
+                        ACloseLog();
+                        closeLogToolStripMenuItem.Enabled = false;
+                        button_Show_Log.Visible = false;
+                    }
                 }
-            }
+                else
+                {
+                    SystemSounds.Hand.Play();
+                    MessageBox.Show(Strings.cantCloseLogFile);
+                }
             else
                 MessageBox.Show(Strings.cantCloseLogFile);
         }
@@ -991,6 +1006,25 @@ namespace LabZSK.Simulation
             if (needRefresh)
                 ADrawBackground();
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            var isActive = Application.OpenForms.Cast<Form>().Any(x => x.ContainsFocus);
+            if (!isActive)
+                appLostFocusCounter++;
+            timer1.Enabled = false;
+        }
+
+        private void SimView_Activated(object sender, EventArgs e)
+        {
+            timer1.Enabled = true;
+        }
+
+        private void SimView_Deactivate(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
+        }
+
         internal void setAllStrings()
         {
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
@@ -998,6 +1032,8 @@ namespace LabZSK.Simulation
             button_End_Edit.Text = Strings.endEditRegisters;
             button_OK.Text = Strings.okButton;
             button_Next_Tact.Text = Strings.nextTactButton;
+            button_Micro.Text = Strings.micro.ToUpper();
+
 
             toolStripMenu_Main.Text = Strings.simulationToolStrip;
             toolStripMenu_Exit.Text = Strings.exitToolStrip;
@@ -1060,7 +1096,8 @@ namespace LabZSK.Simulation
                 try
                 {
                     logManager.addTcpClient(name, lastName, group, ipAddress, remotePort, password);
-                    serverTimer = new Thread(() => {
+                    serverTimer = new Thread(() =>
+                    {
                         bool isConnected = true;
                         try
                         {

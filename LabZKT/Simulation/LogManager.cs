@@ -13,9 +13,10 @@ namespace LabZSK.Simulation
     /// Class for logs creation and management
     /// </summary>
     public class LogManager
-    {
+    { 
         public static ConnectedClient _TcpClient;//jak zamykanie logu to przerywanie polaczenia
         private MemoryStream inMemoryLog = new MemoryStream();
+        private FileSystemWatcher watcher;
         private static readonly LogManager instance;
         private string LogFile = string.Empty;
         private int currentLogLine = 0;
@@ -94,12 +95,16 @@ namespace LabZSK.Simulation
 
                 if (checkLogIntegrity(LogFile))
                 {
+                    watcher.EnableRaisingEvents = false;
                     FileStream fs = fileInfo.Open(FileMode.Open);
                     //usuwanie poprzedniego CRC
                     long bytesToDelete = 4;
                     fs.SetLength(Math.Max(0, fileInfo.Length - bytesToDelete));
                     fs.Close();
                     //zapisywanie nowej porcji danych
+
+                    //solic log Envirenment.Machine Envirenment.User
+
                     using (BinaryWriter bw = new BinaryWriter(File.Open(LogFile, FileMode.Append), Encoding.Unicode))
                     {
                         bw.Write(bytes);
@@ -110,6 +115,7 @@ namespace LabZSK.Simulation
                     {
                         bw.Write(crc);
                     }
+                    watcher.EnableRaisingEvents = true;
                 }
                 else
                     MessageBox.Show(Strings.logModified);
@@ -133,16 +139,34 @@ namespace LabZSK.Simulation
             currentLogLine = 0;
             try
             {
+                if (watcher != null)
+                {
+                    watcher.EnableRaisingEvents = false;
+                    watcher.Dispose();
+                }
                 using (BinaryWriter bw = new BinaryWriter(File.Open(logFile, FileMode.Create), Encoding.Unicode))
                 {
                 }
                 LogFile = logFile;
+                
+                watcher = new FileSystemWatcher();
+                watcher.Path = Path.GetDirectoryName(logFile);
+                watcher.Filter = Path.GetFileName(logFile);
+                watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+                watcher.Changed += Watcher_Changed;
+                watcher.EnableRaisingEvents = true;
             }
             catch
             {
                 MessageBox.Show(Strings.errorLogCreating, "Ups", MessageBoxButtons.OK);
             }
         }
+
+        private void Watcher_Changed(object sender, FileSystemEventArgs e)
+        {
+            MessageBox.Show(Strings.errorLogCreating, "Ups", MessageBoxButtons.OK);
+        }
+
         /// <summary>
         /// Initialize new instance of 'In memory' log file
         /// </summary>

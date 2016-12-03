@@ -44,5 +44,8 @@
     <Setting Name="simStop" Type="System.DateTime" Scope="User">
       <Value Profile="(Default)">1970-01-02</Value>
     </Setting>
+    <Setting Name="isServerVisible" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -53,7 +53,7 @@ namespace LabZSK.MicroOperations
             button_Edit.Text = Strings.editMemoryButton;
             button_Load_Table.Text = Strings.loadTableButton;
             button_Save_Table.Text = Strings.saveTableButton;
-            button_Exit.Text = Strings.exitButton;
+            button_Exit.Text = Strings.exitButton.ToUpper();
             Grid_PM.Columns[0].HeaderText = Strings.cellAddressViewGrid;
 
             this.Text = Strings.PMViewTitle;

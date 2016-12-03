@@ -251,7 +251,7 @@ You will lose all progress.</value>
     <value>======Simulation Stop======</value>
   </data>
   <data name="SimulationTitle" xml:space="preserve">
-    <value>CPU</value>
+    <value>Computer LabZSK</value>
   </data>
   <data name="simulationToolStrip" xml:space="preserve">
     <value>Simulation</value>
@@ -306,5 +306,11 @@ You will lose all progress.</value>
   </data>
   <data name="programStart" xml:space="preserve">
     <value>Application started</value>
+  </data>
+  <data name="micro" xml:space="preserve">
+    <value>Micro</value>
+  </data>
+  <data name="logFileName" xml:space="preserve">
+    <value>You must create log file</value>
   </data>
 </root>

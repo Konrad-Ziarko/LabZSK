@@ -61,7 +61,16 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ALA            arytmetyczne A w lewo.
+        ///   Looks up a localized string similar to ALU = LALU + RALU.
+        /// </summary>
+        internal static string ADS {
+            get {
+                return ResourceManager.GetString("ADS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to arytmetyczne A w lewo.
         /// </summary>
         internal static string ALA {
             get {
@@ -70,7 +79,25 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ARA            arytmetyczne A w prawo.
+        ///   Looks up a localized string similar to ALU = LALU AND RALU.
+        /// </summary>
+        internal static string AND {
+            get {
+                return ResourceManager.GetString("AND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NOT A0 -&gt; MQ15.
+        /// </summary>
+        internal static string AQ15 {
+            get {
+                return ResourceManager.GetString("AQ15", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to arytmetyczne A w prawo.
         /// </summary>
         internal static string ARA {
             get {
@@ -79,7 +106,7 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CEA            Oblicz adres efektywny.
+        ///   Looks up a localized string similar to Oblicz adres efektywny.
         /// </summary>
         internal static string CEA {
             get {
@@ -88,7 +115,25 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CWC            Rozpoczęcie CWC.
+        ///   Looks up a localized string similar to ALU = (NOT LALU)+1.
+        /// </summary>
+        internal static string CMA {
+            get {
+                return ResourceManager.GetString("CMA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ALU = (NOT RALU)+1.
+        /// </summary>
+        internal static string CMX {
+            get {
+                return ResourceManager.GetString("CMX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rozpoczęcie CWC.
         /// </summary>
         internal static string CWC {
             get {
@@ -97,7 +142,52 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to END            Koniec mikroprogramu.
+        ///   Looks up a localized string similar to ALU = LALU - 1.
+        /// </summary>
+        internal static string DECL {
+            get {
+                return ResourceManager.GetString("DECL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ALU = RALU - 1.
+        /// </summary>
+        internal static string DECR {
+            get {
+                return ResourceManager.GetString("DECR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 15 -&gt; LK.
+        /// </summary>
+        internal static string DIV {
+            get {
+                return ResourceManager.GetString("DIV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LK = [LK]-1.
+        /// </summary>
+        internal static string DLK {
+            get {
+                return ResourceManager.GetString("DLK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RI = RI-1.
+        /// </summary>
+        internal static string DRI {
+            get {
+                return ResourceManager.GetString("DRI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Koniec mikroprogramu.
         /// </summary>
         internal static string END {
             get {
@@ -106,7 +196,7 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ENI            Odblokuj przerwania.
+        ///   Looks up a localized string similar to Odblokuj przerwania.
         /// </summary>
         internal static string ENI {
             get {
@@ -115,7 +205,34 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IAS            A0 -&gt; ZNAK.
+        ///   Looks up a localized string similar to ALU = LALU XOR RALU.
+        /// </summary>
+        internal static string EOR {
+            get {
+                return ResourceManager.GetString("EOR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BUS -&gt; A.
+        /// </summary>
+        internal static string IA {
+            get {
+                return ResourceManager.GetString("IA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A -&gt; LALU.
+        /// </summary>
+        internal static string IALU {
+            get {
+                return ResourceManager.GetString("IALU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A0 -&gt; ZNAK.
         /// </summary>
         internal static string IAS {
             get {
@@ -124,7 +241,115 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IWC            Rozpoczęcie IWC.
+        ///   Looks up a localized string similar to BUS -&gt; RALU.
+        /// </summary>
+        internal static string IBE {
+            get {
+                return ResourceManager.GetString("IBE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BUS -&gt; RAE.
+        /// </summary>
+        internal static string IBI {
+            get {
+                return ResourceManager.GetString("IBI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BUS -&gt; LK.
+        /// </summary>
+        internal static string ILK {
+            get {
+                return ResourceManager.GetString("ILK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BUS -&gt; LR.
+        /// </summary>
+        internal static string ILR {
+            get {
+                return ResourceManager.GetString("ILR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BUS -&gt; MQ.
+        /// </summary>
+        internal static string IMQ {
+            get {
+                return ResourceManager.GetString("IMQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ALU = LALU + 1.
+        /// </summary>
+        internal static string INCL {
+            get {
+                return ResourceManager.GetString("INCL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ALU = RALU + 1.
+        /// </summary>
+        internal static string INCR {
+            get {
+                return ResourceManager.GetString("INCR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SUMA -&gt; RAE.
+        /// </summary>
+        internal static string IRAE {
+            get {
+                return ResourceManager.GetString("IRAE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BUS -&gt; RAP.
+        /// </summary>
+        internal static string IRAP {
+            get {
+                return ResourceManager.GetString("IRAP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BUS -&gt; RBP.
+        /// </summary>
+        internal static string IRBP {
+            get {
+                return ResourceManager.GetString("IRBP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BUS -&gt; RI.
+        /// </summary>
+        internal static string IRI {
+            get {
+                return ResourceManager.GetString("IRI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BUS -&gt; RR.
+        /// </summary>
+        internal static string IRR {
+            get {
+                return ResourceManager.GetString("IRR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rozpoczęcie IWC.
         /// </summary>
         internal static string IWC {
             get {
@@ -133,7 +358,34 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LCA            cykliczne A w lewo.
+        ///   Looks up a localized string similar to BUS -&gt; X.
+        /// </summary>
+        internal static string IX {
+            get {
+                return ResourceManager.GetString("IX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RI -&gt; LALU.
+        /// </summary>
+        internal static string IXRE {
+            get {
+                return ResourceManager.GetString("IXRE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ALU = LALU.
+        /// </summary>
+        internal static string L {
+            get {
+                return ResourceManager.GetString("L", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cykliczne A w lewo.
         /// </summary>
         internal static string LCA {
             get {
@@ -142,7 +394,7 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LLA            logiczne A w lewo.
+        ///   Looks up a localized string similar to logiczne A w lewo.
         /// </summary>
         internal static string LLA {
             get {
@@ -151,7 +403,7 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LLQ            logiczne A i MQ w lewo.
+        ///   Looks up a localized string similar to logiczne A i MQ w lewo.
         /// </summary>
         internal static string LLQ {
             get {
@@ -160,7 +412,7 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LRA            logiczne A w prawo.
+        ///   Looks up a localized string similar to logiczne A w prawo.
         /// </summary>
         internal static string LRA {
             get {
@@ -169,7 +421,7 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LRQ            logiczne A i MQ w prawo.
+        ///   Looks up a localized string similar to logiczne A i MQ w prawo.
         /// </summary>
         internal static string LRQ {
             get {
@@ -178,7 +430,88 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OPC            OP lub AOP+32 -&gt; RAPS.
+        ///   Looks up a localized string similar to 16 -&gt; LK.
+        /// </summary>
+        internal static string MUL {
+            get {
+                return ResourceManager.GetString("MUL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ALU = NOT LALU.
+        /// </summary>
+        internal static string NOTL {
+            get {
+                return ResourceManager.GetString("NOTL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ALU = NOT RALU.
+        /// </summary>
+        internal static string NOTR {
+            get {
+                return ResourceManager.GetString("NOTR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LR+1 -&gt; LR.
+        /// </summary>
+        internal static string NSI {
+            get {
+                return ResourceManager.GetString("NSI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A -&gt; BUS.
+        /// </summary>
+        internal static string OA {
+            get {
+                return ResourceManager.GetString("OA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ALU -&gt; BUS.
+        /// </summary>
+        internal static string OBE {
+            get {
+                return ResourceManager.GetString("OBE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LR -&gt; BUS.
+        /// </summary>
+        internal static string OLR {
+            get {
+                return ResourceManager.GetString("OLR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MQ -&gt; BUS.
+        /// </summary>
+        internal static string OMQ {
+            get {
+                return ResourceManager.GetString("OMQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ALU = 1.
+        /// </summary>
+        internal static string ONE {
+            get {
+                return ResourceManager.GetString("ONE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OP lub AOP+32 -&gt; RAPS.
         /// </summary>
         internal static string OPC {
             get {
@@ -187,7 +520,115 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RRC            Rozpoczęcie RRC.
+        ///   Looks up a localized string similar to ALU = LALU OR RALU.
+        /// </summary>
+        internal static string OR {
+            get {
+                return ResourceManager.GetString("OR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RAE -&gt; BUS.
+        /// </summary>
+        internal static string ORAE {
+            get {
+                return ResourceManager.GetString("ORAE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RBP -&gt; BUS.
+        /// </summary>
+        internal static string ORBP {
+            get {
+                return ResourceManager.GetString("ORBP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RI -&gt; BUS.
+        /// </summary>
+        internal static string ORI {
+            get {
+                return ResourceManager.GetString("ORI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RR -&gt; BUS.
+        /// </summary>
+        internal static string ORR {
+            get {
+                return ResourceManager.GetString("ORR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X -&gt; BUS.
+        /// </summary>
+        internal static string OX {
+            get {
+                return ResourceManager.GetString("OX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X -&gt; RALU.
+        /// </summary>
+        internal static string OXE {
+            get {
+                return ResourceManager.GetString("OXE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ALU = RALU.
+        /// </summary>
+        internal static string R {
+            get {
+                return ResourceManager.GetString("R", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A = 0.
+        /// </summary>
+        internal static string RA {
+            get {
+                return ResourceManager.GetString("RA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to INT = 0.
+        /// </summary>
+        internal static string RINT {
+            get {
+                return ResourceManager.GetString("RINT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MQ = 0.
+        /// </summary>
+        internal static string RMQ {
+            get {
+                return ResourceManager.GetString("RMQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OFF = 0.
+        /// </summary>
+        internal static string ROFF {
+            get {
+                return ResourceManager.GetString("ROFF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rozpoczęcie RRC.
         /// </summary>
         internal static string RRC {
             get {
@@ -196,7 +637,16 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SGN            X0 -&gt; ZNAK.
+        ///   Looks up a localized string similar to XRO = 0.
+        /// </summary>
+        internal static string RXRO {
+            get {
+                return ResourceManager.GetString("RXRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X0 -&gt; ZNAK.
         /// </summary>
         internal static string SGN {
             get {
@@ -205,7 +655,7 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SHT            Operacja przesunięcia.
+        ///   Looks up a localized string similar to Operacja przesunięcia.
         /// </summary>
         internal static string SHT {
             get {
@@ -214,7 +664,79 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TIND           Adresowanie pośrednie.
+        ///   Looks up a localized string similar to OFF = 1.
+        /// </summary>
+        internal static string SOFF {
+            get {
+                return ResourceManager.GetString("SOFF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BUS -&gt; RBP.
+        /// </summary>
+        internal static string SRBP {
+            get {
+                return ResourceManager.GetString("SRBP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ALU = LALU - RALU.
+        /// </summary>
+        internal static string SUS {
+            get {
+                return ResourceManager.GetString("SUS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XRO = 1.
+        /// </summary>
+        internal static string SXRO {
+            get {
+                return ResourceManager.GetString("SXRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OFF = 0.
+        /// </summary>
+        internal static string TAO {
+            get {
+                return ResourceManager.GetString("TAO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A &lt; 0.
+        /// </summary>
+        internal static string TAP {
+            get {
+                return ResourceManager.GetString("TAP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A &gt;= 0.
+        /// </summary>
+        internal static string TAS {
+            get {
+                return ResourceManager.GetString("TAS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A = 0.
+        /// </summary>
+        internal static string TAZ {
+            get {
+                return ResourceManager.GetString("TAZ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adresowanie pośrednie.
         /// </summary>
         internal static string TIND {
             get {
@@ -223,7 +745,7 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TINT           Brak przerwania.
+        ///   Looks up a localized string similar to Brak przerwania.
         /// </summary>
         internal static string TINT {
             get {
@@ -232,7 +754,7 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TLK            SHT, LK=0 || !SHT, LK!=0.
+        ///   Looks up a localized string similar to SHT, LK=0 || !SHT, LK!=0.
         /// </summary>
         internal static string TLK {
             get {
@@ -241,7 +763,16 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TSD            ZNAK = 0.
+        ///   Looks up a localized string similar to MQ15 = 0.
+        /// </summary>
+        internal static string TQ15 {
+            get {
+                return ResourceManager.GetString("TQ15", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ZNAK = 0.
         /// </summary>
         internal static string TSD {
             get {
@@ -250,7 +781,34 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TXZ            BXZ i RI &lt;&gt; 0 || TLD i RI = 0.
+        ///   Looks up a localized string similar to RI &lt; 0.
+        /// </summary>
+        internal static string TXP {
+            get {
+                return ResourceManager.GetString("TXP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XRO = 0.
+        /// </summary>
+        internal static string TXRO {
+            get {
+                return ResourceManager.GetString("TXRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RI &gt;= 0.
+        /// </summary>
+        internal static string TXS {
+            get {
+                return ResourceManager.GetString("TXS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BXZ i RI &lt;&gt; 0 || TLD i RI = 0.
         /// </summary>
         internal static string TXZ {
             get {
@@ -259,11 +817,20 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UNB            Zawsze pozytywny.
+        ///   Looks up a localized string similar to Zawsze pozytywny.
         /// </summary>
         internal static string UNB {
             get {
                 return ResourceManager.GetString("UNB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ALU = 0.
+        /// </summary>
+        internal static string ZERO {
+            get {
+                return ResourceManager.GetString("ZERO", resourceCulture);
             }
         }
     }

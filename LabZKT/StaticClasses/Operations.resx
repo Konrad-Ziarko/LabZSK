@@ -117,73 +117,262 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ADS" xml:space="preserve">
+    <value>ALU = LALU + RALU</value>
+  </data>
   <data name="ALA" xml:space="preserve">
-    <value>ALA            arytmetyczne A w lewo</value>
+    <value>arytmetyczne A w lewo</value>
+  </data>
+  <data name="AND" xml:space="preserve">
+    <value>ALU = LALU AND RALU</value>
+  </data>
+  <data name="AQ15" xml:space="preserve">
+    <value>NOT A0 -&gt; MQ15</value>
   </data>
   <data name="ARA" xml:space="preserve">
-    <value>ARA            arytmetyczne A w prawo</value>
+    <value>arytmetyczne A w prawo</value>
   </data>
   <data name="CEA" xml:space="preserve">
-    <value>CEA            Oblicz adres efektywny</value>
+    <value>Oblicz adres efektywny</value>
+  </data>
+  <data name="CMA" xml:space="preserve">
+    <value>ALU = (NOT LALU)+1</value>
+  </data>
+  <data name="CMX" xml:space="preserve">
+    <value>ALU = (NOT RALU)+1</value>
   </data>
   <data name="CWC" xml:space="preserve">
-    <value>CWC            Rozpoczęcie CWC</value>
+    <value>Rozpoczęcie CWC</value>
+  </data>
+  <data name="DECL" xml:space="preserve">
+    <value>ALU = LALU - 1</value>
+  </data>
+  <data name="DECR" xml:space="preserve">
+    <value>ALU = RALU - 1</value>
+  </data>
+  <data name="DIV" xml:space="preserve">
+    <value>15 -&gt; LK</value>
+  </data>
+  <data name="DLK" xml:space="preserve">
+    <value>LK = [LK]-1</value>
+  </data>
+  <data name="DRI" xml:space="preserve">
+    <value>RI = RI-1</value>
   </data>
   <data name="END" xml:space="preserve">
-    <value>END            Koniec mikroprogramu</value>
+    <value>Koniec mikroprogramu</value>
   </data>
   <data name="ENI" xml:space="preserve">
-    <value>ENI            Odblokuj przerwania</value>
+    <value>Odblokuj przerwania</value>
+  </data>
+  <data name="EOR" xml:space="preserve">
+    <value>ALU = LALU XOR RALU</value>
+  </data>
+  <data name="IA" xml:space="preserve">
+    <value>BUS -&gt; A</value>
+  </data>
+  <data name="IALU" xml:space="preserve">
+    <value>A -&gt; LALU</value>
   </data>
   <data name="IAS" xml:space="preserve">
-    <value>IAS            A0 -&gt; ZNAK</value>
+    <value>A0 -&gt; ZNAK</value>
+  </data>
+  <data name="IBE" xml:space="preserve">
+    <value>BUS -&gt; RALU</value>
+  </data>
+  <data name="IBI" xml:space="preserve">
+    <value>BUS -&gt; RAE</value>
+  </data>
+  <data name="ILK" xml:space="preserve">
+    <value>BUS -&gt; LK</value>
+  </data>
+  <data name="ILR" xml:space="preserve">
+    <value>BUS -&gt; LR</value>
+  </data>
+  <data name="IMQ" xml:space="preserve">
+    <value>BUS -&gt; MQ</value>
+  </data>
+  <data name="INCL" xml:space="preserve">
+    <value>ALU = LALU + 1</value>
+  </data>
+  <data name="INCR" xml:space="preserve">
+    <value>ALU = RALU + 1</value>
+  </data>
+  <data name="IRAE" xml:space="preserve">
+    <value>SUMA -&gt; RAE</value>
+  </data>
+  <data name="IRAP" xml:space="preserve">
+    <value>BUS -&gt; RAP</value>
+  </data>
+  <data name="IRBP" xml:space="preserve">
+    <value>BUS -&gt; RBP</value>
+  </data>
+  <data name="IRI" xml:space="preserve">
+    <value>BUS -&gt; RI</value>
+  </data>
+  <data name="IRR" xml:space="preserve">
+    <value>BUS -&gt; RR</value>
   </data>
   <data name="IWC" xml:space="preserve">
-    <value>IWC            Rozpoczęcie IWC</value>
+    <value>Rozpoczęcie IWC</value>
+  </data>
+  <data name="IX" xml:space="preserve">
+    <value>BUS -&gt; X</value>
+  </data>
+  <data name="IXRE" xml:space="preserve">
+    <value>RI -&gt; LALU</value>
+  </data>
+  <data name="L" xml:space="preserve">
+    <value>ALU = LALU</value>
   </data>
   <data name="LCA" xml:space="preserve">
-    <value>LCA            cykliczne A w lewo</value>
+    <value>cykliczne A w lewo</value>
   </data>
   <data name="LLA" xml:space="preserve">
-    <value>LLA            logiczne A w lewo</value>
+    <value>logiczne A w lewo</value>
   </data>
   <data name="LLQ" xml:space="preserve">
-    <value>LLQ            logiczne A i MQ w lewo</value>
+    <value>logiczne A i MQ w lewo</value>
   </data>
   <data name="LRA" xml:space="preserve">
-    <value>LRA            logiczne A w prawo</value>
+    <value>logiczne A w prawo</value>
   </data>
   <data name="LRQ" xml:space="preserve">
-    <value>LRQ            logiczne A i MQ w prawo</value>
+    <value>logiczne A i MQ w prawo</value>
+  </data>
+  <data name="MUL" xml:space="preserve">
+    <value>16 -&gt; LK</value>
+  </data>
+  <data name="NOTL" xml:space="preserve">
+    <value>ALU = NOT LALU</value>
+  </data>
+  <data name="NOTR" xml:space="preserve">
+    <value>ALU = NOT RALU</value>
+  </data>
+  <data name="NSI" xml:space="preserve">
+    <value>LR+1 -&gt; LR</value>
+  </data>
+  <data name="OA" xml:space="preserve">
+    <value>A -&gt; BUS</value>
+  </data>
+  <data name="OBE" xml:space="preserve">
+    <value>ALU -&gt; BUS</value>
+  </data>
+  <data name="OLR" xml:space="preserve">
+    <value>LR -&gt; BUS</value>
+  </data>
+  <data name="OMQ" xml:space="preserve">
+    <value>MQ -&gt; BUS</value>
+  </data>
+  <data name="ONE" xml:space="preserve">
+    <value>ALU = 1</value>
   </data>
   <data name="OPC" xml:space="preserve">
-    <value>OPC            OP lub AOP+32 -&gt; RAPS</value>
+    <value>OP lub AOP+32 -&gt; RAPS</value>
+  </data>
+  <data name="OR" xml:space="preserve">
+    <value>ALU = LALU OR RALU</value>
+  </data>
+  <data name="ORAE" xml:space="preserve">
+    <value>RAE -&gt; BUS</value>
+  </data>
+  <data name="ORBP" xml:space="preserve">
+    <value>RBP -&gt; BUS</value>
+  </data>
+  <data name="ORI" xml:space="preserve">
+    <value>RI -&gt; BUS</value>
+  </data>
+  <data name="ORR" xml:space="preserve">
+    <value>RR -&gt; BUS</value>
+  </data>
+  <data name="OX" xml:space="preserve">
+    <value>X -&gt; BUS</value>
+  </data>
+  <data name="OXE" xml:space="preserve">
+    <value>X -&gt; RALU</value>
+  </data>
+  <data name="R" xml:space="preserve">
+    <value>ALU = RALU</value>
+  </data>
+  <data name="RA" xml:space="preserve">
+    <value>A = 0</value>
+  </data>
+  <data name="RINT" xml:space="preserve">
+    <value>INT = 0</value>
+  </data>
+  <data name="RMQ" xml:space="preserve">
+    <value>MQ = 0</value>
+  </data>
+  <data name="ROFF" xml:space="preserve">
+    <value>OFF = 0</value>
   </data>
   <data name="RRC" xml:space="preserve">
-    <value>RRC            Rozpoczęcie RRC</value>
+    <value>Rozpoczęcie RRC</value>
+  </data>
+  <data name="RXRO" xml:space="preserve">
+    <value>XRO = 0</value>
   </data>
   <data name="SGN" xml:space="preserve">
-    <value>SGN            X0 -&gt; ZNAK</value>
+    <value>X0 -&gt; ZNAK</value>
   </data>
   <data name="SHT" xml:space="preserve">
-    <value>SHT            Operacja przesunięcia</value>
+    <value>Operacja przesunięcia</value>
+  </data>
+  <data name="SOFF" xml:space="preserve">
+    <value>OFF = 1</value>
+  </data>
+  <data name="SRBP" xml:space="preserve">
+    <value>BUS -&gt; RBP</value>
+  </data>
+  <data name="SUS" xml:space="preserve">
+    <value>ALU = LALU - RALU</value>
+  </data>
+  <data name="SXRO" xml:space="preserve">
+    <value>XRO = 1</value>
+  </data>
+  <data name="TAO" xml:space="preserve">
+    <value>OFF = 0</value>
+  </data>
+  <data name="TAP" xml:space="preserve">
+    <value>A &lt; 0</value>
+  </data>
+  <data name="TAS" xml:space="preserve">
+    <value>A &gt;= 0</value>
+  </data>
+  <data name="TAZ" xml:space="preserve">
+    <value>A = 0</value>
   </data>
   <data name="TIND" xml:space="preserve">
-    <value>TIND           Adresowanie pośrednie</value>
+    <value>Adresowanie pośrednie</value>
   </data>
   <data name="TINT" xml:space="preserve">
-    <value>TINT           Brak przerwania</value>
+    <value>Brak przerwania</value>
   </data>
   <data name="TLK" xml:space="preserve">
-    <value>TLK            SHT, LK=0 || !SHT, LK!=0</value>
+    <value>SHT, LK=0 || !SHT, LK!=0</value>
+  </data>
+  <data name="TQ15" xml:space="preserve">
+    <value>MQ15 = 0</value>
   </data>
   <data name="TSD" xml:space="preserve">
-    <value>TSD            ZNAK = 0</value>
+    <value>ZNAK = 0</value>
+  </data>
+  <data name="TXP" xml:space="preserve">
+    <value>RI &lt; 0</value>
+  </data>
+  <data name="TXRO" xml:space="preserve">
+    <value>XRO = 0</value>
+  </data>
+  <data name="TXS" xml:space="preserve">
+    <value>RI &gt;= 0</value>
   </data>
   <data name="TXZ" xml:space="preserve">
-    <value>TXZ            BXZ i RI &lt;&gt; 0 || TLD i RI = 0</value>
+    <value>BXZ i RI &lt;&gt; 0 || TLD i RI = 0</value>
   </data>
   <data name="UNB" xml:space="preserve">
-    <value>UNB            Zawsze pozytywny</value>
+    <value>Zawsze pozytywny</value>
+  </data>
+  <data name="ZERO" xml:space="preserve">
+    <value>ALU = 0</value>
   </data>
 </root>

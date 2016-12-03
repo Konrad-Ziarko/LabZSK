@@ -97,6 +97,7 @@ namespace LabZSK.Memory
                 {
                     radioButton_Hex.Checked = true;
                     textBox_Data.Text = prevHex.TrimStart('0');
+                    radioButton_Dec.Checked = true;
                 }
                 else if (prevTyp == "2")
                 {
@@ -424,6 +425,21 @@ namespace LabZSK.Memory
         private void MemSubmit_Shown(object sender, EventArgs e)
         {
             setAllStrings();
+        }
+
+        private void checkBox_I_CheckedChanged(object sender, EventArgs e)
+        {
+            checkBox_I.Text = "I = " + Convert.ToInt32(checkBox_I.Checked);
+        }
+
+        private void checkBox_S_CheckedChanged(object sender, EventArgs e)
+        {
+            checkBox_S.Text = "S = " + Convert.ToInt32(checkBox_S.Checked);
+        }
+
+        private void checkBox_X_CheckedChanged(object sender, EventArgs e)
+        {
+            checkBox_X.Text = "X = " + Convert.ToInt32(checkBox_X.Checked);
         }
     }
 }

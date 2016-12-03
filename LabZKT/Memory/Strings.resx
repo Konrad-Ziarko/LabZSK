@@ -142,7 +142,7 @@
     <value>Dana</value>
   </data>
   <data name="choiceSimpleButton" xml:space="preserve">
-    <value>Rozkaz prosty</value>
+    <value>Rozkaz zwykły</value>
   </data>
   <data name="clearRowButton" xml:space="preserve">
     <value>Wyczyść komórkę</value>
@@ -196,13 +196,13 @@
     <value>Pamięć Operacyjna</value>
   </data>
   <data name="complexInstructionType" xml:space="preserve">
-    <value>Rozkaz złożony</value>
+    <value>Rozkaz rozszerzony</value>
   </data>
   <data name="dataType" xml:space="preserve">
     <value>Dana</value>
   </data>
   <data name="simpleInstructionType" xml:space="preserve">
-    <value>Rozkaz prosty</value>
+    <value>Rozkaz zwykły</value>
   </data>
   <data name="decimalValue" xml:space="preserve">
     <value>Wartość dziesiętna</value>

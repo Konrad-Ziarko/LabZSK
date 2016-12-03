@@ -146,6 +146,20 @@ namespace LabZSK.StaticClasses
                 MicroOpDescriptions.TryGetValue(microOpMnemo, out description);
             return description;
         }
+        public static string GetMicroOpExtendedDescription(string microOpMnemo)
+        {
+            string description = "";
+            ResourceSet resourceSet = Operations.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
+            foreach (DictionaryEntry entry in resourceSet)
+                if (entry.Key.ToString() == microOpMnemo)
+                {
+                    description = entry.Value.ToString();
+                    break;
+                }
+            if (description == "")
+                MicroOpDescriptions.TryGetValue(microOpMnemo, out description);
+            return microOpMnemo.PadRight(8, ' ') + description;
+        }
         /// <summary>
         /// Get instruction description
         /// </summary>

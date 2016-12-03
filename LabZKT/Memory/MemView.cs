@@ -69,7 +69,7 @@ namespace LabZSK.Memory
             button_Edit.Text = Strings.editMemoryButton;
             button_Load_Table.Text = Strings.loadTableButton;
             button_Save_Table.Text = Strings.saveTableButton;
-            button_Exit.Text = Strings.exitButton;
+            button_Exit.Text = Strings.exitButton.ToUpper();
 
             Grid_Mem.Columns[0].HeaderText = Strings.cellAddressViewGrid;
             Grid_Mem.Columns[1].HeaderText = Strings.cellValueViewGrid;
@@ -224,14 +224,14 @@ namespace LabZSK.Memory
             {
                 for (int i = 0; i < 256; i++)
                 {
-                    if(Grid_Mem.Rows[i].Cells[2].Value.ToString() != "")
+                    if (Grid_Mem.Rows[i].Cells[2].Value.ToString() != "")
                     {
                         Grid_Mem.Rows[i].Cells[1].Value = "";
                         Grid_Mem.Rows[i].Cells[2].Value = "";
                         Grid_Mem.Rows[i].Cells[3].Value = "0";
                         AUpdateForm(i, "", "", 0);
                     }
-                    
+
                 }
                 Grid_PO_SelectionChanged(sender, e);
             }
@@ -383,15 +383,18 @@ namespace LabZSK.Memory
 
                     if (cellType != "")
                         dataGridView_Basic.Rows[1].Cells[1].Value =
-                        Convert.ToString(Convert.ToUInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString(), 2), 10);
+                        Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[idxRow].Cells[1].Value.ToString(), 2), 10);
                 }
                 else
                 {
                     dataGridView_Basic.Rows[0].Cells[1].Value = dataGridView_Basic.Rows[1].Cells[1].Value
                         = dataGridView_Basic.Rows[2].Cells[1].Value = "";
                 }
-
-                dataGridView_Decode_Complex.ColumnHeadersHeight = dataGridView_Decode_Complex.Height / 4;
+                try
+                {
+                    dataGridView_Decode_Complex.ColumnHeadersHeight = dataGridView_Decode_Complex.Height / 4;
+                }
+                catch { }
                 foreach (DataGridViewRow x in dataGridView_Decode_Complex.Rows)
                 {
                     x.Height = dataGridView_Decode_Complex.Height / 4;
@@ -399,7 +402,7 @@ namespace LabZSK.Memory
                 int i = 0;
                 foreach (DataGridViewColumn x in dataGridView_Decode_Complex.Columns)
                 {
-                    if(i++ == 3)
+                    if (i++ == 3)
                         x.Width = dataGridView_Decode_Complex.Width / 2;
                     x.Width = dataGridView_Decode_Complex.Width / 6;
                 }
@@ -515,31 +518,6 @@ namespace LabZSK.Memory
             {
                 x.Height = dataGridView_Decode_Complex.Height / 4;
             }
-            /*
-            int startLocation = 8;
-            int diffSize = (panel_Right.Height - startLocation - (5 * button_Clear_Row.Size.Height)) / 5;
-            diffSize += button_Clear_Row.Size.Height;
-            var bLocation = button_Clear_Row.Location;
-            bLocation.Y = startLocation;
-            bLocation.X = 15;
-            button_Load_Table.Location = bLocation;
-
-            startLocation += diffSize;
-            bLocation.Y = startLocation;
-            button_Save_Table.Location = bLocation;
-
-            startLocation += diffSize;
-            bLocation.Y = startLocation;
-            button_Edit.Location = bLocation;
-            */
-            /*
-            startLocation = panel_Right.Height - button_Clear_Table.Size.Height - 8;
-            bLocation.Y = startLocation;
-            button_Clear_Table.Location = bLocation;
-
-            startLocation -= diffSize;
-            bLocation.Y = startLocation;
-            button_Clear_Row.Location = bLocation;*/
 
             Grid_PO_SelectionChanged(this, new EventArgs());
         }
@@ -589,6 +567,14 @@ namespace LabZSK.Memory
                 Grid_Mem[3, Grid_Mem.CurrentCell.RowIndex].Value = List_Memory[Grid_Mem.CurrentCell.RowIndex].typ;
             }
 
+        }
+
+        internal void MemUpadateFromSimView(int row, string binary, string hex, int type)
+        {
+            AUpdateForm(row, binary, hex, type);
+            Grid_Mem[2, row].Value = hex;
+            Grid_Mem[1, row].Value = binary;
+            Grid_Mem[3, row].Value = type;
         }
 
         private void MemView_KeyDown(object sender, KeyEventArgs e)

@@ -116,7 +116,7 @@ namespace LabZSK.Simulation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O autorze....
+        ///   Looks up a localized string similar to O programie LabZSK.
         /// </summary>
         internal static string authorToolStrip {
             get {
@@ -332,6 +332,15 @@ namespace LabZSK.Simulation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Konieczne jest utworzenie pliku LOG.
+        /// </summary>
+        internal static string logFileName {
+            get {
+                return ResourceManager.GetString("logFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zalogowano jako.
         /// </summary>
         internal static string loggedAs {
@@ -391,6 +400,15 @@ namespace LabZSK.Simulation {
         internal static string memToolStrip {
             get {
                 return ResourceManager.GetString("memToolStrip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mikro.
+        /// </summary>
+        internal static string micro {
+            get {
+                return ResourceManager.GetString("micro", resourceCulture);
             }
         }
         
@@ -566,7 +584,7 @@ namespace LabZSK.Simulation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Praca procesora.
+        ///   Looks up a localized string similar to Komputer LabZSK.
         /// </summary>
         internal static string SimulationTitle {
             get {
@@ -620,7 +638,7 @@ namespace LabZSK.Simulation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Podględ logu.
+        ///   Looks up a localized string similar to Podgląd logu.
         /// </summary>
         internal static string viewLogFile {
             get {
