@@ -63,9 +63,13 @@
             this.toolStripMenu_Exit = new System.Windows.Forms.ToolStripMenuItem();
             this.microToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadpmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zapiszToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.drukujToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editpmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.memToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadmemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zapiszToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.drukujToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.editmemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -369,6 +373,8 @@
             // 
             this.microToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadpmToolStripMenuItem,
+            this.zapiszToolStripMenuItem,
+            this.drukujToolStripMenuItem,
             this.editpmToolStripMenuItem});
             this.microToolStripMenuItem.Name = "microToolStripMenuItem";
             this.microToolStripMenuItem.Size = new System.Drawing.Size(102, 20);
@@ -377,14 +383,28 @@
             // loadpmToolStripMenuItem
             // 
             this.loadpmToolStripMenuItem.Name = "loadpmToolStripMenuItem";
-            this.loadpmToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.loadpmToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadpmToolStripMenuItem.Text = "Wczytaj";
             this.loadpmToolStripMenuItem.Click += new System.EventHandler(this.wczytajpmToolStripMenuItem_Click);
+            // 
+            // zapiszToolStripMenuItem
+            // 
+            this.zapiszToolStripMenuItem.Name = "zapiszToolStripMenuItem";
+            this.zapiszToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zapiszToolStripMenuItem.Text = "Zapisz";
+            this.zapiszToolStripMenuItem.Click += new System.EventHandler(this.zapiszToolStripMenuItem_Click);
+            // 
+            // drukujToolStripMenuItem
+            // 
+            this.drukujToolStripMenuItem.Name = "drukujToolStripMenuItem";
+            this.drukujToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.drukujToolStripMenuItem.Text = "Drukuj";
+            this.drukujToolStripMenuItem.Click += new System.EventHandler(this.drukujToolStripMenuItem_Click);
             // 
             // editpmToolStripMenuItem
             // 
             this.editpmToolStripMenuItem.Name = "editpmToolStripMenuItem";
-            this.editpmToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.editpmToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.editpmToolStripMenuItem.Text = "Edytuj";
             this.editpmToolStripMenuItem.Click += new System.EventHandler(this.edytujpmToolStripMenuItem_Click);
             // 
@@ -392,6 +412,8 @@
             // 
             this.memToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadmemToolStripMenuItem,
+            this.zapiszToolStripMenuItem2,
+            this.drukujToolStripMenuItem1,
             this.editmemToolStripMenuItem});
             this.memToolStripMenuItem.Name = "memToolStripMenuItem";
             this.memToolStripMenuItem.Size = new System.Drawing.Size(119, 20);
@@ -400,14 +422,28 @@
             // loadmemToolStripMenuItem
             // 
             this.loadmemToolStripMenuItem.Name = "loadmemToolStripMenuItem";
-            this.loadmemToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.loadmemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadmemToolStripMenuItem.Text = "Wczytaj";
             this.loadmemToolStripMenuItem.Click += new System.EventHandler(this.wczytajpaoToolStripMenuItem1_Click);
+            // 
+            // zapiszToolStripMenuItem2
+            // 
+            this.zapiszToolStripMenuItem2.Name = "zapiszToolStripMenuItem2";
+            this.zapiszToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.zapiszToolStripMenuItem2.Text = "Zapisz";
+            this.zapiszToolStripMenuItem2.Click += new System.EventHandler(this.zapiszToolStripMenuItem2_Click);
+            // 
+            // drukujToolStripMenuItem1
+            // 
+            this.drukujToolStripMenuItem1.Name = "drukujToolStripMenuItem1";
+            this.drukujToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.drukujToolStripMenuItem1.Text = "Drukuj";
+            this.drukujToolStripMenuItem1.Click += new System.EventHandler(this.drukujToolStripMenuItem1_Click);
             // 
             // editmemToolStripMenuItem
             // 
             this.editmemToolStripMenuItem.Name = "editmemToolStripMenuItem";
-            this.editmemToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.editmemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.editmemToolStripMenuItem.Text = "Edytuj";
             this.editmemToolStripMenuItem.Click += new System.EventHandler(this.edytujpaoToolStripMenuItem1_Click);
             // 
@@ -988,5 +1024,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ToolStripMenuItem zapiszToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem drukujToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem zapiszToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem drukujToolStripMenuItem1;
     }
 }

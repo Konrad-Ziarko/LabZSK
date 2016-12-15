@@ -1,10 +1,12 @@
-﻿using LabZSK.Properties;
+﻿using LabZSK.Controls;
+using LabZSK.Properties;
 using LabZSK.StaticClasses;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
@@ -237,7 +239,7 @@ namespace LabZSK.Memory
             }
         }
 
-        private void button_Save_Table_Click(object sender, EventArgs e)
+        internal void button_Save_Table_Click(object sender, EventArgs e)
         {
             save_File_Dialog.Filter = "Pamięć operacyjna|*.po|Wszystko|*.*";
             save_File_Dialog.Title = "Zapisz zawartość pamięci";
@@ -465,7 +467,8 @@ namespace LabZSK.Memory
         {
             dataGridView_Decode_Complex.ClearSelection();
         }
-
+        [DllImport("user32.dll")]
+        static extern int MapVirtualKey(uint uCode, uint uMapType);
         private void Grid_PO_KeyDown(object sender, KeyEventArgs e)
         {
             if (!e.Control)
@@ -475,12 +478,14 @@ namespace LabZSK.Memory
                 else if (char.IsLetterOrDigit((char)e.KeyCode) || e.KeyCode == Keys.OemMinus)
                 {
                     Grid_Mem.ReadOnly = false;
-                    if ((char)e.KeyCode <= 90 && (char)e.KeyCode >= 65)
-                        Grid_Mem.CurrentCell.Value = (char)(e.KeyCode + 32);
+                    int nonVirtualKey = MapVirtualKey((uint)e.KeyCode, 2);
+                    char mappedChar = Convert.ToChar(nonVirtualKey);
+                    if ((mappedChar >= 'a' && mappedChar <= 'f') || (mappedChar >= 'A' && mappedChar <= 'F') || (mappedChar >= '0' && mappedChar <= '9'))
+                        Grid_Mem.CurrentCell.Value = mappedChar;
                     else if (e.KeyCode == Keys.OemMinus)
                         Grid_Mem.CurrentCell.Value = (char)45;
                     else
-                        Grid_Mem.CurrentCell.Value = (char)e.KeyCode;
+                        Grid_Mem.CurrentCell.Value = "";
                     Grid_Mem.BeginEdit(false);
                 }
                 else if (e.KeyCode == Keys.Enter)
@@ -575,6 +580,7 @@ namespace LabZSK.Memory
             Grid_Mem[2, row].Value = hex;
             Grid_Mem[1, row].Value = binary;
             Grid_Mem[3, row].Value = type;
+            Grid_PO_SelectionChanged(this, new EventArgs());
         }
 
         private void MemView_KeyDown(object sender, KeyEventArgs e)
@@ -586,6 +592,86 @@ namespace LabZSK.Memory
         private void button_Exit_Click(object sender, EventArgs e)
         {
             this.Hide();
+        }
+
+        internal void button1_Click(object sender, EventArgs e)
+        {
+            /*Form print = new Form();
+            print.Icon = Resources.Logo_WAT1;
+            RichTextBox rtb = new FastRichBox();
+            rtb.WordWrap = false;
+            print.Controls.Add(rtb);
+            rtb.ReadOnly = true;
+            rtb.Font = new Font("Consolas", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            */
+            //
+            string allText = "";
+            foreach (var row in List_Memory)
+            {
+                string tmp = " " + row.addr.PadRight(8, ' ');
+                bool addToPrint = false;
+                if (row.value != "")
+                {
+                    addToPrint = true;
+                    tmp += row.value+"b".PadRight(8, ' ') ;
+                    tmp += row.hex + "h".PadRight(8, ' ');
+                    if (row.typ == 1)
+                    {
+                        tmp += row.getInt16Value().ToString().PadRight(8, ' ');
+                    }
+                    else if (row.typ == 2)
+                    {
+                        tmp += "OP="+Convert.ToInt32(row.OP,2).ToString().PadRight(11, ' ');
+                        tmp += "XSI=" + row.XSI.PadRight(8, ' ');
+                        tmp += "DA=" + Convert.ToInt32(row.DA,2).ToString().PadRight(8, ' ');
+                    }
+                    else if (row.typ == 3)
+                    {
+                        tmp += "AOP="+ Convert.ToInt32(row.AOP,2).ToString().PadRight(10, ' ');
+                        tmp += "N=" + Convert.ToInt32(row.N,2).ToString().PadRight(8, ' ');
+                    }
+                }
+                if (addToPrint)
+                    allText += tmp + "\n";
+            }
+
+
+            string dirPath = envPath + @"\Env\";
+            string filePath;
+            do {
+                filePath = dirPath +"PAO-"+ new Random().Next(1, 10024) + "-" +(new Random().Next(1, 10024) + new Random().Next(100, 160)) +".txt";
+            } while (File.Exists(filePath));
+            
+
+            File.WriteAllText(filePath, allText);
+            System.Diagnostics.Process.Start(filePath);
+
+
+            //
+            /*
+            //log.AutoSize = true;
+            //log.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            int width = 200;
+            Graphics g = Graphics.FromHwnd(rtb.Handle);
+            foreach (var line in rtb.Lines)
+            {
+                SizeF f = g.MeasureString(line, rtb.Font);
+                width = (int)(f.Width) > width ? (int)(f.Width) : width;
+            }
+            rtb.Dock = DockStyle.Fill;
+
+            print.Width = width + 40;
+            print.Height = 600;
+            print.MaximizeBox = false;
+            //log.SizeGripStyle = SizeGripStyle.Hide;
+
+            rtb.Select(0, 0);
+            print.ShowDialog();*/
+        }
+
+        private void MemView_Shown(object sender, EventArgs e)
+        {
+            Grid_PO_SelectionChanged(sender, e);
         }
     }
 }

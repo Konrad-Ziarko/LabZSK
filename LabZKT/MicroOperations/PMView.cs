@@ -1,4 +1,5 @@
-﻿using LabZSK.Properties;
+﻿using LabZSK.Controls;
+using LabZSK.Properties;
 using LabZSK.StaticClasses;
 using System;
 using System.Collections.Generic;
@@ -300,7 +301,7 @@ namespace LabZSK.MicroOperations
                         AUpdateData(i, j, "");
                     }
         }
-        private void button_Save_Table_Click(object sender, EventArgs e)
+        internal void button_Save_Table_Click(object sender, EventArgs e)
         {
             save_File_Dialog.Filter = "Pamięć mikroprogramu|*.pm|Wszystko|*.*";
             save_File_Dialog.Title = "Zapisz mikroprogram";
@@ -482,6 +483,117 @@ namespace LabZSK.MicroOperations
         private void button_Exit_Click(object sender, EventArgs e)
         {
             this.Hide();
+        }
+
+        internal void button1_Click(object sender, EventArgs e)
+        {
+            /*Form print = new Form();
+            print.Icon = Resources.Logo_WAT1;
+            RichTextBox rtb = new FastRichBox();
+            rtb.WordWrap = false;
+            print.Controls.Add(rtb);
+            rtb.ReadOnly = true;
+            rtb.Font = new Font("Consolas", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            */
+            //
+            string allText = "";
+            foreach(var row in List_MicroOps)
+            {
+                string tmp = " " + row.addr.PadRight(8, ' ');
+                bool addToPrint = false;
+                if (row.S1 != "")
+                {
+                    addToPrint = AddToPrint(addToPrint, row, ref tmp, 1);
+                }
+                 if (row.D1 != "")
+                {
+                    addToPrint = AddToPrint(addToPrint, row, ref tmp, 2);
+                }
+                 if (row.S2 != "")
+                {
+                    addToPrint = AddToPrint(addToPrint, row, ref tmp, 3);
+                }
+                 if (row.D2 != "")
+                {
+                    addToPrint = AddToPrint(addToPrint, row, ref tmp, 4);
+                }
+                 if (row.S3 != "")
+                {
+                    addToPrint = AddToPrint(addToPrint, row, ref tmp, 5);
+                }
+                 if (row.D3 != "")
+                {
+                    addToPrint = AddToPrint(addToPrint, row, ref tmp, 6);
+                }
+                 if (row.C1 != "")
+                {
+                    addToPrint = AddToPrint(addToPrint, row, ref tmp, 7);
+                }
+                 if (row.C2 != "")
+                {
+                    addToPrint = AddToPrint(addToPrint, row, ref tmp, 8);
+                }
+                if (row.Test != "")
+                {
+                    addToPrint = AddToPrint(addToPrint, row, ref tmp, 9);
+                }
+                if (row.ALU != "")
+                {
+                    addToPrint = AddToPrint(addToPrint, row, ref tmp, 10);
+                }
+                if (row.NA != "")
+                {
+                    if (addToPrint)
+                        tmp += "".PadRight(9, ' ');
+                    addToPrint = true;
+                    tmp += "NA".PadRight(8, ' ');
+                    tmp += "___" + row.NA.PadRight(8, ' ') + "\n";
+                }
+                if (addToPrint)
+                    allText += tmp + "\n";
+            }
+            string dirPath = envPath + @"\Env\";
+            string filePath;
+            do
+            {
+                filePath = dirPath + "PM-"+new Random().Next(1, 10024) + "-" + (new Random().Next(1, 10024) + new Random().Next(50, 80))+ ".txt";
+            } while (File.Exists(filePath));
+
+
+            File.WriteAllText(filePath, allText);
+            System.Diagnostics.Process.Start(filePath);
+            //
+
+            //log.AutoSize = true;
+            //log.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            /*
+            int width = 200;
+            Graphics g = Graphics.FromHwnd(rtb.Handle);
+            foreach (var line in rtb.Lines)
+            {
+                SizeF f = g.MeasureString(line, rtb.Font);
+                width = (int)(f.Width) > width ? (int)(f.Width) : width;
+            }
+            rtb.Dock = DockStyle.Fill;
+
+            print.Width = width + 40;
+            print.Height = 600;
+            print.MaximizeBox = false;
+            //log.SizeGripStyle = SizeGripStyle.Hide;
+
+            rtb.Select(0, 0);
+            print.ShowDialog();*/
+        }
+
+        private static bool AddToPrint(bool add, MicroOperation row, ref string tmp, int idx)
+        {
+            if (add)
+                tmp += "".PadRight(9, ' ');
+            bool addToPrint = true;
+            tmp += row.getColumnName(idx).PadRight(8, ' ');
+            tmp += "___" + row.getColumn(idx).PadRight(8, ' ');
+            tmp += "___" + Translator.GetMicroOpExtendedDescription(row.getColumn(idx)).PadRight(8, ' ') + "\n";
+            return addToPrint;
         }
     }
 }

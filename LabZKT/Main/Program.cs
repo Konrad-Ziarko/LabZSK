@@ -2,6 +2,7 @@
 using LabZSK.Simulation;
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -10,11 +11,11 @@ namespace LabZSK
     static class Program
     {
         static Mutex singleton = new Mutex(true, "LabZSK");
+
         private static string envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK";
         [STAThread]
         static void Main(string[] args)
         {
-            
             if (true/*singleton.WaitOne(TimeSpan.Zero, true)*/)
             {
                 if (Settings.Default.FirstRun)

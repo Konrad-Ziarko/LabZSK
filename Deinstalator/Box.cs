@@ -20,8 +20,15 @@ namespace Deinstalator
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Directory.Delete(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZkt", true);
-            Application.Exit();
+            try
+            {
+                Directory.Delete(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK", true);
+            }
+            catch { }
+            finally
+            {
+                Application.Exit();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)

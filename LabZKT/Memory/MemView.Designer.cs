@@ -55,6 +55,7 @@
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel_Right = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.button_Edit = new System.Windows.Forms.Button();
             this.button_Load_Table = new System.Windows.Forms.Button();
             this.panel_Bottom_Right = new System.Windows.Forms.Panel();
@@ -86,7 +87,7 @@
             this.panel_View_PO.Margin = new System.Windows.Forms.Padding(2);
             this.panel_View_PO.MinimumSize = new System.Drawing.Size(195, 0);
             this.panel_View_PO.Name = "panel_View_PO";
-            this.panel_View_PO.Size = new System.Drawing.Size(206, 586);
+            this.panel_View_PO.Size = new System.Drawing.Size(206, 626);
             this.panel_View_PO.TabIndex = 0;
             // 
             // Grid_Mem
@@ -122,7 +123,7 @@
             this.Grid_Mem.RowTemplate.Height = 24;
             this.Grid_Mem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.Grid_Mem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Grid_Mem.Size = new System.Drawing.Size(206, 586);
+            this.Grid_Mem.Size = new System.Drawing.Size(206, 626);
             this.Grid_Mem.TabIndex = 0;
             this.Grid_Mem.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.Grid_Mem_CellEndEdit);
             this.Grid_Mem.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grid_PO_CellMouseClick);
@@ -194,7 +195,7 @@
             this.panel_Edit_PO.Location = new System.Drawing.Point(206, 0);
             this.panel_Edit_PO.Margin = new System.Windows.Forms.Padding(2);
             this.panel_Edit_PO.Name = "panel_Edit_PO";
-            this.panel_Edit_PO.Size = new System.Drawing.Size(648, 586);
+            this.panel_Edit_PO.Size = new System.Drawing.Size(648, 626);
             this.panel_Edit_PO.TabIndex = 1;
             // 
             // panel_Down
@@ -205,7 +206,7 @@
             this.panel_Down.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_Down.Location = new System.Drawing.Point(2, 332);
             this.panel_Down.Name = "panel_Down";
-            this.panel_Down.Size = new System.Drawing.Size(497, 254);
+            this.panel_Down.Size = new System.Drawing.Size(497, 294);
             this.panel_Down.TabIndex = 5;
             // 
             // button_Clear_Row
@@ -244,7 +245,7 @@
             this.dataGridView_Decode_Complex.AllowUserToResizeRows = false;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -336,6 +337,7 @@
             // panel_Right
             // 
             this.panel_Right.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel_Right.Controls.Add(this.button1);
             this.panel_Right.Controls.Add(this.button_Edit);
             this.panel_Right.Controls.Add(this.button_Load_Table);
             this.panel_Right.Controls.Add(this.panel_Bottom_Right);
@@ -344,8 +346,24 @@
             this.panel_Right.Location = new System.Drawing.Point(499, 205);
             this.panel_Right.Margin = new System.Windows.Forms.Padding(2);
             this.panel_Right.Name = "panel_Right";
-            this.panel_Right.Size = new System.Drawing.Size(149, 381);
+            this.panel_Right.Size = new System.Drawing.Size(149, 421);
             this.panel_Right.TabIndex = 2;
+            // 
+            // button1
+            // 
+            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            this.button1.FlatAppearance.BorderSize = 2;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button1.Location = new System.Drawing.Point(13, 239);
+            this.button1.Margin = new System.Windows.Forms.Padding(11, 7, 11, 7);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(125, 63);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "Drukuj";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button_Edit
             // 
@@ -384,7 +402,7 @@
             // 
             this.panel_Bottom_Right.Controls.Add(this.button_Exit);
             this.panel_Bottom_Right.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel_Bottom_Right.Location = new System.Drawing.Point(0, 248);
+            this.panel_Bottom_Right.Location = new System.Drawing.Point(0, 288);
             this.panel_Bottom_Right.Name = "panel_Bottom_Right";
             this.panel_Bottom_Right.Size = new System.Drawing.Size(147, 131);
             this.panel_Bottom_Right.TabIndex = 10;
@@ -430,7 +448,7 @@
             this.panel_Left.Location = new System.Drawing.Point(0, 205);
             this.panel_Left.Margin = new System.Windows.Forms.Padding(2);
             this.panel_Left.Name = "panel_Left";
-            this.panel_Left.Size = new System.Drawing.Size(2, 381);
+            this.panel_Left.Size = new System.Drawing.Size(2, 421);
             this.panel_Left.TabIndex = 1;
             // 
             // panel_Top
@@ -505,17 +523,18 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(854, 586);
+            this.ClientSize = new System.Drawing.Size(854, 626);
             this.Controls.Add(this.panel_Edit_PO);
             this.Controls.Add(this.panel_View_PO);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.MinimumSize = new System.Drawing.Size(730, 535);
+            this.MinimumSize = new System.Drawing.Size(730, 645);
             this.Name = "MemView";
             this.Text = "Pamięć Operacyjna";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PO_FormClosing);
             this.Load += new System.EventHandler(this.MemView_Load);
+            this.Shown += new System.EventHandler(this.MemView_Shown);
             this.SizeChanged += new System.EventHandler(this.PO_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MemView_KeyDown);
             this.panel_View_PO.ResumeLayout(false);
@@ -562,5 +581,6 @@
         private System.Windows.Forms.Panel panel_Right;
         private System.Windows.Forms.Panel panel_Bottom_Right;
         private System.Windows.Forms.Button button_Exit;
+        private System.Windows.Forms.Button button1;
     }
 }

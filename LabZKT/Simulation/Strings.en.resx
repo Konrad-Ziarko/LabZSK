@@ -185,7 +185,7 @@ You will lose all progress.</value>
     <value>End editing</value>
   </data>
   <data name="errorLogCreating" xml:space="preserve">
-    <value>Wystąpił nieoczekiwany błąd podczas tworzenia logu!</value>
+    <value>Unexpected error while creating log file!</value>
   </data>
   <data name="exitToolStrip" xml:space="preserve">
     <value>Exit application</value>
@@ -277,9 +277,6 @@ You will lose all progress.</value>
   <data name="simulationBreak" xml:space="preserve">
     <value>==Simulation interrupted==</value>
   </data>
-  <data name="memHasChanged" xml:space="preserve">
-    <value>Operating memory changed:</value>
-  </data>
   <data name="microcodeHasChanged" xml:space="preserve">
     <value>Microcode memory changed:</value>
   </data>
@@ -287,7 +284,7 @@ You will lose all progress.</value>
     <value>Allowed to edit settings!</value>
   </data>
   <data name="notForStudents" xml:space="preserve">
-    <value>Application in not for students mode!</value>
+    <value>Application not in for students mode!</value>
   </data>
   <data name="logInconsistent" xml:space="preserve">
     <value>Log file is inconsistent</value>

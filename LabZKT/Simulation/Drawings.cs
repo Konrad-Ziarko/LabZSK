@@ -188,6 +188,8 @@ namespace LabZSK.Simulation
             //p2.X = registers["X"].Location.Y;
             path.Reset();
             path.StartFigure();
+            //tu podnoszę magistralę nad flagami
+            p2.Y -= 6;
             path.AddLine(p1, new Point(p1.X, p2.Y));
             path.AddLine(new Point(p1.X, p2.Y), p2);
 

@@ -322,8 +322,7 @@ namespace LabZSK.Simulation
         }
         private void MemView_AUpdateForm(int row, string binary, string hex, int type)
         {
-            addTextToLog("\t" + Strings.memHasChanged + "\n\tPAO["
-                + row + "] = 0x" + List_Memory[row].hex.PadLeft(4, '0') + "     =>     PAO[" + row + "] = 0x" + hex + "\n\n");
+            addTextToLog("\tPAO[" + row + "] = 0x" + List_Memory[row].hex.PadLeft(4, '0') + "     =>     PAO[" + row + "] = 0x" + hex + "\n\n");
             List_Memory[row] = new MemoryRecord(row, binary, hex, type);
             Grid_Mem[1, row].Value = List_Memory[row].value;
             Grid_Mem[2, row].Value = List_Memory[row].hex;
@@ -602,13 +601,13 @@ namespace LabZSK.Simulation
                         rtb.Select(match.Index, match.Length);
                         rtb.SelectionColor = Color.MediumVioletRed;
                     }
-                    regExp = new Regex(@"(" + Strings.registerHasChanged + @".+\s|" + Strings.microcodeHasChanged + @"\s|" + Strings.memHasChanged + @"\s)");
+                    regExp = new Regex(@"(" + Strings.registerHasChanged + @".+\s|" + Strings.microcodeHasChanged + @"\s|" + "=>" + @"\s)");
                     foreach (Match match in regExp.Matches(rtb.Text))
                     {
                         rtb.Select(match.Index, match.Length);
                         rtb.SelectionColor = Color.OrangeRed;
                     }
-                    regExp = new Regex(@"(={6}.+=|" + @".+CEA.+\s|" + @".+RRC.+\s|" + @".+END.+\s+)");
+                    regExp = new Regex(@"(={6}.+=|" + @".+CEA.+\s|" + @".+RRC.+\s|" + @".+CWC.+\s|" + @".+IWC.+\s|" + @".+END.+\s+)");
                     foreach (Match match in regExp.Matches(rtb.Text))
                     {
                         rtb.Select(match.Index, match.Length);
@@ -733,6 +732,8 @@ namespace LabZSK.Simulation
             }
 
         }
+        [DllImport("user32.dll")]
+        static extern int MapVirtualKey(uint uCode, uint uMapType);
         private void Grid_Mem_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -742,12 +743,14 @@ namespace LabZSK.Simulation
             else if (char.IsLetterOrDigit((char)e.KeyCode) || e.KeyCode == Keys.OemMinus)
             {
                 Grid_Mem.ReadOnly = false;
-                if ((char)e.KeyCode <= 90 && (char)e.KeyCode >= 65)
-                    Grid_Mem.CurrentCell.Value = (char)(e.KeyCode + 32);
+                int nonVirtualKey = MapVirtualKey((uint)e.KeyCode, 2);
+                char mappedChar = Convert.ToChar(nonVirtualKey);
+                if ((mappedChar >= 'a' && mappedChar <= 'f')|| (mappedChar >= 'A' && mappedChar <= 'F') || (mappedChar >= '0' && mappedChar <= '9'))
+                    Grid_Mem.CurrentCell.Value = mappedChar;
                 else if (e.KeyCode == Keys.OemMinus)
                     Grid_Mem.CurrentCell.Value = (char)45;
                 else
-                    Grid_Mem.CurrentCell.Value = (char)e.KeyCode;
+                    Grid_Mem.CurrentCell.Value = "";
                 Grid_Mem.BeginEdit(false);
             }
             else if (e.KeyCode == Keys.Enter)
@@ -813,7 +816,7 @@ namespace LabZSK.Simulation
             {
                 cellDescription.Text += " - " + Strings.data + "\n";
                 cellDescription.Text += selectedInstruction.value.ToString() + "b\n";
-                cellDescription.Text += Convert.ToUInt16(selectedInstruction.value, 2) + "d\n";
+                cellDescription.Text += Convert.ToInt16(selectedInstruction.value, 2) + "d\n";
                 cellDescription.Text += Convert.ToInt16(selectedInstruction.value, 2).ToString("X") + "h";
             }
             else if (selectedInstruction.typ == 2)
@@ -1023,6 +1026,26 @@ namespace LabZSK.Simulation
         private void SimView_Deactivate(object sender, EventArgs e)
         {
             timer1.Enabled = false;
+        }
+
+        private void zapiszToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pmView.button_Save_Table_Click(this, new EventArgs());
+        }
+
+        private void zapiszToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            memView.button_Save_Table_Click(this, new EventArgs());
+        }
+
+        private void drukujToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            memView.button1_Click(this, new EventArgs());
+        }
+
+        private void drukujToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pmView.button1_Click(this, new EventArgs());
         }
 
         internal void setAllStrings()

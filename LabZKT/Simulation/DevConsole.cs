@@ -17,6 +17,7 @@ namespace LabZSK.Simulation
         {
             this.viewRef = view;
             InitializeComponent();
+            AcceptButton = buttonStart;
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
@@ -38,7 +39,13 @@ namespace LabZSK.Simulation
 
         private void DevConsole_Load(object sender, EventArgs e)
         {
+            registerName.SelectedIndex = 0;
+        }
 
+        private void DevConsole_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                this.Hide();
         }
     }
 }

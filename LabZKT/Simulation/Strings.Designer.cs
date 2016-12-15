@@ -386,15 +386,6 @@ namespace LabZSK.Simulation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Zmiana zawartości pamięci operacyjnej:.
-        /// </summary>
-        internal static string memHasChanged {
-            get {
-                return ResourceManager.GetString("memHasChanged", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Pamięć operacyjna.
         /// </summary>
         internal static string memToolStrip {

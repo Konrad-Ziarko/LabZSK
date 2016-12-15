@@ -277,9 +277,6 @@ Log symulacji zostanie zamknięty.</value>
   <data name="simulationBreak" xml:space="preserve">
     <value>==Symulacja przerwana==</value>
   </data>
-  <data name="memHasChanged" xml:space="preserve">
-    <value>Zmiana zawartości pamięci operacyjnej:</value>
-  </data>
   <data name="microcodeHasChanged" xml:space="preserve">
     <value>Zmiana zawartości pamięci mikroprogramów:</value>
   </data>

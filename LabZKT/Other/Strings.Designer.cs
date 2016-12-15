@@ -61,7 +61,7 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Autor: Konrad Tomasz Ziarko.
+        ///   Looks up a localized string similar to Autor programu: Konrad Tomasz Ziarko.
         /// </summary>
         internal static string authorName {
             get {
@@ -70,7 +70,7 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LabZSK.
+        ///   Looks up a localized string similar to O programie LabZSK.
         /// </summary>
         internal static string AuthorTitle {
             get {

@@ -157,10 +157,10 @@
     <value>Czarna</value>
   </data>
   <data name="authorName" xml:space="preserve">
-    <value>Autor: Konrad Tomasz Ziarko</value>
+    <value>Autor programu: Konrad Tomasz Ziarko</value>
   </data>
   <data name="AuthorTitle" xml:space="preserve">
-    <value>LabZSK</value>
+    <value>O programie LabZSK</value>
   </data>
   <data name="instituteName" xml:space="preserve">
     <value>Wydział Cybernetyki

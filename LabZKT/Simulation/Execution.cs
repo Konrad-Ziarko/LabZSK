@@ -286,6 +286,8 @@ namespace LabZSK.Simulation
             }
             else if (cells[7, 7])
             {
+                bool addToMemory = false;
+                MemoryRecord mr = null;
                 Grid_PM.CurrentCell = Grid_PM[7, raps];
                 microOpMnemo = Grid_PM[7, raps].Value.ToString();
                 if (microOpMnemo == "END")
@@ -296,12 +298,12 @@ namespace LabZSK.Simulation
                     //addTextToLog("\t\tMAV = " + 0 + "\n");
                     flags["IA"].setInnerValue(1);
                     //addTextToLog("\t\tIA = " + 1 + "\n");
-                    MemoryRecord mr = new MemoryRecord(registers["RAP"].innerValue, Convert.ToString(registers["RBP"].innerValue, 2).PadLeft(16, '0'), Convert.ToString(registers["RBP"].innerValue, 16).PadLeft(4, '0'), 1);
-                    List_Memory[registers["RAP"].innerValue] = mr;
-                    Grid_Mem.Rows[registers["RAP"].innerValue].Cells[0].Value = mr.addr;
-                    Grid_Mem.Rows[registers["RAP"].innerValue].Cells[1].Value = mr.value;
-                    Grid_Mem.Rows[registers["RAP"].innerValue].Cells[2].Value = mr.hex;
-                    Grid_Mem.FirstDisplayedScrollingRowIndex = registers["RAP"].innerValue;
+                    mr = new MemoryRecord(registers["RAP"].innerValue, Convert.ToString(registers["RBP"].innerValue, 2).PadLeft(16, '0'), Convert.ToString(registers["RBP"].innerValue, 16).PadLeft(4, '0'), 1);
+                    //List_Memory[registers["RAP"].innerValue] = mr;
+                    //Grid_Mem.Rows[registers["RAP"].innerValue].Cells[0].Value = mr.addr;
+                    //Grid_Mem.Rows[registers["RAP"].innerValue].Cells[1].Value = mr.value;
+                    //Grid_Mem.Rows[registers["RAP"].innerValue].Cells[2].Value = mr.hex.ToUpper();
+                    addToMemory = true;
                 }
                 else if (microOpMnemo == "IWC")
                 {
@@ -310,7 +312,7 @@ namespace LabZSK.Simulation
                     flags["IA"].setInnerValue(1);
                     //addTextToLog("\t\tIA = " + 1 + "\n");
                     registers["RAP"].setInnerAndExpectedValue(255);
-                    MemoryRecord mr = new MemoryRecord(255, Convert.ToString(registers["LR"].innerValue, 2).PadLeft(16, '0'), Convert.ToString(registers["LR"].innerValue, 16).PadLeft(4, '0'), 1);
+                    mr = new MemoryRecord(255, Convert.ToString(registers["LR"].innerValue, 2).PadLeft(16, '0'), Convert.ToString(registers["LR"].innerValue, 16).PadLeft(4, '0'), 1);
                     List_Memory[255] = mr;
                     Grid_Mem.Rows[255].Cells[0].Value = mr.addr;
                     Grid_Mem.Rows[255].Cells[1].Value = mr.value;
@@ -324,6 +326,11 @@ namespace LabZSK.Simulation
                     currentTact = 9;
                 cells[7, 7] = false;
                 AddToLogAndMiniLog("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                if(addToMemory)
+                {
+                    Grid_Mem.FirstDisplayedScrollingRowIndex = registers["RAP"].innerValue;
+                    AUpdateForm(registers["RAP"].innerValue, mr.value, mr.hex.ToUpper(), 1);
+                }
             }
             button_OK.Visible = true;
             if (registerToCheck != "")
@@ -799,10 +806,15 @@ namespace LabZSK.Simulation
                             setXro = 1;
                         }
                         else if (xsi == "010" || xsi == "011")
+                        {
                             rightValue = registers["LR"].innerValue;
+                            leftValue = Convert.ToInt16(tmp.Substring(8, 8), 2);
+                        }
                         else if (xsi == "100" || xsi == "101")
+                        {
                             rightValue = registers["RI"].innerValue;
-                        leftValue = Convert.ToInt16(tmp.Substring(8, 8), 2);
+                            leftValue = Convert.ToInt16(tmp.Substring(8, 8), 2);
+                        }
                     }
                     else
                     {
@@ -818,8 +830,6 @@ namespace LabZSK.Simulation
                     {
                         setXro = 1;
                     }
-                    else
-                        setXro = 0;
                 }
                 cells[8, 1] = false;
                 AddToLogAndMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
@@ -944,7 +954,14 @@ namespace LabZSK.Simulation
                     stopSim();
                     buttonOKClicked = false;
                 }
-                else if (DEVMODE && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
+                else if (DEVMODE && DEVREGISTER!="L. Cykli" && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
+                {
+                    DEVMODE = false;
+                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                    stopSim();
+                    buttonOKClicked = false;
+                }
+                else if (DEVMODE && currnetCycle == DEVVALUE && DEVREGISTER == "L. Cykli")
                 {
                     DEVMODE = false;
                     registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
@@ -967,7 +984,14 @@ namespace LabZSK.Simulation
                     stopSim();
                     buttonOKClicked = false;
                 }
-                else if (DEVMODE && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
+                else if (DEVMODE && currnetCycle == DEVVALUE && DEVREGISTER == "L. Cykli")
+                {
+                    DEVMODE = false;
+                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                    stopSim();
+                    buttonOKClicked = false;
+                }
+                else if (DEVMODE && DEVREGISTER != "L. Cykli" && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
                 {
                     DEVMODE = false;
                     registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
@@ -988,7 +1012,14 @@ namespace LabZSK.Simulation
                     stopSim();
                     buttonOKClicked = false;
                 }
-                else if (DEVMODE && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
+                else if (DEVMODE && DEVREGISTER != "L. Cykli" && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
+                {
+                    DEVMODE = false;
+                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                    stopSim();
+                    buttonOKClicked = false;
+                }
+                else if (DEVMODE && currnetCycle == DEVVALUE && DEVREGISTER == "L. Cykli")
                 {
                     DEVMODE = false;
                     registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);

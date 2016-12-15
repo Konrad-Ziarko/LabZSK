@@ -41,6 +41,7 @@
             this.registerName.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.registerName.FormattingEnabled = true;
             this.registerName.Items.AddRange(new object[] {
+            "L. Cykli",
             "LK",
             "A",
             "MQ",
@@ -103,11 +104,13 @@
             this.Controls.Add(this.registerName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "DevConsole";
             this.Text = "DevConsole";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DevConsole_FormClosing);
             this.Load += new System.EventHandler(this.DevConsole_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DevConsole_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.registerValue)).EndInit();
             this.ResumeLayout(false);
 
