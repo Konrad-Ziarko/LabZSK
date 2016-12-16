@@ -207,6 +207,7 @@
     <Compile Include="MicroOperations\PMSubmit.Designer.cs">
       <DependentUpon>PMSubmit.cs</DependentUpon>
     </Compile>
+    <Compile Include="StaticClasses\Encryptor.cs" />
     <Compile Include="StaticClasses\Instructions.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

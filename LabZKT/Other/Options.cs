@@ -2,6 +2,7 @@
 using System;
 using System.Configuration;
 using System.Globalization;
+using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -10,6 +11,7 @@ namespace LabZSK.Other
     public partial class Options : Form
     {
         private bool suppressReload = true;
+        private string _environmentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK";
         internal event Action ACallUpdate;
         public Options()
         {
@@ -25,17 +27,8 @@ namespace LabZSK.Other
             numericUpDown3.Value = Settings.Default.SecondMark;
             numericUpDown2.Value = Settings.Default.ThirdMark;
             checkBox2.Checked = Settings.Default.CanCloseLog;
-            //ustawienia użytkownika są nadpisywane przez aplikacji
             groupBox1.Enabled = Settings.Default.CanEditOptions;
             checkBox1.Checked = Settings.Default.IsDevConsole;
-            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["ApplicationForStudents"]))
-            {
-                checkBox1.Enabled = groupBox1.Enabled = true;
-            }
-            else
-            {
-                checkBox1.Enabled = checkBox1.Checked = false;
-            }
             setAllStrings();
         }
         internal void setAllStrings()
@@ -43,7 +36,7 @@ namespace LabZSK.Other
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
 
             this.Text = Strings.OptionsTitle;
-            label1.Text = Strings.themeLabel; 
+            label1.Text = Strings.themeLabel;
             label2.Text = Strings.autoModeLatencyLabel;
             label3.Text = Strings.gradingScaleLabel;
             label6.Text = Strings.languageLabel;
@@ -81,12 +74,78 @@ namespace LabZSK.Other
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //zapisz konfiguracje
+            SaveFileDialog save_File_Dialog = new SaveFileDialog();
+            save_File_Dialog.Filter = "To czego szukasz|*.mnie|Wszystko|*.*";
+            save_File_Dialog.Title = "Zapisz konfigurację";
+            if (Directory.Exists(_environmentPath))
+                save_File_Dialog.InitialDirectory = _environmentPath;
+            DialogResult saveFileDialogResult = save_File_Dialog.ShowDialog();
+            if (saveFileDialogResult == DialogResult.OK && save_File_Dialog.FileName != "")
+            {
+                string currentAppSettings = Settings.Default.CanEditOptions.ToString();
+                currentAppSettings += "<?>" + Settings.Default.CanCloseLog.ToString();
+                currentAppSettings += "<?>" + Settings.Default.IsDevConsole.ToString();
+                currentAppSettings += "<?>" + Settings.Default.FirstMark;
+                currentAppSettings += "<?>" + Settings.Default.SecondMark;
+                currentAppSettings += "<?>" + Settings.Default.ThirdMark;
+
+                string encryptedstring = StaticClasses.Encryptor.Encrypt(currentAppSettings);
+                try
+                {
+                    File.WriteAllText(save_File_Dialog.FileName, encryptedstring);
+                }
+                catch
+                {
+                    MessageBox.Show("Zapisywanie konfiguracji zakończyło się niepowodzeniem");
+                }
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             //odczyt konfiguracji
+            OpenFileDialog open_File_Dialog = new OpenFileDialog();
+            open_File_Dialog.Filter = "To czego szukasz|*.mnie|Wszystko|*.*";
+            open_File_Dialog.Title = "Wczytaj konfigurację";
+            if (Directory.Exists(_environmentPath + @"\PO\"))
+                open_File_Dialog.InitialDirectory = _environmentPath;
+
+            DialogResult openFileDialogResult = open_File_Dialog.ShowDialog();
+            if (openFileDialogResult == DialogResult.OK && open_File_Dialog.FileName != "")
+                try
+                {
+                    string encryptedString = File.ReadAllText(open_File_Dialog.FileName);
+                    string newAppSettings = StaticClasses.Encryptor.Decrypt(encryptedString);
+
+                    string[] tmp = newAppSettings.Split(new[] { "<?>" }, StringSplitOptions.RemoveEmptyEntries);
+                    if (tmp.Length != 6)
+                        throw new Exception();
+                    if (tmp[0] != "False" && tmp[0] != "True" || tmp[1] != "False" && tmp[1] != "True" || tmp[2] != "False" && tmp[2] != "True")
+                        throw new Exception();
+                    if (Convert.ToInt32(tmp[3]) < 0 || Convert.ToInt32(tmp[4]) < 0 || Convert.ToInt32(tmp[5]) < 0)
+                        throw new Exception();
+
+                    Settings.Default.CanEditOptions = Convert.ToBoolean(tmp[0]);
+                    Settings.Default.CanCloseLog = Convert.ToBoolean(tmp[1]);
+                    Settings.Default.IsDevConsole = Convert.ToBoolean(tmp[2]);
+                    Settings.Default.FirstMark = Convert.ToInt32(tmp[3]);
+                    Settings.Default.SecondMark = Convert.ToInt32(tmp[4]);
+                    Settings.Default.ThirdMark = Convert.ToInt32(tmp[5]);
+
+                    comboBox1.SelectedIndex = Settings.Default.SkinNum;
+                    comboBox2.SelectedIndex = Settings.Default.CultureIdx;
+                    numericUpDown1.Value = Settings.Default.Delay;
+                    numericUpDown4.Value = Settings.Default.FirstMark;
+                    numericUpDown3.Value = Settings.Default.SecondMark;
+                    numericUpDown2.Value = Settings.Default.ThirdMark;
+                    checkBox2.Checked = Settings.Default.CanCloseLog;
+                    groupBox1.Enabled = Settings.Default.CanEditOptions;
+                    checkBox1.Checked = Settings.Default.IsDevConsole;
+                }
+                catch
+                {
+                    MessageBox.Show("Wczytywanie konfiguracji zakończyło się niepowodzeniem");
+                }
         }
 
         private void Options_FormClosing(object sender, FormClosingEventArgs e)
@@ -128,7 +187,7 @@ namespace LabZSK.Other
                 Settings.Default.CultureIdx = 0;
                 Settings.Default.Culture = "pl-PL";
             }
-            else if(comboBox2.SelectedIndex == 1)
+            else if (comboBox2.SelectedIndex == 1)
             {
                 Settings.Default.Culture = "en-US";
                 Settings.Default.CultureIdx = 1;

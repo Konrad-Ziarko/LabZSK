@@ -73,14 +73,12 @@
             this.groupBox1.Controls.Add(this.numericUpDown3);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.numericUpDown2);
-            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.checkBox1);
-            this.groupBox1.Controls.Add(this.numericUpDown1);
             this.groupBox1.Enabled = false;
             this.groupBox1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(454, 205);
+            this.groupBox1.Size = new System.Drawing.Size(454, 176);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Ustawienia";
@@ -115,7 +113,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label7.Location = new System.Drawing.Point(12, 68);
+            this.label7.Location = new System.Drawing.Point(12, 73);
             this.label7.Margin = new System.Windows.Forms.Padding(9);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(150, 18);
@@ -127,7 +125,7 @@
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label5.Location = new System.Drawing.Point(191, 152);
+            this.label5.Location = new System.Drawing.Point(190, 113);
             this.label5.Margin = new System.Windows.Forms.Padding(3, 9, 3, 9);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(59, 18);
@@ -139,7 +137,7 @@
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label4.Location = new System.Drawing.Point(325, 152);
+            this.label4.Location = new System.Drawing.Point(324, 113);
             this.label4.Margin = new System.Windows.Forms.Padding(3, 9, 3, 9);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 18);
@@ -149,7 +147,7 @@
             // numericUpDown4
             // 
             this.numericUpDown4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown4.Location = new System.Drawing.Point(137, 150);
+            this.numericUpDown4.Location = new System.Drawing.Point(136, 111);
             this.numericUpDown4.Margin = new System.Windows.Forms.Padding(9);
             this.numericUpDown4.Maximum = new decimal(new int[] {
             98,
@@ -174,7 +172,7 @@
             // numericUpDown3
             // 
             this.numericUpDown3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown3.Location = new System.Drawing.Point(262, 150);
+            this.numericUpDown3.Location = new System.Drawing.Point(261, 111);
             this.numericUpDown3.Margin = new System.Windows.Forms.Padding(9);
             this.numericUpDown3.Maximum = new decimal(new int[] {
             99,
@@ -200,7 +198,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label3.Location = new System.Drawing.Point(12, 152);
+            this.label3.Location = new System.Drawing.Point(11, 113);
             this.label3.Margin = new System.Windows.Forms.Padding(9);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(80, 18);
@@ -210,7 +208,7 @@
             // numericUpDown2
             // 
             this.numericUpDown2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown2.Location = new System.Drawing.Point(406, 150);
+            this.numericUpDown2.Location = new System.Drawing.Point(405, 111);
             this.numericUpDown2.Margin = new System.Windows.Forms.Padding(9);
             this.numericUpDown2.Minimum = new decimal(new int[] {
             3,
@@ -231,7 +229,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.Location = new System.Drawing.Point(12, 108);
+            this.label2.Location = new System.Drawing.Point(18, 214);
             this.label2.Margin = new System.Windows.Forms.Padding(9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(188, 18);
@@ -243,7 +241,7 @@
             this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox1.AutoSize = true;
             this.checkBox1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.checkBox1.Location = new System.Drawing.Point(416, 66);
+            this.checkBox1.Location = new System.Drawing.Point(416, 71);
             this.checkBox1.Margin = new System.Windows.Forms.Padding(9);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -256,12 +254,13 @@
             // numericUpDown1
             // 
             this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.numericUpDown1.Increment = new decimal(new int[] {
             100,
             0,
             0,
             0});
-            this.numericUpDown1.Location = new System.Drawing.Point(328, 106);
+            this.numericUpDown1.Location = new System.Drawing.Point(340, 212);
             this.numericUpDown1.Margin = new System.Windows.Forms.Padding(9);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             1000,
@@ -336,7 +335,6 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Enabled = false;
             this.button1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button1.Location = new System.Drawing.Point(13, 381);
             this.button1.Name = "button1";
@@ -349,7 +347,6 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Enabled = false;
             this.button2.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button2.Location = new System.Drawing.Point(299, 381);
             this.button2.Name = "button2";
@@ -400,6 +397,8 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.numericUpDown1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;

@@ -18,12 +18,6 @@ namespace LabZSK
         {
             if (true/*singleton.WaitOne(TimeSpan.Zero, true)*/)
             {
-                if (Settings.Default.FirstRun)
-                {
-                    MessageBox.Show(Strings.defaultDirectoryMessage, "LabZSK", MessageBoxButtons.OK);
-                    Settings.Default.FirstRun = false;
-                    Settings.Default.Save();
-                }
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 if (File.Exists(envPath + @"\Env\LabZSK.ini"))

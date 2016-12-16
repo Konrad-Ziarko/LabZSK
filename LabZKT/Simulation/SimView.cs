@@ -32,6 +32,7 @@ namespace LabZSK.Simulation
         private string _environmentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK";
         private static Thread serverTimer;
         internal static int appLostFocusCounter = 0;
+        private Keys devKeyRequired;
         //private bool isDebuggerPresent;
         //private MemoryRecord lastRecordFromRRC;//pamietaj aby nullowac po zerowaniu rejestrow albo nowej symulacji, to delete?
         #region Lists and Dictionary
@@ -139,6 +140,38 @@ namespace LabZSK.Simulation
             Focus();
             windowSize = new Size(Width, Height);
 
+            Settings.Default.CanEditOptions = false;
+            Settings.Default.CanCloseLog = false;
+            Settings.Default.IsDevConsole = false;
+            Settings.Default.FirstMark = 2;
+            Settings.Default.SecondMark = 6;
+            Settings.Default.ThirdMark = 10;
+
+            try
+            {
+                string encryptedString = File.ReadAllText(_environmentPath + "\\NieUsuwaj.mnie");
+                string newAppSettings = StaticClasses.Encryptor.Decrypt(encryptedString);
+
+                string[] tmp = newAppSettings.Split(new[] { "<?>" }, StringSplitOptions.RemoveEmptyEntries);
+                if (tmp.Length != 6)
+                    throw new Exception();
+                if (tmp[0] != "False" && tmp[0] != "True" || tmp[1] != "False" && tmp[1] != "True" || tmp[2] != "False" && tmp[2] != "True")
+                    throw new Exception();
+                if (Convert.ToInt32(tmp[3]) < 0 || Convert.ToInt32(tmp[4]) < 0 || Convert.ToInt32(tmp[5]) < 0)
+                    throw new Exception();
+
+                Settings.Default.CanEditOptions = Convert.ToBoolean(tmp[0]);
+                Settings.Default.CanCloseLog = Convert.ToBoolean(tmp[1]);
+                Settings.Default.IsDevConsole = Convert.ToBoolean(tmp[2]);
+                Settings.Default.FirstMark = Convert.ToInt32(tmp[3]);
+                Settings.Default.SecondMark = Convert.ToInt32(tmp[4]);
+                Settings.Default.ThirdMark = Convert.ToInt32(tmp[5]);
+            }
+            catch
+            {
+                MessageBox.Show("Wczytywanie konfiguracji zakończyło się niepowodzeniem");
+            }
+
             serwerToolStripMenuItem.Visible = Settings.Default.isServerVisible;
             if (Settings.Default.simStop > DateTime.Now)
             {
@@ -171,6 +204,19 @@ namespace LabZSK.Simulation
                     }
                     Settings.Default.Save();
                     ACloseLog();
+                    string currentAppSettings = Settings.Default.CanEditOptions.ToString();
+                    currentAppSettings += "<?>" + Settings.Default.CanCloseLog.ToString();
+                    currentAppSettings += "<?>" + Settings.Default.IsDevConsole.ToString();
+                    currentAppSettings += "<?>" + Settings.Default.FirstMark;
+                    currentAppSettings += "<?>" + Settings.Default.SecondMark;
+                    currentAppSettings += "<?>" + Settings.Default.ThirdMark;
+
+
+                    string encryptedstring = Encryptor.Encrypt(currentAppSettings);
+                    try {
+                    File.WriteAllText(_environmentPath + "\\NieUsuwaj.mnie", encryptedstring);
+                    }
+                    catch { }
                 }
                 else if (dr == DialogResult.No)
                     e.Cancel = true;
@@ -698,6 +744,7 @@ namespace LabZSK.Simulation
                 DEVREGISTER = null;
                 DEVVALUE = 0;
             }
+
             if (e.KeyChar == (char)Keys.Enter && !inEditMode)
             {
                 if (isRunning && !inMicroMode)
@@ -770,9 +817,30 @@ namespace LabZSK.Simulation
         }
         private void SimView_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Alt)
+            if (e.Alt && e.KeyCode == Keys.None)
             {
-                e.Handled = true;
+                //e.Handled = true;
+            }
+            if (e.Control && e.Shift && e.KeyCode == Keys.A)
+            {
+                devKeyRequired = Keys.D;
+            }
+            else if (e.KeyCode == devKeyRequired)
+            {
+                if (devKeyRequired == Keys.D)
+                    devKeyRequired = Keys.E;
+                else if (devKeyRequired == Keys.E)
+                    devKeyRequired = Keys.V;
+                else if (devKeyRequired == Keys.V)
+                    devKeyRequired = Keys.D4;
+                else if (devKeyRequired == Keys.D4)
+                    devKeyRequired = Keys.D2;
+                else if (devKeyRequired == Keys.D2)
+                    Settings.Default.CanEditOptions = true;
+            }
+            else
+            {
+                devKeyRequired = Keys.F24;
             }
         }
         private void SimView_ResizeEnd(object sender, EventArgs e)
@@ -1015,6 +1083,7 @@ namespace LabZSK.Simulation
             var isActive = Application.OpenForms.Cast<Form>().Any(x => x.ContainsFocus);
             if (!isActive)
                 appLostFocusCounter++;
+            Console.Out.WriteLine(appLostFocusCounter);
             timer1.Enabled = false;
         }
 
@@ -1025,7 +1094,7 @@ namespace LabZSK.Simulation
 
         private void SimView_Deactivate(object sender, EventArgs e)
         {
-            timer1.Enabled = false;
+            timer1.Enabled = true;
         }
 
         private void zapiszToolStripMenuItem_Click(object sender, EventArgs e)

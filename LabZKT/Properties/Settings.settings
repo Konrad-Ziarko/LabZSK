@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="LabZSK.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="FirstRun" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="Skin" Type="System.String" Scope="User">
       <Value Profile="(Default)">Domyślny</Value>
     </Setting>
