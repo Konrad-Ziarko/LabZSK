@@ -130,7 +130,7 @@
     <value>Nowa symulacja</value>
   </data>
   <data name="areYouSureExit" xml:space="preserve">
-    <value>Czy napewno chcesz zakończyć pracę?
+    <value>Czy na pewno chcesz zakończyć pracę?
 Log symulacji zostanie zamknięty.</value>
   </data>
   <data name="areYouSureExitTitle" xml:space="preserve">
@@ -309,5 +309,11 @@ Log symulacji zostanie zamknięty.</value>
   </data>
   <data name="logFileName" xml:space="preserve">
     <value>Konieczne jest utworzenie pliku LOG</value>
+  </data>
+  <data name="printToolStrip" xml:space="preserve">
+    <value>Drukuj</value>
+  </data>
+  <data name="saveToolStrip" xml:space="preserve">
+    <value>Zapisz...</value>
   </data>
 </root>

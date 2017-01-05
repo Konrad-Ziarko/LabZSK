@@ -133,7 +133,7 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ustawienia.
+        ///   Looks up a localized string similar to Ustawienia admina.
         /// </summary>
         internal static string groupBoxName {
             get {
@@ -142,8 +142,8 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wydział Cybernetyki
-        ///Instytut Teleinformatyki i Automatyki.
+        ///   Looks up a localized string similar to Instytut Teleinformatyki i Automatyki
+        ///Wydział Cybernetyki.
         /// </summary>
         internal static string instituteName {
             get {
@@ -292,6 +292,15 @@ namespace LabZSK.Other {
         internal static string themeComboBox4 {
             get {
                 return ResourceManager.GetString("themeComboBox4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Własna.
+        /// </summary>
+        internal static string themeComboBox5 {
+            get {
+                return ResourceManager.GetString("themeComboBox5", resourceCulture);
             }
         }
         

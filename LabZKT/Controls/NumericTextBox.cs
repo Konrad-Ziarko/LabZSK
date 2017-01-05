@@ -212,6 +212,7 @@ namespace LabZSK.Controls
         protected override void OnDragDrop(DragEventArgs drgevent)
         {
             base.OnDragDrop(drgevent);
+            if(!this.ReadOnly)
             try
             {
                 innerValue = dragValue;

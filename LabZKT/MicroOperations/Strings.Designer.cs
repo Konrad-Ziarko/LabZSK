@@ -61,7 +61,7 @@ namespace LabZSK.MicroOperations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Czy napewno chcesz wyczyścić całą pamięć?.
+        ///   Looks up a localized string similar to Czy na pewno chcesz wyczyścić całą pamięć?.
         /// </summary>
         internal static string areYouSureClearTable {
             get {
@@ -174,6 +174,15 @@ namespace LabZSK.MicroOperations {
         internal static string PMViewTitle {
             get {
                 return ResourceManager.GetString("PMViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drukuj.
+        /// </summary>
+        internal static string printButton {
+            get {
+                return ResourceManager.GetString("printButton", resourceCulture);
             }
         }
         

@@ -142,7 +142,7 @@
     <value>Skórka:</value>
   </data>
   <data name="groupBoxName" xml:space="preserve">
-    <value>Ustawienia</value>
+    <value>Ustawienia admina</value>
   </data>
   <data name="themeComboBox1" xml:space="preserve">
     <value>Domyślna</value>
@@ -163,8 +163,8 @@
     <value>O programie LabZSK</value>
   </data>
   <data name="instituteName" xml:space="preserve">
-    <value>Wydział Cybernetyki
-Instytut Teleinformatyki i Automatyki</value>
+    <value>Instytut Teleinformatyki i Automatyki
+Wydział Cybernetyki</value>
   </data>
   <data name="promoterName" xml:space="preserve">
     <value>Kierownik: dr inż. Witold Żorski</value>
@@ -201,5 +201,8 @@ Instytut Teleinformatyki i Automatyki</value>
   </data>
   <data name="theOtherGuy" xml:space="preserve">
     <value>Konsultant: mgr inż. Artur Miktus</value>
+  </data>
+  <data name="themeComboBox5" xml:space="preserve">
+    <value>Własna</value>
   </data>
 </root>

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -105,7 +104,6 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.richTextBox_Log = new System.Windows.Forms.RichTextBox();
             this.open_File_Dialog = new System.Windows.Forms.OpenFileDialog();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel_PO.SuspendLayout();
             this.panel_View_PO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid_Mem)).BeginInit();
@@ -196,6 +194,7 @@
             this.Grid_Mem.Size = new System.Drawing.Size(270, 499);
             this.Grid_Mem.TabIndex = 0;
             this.Grid_Mem.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.Grid_Mem_CellEndEdit);
+            this.Grid_Mem.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.Grid_Mem_CellLeave);
             this.Grid_Mem.SelectionChanged += new System.EventHandler(this.Grid_Mem_SelectionChanged);
             this.Grid_Mem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Grid_Mem_KeyDown);
             // 
@@ -383,28 +382,28 @@
             // loadpmToolStripMenuItem
             // 
             this.loadpmToolStripMenuItem.Name = "loadpmToolStripMenuItem";
-            this.loadpmToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.loadpmToolStripMenuItem.Text = "Wczytaj";
+            this.loadpmToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.loadpmToolStripMenuItem.Text = "Wczytaj...";
             this.loadpmToolStripMenuItem.Click += new System.EventHandler(this.wczytajpmToolStripMenuItem_Click);
             // 
             // zapiszToolStripMenuItem
             // 
             this.zapiszToolStripMenuItem.Name = "zapiszToolStripMenuItem";
-            this.zapiszToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.zapiszToolStripMenuItem.Text = "Zapisz";
+            this.zapiszToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.zapiszToolStripMenuItem.Text = "Zapisz...";
             this.zapiszToolStripMenuItem.Click += new System.EventHandler(this.zapiszToolStripMenuItem_Click);
             // 
             // drukujToolStripMenuItem
             // 
             this.drukujToolStripMenuItem.Name = "drukujToolStripMenuItem";
-            this.drukujToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.drukujToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.drukujToolStripMenuItem.Text = "Drukuj";
             this.drukujToolStripMenuItem.Click += new System.EventHandler(this.drukujToolStripMenuItem_Click);
             // 
             // editpmToolStripMenuItem
             // 
             this.editpmToolStripMenuItem.Name = "editpmToolStripMenuItem";
-            this.editpmToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editpmToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.editpmToolStripMenuItem.Text = "Edytuj";
             this.editpmToolStripMenuItem.Click += new System.EventHandler(this.edytujpmToolStripMenuItem_Click);
             // 
@@ -422,28 +421,28 @@
             // loadmemToolStripMenuItem
             // 
             this.loadmemToolStripMenuItem.Name = "loadmemToolStripMenuItem";
-            this.loadmemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.loadmemToolStripMenuItem.Text = "Wczytaj";
+            this.loadmemToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.loadmemToolStripMenuItem.Text = "Wczytaj...";
             this.loadmemToolStripMenuItem.Click += new System.EventHandler(this.wczytajpaoToolStripMenuItem1_Click);
             // 
             // zapiszToolStripMenuItem2
             // 
             this.zapiszToolStripMenuItem2.Name = "zapiszToolStripMenuItem2";
-            this.zapiszToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
-            this.zapiszToolStripMenuItem2.Text = "Zapisz";
+            this.zapiszToolStripMenuItem2.Size = new System.Drawing.Size(124, 22);
+            this.zapiszToolStripMenuItem2.Text = "Zapisz...";
             this.zapiszToolStripMenuItem2.Click += new System.EventHandler(this.zapiszToolStripMenuItem2_Click);
             // 
             // drukujToolStripMenuItem1
             // 
             this.drukujToolStripMenuItem1.Name = "drukujToolStripMenuItem1";
-            this.drukujToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.drukujToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.drukujToolStripMenuItem1.Text = "Drukuj";
             this.drukujToolStripMenuItem1.Click += new System.EventHandler(this.drukujToolStripMenuItem1_Click);
             // 
             // editmemToolStripMenuItem
             // 
             this.editmemToolStripMenuItem.Name = "editmemToolStripMenuItem";
-            this.editmemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editmemToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.editmemToolStripMenuItem.Text = "Edytuj";
             this.editmemToolStripMenuItem.Click += new System.EventHandler(this.edytujpaoToolStripMenuItem1_Click);
             // 
@@ -735,11 +734,13 @@
             // 
             // button_Show_Log
             // 
+            this.button_Show_Log.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.button_Show_Log.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Show_Log.Location = new System.Drawing.Point(11, 31);
+            this.button_Show_Log.Location = new System.Drawing.Point(20, 31);
             this.button_Show_Log.Margin = new System.Windows.Forms.Padding(2);
             this.button_Show_Log.Name = "button_Show_Log";
-            this.button_Show_Log.Size = new System.Drawing.Size(116, 28);
+            this.button_Show_Log.Size = new System.Drawing.Size(117, 40);
             this.button_Show_Log.TabIndex = 5;
             this.button_Show_Log.Text = "Pokaż Log";
             this.button_Show_Log.UseVisualStyleBackColor = true;
@@ -757,10 +758,10 @@
             this.panel_Control.Controls.Add(this.button_Next_Tact);
             this.panel_Control.Controls.Add(this.label_Status);
             this.panel_Control.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel_Control.Location = new System.Drawing.Point(286, 0);
+            this.panel_Control.Location = new System.Drawing.Point(311, 0);
             this.panel_Control.Margin = new System.Windows.Forms.Padding(2);
             this.panel_Control.Name = "panel_Control";
-            this.panel_Control.Size = new System.Drawing.Size(150, 102);
+            this.panel_Control.Size = new System.Drawing.Size(158, 102);
             this.panel_Control.TabIndex = 2;
             // 
             // button_End_Edit
@@ -869,7 +870,7 @@
             dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView_Info.DefaultCellStyle = dataGridViewCellStyle10;
             this.dataGridView_Info.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dataGridView_Info.Location = new System.Drawing.Point(436, 0);
+            this.dataGridView_Info.Location = new System.Drawing.Point(469, 0);
             this.dataGridView_Info.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView_Info.MultiSelect = false;
             this.dataGridView_Info.Name = "dataGridView_Info";
@@ -877,12 +878,13 @@
             this.dataGridView_Info.RowHeadersVisible = false;
             this.dataGridView_Info.RowTemplate.Height = 25;
             this.dataGridView_Info.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dataGridView_Info.Size = new System.Drawing.Size(136, 102);
+            this.dataGridView_Info.Size = new System.Drawing.Size(103, 102);
             this.dataGridView_Info.TabIndex = 1;
             // 
             // Column1
             // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             this.Column1.DefaultCellStyle = dataGridViewCellStyle9;
             this.Column1.HeaderText = "Column1";
             this.Column1.MinimumWidth = 40;
@@ -910,11 +912,6 @@
             this.richTextBox_Log.TabIndex = 0;
             this.richTextBox_Log.Text = "";
             // 
-            // timer1
-            // 
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // SimView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -932,10 +929,9 @@
             this.MinimumSize = new System.Drawing.Size(950, 700);
             this.Name = "SimView";
             this.Text = "Komputer LabZSK";
-            this.Activated += new System.EventHandler(this.SimView_Activated);
-            this.Deactivate += new System.EventHandler(this.SimView_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RunSim_FormClosing);
             this.Load += new System.EventHandler(this.RunSim_Load);
+            this.ResizeBegin += new System.EventHandler(this.SimView_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.SimView_ResizeEnd);
             this.SizeChanged += new System.EventHandler(this.RunSim_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SimView_KeyDown);
@@ -1021,12 +1017,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ALU;
         private System.Windows.Forms.DataGridViewTextBoxColumn NA;
         private System.Windows.Forms.ToolStripMenuItem serwerToolStripMenuItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ToolStripMenuItem zapiszToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drukujToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zapiszToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem drukujToolStripMenuItem1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
     }
 }

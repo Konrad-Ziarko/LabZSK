@@ -223,7 +223,7 @@
     <value>Ładowanie pamięci przerwane</value>
   </data>
   <data name="areYouSureClearTable" xml:space="preserve">
-    <value>Czy napewno chcesz wyczyścić całą pamięć?</value>
+    <value>Czy na pewno chcesz wyczyścić całą pamięć?</value>
   </data>
   <data name="areYouSureClearTableTitle" xml:space="preserve">
     <value>Tej operacji nie da się cofnąć!</value>
@@ -233,5 +233,8 @@
   </data>
   <data name="exitButton" xml:space="preserve">
     <value>Wyjście</value>
+  </data>
+  <data name="printButton" xml:space="preserve">
+    <value>Drukuj</value>
   </data>
 </root>

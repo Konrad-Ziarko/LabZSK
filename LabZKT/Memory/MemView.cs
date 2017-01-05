@@ -79,6 +79,7 @@ namespace LabZSK.Memory
             dataGridView_Basic.Rows[0].Cells[0].Value = Strings.recordType;
             dataGridView_Basic.Rows[1].Cells[0].Value = Strings.decimalValue;
             dataGridView_Basic.Rows[2].Cells[0].Value = Strings.mnemonicName;
+            button1.Text = Strings.printButton;
 
             dataGridView_Decode_Complex.Columns[0].HeaderText = Strings.field;
             Grid_PO_SelectionChanged(this, new EventArgs());
@@ -189,6 +190,8 @@ namespace LabZSK.Memory
                 {
                     Point startPosition = Cursor.Position;
                     startPosition.Y -= theSubView.Height / 2;
+                    if (startPosition.Y < 0)
+                        startPosition.Y = 0;
                     startPosition.X -= theSubView.Width / 2;
                     theSubView.Location = startPosition;
                     var result = theSubView.ShowDialog();
@@ -596,15 +599,6 @@ namespace LabZSK.Memory
 
         internal void button1_Click(object sender, EventArgs e)
         {
-            /*Form print = new Form();
-            print.Icon = Resources.Logo_WAT1;
-            RichTextBox rtb = new FastRichBox();
-            rtb.WordWrap = false;
-            print.Controls.Add(rtb);
-            rtb.ReadOnly = true;
-            rtb.Font = new Font("Consolas", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            */
-            //
             string allText = "";
             foreach (var row in List_Memory)
             {
@@ -627,16 +621,16 @@ namespace LabZSK.Memory
                     }
                     else if (row.typ == 3)
                     {
-                        tmp += "AOP="+ Convert.ToInt32(row.AOP,2).ToString().PadRight(10, ' ');
+                        tmp += "AOP="+ Convert.ToInt32(row.AOP,2).ToString().PadRight(22, ' ');
                         tmp += "N=" + Convert.ToInt32(row.N,2).ToString().PadRight(8, ' ');
                     }
                 }
                 if (addToPrint)
-                    allText += tmp + "\n";
+                    allText += tmp + "\r\n";
             }
 
 
-            string dirPath = envPath + @"\Env\";
+            string dirPath = envPath + @"\TMP\";
             string filePath;
             do {
                 filePath = dirPath +"PAO-"+ new Random().Next(1, 10024) + "-" +(new Random().Next(1, 10024) + new Random().Next(100, 160)) +".txt";

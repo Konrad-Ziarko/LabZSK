@@ -85,9 +85,12 @@ namespace LabZSK.MicroOperations
             aligneButtons();
             Point startLocation = startPosition;
             startLocation.Y -= this.Height / 2;
+            if (startLocation.Y < 0)
+                startLocation.Y = 0;
             startLocation.X -= this.Width / 2;
             Location = startLocation;
             radioButton1.Focus();
+            radioButton1.Select();
         }
         private void aligneButtons()
         {

@@ -2,9 +2,11 @@
 using LabZSK.Simulation;
 using System;
 using System.IO;
+using System.IO.Compression;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace LabZSK
 {
@@ -16,22 +18,20 @@ namespace LabZSK
         [STAThread]
         static void Main(string[] args)
         {
-            if (true/*singleton.WaitOne(TimeSpan.Zero, true)*/)
+            if (/*singleton.WaitOne(TimeSpan.Zero, true)*/ true)
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                if (File.Exists(envPath + @"\Env\LabZSK.ini"))
-                {
-                    //ustawienia ladowac
-                    Settings.Default.Save();
-                }
+                Console.Out.Write(Settings.Default.RunIdx);
+                Settings.Default.RunIdx += 1;
+                Settings.Default.Save();
+
                 string filename = string.Empty;
-                if (args != null && args.Length > 0)
-                {
+                if (args != null && args.Length == 1)
                     filename = args[0];
-                }
-                //Application.Run(new SplashScreen());
-                Settings.Default.IsDevConsole = Settings.Default.isServerVisible = false;
+                else if (args != null && args.Length == 2)
+                    filename = args[0]+"<*>"+args[1];
+                Application.Run(new SplashScreen());
                 Application.Run(new SimView(filename));
             }
             else

@@ -56,12 +56,13 @@ namespace LabZSK.MicroOperations
             button_Save_Table.Text = Strings.saveTableButton;
             button_Exit.Text = Strings.exitButton.ToUpper();
             Grid_PM.Columns[0].HeaderText = Strings.cellAddressViewGrid;
+            button1.Text = Strings.printButton;
 
             this.Text = Strings.PMViewTitle;
         }
         private void PM_Load(object sender, EventArgs e)
         {
-            Size = new Size(800, 650);
+            Size = new Size(820, 650);
             CenterToScreen();
         }
         internal void CloseForm()
@@ -487,15 +488,6 @@ namespace LabZSK.MicroOperations
 
         internal void button1_Click(object sender, EventArgs e)
         {
-            /*Form print = new Form();
-            print.Icon = Resources.Logo_WAT1;
-            RichTextBox rtb = new FastRichBox();
-            rtb.WordWrap = false;
-            print.Controls.Add(rtb);
-            rtb.ReadOnly = true;
-            rtb.Font = new Font("Consolas", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            */
-            //
             string allText = "";
             foreach(var row in List_MicroOps)
             {
@@ -547,12 +539,12 @@ namespace LabZSK.MicroOperations
                         tmp += "".PadRight(9, ' ');
                     addToPrint = true;
                     tmp += "NA".PadRight(8, ' ');
-                    tmp += "___" + row.NA.PadRight(8, ' ') + "\n";
+                    tmp += "___" + row.NA.PadRight(8, ' ') + "\r\n";
                 }
                 if (addToPrint)
-                    allText += tmp + "\n";
+                    allText += tmp + "\r\n";
             }
-            string dirPath = envPath + @"\Env\";
+            string dirPath = envPath + @"\TMP\";
             string filePath;
             do
             {
@@ -562,27 +554,6 @@ namespace LabZSK.MicroOperations
 
             File.WriteAllText(filePath, allText);
             System.Diagnostics.Process.Start(filePath);
-            //
-
-            //log.AutoSize = true;
-            //log.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            /*
-            int width = 200;
-            Graphics g = Graphics.FromHwnd(rtb.Handle);
-            foreach (var line in rtb.Lines)
-            {
-                SizeF f = g.MeasureString(line, rtb.Font);
-                width = (int)(f.Width) > width ? (int)(f.Width) : width;
-            }
-            rtb.Dock = DockStyle.Fill;
-
-            print.Width = width + 40;
-            print.Height = 600;
-            print.MaximizeBox = false;
-            //log.SizeGripStyle = SizeGripStyle.Hide;
-
-            rtb.Select(0, 0);
-            print.ShowDialog();*/
         }
 
         private static bool AddToPrint(bool add, MicroOperation row, ref string tmp, int idx)
@@ -592,8 +563,19 @@ namespace LabZSK.MicroOperations
             bool addToPrint = true;
             tmp += row.getColumnName(idx).PadRight(8, ' ');
             tmp += "___" + row.getColumn(idx).PadRight(8, ' ');
-            tmp += "___" + Translator.GetMicroOpExtendedDescription(row.getColumn(idx)).PadRight(8, ' ') + "\n";
+            tmp += "___" + Translator.GetMicroOpExtendedDescription(row.getColumn(idx)).PadRight(8, ' ') + "\r\n";
             return addToPrint;
+        }
+
+        private void Grid_PM_CellLeave(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void Grid_PM_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            Grid_PM[e.ColumnIndex, e.RowIndex].Value = 255 & Convert.ToInt32(Grid_PM[e.ColumnIndex, e.RowIndex].Value);
+            AUpdateData(e.RowIndex, e.ColumnIndex, Grid_PM[e.ColumnIndex, e.RowIndex].Value.ToString());
         }
     }
 }

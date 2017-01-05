@@ -63,10 +63,10 @@
             this.label1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label1.Location = new System.Drawing.Point(13, 13);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(525, 38);
+            this.label1.Size = new System.Drawing.Size(525, 57);
             this.label1.TabIndex = 2;
             this.label1.Text = "Czy instalator ma usunąć wszystkie pliki utworzone w \'Moje Dokumenty\'?\r\nWykasowan" +
-    "e zostaną WSZYSTKIE pliki wraz z folderem LabZkt.";
+    "e zostaną WSZYSTKIE pliki wraz z folderem LabZSK\r\n.";
             // 
             // Box
             // 

@@ -97,7 +97,7 @@ namespace LabZSK.Simulation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Czy napewno chcesz zakończyć pracę?
+        ///   Looks up a localized string similar to Czy na pewno chcesz zakończyć pracę?
         ///Log symulacji zostanie zamknięty..
         /// </summary>
         internal static string areYouSureExit {
@@ -485,6 +485,15 @@ namespace LabZSK.Simulation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Drukuj.
+        /// </summary>
+        internal static string printToolStrip {
+            get {
+                return ResourceManager.GetString("printToolStrip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start symulatora.
         /// </summary>
         internal static string programStart {
@@ -508,6 +517,15 @@ namespace LabZSK.Simulation {
         internal static string registersContent {
             get {
                 return ResourceManager.GetString("registersContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zapisz....
+        /// </summary>
+        internal static string saveToolStrip {
+            get {
+                return ResourceManager.GetString("saveToolStrip", resourceCulture);
             }
         }
         

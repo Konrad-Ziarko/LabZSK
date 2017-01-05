@@ -3,8 +3,10 @@ using System;
 using System.Configuration;
 using System.Globalization;
 using System.IO;
+using System.Media;
 using System.Threading;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace LabZSK.Other
 {
@@ -13,6 +15,7 @@ namespace LabZSK.Other
         private bool suppressReload = true;
         private string _environmentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK";
         internal event Action ACallUpdate;
+        private bool ignore = false;
         public Options()
         {
             InitializeComponent();
@@ -20,7 +23,20 @@ namespace LabZSK.Other
 
         private void Options_Load(object sender, EventArgs e)
         {
-            comboBox1.SelectedIndex = Settings.Default.SkinNum;
+            comboBox1.SelectedIndex = Settings.Default.Skin;
+            ignore = true;
+            r1.Value = Settings.Default.R1;
+            g1.Value = Settings.Default.G1;
+            b1.Value = Settings.Default.B1;
+
+            r2.Value = Settings.Default.R2;
+            g2.Value = Settings.Default.G2;
+            b3.Value = Settings.Default.B2;
+
+            r3.Value = Settings.Default.R3;
+            g3.Value = Settings.Default.G3;
+            b3.Value = Settings.Default.B3;
+            ignore = false;
             comboBox2.SelectedIndex = Settings.Default.CultureIdx;
             numericUpDown1.Value = Settings.Default.Delay;
             numericUpDown4.Value = Settings.Default.FirstMark;
@@ -49,16 +65,99 @@ namespace LabZSK.Other
             groupBox1.Text = Strings.groupBoxName;
 
             comboBox1.Items.Clear();
-            comboBox1.Items.AddRange(new object[] { Strings.themeComboBox1, Strings.themeComboBox2, Strings.themeComboBox3, Strings.themeComboBox4 });
+            comboBox1.Items.AddRange(new object[] { Strings.themeComboBox1, Strings.themeComboBox2, Strings.themeComboBox3, Strings.themeComboBox4, Strings.themeComboBox5 });
 
             suppressReload = true;
-            comboBox1.SelectedIndex = Settings.Default.SkinNum;
+            comboBox1.SelectedIndex = Settings.Default.Skin;
         }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Settings.Default.SkinNum = comboBox1.SelectedIndex;
+            switch (comboBox1.SelectedIndex)
+            {
+                case 0:
+                    Settings.Default.Skin = 0;
+                    ignore = true;
+                    r1.Value = 27;
+                    g1.Value = 96;
+                    b1.Value = 51;
+
+                    r2.Value = 133;
+                    g2.Value = 198;
+                    b2.Value = 72;
+
+                    r3.Value = 249;
+                    g3.Value = 66;
+                    b3.Value = 239;
+                    ignore = false;
+                    break;
+                case 1:
+                    Settings.Default.Skin = 1;
+                    ignore = true;
+                    r1.Value = 31;
+                    g1.Value = 18;
+                    b1.Value = 158;
+
+                    r2.Value = 2;
+                    g2.Value = 112;
+                    b2.Value = 223;
+
+                    r3.Value = 249;
+                    g3.Value = 239;
+                    b3.Value = 66;
+                    ignore = false;
+                    break;
+                case 2:
+                    Settings.Default.Skin = 2;
+                    ignore = true;
+                    r1.Value = 177;
+                    g1.Value = 1;
+                    b1.Value = 5;
+
+                    r2.Value = 254;
+                    g2.Value = 65;
+                    b2.Value = 69;
+
+                    r3.Value = 5;
+                    g3.Value = 254;
+                    b3.Value = 177;
+                    ignore = false;
+                    break;
+                case 3:
+                    Settings.Default.Skin = 3;
+                    ignore = true;
+                    r1.Value = 5;
+                    g1.Value = 5;
+                    b1.Value = 5;
+
+                    r2.Value = 120;
+                    g2.Value = 120;
+                    b2.Value = 120;
+
+                    r3.Value = 239;
+                    g3.Value = 254;
+                    b3.Value = 245;
+                    ignore = false;
+                    break;
+                case 4:
+                    Settings.Default.Skin = 4;
+                    ignore = true;
+                    r1.Value = Settings.Default.R1;
+                    g1.Value = Settings.Default.G1;
+                    b1.Value = Settings.Default.B1;
+
+                    r2.Value = Settings.Default.R2;
+                    g2.Value = Settings.Default.G2;
+                    b2.Value = Settings.Default.B2;
+
+                    r3.Value = Settings.Default.R3;
+                    g3.Value = Settings.Default.G3;
+                    b3.Value = Settings.Default.B3;
+                    ignore = false;
+                    break;
+            }
+            Settings.Default.Save();
             if (!suppressReload)
-                ACallUpdate();
+            ACallUpdate();
             suppressReload = false;
         }
 
@@ -132,7 +231,7 @@ namespace LabZSK.Other
                     Settings.Default.SecondMark = Convert.ToInt32(tmp[4]);
                     Settings.Default.ThirdMark = Convert.ToInt32(tmp[5]);
 
-                    comboBox1.SelectedIndex = Settings.Default.SkinNum;
+                    //comboBox1.SelectedIndex = Settings.Default.SkinNum;
                     comboBox2.SelectedIndex = Settings.Default.CultureIdx;
                     numericUpDown1.Value = Settings.Default.Delay;
                     numericUpDown4.Value = Settings.Default.FirstMark;
@@ -204,6 +303,87 @@ namespace LabZSK.Other
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
             Settings.Default.isServerVisible = checkBox3.Checked;
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void getSkinData()
+        {
+            Settings.Default.R1 = Convert.ToInt32(r1.Value);
+            Settings.Default.R2 = Convert.ToInt32(r2.Value);
+            Settings.Default.B1 = Convert.ToInt32(b1.Value);
+            Settings.Default.B2 = Convert.ToInt32(b2.Value);
+            Settings.Default.G2 = Convert.ToInt32(g2.Value);
+            Settings.Default.R3 = Convert.ToInt32(r3.Value);
+            Settings.Default.B3 = Convert.ToInt32(b3.Value);
+            Settings.Default.G3 = Convert.ToInt32(g3.Value);
+            Settings.Default.G1 = Convert.ToInt32(g1.Value);
+
+            Settings.Default.Skin = 4;
+            if (comboBox1.SelectedIndex != 4)
+                comboBox1.SelectedIndex = 4;
+            if (!suppressReload)
+            ACallUpdate();
+            suppressReload = false;
+
+        }
+        private void r1_ValueChanged(object sender, EventArgs e)
+        {
+            if (!ignore)
+                getSkinData();
+        }
+        private void g1_ValueChanged(object sender, EventArgs e)
+        {
+            if (!ignore)
+                getSkinData();
+        }
+        private void b1_ValueChanged(object sender, EventArgs e)
+        {
+            if (!ignore)
+                getSkinData();
+        }
+        private void r2_ValueChanged(object sender, EventArgs e)
+        {
+            if (!ignore)
+                getSkinData();
+        }
+        private void g2_ValueChanged(object sender, EventArgs e)
+        {
+            if (!ignore)
+                getSkinData();
+        }
+        private void b2_ValueChanged(object sender, EventArgs e)
+        {
+            if (!ignore)
+                getSkinData();
+        }
+        private void r3_ValueChanged(object sender, EventArgs e)
+        {
+            if (!ignore)
+                getSkinData();
+        }
+        private void g3_ValueChanged(object sender, EventArgs e)
+        {
+            if (!ignore)
+                getSkinData();
+        }
+        private void b3_ValueChanged(object sender, EventArgs e)
+        {
+            if (!ignore)
+                getSkinData();
         }
     }
 }

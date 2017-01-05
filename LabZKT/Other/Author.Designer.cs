@@ -70,7 +70,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(571, 53);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Wydział Cybernetyki\r\nInstytut Teleinformatyki i Automatyki";
+            this.label1.Text = "Instytut Teleinformatyki i Automatyki\r\nWydział Cybernetyki";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label2

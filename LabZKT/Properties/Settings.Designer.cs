@@ -25,10 +25,10 @@ namespace LabZSK.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Domyślny")]
-        public string Skin {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Skin {
             get {
-                return ((string)(this["Skin"]));
+                return ((int)(this["Skin"]));
             }
             set {
                 this["Skin"] = value;
@@ -56,18 +56,6 @@ namespace LabZSK.Properties {
             }
             set {
                 this["CanEditOptions"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int SkinNum {
-            get {
-                return ((int)(this["SkinNum"]));
-            }
-            set {
-                this["SkinNum"] = value;
             }
         }
         
@@ -188,6 +176,126 @@ namespace LabZSK.Properties {
             }
             set {
                 this["isServerVisible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int RunIdx {
+            get {
+                return ((int)(this["RunIdx"]));
+            }
+            set {
+                this["RunIdx"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("27")]
+        public int R1 {
+            get {
+                return ((int)(this["R1"]));
+            }
+            set {
+                this["R1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("133")]
+        public int R2 {
+            get {
+                return ((int)(this["R2"]));
+            }
+            set {
+                this["R2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("249")]
+        public int R3 {
+            get {
+                return ((int)(this["R3"]));
+            }
+            set {
+                this["R3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("96")]
+        public int G1 {
+            get {
+                return ((int)(this["G1"]));
+            }
+            set {
+                this["G1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("198")]
+        public int G2 {
+            get {
+                return ((int)(this["G2"]));
+            }
+            set {
+                this["G2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("66")]
+        public int G3 {
+            get {
+                return ((int)(this["G3"]));
+            }
+            set {
+                this["G3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("51")]
+        public int B1 {
+            get {
+                return ((int)(this["B1"]));
+            }
+            set {
+                this["B1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("72")]
+        public int B2 {
+            get {
+                return ((int)(this["B2"]));
+            }
+            set {
+                this["B2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("239")]
+        public int B3 {
+            get {
+                return ((int)(this["B3"]));
+            }
+            set {
+                this["B3"] = value;
             }
         }
     }

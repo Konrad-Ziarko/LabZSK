@@ -202,4 +202,7 @@ Instytut Teleinformatyki i Automatyki</value>
   <data name="theOtherGuy" xml:space="preserve">
     <value>Adviser: M.Sc., eng. Artur Miktus</value>
   </data>
+  <data name="themeComboBox5" xml:space="preserve">
+    <value>User</value>
+  </data>
 </root>

@@ -56,7 +56,8 @@ namespace LabZSK.Simulation
                     registers["RAP"].setNeedCheck(out registerToCheck);
                     button_OK.Visible = true;
                     EnDisableButtons();
-                    registers[registerToCheck].Focus();
+                    if (registerToCheck != "")
+                        registers[registerToCheck].Focus();
                     waitForButton();
                     buttonOKClicked = false;
                     EnDisableButtons();
@@ -158,15 +159,12 @@ namespace LabZSK.Simulation
             Grid_PM.CurrentCell = Grid_PM[11, registers["RAPS"].innerValue];
 
             button_OK.Visible = true;
+            EnDisableButtons();
             if (registerToCheck != "")
-            {
-                EnDisableButtons();
                 registers[registerToCheck].Focus();
-            }
             waitForButton();
             buttonOKClicked = false;
-            if (registerToCheck != "")
-                EnDisableButtons();
+            EnDisableButtons();
             currentTact = 9;
         }
         private void exeTact7()
@@ -186,12 +184,12 @@ namespace LabZSK.Simulation
                 else if (microOpMnemo == "RINT")
                 {
                     flags["INT"].setInnerValue(0);
-                    //addTextToLog("\t\tINT = " + 0 + "\n");
+                    flagToCheck = "INT";
                 }
                 else if (microOpMnemo == "ENI")
                 {
                     flags["INT"].setInnerValue(1);
-                    //addTextToLog("\t\tINT = " + 1 + "\n");
+                    flagToCheck = "INT";
                 }
                 else if (microOpMnemo == "OPC")
                 {
@@ -326,18 +324,16 @@ namespace LabZSK.Simulation
                     currentTact = 9;
                 cells[7, 7] = false;
                 AddToLogAndMiniLog("C1", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-                if(addToMemory)
+                if (addToMemory)
                 {
                     Grid_Mem.FirstDisplayedScrollingRowIndex = registers["RAP"].innerValue;
                     AUpdateForm(registers["RAP"].innerValue, mr.value, mr.hex.ToUpper(), 1);
                 }
             }
             button_OK.Visible = true;
+            EnDisableButtons();
             if (registerToCheck != "")
-            {
-                EnDisableButtons();
                 registers[registerToCheck].Focus();
-            }
             waitForButton();
             buttonOKClicked = false;
             if (resetBus)
@@ -345,8 +341,7 @@ namespace LabZSK.Simulation
                 registers["BUS"].setInnerAndExpectedValue(0);
                 resetBus = false;
             }
-            if (registerToCheck != "")
-                EnDisableButtons();
+            EnDisableButtons();
         }
         private void exeTact6()
         {
@@ -448,22 +443,22 @@ namespace LabZSK.Simulation
                 else if (microOpMnemo == "SOFF")
                 {
                     flags["OFF"].setInnerValue(1);
-                    addTextToLog("\t\tOFF = " + 1 + "\n");
+                    flagToCheck = "OFF";
                 }
                 else if (microOpMnemo == "ROFF")
                 {
                     flags["OFF"].setInnerValue(0);
-                    addTextToLog("\t\tOFF = " + 0 + "\n");
+                    flagToCheck = "OFF";
                 }
                 else if (microOpMnemo == "SXRO")
                 {
                     flags["XRO"].setInnerValue(1);
-                    addTextToLog("\t\tXRO = " + 1 + "\n");
+                    flagToCheck = "XRO";
                 }
                 else if (microOpMnemo == "RXRO")
                 {
                     flags["XRO"].setInnerValue(0);
-                    addTextToLog("\t\tXRO = " + 0 + "\n");
+                    flagToCheck = "XRO";
                 }
                 else if (microOpMnemo == "AQ15")
                 {
@@ -476,11 +471,9 @@ namespace LabZSK.Simulation
                 AddToLogAndMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             button_OK.Visible = true;
+            EnDisableButtons();
             if (registerToCheck != "")
-            {
-                EnDisableButtons();
                 registers[registerToCheck].Focus();
-            }
             waitForButton();
             if (resetBus)
             {
@@ -488,8 +481,7 @@ namespace LabZSK.Simulation
                 resetBus = false;
             }
             buttonOKClicked = false;
-            if (registerToCheck != "")
-                EnDisableButtons();
+            EnDisableButtons();
         }
         private void exeTact2()
         {
@@ -615,14 +607,11 @@ namespace LabZSK.Simulation
             }
 
             button_OK.Visible = true;
+            EnDisableButtons();
             if (registerToCheck != "")
-            {
-                EnDisableButtons();
                 registers[registerToCheck].Focus();
-            }
             waitForButton();
-            if (registerToCheck != "")
-                EnDisableButtons();
+            EnDisableButtons();
             if ((registers["ALU"].valueWhichShouldBeMovedToRegister & 0x8000) == 0x8000)
             {
                 flags["ZNAK"].setInnerValue(1);
@@ -815,6 +804,10 @@ namespace LabZSK.Simulation
                             rightValue = registers["RI"].innerValue;
                             leftValue = Convert.ToInt16(tmp.Substring(8, 8), 2);
                         }
+                        else if (xsi == "000" || xsi == "001")
+                        {
+                            leftValue = Convert.ToInt16(tmp.Substring(8, 8), 2);
+                        }
                     }
                     else
                     {
@@ -836,13 +829,14 @@ namespace LabZSK.Simulation
             }
             button_OK.Visible = true;
             EnDisableButtons();
-            registers[registerToCheck].Focus();
+            if (registerToCheck != "")
+                registers[registerToCheck].Focus();
             waitForButton();
             EnDisableButtons();
             if (setXro == 0 || setXro == 1)
             {
                 flags["XRO"].setInnerValue(setXro);
-                addTextToLog("\t\tXRO = " + setXro + "\n");
+                addTextToLog("XRO".PadLeft(15, ' ') + " = " + setXro + "\n");
             }
             if (resetBus)
             {
@@ -863,7 +857,6 @@ namespace LabZSK.Simulation
             inMicroMode = b;
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.InitialDirectory = _environmentPath;
-            string internetTime = string.Empty;
             while (logFile == "")
             {
                 dialog.Filter = Strings.simLog + "|*.log|" + Strings.all + "|*.*";
@@ -879,13 +872,7 @@ namespace LabZSK.Simulation
                     logFile = dialog.FileName;
                     initLogInformation();
 
-                    CancellationTokenSource cts = new CancellationTokenSource();
-                    Task loop = Task.Factory.StartNew(() => GetNISTDate(cts.Token, out internetTime));
-                    if (Task.WaitAll(new Task[] { loop }, nistTimeTimeout))
-                        ;
-                    else
-                        cts.Cancel();
-                    addTextToLog(Strings.startingSimulation + "\n" + DateTime.Now.ToString("HH:mm.ss").PadLeft(20, ' ') + "\n" + internetTime.PadLeft(20, ' ') + "\n" + Strings.registersContent + "\n");
+                    addTextToLog(Strings.startingSimulation + "\n" + DateTime.Now.ToString("HH:mm.ss").PadLeft(20, ' ') + "\n" + Strings.registersContent + "\n");
                     foreach (var reg in registers.Values)
                         addTextToLog(reg.registerName.PadRight(6, ' ') + " = " + reg.Text + "\n");
                     addTextToLog("\n");
@@ -900,7 +887,7 @@ namespace LabZSK.Simulation
                 else
                     addTextToLog("Makro\n");
             }
-            dataGridView_Info.Rows[3].Cells[0].Value = (++currnetCycle);
+            dataGridView_Info.Rows[3].Cells[1].Value = (++currnetCycle);
             simulateCPU();
         }
         private void simulateCPU()
@@ -943,28 +930,29 @@ namespace LabZSK.Simulation
                 testAndSet("RAPS", (short)(registers["RAPS"].innerValue + 1));
                 Grid_PM.CurrentCell = Grid_PM[11, registers["RAPS"].innerValue];
                 button_OK.Visible = true;
-                EnDisableButtons();
-                registers[registerToCheck].Focus();
-                waitForButton();
-                EnDisableButtons();
+                    EnDisableButtons();
+                if (registerToCheck != "")
+                    registers[registerToCheck].Focus();
+                    waitForButton();
+                    EnDisableButtons();
                 currentTact = 0;
-                dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
+                dataGridView_Info.Rows[2].Cells[1].Value = currentTact;
                 if (!DEVMODE)
                 {
                     stopSim();
                     buttonOKClicked = false;
                 }
-                else if (DEVMODE && DEVREGISTER!="L. Cykli" && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
+                else if (DEVMODE && DEVREGISTER != "L. Cykli" && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
                 {
                     DEVMODE = false;
-                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                    //registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
                     stopSim();
                     buttonOKClicked = false;
                 }
                 else if (DEVMODE && currnetCycle == DEVVALUE && DEVREGISTER == "L. Cykli")
                 {
                     DEVMODE = false;
-                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                    //registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
                     stopSim();
                     buttonOKClicked = false;
                 }
@@ -978,7 +966,7 @@ namespace LabZSK.Simulation
                 registers["LALU"].setInnerAndExpectedValue(0);
                 registers["RALU"].setInnerAndExpectedValue(0);
                 currentTact = 0;
-                dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
+                dataGridView_Info.Rows[2].Cells[1].Value = currentTact;
                 if (!DEVMODE)
                 {
                     stopSim();
@@ -987,14 +975,14 @@ namespace LabZSK.Simulation
                 else if (DEVMODE && currnetCycle == DEVVALUE && DEVREGISTER == "L. Cykli")
                 {
                     DEVMODE = false;
-                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                    //registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
                     stopSim();
                     buttonOKClicked = false;
                 }
                 else if (DEVMODE && DEVREGISTER != "L. Cykli" && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
                 {
                     DEVMODE = false;
-                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                    //registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
                     stopSim();
                     buttonOKClicked = false;
                 }
@@ -1006,7 +994,7 @@ namespace LabZSK.Simulation
             else if (currentTact == 9)
             {
                 currentTact = 0;
-                dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
+                dataGridView_Info.Rows[2].Cells[1].Value = currentTact;
                 if (!DEVMODE)
                 {
                     stopSim();
@@ -1015,14 +1003,14 @@ namespace LabZSK.Simulation
                 else if (DEVMODE && DEVREGISTER != "L. Cykli" && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
                 {
                     DEVMODE = false;
-                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                    //registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
                     stopSim();
                     buttonOKClicked = false;
                 }
                 else if (DEVMODE && currnetCycle == DEVVALUE && DEVREGISTER == "L. Cykli")
                 {
                     DEVMODE = false;
-                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                    //registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
                     stopSim();
                     buttonOKClicked = false;
                 }
@@ -1201,7 +1189,7 @@ namespace LabZSK.Simulation
                         Application.DoEvents();
             }
             currentTact = (currentTact + 1) % 8;
-            dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
+            dataGridView_Info.Rows[2].Cells[1].Value = currentTact;
             buttonNextTactClicked = false;
         }
         #endregion

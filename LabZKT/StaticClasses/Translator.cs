@@ -54,7 +54,7 @@ namespace LabZSK.StaticClasses
             {"DRI","RI = RI-1"},{"RA","A = 0"},{"RMQ","MQ = 0"},{"AQ15","NOT A0 -> MQ15"},
             {"RINT","INT = 0"},{"TAS","A >= 0"},{"TXS","RI >= 0"},{"TQ15","MQ15 = 0"},
             {"TAO","OFF = 0"},{"TXP","RI < 0"},{"TXRO","XRO = 0"},
-            {"TAP","A < 0"},{"TAZ","A = 0"},{"ADS","ALU = LALU + RALU"},{"SUS","ALU = LALU - RALU"},
+            {"TAP","A <= 0"},{"TAZ","A = 0"},{"ADS","ALU = LALU + RALU"},{"SUS","ALU = LALU - RALU"},
             {"CMX","ALU = (NOT RALU)+1"},{"CMA","ALU = (NOT LALU)+1"},{"OR","ALU = LALU OR RALU"},{"AND","ALU = LALU AND RALU"},
             {"EOR","ALU = LALU XOR RALU"},{"NOTL","ALU = NOT LALU"},{"NOTR","ALU = NOT RALU"},{"L","ALU = LALU"},
             {"R","ALU = RALU"},{"INCL","ALU = LALU + 1"},{"INCR","ALU = RALU + 1"},{"DECL","ALU = LALU - 1"},

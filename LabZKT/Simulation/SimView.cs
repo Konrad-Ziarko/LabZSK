@@ -66,9 +66,8 @@ namespace LabZSK.Simulation
         private bool resetBus;
         private bool layoutChange = false;
         private bool[,] cells = new bool[11, 8];
-        private string logFile = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty;
+        private string logFile = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty, flagToCheck=string.Empty;
         private short raps = 0, na = 0;
-        private int nistTimeTimeout = 1200;
         private int currnetCycle;
         private int mark;
         private int mistakes;
@@ -114,18 +113,44 @@ namespace LabZSK.Simulation
             memView = new MemView(ref List_Memory);
             memView.AUpdateForm += MemView_AUpdateForm;
 
-            if (filename != string.Empty)
+            string[] split = filename.Split(new[] { "<*>" }, StringSplitOptions.RemoveEmptyEntries);
+            try
             {
-                string[] split = filename.Split('.');
-                try
+                if (filename != string.Empty)
                 {
-                    if (split[split.Length - 1] == "pm" || split[split.Length - 1] == "PM")
-                        pmView.LoadTable(filename);
-                    else if (split[split.Length - 1] == "po" || split[split.Length - 1] == "PO")
-                        memView.LoadTable(filename);
+                    if (split.Length == 1)
+                    {
+                        string first = split[0];
+                        string[] arr = first.Split('.');
+
+                        if (Regex.Match(arr[1], @"[pP][mM]").Success)
+                            pmView.LoadTable(first);
+                        else if (Regex.Match(arr[1], @"[pP][oO]").Success)
+                            memView.LoadTable(first);
+
+                    }
+                    else if (split.Length == 2)
+                    {
+                        string first = split[0];
+                        string second = split[1];
+
+                        string[] arr = first.Split('.');
+
+                        if (Regex.Match(arr[1], @"[pP][mM]").Success)
+                            pmView.LoadTable(first);
+                        else if (Regex.Match(arr[1], @"[pP][oO]").Success)
+                            memView.LoadTable(first);
+
+                        arr = second.Split('.');
+
+                        if (Regex.Match(arr[1], @"[pP][mM]").Success)
+                            pmView.LoadTable(second);
+                        else if (Regex.Match(arr[1], @"[pP][oO]").Success)
+                            memView.LoadTable(second);
+                    }
                 }
-                catch { }
             }
+            catch { }
             devConsoleToolStripMenuItem.Enabled = false;
             closeLogToolStripMenuItem.Enabled = false;
             setAllStrings();
@@ -213,8 +238,9 @@ namespace LabZSK.Simulation
 
 
                     string encryptedstring = Encryptor.Encrypt(currentAppSettings);
-                    try {
-                    File.WriteAllText(_environmentPath + "\\NieUsuwaj.mnie", encryptedstring);
+                    try
+                    {
+                        File.WriteAllText(_environmentPath + "\\NieUsuwaj.mnie", encryptedstring);
                     }
                     catch { }
                 }
@@ -225,7 +251,7 @@ namespace LabZSK.Simulation
         #region init
         private void initLists()
         {
-            Directory.CreateDirectory(_environmentPath + "\\Env");
+            Directory.CreateDirectory(_environmentPath + "\\TMP");
             Directory.CreateDirectory(_environmentPath + "\\Log");
             Directory.CreateDirectory(_environmentPath + "\\PO");
             Directory.CreateDirectory(_environmentPath + "\\PM");
@@ -306,12 +332,12 @@ namespace LabZSK.Simulation
             registers["RALU"].SetXY(horizontalGap * 2 + (horizontalGap - 130) / 2, locY);
 
             int gapFromRalu = panel_Sim_Control.Width - registers["RALU"].Location.X - registers["RALU"].Width - 60;
-            flags["ZNAK"].SetXY(panel_Sim_Control.Width - gapFromRalu, verticalGap + (verticalGap - 27) / 4);
-            flags["XRO"].SetXY(panel_Sim_Control.Width - gapFromRalu * 2 / 3, verticalGap + (verticalGap - 27) / 4);
-            flags["OFF"].SetXY(panel_Sim_Control.Width - gapFromRalu / 3, verticalGap + (verticalGap - 27) / 4);
-            flags["MAV"].SetXY(panel_Sim_Control.Width - gapFromRalu, verticalGap * 2 + (verticalGap - 27) * 1 / 4);
-            flags["IA"].SetXY(panel_Sim_Control.Width - gapFromRalu * 2 / 3, verticalGap * 2 + (verticalGap - 27) * 1 / 4);
-            flags["INT"].SetXY(panel_Sim_Control.Width - gapFromRalu / 3, verticalGap * 2 + (verticalGap - 27) * 1 / 4);
+            flags["ZNAK"].SetXY(panel_Sim_Control.Width - gapFromRalu, verticalGap + (verticalGap - 27));
+            flags["XRO"].SetXY(panel_Sim_Control.Width - gapFromRalu * 2 / 3, verticalGap + (verticalGap - 27));
+            flags["OFF"].SetXY(panel_Sim_Control.Width - gapFromRalu / 3, verticalGap + (verticalGap - 27));
+            flags["MAV"].SetXY(panel_Sim_Control.Width - gapFromRalu, verticalGap * 2 + (verticalGap - 27) * 2 / 4);
+            flags["IA"].SetXY(panel_Sim_Control.Width - gapFromRalu * 2 / 3, verticalGap * 2 + (verticalGap - 27) * 2 / 4);
+            flags["INT"].SetXY(panel_Sim_Control.Width - gapFromRalu / 3, verticalGap * 2 + (verticalGap - 27) * 2 / 4);
 
             registers["RBP"].SetXY((horizontalGap - 130) / 2, verticalGap * 2 + (verticalGap - 27) * 1 / 4);
             registers["ALU"].SetXY((registers["RALU"].Location.X - registers["LALU"].Location.X + 130) / 2
@@ -341,10 +367,10 @@ namespace LabZSK.Simulation
         }
         private void initUserInfoArea()
         {
-            dataGridView_Info.Rows.Add(mark, Strings.mark);
-            dataGridView_Info.Rows.Add(mistakes, Strings.mistakes);
-            dataGridView_Info.Rows.Add("0", Strings.tact);
-            dataGridView_Info.Rows.Add(currnetCycle, Strings.cycle);
+            dataGridView_Info.Rows.Add(Strings.mark, mark);
+            dataGridView_Info.Rows.Add(Strings.mistakes, mistakes);
+            dataGridView_Info.Rows.Add(Strings.tact, "0");
+            dataGridView_Info.Rows.Add(Strings.cycle, currnetCycle);
             dataGridView_Info.Enabled = false;
             dataGridView_Info.ClearSelection();
 
@@ -355,6 +381,52 @@ namespace LabZSK.Simulation
             dgvcs2.ForeColor = Color.Blue;
             dataGridView_Info.Rows[2].DefaultCellStyle = dgvcs2;
             dataGridView_Info.Rows[3].DefaultCellStyle = dgvcs2;
+        }
+        internal void setAllStrings()
+        {
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
+            button_Show_Log.Text = Strings.showLogButton;
+            button_End_Edit.Text = Strings.endEditRegisters;
+            button_OK.Text = Strings.okButton;
+            button_Next_Tact.Text = Strings.nextTactButton;
+            button_Micro.Text = Strings.micro.ToUpper();
+
+
+            toolStripMenu_Main.Text = Strings.simulationToolStrip;
+            toolStripMenu_Exit.Text = Strings.exitToolStrip;
+            toolStripMenu_Show_Log.Text = Strings.showLogToolStrip;
+            if (inEditMode)
+                toolStripMenu_Edit.Text = Strings.endEditRegisters;
+            else
+                toolStripMenu_Edit.Text = Strings.editRegisters;
+            toolStripMenu_Clear.Text = Strings.clearRegistersToolStrip;
+            closeLogToolStripMenuItem.Text = Strings.closeLogToolStrip;
+            devConsoleToolStripMenuItem.Text = Strings.devConsoleToolStrip;
+            settingsToolStripMenuItem.Text = Strings.settingsToolStrip;
+
+            microToolStripMenuItem.Text = Strings.microToolStrip;
+            editpmToolStripMenuItem.Text = Strings.editPMToolStrip;
+            loadpmToolStripMenuItem.Text = Strings.loadPMToolStrip;
+            memToolStripMenuItem.Text = Strings.memToolStrip;
+            editmemToolStripMenuItem.Text = Strings.editMemToolStrip;
+            loadmemToolStripMenuItem.Text = Strings.loadMemToolStrip;
+            aboutToolStripMenuItem.Text = Strings.authorToolStrip;
+            zapiszToolStripMenuItem.Text = zapiszToolStripMenuItem2.Text = Strings.saveToolStrip;
+            drukujToolStripMenuItem.Text = drukujToolStripMenuItem1.Text = Strings.printToolStrip;
+
+
+            try
+            {
+                dataGridView_Info.Rows[0].Cells[0].Value = Strings.mark;
+                dataGridView_Info.Rows[1].Cells[0].Value = Strings.mistakes;
+                dataGridView_Info.Rows[2].Cells[0].Value = Strings.tact;
+                dataGridView_Info.Rows[3].Cells[0].Value = Strings.cycle;
+            }
+            catch { }
+
+            Grid_PM.Columns[0].HeaderText = Grid_Mem.Columns[0].HeaderText = Strings.cellAddressViewGrid;
+            Grid_Mem.Columns[1].HeaderText = Strings.cellValueViewGrid;
+            this.Text = Strings.SimulationTitle;
         }
         #endregion
         #region SubFormUpdate
@@ -368,12 +440,13 @@ namespace LabZSK.Simulation
         }
         private void MemView_AUpdateForm(int row, string binary, string hex, int type)
         {
-            addTextToLog("\tPAO[" + row + "] = 0x" + List_Memory[row].hex.PadLeft(4, '0') + "     =>     PAO[" + row + "] = 0x" + hex + "\n\n");
+            addTextToLog(("PAO[" + row + "]").PadLeft(16, ' ') + " = 0x" + List_Memory[row].hex.PadLeft(4, '0') + "  =>  PAO[" + row + "] = 0x" + hex + "\n\n");
             List_Memory[row] = new MemoryRecord(row, binary, hex, type);
             Grid_Mem[1, row].Value = List_Memory[row].value;
             Grid_Mem[2, row].Value = List_Memory[row].hex;
             Grid_Mem.ClearSelection();
-            Grid_Mem.CurrentCell.Selected = true;
+            if (Grid_Mem.CurrentCell != null)
+                Grid_Mem.CurrentCell.Selected = true;
         }
         #endregion
         #region Buttons
@@ -391,7 +464,8 @@ namespace LabZSK.Simulation
             {
                 Application.DoEvents();
                 Thread.Sleep(Settings.Default.Delay);
-                registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                if(registerToCheck!="")
+                    registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
                 validateRegisters();
             }
         }
@@ -429,15 +503,15 @@ namespace LabZSK.Simulation
         {
             button_Next_Tact.Visible = false;
             buttonNextTactClicked = true;
-            dataGridView_Info.Rows[2].Cells[0].Value = currentTact;
+            dataGridView_Info.Rows[2].Cells[1].Value = currentTact;
         }
         private void button_OK_Click(object sender, EventArgs e)
         {
+            button_OK.Visible = false;
             buttonOKClicked = true;
             validateRegisters();
-            button_OK.Visible = false;
-            dataGridView_Info[0, 1].Value = mistakes;
-            dataGridView_Info[0, 0].Value = mark;
+            dataGridView_Info[1, 1].Value = mistakes;
+            dataGridView_Info[1, 0].Value = mark;
             if (mistakes >= Settings.Default.ThirdMark)
                 dgvcs1.ForeColor = Color.Red;
         }
@@ -455,7 +529,11 @@ namespace LabZSK.Simulation
         {
             button_OK.Visible = true;
             EnDisableButtons();
-            registers[registerToCheck].Focus();
+            try
+            {
+                registers[registerToCheck].Focus();
+            }
+            catch { }
             waitForButton();
             EnDisableButtons();
             buttonOKClicked = false;
@@ -463,28 +541,52 @@ namespace LabZSK.Simulation
         public void validateRegisters()
         {
             short badValue;
-            if (!registers[registerToCheck].validateRegisterValue(out badValue))
+            if (registerToCheck != "")
             {
-                new Thread(SystemSounds.Beep.Play).Start();
-                addTextToLog("\t\t" + Strings.mistake + "(" + (mistakes + 1) + "): " + registerToCheck + " = " + badValue + " / " + Convert.ToString(badValue, 16).ToUpper() +
-                    "h (" + Strings.correct + " " + registerToCheck + " = " + registers[registerToCheck].innerValue + " / " +
-                    Convert.ToString(registers[registerToCheck].innerValue, 16).ToUpper() + "h)\n\n");
-
-                mistakes++;
-
-                if (mistakes >= Settings.Default.ThirdMark)
-                    mark = 2;
-                else if (mistakes >= Settings.Default.SecondMark)
-                    mark = 3;
-                else if (mistakes >= Settings.Default.FirstMark)
-                    mark = 4;
+                if (!registers[registerToCheck].validateRegisterValue(out badValue))
+                {
+                    new Thread(SystemSounds.Beep.Play).Start();
+                    if (registerToCheck == "RAPS")
+                    {
+                        addTextToLog("\n" + Strings.mistake.PadLeft(14, ' ') + "(" + (mistakes + 1) + "): " + registerToCheck + " = " + badValue + " / " + Convert.ToString(badValue, 16).ToUpper() +
+                        "h (" + Strings.correct + " " + registerToCheck + " = " + registers[registerToCheck].innerValue + " / " +
+                        Convert.ToString(registers[registerToCheck].innerValue, 16).ToUpper() + "h)\n\n");
+                    }
+                    else
+                    {
+                        addTextToLog(Strings.mistake.PadLeft(14, ' ') + "(" + (mistakes + 1) + "): " + registerToCheck + " = " + badValue + " / " + Convert.ToString(badValue, 16).ToUpper() +
+                        "h (" + Strings.correct + " " + registerToCheck + " = " + registers[registerToCheck].innerValue + " / " +
+                        Convert.ToString(registers[registerToCheck].innerValue, 16).ToUpper() + "h)\n\n");
+                    }
+                    mistakes++;
+                    if (mistakes >= Settings.Default.ThirdMark)
+                        mark = 2;
+                    else if (mistakes >= Settings.Default.SecondMark)
+                        mark = 3;
+                    else if (mistakes >= Settings.Default.FirstMark)
+                        mark = 4;
+                    else
+                        mark = 5;
+                }
                 else
-                    mark = 5;
+                {
+                    if (registerToCheck == "RAPS")
+                    {
+                        addTextToLog("\n" + registerToCheck.PadLeft(15, ' ') + " = " + registers[registerToCheck].innerValue +
+                        " / " + Convert.ToString(registers[registerToCheck].innerValue, 16).ToUpper() + "h\n");
+                    }
+                    else
+                    {
+                        addTextToLog(registerToCheck.PadLeft(15, ' ') + " = " + registers[registerToCheck].innerValue +
+                        " / " + Convert.ToString(registers[registerToCheck].innerValue, 16).ToUpper() + "h\n");
+                    }
+                }
+                registerToCheck = "";
             }
-            else
+            if (flagToCheck != "")
             {
-                addTextToLog("\t\t" + registerToCheck + " = " + registers[registerToCheck].innerValue +
-                    " / " + Convert.ToString(registers[registerToCheck].innerValue, 16).ToUpper() + "h\n");
+                addTextToLog(flagToCheck.PadLeft(15, ' ') + " = " + flags[flagToCheck].innerValue + "\n");
+                flagToCheck = "";
             }
         }
         private void testAndSet(string register, short setValue)
@@ -557,17 +659,7 @@ namespace LabZSK.Simulation
         #region Log
         public void ACloseLog()
         {
-            string internetTime = string.Empty;
-            CancellationTokenSource cts = new CancellationTokenSource();
-            Task loop = Task.Factory.StartNew(() => GetNISTDate(cts.Token, out internetTime));
-            if (Task.WaitAll(new Task[] { loop }, nistTimeTimeout))
-            {
-            }
-            else
-            {
-                cts.Cancel();
-            }
-            addTextToLog("\n" + DateTime.Now.ToString("HH:mm.ss").PadLeft(20, ' ') + "\n" + internetTime.PadLeft(20, ' ') + "\n" + Strings.simStop + "\n" +
+            addTextToLog("\n" + DateTime.Now.ToString("HH:mm.ss").PadLeft(20, ' ') + "\n" + Strings.simStop + "\n" +
                 Strings.mark + ": " + mark + "   " + Strings.mistakes + ": " + mistakes + "\n");
             logManager.clearInMemoryLog();
             logManager.closeConnection();
@@ -712,9 +804,9 @@ namespace LabZSK.Simulation
         internal void AddToLogAndMiniLog(string tact, string mnemo, string description)
         {
             if (mnemo == "END")
-                addTextToLog("\t" + tact + " | " + mnemo + " : (" + Strings.cycle + " " + currnetCycle + ") " + description + " (" + DateTime.Now.ToString("HH:mm.ss") + ")\n");
+                addTextToLog((tact.PadLeft(8, ' ') + " | ") + mnemo.PadLeft(4, ' ') + " : (" + Strings.cycle + " " + currnetCycle + ") " + description + " (" + DateTime.Now.ToString("HH:mm.ss") + ")\n");
             else
-                addTextToLog("\t" + tact + " | " + mnemo + " : " + description + "\n");
+                addTextToLog((tact.PadLeft(8, ' ') + " | ") + mnemo.PadLeft(4, ' ') + " : " + description + "\n");
             string text;
             if (richTextBox_Log.Lines.Count() == 0)
                 text = tact.PadRight(5, ' ');
@@ -747,13 +839,13 @@ namespace LabZSK.Simulation
 
             if (e.KeyChar == (char)Keys.Enter && !inEditMode)
             {
-                if (isRunning && !inMicroMode)
+                if (isRunning && !inMicroMode && button_OK.Visible)
                     button_OK_Click(sender, e);
-                else if (isRunning && inMicroMode && currentTact != 7)
+                else if (isRunning && inMicroMode && currentTact != 7 && button_Next_Tact.Visible)
                     button_Next_Tact_Click(sender, e);
-                else if (isRunning && inMicroMode && currentTact == 7)
+                else if (isRunning && inMicroMode && currentTact == 7 && button_OK.Visible)
                     button_OK_Click(sender, e);
-                else
+                else if (button_Makro.Visible)
                     button_Makro_Click(sender, e);
             }
             else if (e.KeyChar == (char)Keys.Escape && inEditMode)
@@ -783,16 +875,12 @@ namespace LabZSK.Simulation
         static extern int MapVirtualKey(uint uCode, uint uMapType);
         private void Grid_Mem_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.Handled = true;
-            }
-            else if (char.IsLetterOrDigit((char)e.KeyCode) || e.KeyCode == Keys.OemMinus)
+            if (char.IsLetterOrDigit((char)e.KeyCode) || e.KeyCode == Keys.OemMinus)
             {
                 Grid_Mem.ReadOnly = false;
                 int nonVirtualKey = MapVirtualKey((uint)e.KeyCode, 2);
                 char mappedChar = Convert.ToChar(nonVirtualKey);
-                if ((mappedChar >= 'a' && mappedChar <= 'f')|| (mappedChar >= 'A' && mappedChar <= 'F') || (mappedChar >= '0' && mappedChar <= '9'))
+                if ((mappedChar >= 'a' && mappedChar <= 'f') || (mappedChar >= 'A' && mappedChar <= 'F') || (mappedChar >= '0' && mappedChar <= '9'))
                     Grid_Mem.CurrentCell.Value = mappedChar;
                 else if (e.KeyCode == Keys.OemMinus)
                     Grid_Mem.CurrentCell.Value = (char)45;
@@ -805,6 +893,7 @@ namespace LabZSK.Simulation
         }
         private void RunSim_SizeChanged(object sender, EventArgs e)
         {
+            panel_Sim_Control.BackgroundImage = null;
             previousWindowState = currentWindowState;
             currentWindowState = WindowState;
             if (previousWindowState != currentWindowState)
@@ -1024,9 +1113,9 @@ namespace LabZSK.Simulation
             foreach (var flg in flags)
                 flg.Value.resetValue();
             dgvcs1.ForeColor = Color.Green;
-            dataGridView_Info.Rows[0].Cells[0].Value = 5;
-            dataGridView_Info.Rows[1].Cells[0].Value = dataGridView_Info.Rows[2].Cells[0].Value =
-                dataGridView_Info.Rows[3].Cells[0].Value = 0;
+            dataGridView_Info.Rows[0].Cells[1].Value = 5;
+            dataGridView_Info.Rows[1].Cells[1].Value = dataGridView_Info.Rows[2].Cells[1].Value =
+                dataGridView_Info.Rows[3].Cells[1].Value = 0;
         }
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1078,24 +1167,6 @@ namespace LabZSK.Simulation
                 ADrawBackground();
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            var isActive = Application.OpenForms.Cast<Form>().Any(x => x.ContainsFocus);
-            if (!isActive)
-                appLostFocusCounter++;
-            Console.Out.WriteLine(appLostFocusCounter);
-            timer1.Enabled = false;
-        }
-
-        private void SimView_Activated(object sender, EventArgs e)
-        {
-            timer1.Enabled = true;
-        }
-
-        private void SimView_Deactivate(object sender, EventArgs e)
-        {
-            timer1.Enabled = true;
-        }
 
         private void zapiszToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1105,6 +1176,16 @@ namespace LabZSK.Simulation
         private void zapiszToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             memView.button_Save_Table_Click(this, new EventArgs());
+        }
+
+        private void Grid_Mem_CellLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            Grid_Mem.EndEdit();
+        }
+
+        private void SimView_ResizeBegin(object sender, EventArgs e)
+        {
+            
         }
 
         private void drukujToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -1117,49 +1198,6 @@ namespace LabZSK.Simulation
             pmView.button1_Click(this, new EventArgs());
         }
 
-        internal void setAllStrings()
-        {
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
-            button_Show_Log.Text = Strings.showLogButton;
-            button_End_Edit.Text = Strings.endEditRegisters;
-            button_OK.Text = Strings.okButton;
-            button_Next_Tact.Text = Strings.nextTactButton;
-            button_Micro.Text = Strings.micro.ToUpper();
-
-
-            toolStripMenu_Main.Text = Strings.simulationToolStrip;
-            toolStripMenu_Exit.Text = Strings.exitToolStrip;
-            toolStripMenu_Show_Log.Text = Strings.showLogToolStrip;
-            if (inEditMode)
-                toolStripMenu_Edit.Text = Strings.endEditRegisters;
-            else
-                toolStripMenu_Edit.Text = Strings.editRegisters;
-            toolStripMenu_Clear.Text = Strings.clearRegistersToolStrip;
-            closeLogToolStripMenuItem.Text = Strings.closeLogToolStrip;
-            devConsoleToolStripMenuItem.Text = Strings.devConsoleToolStrip;
-            settingsToolStripMenuItem.Text = Strings.settingsToolStrip;
-
-            microToolStripMenuItem.Text = Strings.microToolStrip;
-            editpmToolStripMenuItem.Text = Strings.editPMToolStrip;
-            loadpmToolStripMenuItem.Text = Strings.loadPMToolStrip;
-            memToolStripMenuItem.Text = Strings.memToolStrip;
-            editmemToolStripMenuItem.Text = Strings.editMemToolStrip;
-            loadmemToolStripMenuItem.Text = Strings.loadMemToolStrip;
-            aboutToolStripMenuItem.Text = Strings.authorToolStrip;
-
-            try
-            {
-                dataGridView_Info.Rows[0].Cells[1].Value = Strings.mark;
-                dataGridView_Info.Rows[1].Cells[1].Value = Strings.mistakes;
-                dataGridView_Info.Rows[2].Cells[1].Value = Strings.tact;
-                dataGridView_Info.Rows[3].Cells[1].Value = Strings.cycle;
-            }
-            catch { }
-
-            Grid_PM.Columns[0].HeaderText = Grid_Mem.Columns[0].HeaderText = Strings.cellAddressViewGrid;
-            Grid_Mem.Columns[1].HeaderText = Strings.cellValueViewGrid;
-            this.Text = Strings.SimulationTitle;
-        }
         internal void ADrawBackground()
         {
             panel_Sim_Control.Visible = false;

@@ -1,4 +1,5 @@
 ﻿using LabZSK.Controls;
+using LabZSK.Properties;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -37,7 +38,7 @@ namespace LabZSK.Simulation
         public void drawBackground()
         {
             Bitmap skin;
-            switch (Properties.Settings.Default.SkinNum)
+            switch (Settings.Default.Skin)
             {
                 case 0:
                     skin = drawSkin(Color.FromArgb(255, 27, 96, 51), Color.FromArgb(255, 133, 198, 72), Color.FromArgb(255, 249, 66, 239));
@@ -52,7 +53,7 @@ namespace LabZSK.Simulation
                     skin = drawSkin(Color.FromArgb(255, 5, 5, 5), Color.FromArgb(255, 120, 120, 120), Color.FromArgb(255, 249, 239, 245));
                     break;
                 default:
-                    skin = drawSkin(Color.FromArgb(255, 27, 96, 51), Color.FromArgb(255, 133, 198, 72), Color.FromArgb(255, 249, 66, 239));
+                    skin = drawSkin(Color.FromArgb(255, Settings.Default.R1, Settings.Default.G1, Settings.Default.B1), Color.FromArgb(255, Settings.Default.R2, Settings.Default.G2, Settings.Default.B2), Color.FromArgb(255, Settings.Default.R3, Settings.Default.G3, Settings.Default.B3));
                     break;
             }
             controlToDrawOn.BackgroundImage = skin;
@@ -88,7 +89,7 @@ namespace LabZSK.Simulation
             path.StartFigure();
             //
             p2.X = p1.X = controlToDrawOn.Location.X + (registers["BUS"].Location.X / 2);
-            p2.Y = registers["LK"].Location.Y ;
+            p2.Y = registers["LK"].Location.Y;
             p1.Y = controlToDrawOn.Size.Height;
             //
             path.AddLine(p1, p2);
@@ -188,11 +189,9 @@ namespace LabZSK.Simulation
             //p2.X = registers["X"].Location.Y;
             path.Reset();
             path.StartFigure();
-            //tu podnoszę magistralę nad flagami
-            p2.Y -= 6;
+            //tu magistrala nad flagami
             path.AddLine(p1, new Point(p1.X, p2.Y));
             path.AddLine(new Point(p1.X, p2.Y), p2);
-
             //
             p1.X = registers["X"].Location.X + registers["X"].Size.Width / 2;
             p1.Y = p2.Y;
@@ -203,7 +202,7 @@ namespace LabZSK.Simulation
 
             g.DrawPath(pen, path);
             //
-           
+
             controlToDrawOn.Visible = true;
             if (registers["SUMA"].Visible)
             {
@@ -222,7 +221,7 @@ namespace LabZSK.Simulation
                 p2.X = registers["L"].Location.X + registers["L"].Size.Height / 2;
                 path.AddLine(p1, p2);
                 g.DrawPath(pen, path);
-                
+
                 p2 = registers["SUMA"].Location;
                 p2.X += registers["SUMA"].Size.Width / 2;
                 p2.Y += registers["SUMA"].Size.Height / 2;
@@ -299,7 +298,7 @@ namespace LabZSK.Simulation
             Font fnt = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
             SolidBrush sb = new SolidBrush(textColor);
             foreach (var flg in flags.Values)
-                g.DrawString(flg.flagName, fnt, sb, flg.Location.X + flg.Width/2 - g.MeasureString(flg.flagName, fnt).Width/2, flg.Location.Y - 18);
+                g.DrawString(flg.flagName, fnt, sb, flg.Location.X + flg.Width / 2 - g.MeasureString(flg.flagName, fnt).Width / 2, flg.Location.Y - 18);
             foreach (var reg in registers.Values)
                 if (reg.Visible)
                     if (reg.registerName == "L" || reg.registerName == "R" || reg.registerName == "ALU" || reg.registerName == "SUMA")

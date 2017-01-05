@@ -310,4 +310,10 @@ You will lose all progress.</value>
   <data name="logFileName" xml:space="preserve">
     <value>You must create log file</value>
   </data>
+  <data name="printToolStrip" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="saveToolStrip" xml:space="preserve">
+    <value>Save...</value>
+  </data>
 </root>

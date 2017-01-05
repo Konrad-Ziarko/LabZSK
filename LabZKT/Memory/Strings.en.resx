@@ -234,4 +234,7 @@
   <data name="exitButton" xml:space="preserve">
     <value>Exit</value>
   </data>
+  <data name="printButton" xml:space="preserve">
+    <value>Print</value>
+  </data>
 </root>

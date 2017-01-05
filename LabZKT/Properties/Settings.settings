@@ -2,17 +2,14 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="LabZSK.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Skin" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Domyślny</Value>
+    <Setting Name="Skin" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Delay" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">200</Value>
     </Setting>
     <Setting Name="CanEditOptions" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="SkinNum" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="FirstMark" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
@@ -43,6 +40,36 @@
     </Setting>
     <Setting Name="isServerVisible" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="RunIdx" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="R1" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">27</Value>
+    </Setting>
+    <Setting Name="R2" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">133</Value>
+    </Setting>
+    <Setting Name="R3" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">249</Value>
+    </Setting>
+    <Setting Name="G1" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">96</Value>
+    </Setting>
+    <Setting Name="G2" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">198</Value>
+    </Setting>
+    <Setting Name="G3" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">66</Value>
+    </Setting>
+    <Setting Name="B1" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">51</Value>
+    </Setting>
+    <Setting Name="B2" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">72</Value>
+    </Setting>
+    <Setting Name="B3" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">239</Value>
     </Setting>
   </Settings>
 </SettingsFile>

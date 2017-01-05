@@ -81,7 +81,7 @@
             this.Grid_PM.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -103,7 +103,7 @@
             this.NA});
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -114,12 +114,13 @@
             this.Grid_PM.Margin = new System.Windows.Forms.Padding(2);
             this.Grid_PM.MultiSelect = false;
             this.Grid_PM.Name = "Grid_PM";
-            this.Grid_PM.ReadOnly = true;
             this.Grid_PM.RowHeadersVisible = false;
             this.Grid_PM.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.Grid_PM.RowTemplate.Height = 24;
             this.Grid_PM.Size = new System.Drawing.Size(589, 605);
             this.Grid_PM.TabIndex = 3;
+            this.Grid_PM.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.Grid_PM_CellEndEdit);
+            this.Grid_PM.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.Grid_PM_CellLeave);
             this.Grid_PM.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grid_PM_CellMouseDoubleClick);
             this.Grid_PM.DragDrop += new System.Windows.Forms.DragEventHandler(this.grid_PM_DragDrop);
             this.Grid_PM.DragEnter += new System.Windows.Forms.DragEventHandler(this.grid_PM_DragEnter);
@@ -140,7 +141,7 @@
             this.addres.ReadOnly = true;
             this.addres.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.addres.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.addres.Width = 60;
+            this.addres.Width = 51;
             // 
             // s1
             // 
@@ -248,7 +249,6 @@
             this.NA.HeaderText = "NA";
             this.NA.MinimumWidth = 50;
             this.NA.Name = "NA";
-            this.NA.ReadOnly = true;
             this.NA.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.NA.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
@@ -272,9 +272,9 @@
             // button1
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
             this.button1.FlatAppearance.BorderSize = 2;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button1.Location = new System.Drawing.Point(7, 238);
             this.button1.Margin = new System.Windows.Forms.Padding(7);
@@ -419,6 +419,8 @@
         private System.Windows.Forms.Button button_Clear_Row;
         private System.Windows.Forms.OpenFileDialog open_File_Dialog;
         private System.Windows.Forms.SaveFileDialog save_File_Dialog;
+        private System.Windows.Forms.Button button_Exit;
+        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridViewTextBoxColumn addres;
         private System.Windows.Forms.DataGridViewTextBoxColumn s1;
         private System.Windows.Forms.DataGridViewTextBoxColumn d1;
@@ -431,7 +433,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Test;
         private System.Windows.Forms.DataGridViewTextBoxColumn ALU;
         private System.Windows.Forms.DataGridViewTextBoxColumn NA;
-        private System.Windows.Forms.Button button_Exit;
-        private System.Windows.Forms.Button button1;
     }
 }

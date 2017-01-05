@@ -298,7 +298,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Instructions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="StaticClasses\Operations.en.resx" />
+    <EmbeddedResource Include="StaticClasses\Operations.en.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="StaticClasses\Operations.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Operations.Designer.cs</LastGenOutput>
@@ -337,6 +339,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Logo_WAT.ico" />
+    <None Include="Resources\splash2.png" />
     <None Include="Resources\pc.ico" />
     <None Include="Resources\splash.png" />
     <None Include="Resources\BSoD.wav" />
