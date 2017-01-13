@@ -174,7 +174,7 @@ namespace LabZSK.Other
         private void button1_Click(object sender, EventArgs e)
         {
             SaveFileDialog save_File_Dialog = new SaveFileDialog();
-            save_File_Dialog.Filter = "To czego szukasz|*.mnie|Wszystko|*.*";
+            save_File_Dialog.Filter = "Plik konfiguracyjny|*.mnie|Wszystko|*.*";
             save_File_Dialog.Title = "Zapisz konfigurację";
             if (Directory.Exists(_environmentPath))
                 save_File_Dialog.InitialDirectory = _environmentPath;

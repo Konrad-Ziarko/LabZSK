@@ -1,26 +1,26 @@
-﻿using System.Runtime.CompilerServices;
-using System.Reflection;
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("LabZSK")]
-[assembly: AssemblyDescription("Symulator Komputera Sterowanego Mikroprogramowo LabZSK")]
-[assembly: AssemblyConfiguration("Ziarko Konrad")]
-[assembly: AssemblyCompany("Ziarko Konrad Tomasz - Wojskowa Akademia Techniczna")]
-[assembly: AssemblyProduct("LabZSK")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyTitle("LabZSKTests")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("LabZSKTests")]
+[assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
-[assembly: ComVisible(true)]
+[assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("1b859384-6c72-4f67-a97d-abb0af560d36")]
+[assembly: Guid("d0aa5db3-1a89-4e18-8618-3329eb3d3746")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,8 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.0.0")]
-[assembly: AssemblyFileVersion("1.1.0.0")]
-[assembly: InternalsVisibleTo("LabZSK.Tests")]
-[assembly: InternalsVisibleTo("LabZSK.Explorables")]
-
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

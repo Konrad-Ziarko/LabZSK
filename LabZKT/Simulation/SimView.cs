@@ -893,6 +893,7 @@ namespace LabZSK.Simulation
         }
         private void RunSim_SizeChanged(object sender, EventArgs e)
         {
+            var tmp = panel_Sim_Control.BackgroundImage;
             panel_Sim_Control.BackgroundImage = null;
             previousWindowState = currentWindowState;
             currentWindowState = WindowState;
@@ -902,6 +903,8 @@ namespace LabZSK.Simulation
                     SimView_ResizeEnd(this, new EventArgs());
                 else if (currentWindowState == FormWindowState.Normal && previousWindowState == FormWindowState.Maximized)
                     SimView_ResizeEnd(this, new EventArgs());
+                else
+                    panel_Sim_Control.BackgroundImage = tmp;
             }
         }
         private void SimView_KeyDown(object sender, KeyEventArgs e)
@@ -1188,6 +1191,27 @@ namespace LabZSK.Simulation
             
         }
 
+        private void SimView_MinimumSizeChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SimView_Shown(object sender, EventArgs e)
+        {
+            
+        }
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_SYSCOMMAND = 0x0112;
+            const int SC_RESTORE = 0xF120;
+
+            if (m.Msg == WM_SYSCOMMAND && (int)m.WParam == SC_RESTORE)
+            {
+                //
+            }
+
+            base.WndProc(ref m);
+        }
         private void drukujToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             memView.button1_Click(this, new EventArgs());

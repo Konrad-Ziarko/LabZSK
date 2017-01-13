@@ -929,8 +929,10 @@
             this.MinimumSize = new System.Drawing.Size(950, 700);
             this.Name = "SimView";
             this.Text = "Komputer LabZSK";
+            this.MinimumSizeChanged += new System.EventHandler(this.SimView_MinimumSizeChanged);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RunSim_FormClosing);
             this.Load += new System.EventHandler(this.RunSim_Load);
+            this.Shown += new System.EventHandler(this.SimView_Shown);
             this.ResizeBegin += new System.EventHandler(this.SimView_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.SimView_ResizeEnd);
             this.SizeChanged += new System.EventHandler(this.RunSim_SizeChanged);

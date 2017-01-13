@@ -309,11 +309,6 @@ namespace LabZSK.Controls
                 innerValue &= 255;
                 valueWhichShouldBeMovedToRegister &= 255;
             }
-            else if (registerName == "LR")
-            {
-                innerValue &= 255;
-                valueWhichShouldBeMovedToRegister &= 255;
-            }
         }
     }
 }
