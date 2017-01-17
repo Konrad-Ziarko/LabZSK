@@ -89,6 +89,16 @@ namespace LabZSK.MicroOperations
                 startLocation.Y = 0;
             startLocation.X -= this.Width / 2;
             Location = startLocation;
+            var curLoc = Location;
+            if (curLoc.Y < 0)
+                curLoc.Y = 0;
+            if (curLoc.X < 0)
+                curLoc.X = 0;
+            if (curLoc.Y + Size.Height > Screen.PrimaryScreen.Bounds.Height)
+                curLoc.Y = Screen.PrimaryScreen.Bounds.Height - Size.Height;
+            if (curLoc.X + Size.Width > Screen.PrimaryScreen.Bounds.Width)
+                curLoc.X = Screen.PrimaryScreen.Bounds.Width - Size.Width;
+            Location = curLoc;
             radioButton1.Focus();
             radioButton1.Select();
         }

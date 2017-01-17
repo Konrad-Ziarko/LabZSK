@@ -32,5 +32,27 @@ namespace LabZSK.StaticClasses.Tests
             // assert
             Assert.AreEqual(expected, actual);
         }
+        [TestMethod()]
+        public void ComputePMChecksumTest3()
+        {
+            // arrange
+            byte[] test = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+            uint expected = 49124351;
+            // act
+            uint actual = CRC.ComputePMChecksum(test);
+            // assert
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod()]
+        public void ComputePMChecksumTest4()
+        {
+            // arrange
+            byte[] test = { 9, 8, 7, 6, 5, 5, 4, 3, 2, 1 };
+            uint expected = 38518784;
+            // act
+            uint actual = CRC.ComputePMChecksum(test);
+            // assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

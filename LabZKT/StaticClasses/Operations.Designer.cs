@@ -709,7 +709,7 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A &lt; 0.
+        ///   Looks up a localized string similar to A &lt;= 0.
         /// </summary>
         internal static string TAP {
             get {
@@ -781,7 +781,7 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RI &lt; 0.
+        ///   Looks up a localized string similar to RI &lt;= 0.
         /// </summary>
         internal static string TXP {
             get {
@@ -790,7 +790,7 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to XRO = 0.
+        ///   Looks up a localized string similar to RI = 0.
         /// </summary>
         internal static string TXRO {
             get {

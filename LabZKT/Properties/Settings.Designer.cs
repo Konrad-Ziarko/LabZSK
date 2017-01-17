@@ -298,5 +298,17 @@ namespace LabZSK.Properties {
                 this["B3"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SimTimer {
+            get {
+                return ((bool)(this["SimTimer"]));
+            }
+            set {
+                this["SimTimer"] = value;
+            }
+        }
     }
 }

@@ -57,6 +57,7 @@ namespace LabZSK.Simulation
         private DevConsole devConsole;
         #endregion
         #region Simulation Vars
+        private DateTime simTime;
         internal bool isRunning = false;
         private bool isTestPositive = false;
         private bool isOverflow = false;
@@ -66,7 +67,7 @@ namespace LabZSK.Simulation
         private bool resetBus;
         private bool layoutChange = false;
         private bool[,] cells = new bool[11, 8];
-        private string logFile = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty, flagToCheck=string.Empty;
+        private string logFile = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty, flagToCheck = string.Empty;
         private short raps = 0, na = 0;
         private int currnetCycle;
         private int mark;
@@ -464,7 +465,7 @@ namespace LabZSK.Simulation
             {
                 Application.DoEvents();
                 Thread.Sleep(Settings.Default.Delay);
-                if(registerToCheck!="")
+                if (registerToCheck != "")
                     registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
                 validateRegisters();
             }
@@ -1129,24 +1130,22 @@ namespace LabZSK.Simulation
         }
         private void nowyLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (false)//tymczasowe
-                if (Settings.Default.CanCloseLog)
+            if (Settings.Default.CanCloseLog)
+            {
+                DialogResult result = MessageBox.Show(Strings.areYouSureCloseLog, Strings.areYouSureCloseLogTitle, MessageBoxButtons.OKCancel);
+                if (result == DialogResult.OK)
                 {
-                    DialogResult result = MessageBox.Show(Strings.areYouSureCloseLog, Strings.areYouSureCloseLogTitle, MessageBoxButtons.OKCancel);
-                    if (result == DialogResult.OK)
-                    {
-                        ACloseLog();
-                        closeLogToolStripMenuItem.Enabled = false;
-                        button_Show_Log.Visible = false;
-                    }
+                    ACloseLog();
+                    closeLogToolStripMenuItem.Enabled = false;
+                    button_Show_Log.Visible = false;
+                    timer1.Enabled = false;
                 }
-                else
-                {
-                    SystemSounds.Hand.Play();
-                    MessageBox.Show(Strings.cantCloseLogFile);
-                }
+            }
             else
+            {
+                SystemSounds.Hand.Play();
                 MessageBox.Show(Strings.cantCloseLogFile);
+            }
         }
         #endregion
         #region Other
@@ -1188,7 +1187,7 @@ namespace LabZSK.Simulation
 
         private void SimView_ResizeBegin(object sender, EventArgs e)
         {
-            
+
         }
 
         private void SimView_MinimumSizeChanged(object sender, EventArgs e)
@@ -1198,7 +1197,13 @@ namespace LabZSK.Simulation
 
         private void SimView_Shown(object sender, EventArgs e)
         {
-            
+            Microsoft.Win32.SystemEvents.DisplaySettingsChanged += new
+            EventHandler(SystemEvents_DisplaySettingsChanged);
+        }
+
+        public void SystemEvents_DisplaySettingsChanged(object sender, EventArgs e)
+        {
+            SimView_ResizeEnd(this, new EventArgs());
         }
         protected override void WndProc(ref Message m)
         {
@@ -1212,6 +1217,13 @@ namespace LabZSK.Simulation
 
             base.WndProc(ref m);
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            TimeSpan diff = DateTime.Now - simTime;
+            label1.Text = string.Format("{0:00}:{1:00}.{2:00}", diff.Hours, diff.Minutes, diff.Seconds);
+        }
+
         private void drukujToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             memView.button1_Click(this, new EventArgs());

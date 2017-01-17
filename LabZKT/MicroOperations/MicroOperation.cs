@@ -55,6 +55,11 @@ namespace LabZSK.MicroOperations
         /// Microoperation NA field value
         /// </summary>
         public string NA { get; private set; }
+        public MicroOperation(int adr)
+        {
+            addr = adr.ToString();
+            S1 = D1 = S2 = D2 = S3 = D3 = C1 = C2 = Test = ALU = NA = "";
+        }
         /// <summary>
         /// Initialize microoperation class instance
         /// </summary>
@@ -113,7 +118,7 @@ namespace LabZSK.MicroOperations
 
         }
 
-        internal string getColumn(int col)
+        public string getColumn(int col)
         {
             if (col == 1)
                 return S1;
@@ -139,7 +144,7 @@ namespace LabZSK.MicroOperations
                 return NA;
             return "";
         }
-        internal string getColumnName(int col)
+        public string getColumnName(int col)
         {
             if (col == 1)
                 return "S1";

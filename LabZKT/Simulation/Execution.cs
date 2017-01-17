@@ -119,21 +119,33 @@ namespace LabZSK.Simulation
             }
             else if (microOpMnemo == "TXP")
             {
-                if (registers["RI"].innerValue < 0)
+                if (registers["RI"].innerValue <= 0)
                     isTestPositive = true;
             }
             else if (microOpMnemo == "TXZ")
             {
-                //co tu porównać?
+                short tmp = registers["RR"].innerValue;
+                string rr = tmp.ToString().PadLeft(16, '0');
+                string op = rr.Substring(0, 5);
+                if (op == "10101")//TLD
+                {
+                    if (registers["RI"].innerValue == 0)
+                        isTestPositive = true;
+                }
+                else if(op == "10011")//BXZ
+                {
+                    if (registers["RI"].innerValue != 0)
+                        isTestPositive = true;
+                }
             }
-            else if (microOpMnemo == "TXRO")
+            else if (microOpMnemo == "TXRO")//zmienić nazwę na TRI0
             {
-                if (flags["XRO"].innerValue == 0)
+                if (registers["RI"].innerValue == 0)
                     isTestPositive = true;
             }
             else if (microOpMnemo == "TAP")
             {
-                if (registers["A"].innerValue < 0)
+                if (registers["A"].innerValue <= 0)
                     isTestPositive = true;
             }
             else if (microOpMnemo == "TAZ")
@@ -876,6 +888,8 @@ namespace LabZSK.Simulation
                     foreach (var reg in registers.Values)
                         addTextToLog(reg.registerName.PadRight(6, ' ') + " = " + reg.Text + "\n");
                     addTextToLog("\n");
+                    timer1.Enabled = true;
+                    simTime = DateTime.Now;
                 }
             }
             if (DEVMODE)

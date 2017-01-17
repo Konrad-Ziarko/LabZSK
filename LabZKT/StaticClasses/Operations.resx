@@ -334,7 +334,7 @@
     <value>OFF = 0</value>
   </data>
   <data name="TAP" xml:space="preserve">
-    <value>A &lt; 0</value>
+    <value>A &lt;= 0</value>
   </data>
   <data name="TAS" xml:space="preserve">
     <value>A &gt;= 0</value>
@@ -358,10 +358,10 @@
     <value>ZNAK = 0</value>
   </data>
   <data name="TXP" xml:space="preserve">
-    <value>RI &lt; 0</value>
+    <value>RI &lt;= 0</value>
   </data>
   <data name="TXRO" xml:space="preserve">
-    <value>XRO = 0</value>
+    <value>RI = 0</value>
   </data>
   <data name="TXS" xml:space="preserve">
     <value>RI &gt;= 0</value>

@@ -116,6 +116,16 @@ namespace LabZSK.Memory
                     numericUpDown_N.Value = Convert.ToInt16(tmp.Substring(9, 7), 2);
                 }
             }
+            var curLoc = Location;
+            if (curLoc.Y < 0)
+                curLoc.Y = 0;
+            if (curLoc.X < 0)
+                curLoc.X = 0;
+            if (curLoc.Y + Size.Height > Screen.PrimaryScreen.Bounds.Height)
+                curLoc.Y = Screen.PrimaryScreen.Bounds.Height-Size.Height;
+            if (curLoc.X + Size.Width> Screen.PrimaryScreen.Bounds.Width)
+                curLoc.X = Screen.PrimaryScreen.Bounds.Width - Size.Width;
+            Location = curLoc;
         }
         private void setAndClose(DataType type)
         {

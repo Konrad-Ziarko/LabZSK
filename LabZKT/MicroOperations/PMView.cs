@@ -254,9 +254,9 @@ namespace LabZSK.MicroOperations
             NewMicroInstruction(newMicroInstruction, currentMicroInstruction);
             if (newMicroInstruction == "SHT")
             {
-                theSubView.startPosition = Cursor.Position;
                 using (theSubView = new PMSubmit(4, Grid_PM[4, idxRow].Value.ToString(), Grid_PM[7, idxRow].Value.ToString()))
                 {
+                    theSubView.startPosition = Cursor.Position;
                     var result = theSubView.ShowDialog();
                     if (result == DialogResult.OK)
                         newMicroInstruction = theSubView.SelectedInstruction;

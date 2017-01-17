@@ -87,7 +87,6 @@ namespace LabZSK.Memory
                     isComplex = false;
                     XSI = value.Substring(5, 3);
                     OP = value.Substring(0, 5);
-                    XSI = value.Substring(5, 3);
                     DA = value.Substring(8, 8);
                 }
             }
