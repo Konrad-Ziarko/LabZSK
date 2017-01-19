@@ -57,6 +57,7 @@ namespace LabZSK.Simulation
         private DevConsole devConsole;
         #endregion
         #region Simulation Vars
+        private bool canSimulate = true;
         private DateTime simTime;
         internal bool isRunning = false;
         private bool isTestPositive = false;
@@ -69,7 +70,7 @@ namespace LabZSK.Simulation
         private bool[,] cells = new bool[11, 8];
         private string logFile = string.Empty, microOpMnemo = string.Empty, registerToCheck = string.Empty, flagToCheck = string.Empty;
         private short raps = 0, na = 0;
-        private int currnetCycle;
+        internal int currnetCycle;
         private int mark;
         private int mistakes;
         private int currentTact;
@@ -80,6 +81,9 @@ namespace LabZSK.Simulation
         internal bool DEVMODE = false;
         internal int DEVVALUE;
         internal string DEVREGISTER;
+        internal int DEVCYCLE;
+        internal int DEVINCCYCLE;
+        internal bool DEVADDCYCLE = false;
         #endregion
         #region Form vars
         private DataGridViewCellStyle dgvcs1;
@@ -152,8 +156,8 @@ namespace LabZSK.Simulation
                 }
             }
             catch { }
-            devConsoleToolStripMenuItem.Enabled = false;
-            closeLogToolStripMenuItem.Enabled = false;
+            devConsoleToolStripMenuItem.Enabled = Settings.Default.IsDevConsole;
+            closeLogToolStripMenuItem.Enabled = Settings.Default.CanCloseLog;
             setAllStrings();
         }
         private void RunSim_Load(object sender, EventArgs e)
@@ -433,15 +437,15 @@ namespace LabZSK.Simulation
         #region SubFormUpdate
         private void PmView_AUpdateData(int row, int col, string str)
         {
-            addTextToLog("\t" + Strings.microcodeHasChanged + "\n\tPM["
+            addTextToLog("PM[".PadLeft(14, ' ')
                 + row + "][" + List_MicroOp[row].getColumnName(col) + "] = \"" + List_MicroOp[row].getColumn(col)
-                + "\"     =>     PM[" + row + "][" + List_MicroOp[row].getColumnName(col) + "] = \"" + str + "\"\n\n");
+                + "\"  -zmiana->  PM[" + row + "][" + List_MicroOp[row].getColumnName(col) + "] = \"" + str + "\"\n");
             List_MicroOp[row].setValue(col, str);
             Grid_PM[col, row].Value = List_MicroOp[row].getColumn(col);
         }
         private void MemView_AUpdateForm(int row, string binary, string hex, int type)
         {
-            addTextToLog(("PAO[" + row + "]").PadLeft(16, ' ') + " = 0x" + List_Memory[row].hex.PadLeft(4, '0') + "  =>  PAO[" + row + "] = 0x" + hex + "\n\n");
+            addTextToLog(("PAO[" + row + "]").PadLeft(17, ' ') + " = 0x" + List_Memory[row].hex.PadLeft(4, '0') + "  -zmiana->  PAO[" + row + "] = 0x" + hex + "\n");
             List_Memory[row] = new MemoryRecord(row, binary, hex, type);
             Grid_Mem[1, row].Value = List_Memory[row].value;
             Grid_Mem[2, row].Value = List_Memory[row].hex;
@@ -472,6 +476,7 @@ namespace LabZSK.Simulation
         }
         internal void button_Makro_Click(object sender, EventArgs e)
         {
+            if(canSimulate)
             if (!isRunning)
             {
                 toolStripMenu_Edit.Enabled = false;
@@ -487,6 +492,7 @@ namespace LabZSK.Simulation
         }
         private void button_Micro_Click(object sender, EventArgs e)
         {
+            if(canSimulate)
             if (!isRunning)
             {
                 toolStripMenu_Edit.Enabled = false;
@@ -626,8 +632,8 @@ namespace LabZSK.Simulation
             foreach (var oldReg in oldRegs)
             {
                 if (registers[oldReg.Key].innerValue != oldReg.Value)
-                    addTextToLog(Strings.registerHasChanged + " " + oldReg.Key.PadRight(6, ' ') +
-                        oldReg.Value + "=>" + registers[oldReg.Key].innerValue + "\n");
+                    addTextToLog("".PadLeft(11, ' ') + oldReg.Key + " = " +
+                        oldReg.Value + "  -zmiana->  "+ oldReg.Key + " = " + registers[oldReg.Key].innerValue + "\n");
             }
             foreach (var reg in registers)
                 reg.Value.Enabled = false;
@@ -728,19 +734,19 @@ namespace LabZSK.Simulation
                     log.MaximizeBox = false;
                     //log.SizeGripStyle = SizeGripStyle.Hide;
 
-                    Regex regExp = new Regex(@"(={2}.+==|" + Strings.mistake + @".+\s|" + Strings.canEditSettings + @"\s|" + Strings.notForStudents + @"\s)");
+                    Regex regExp = new Regex(@"(={2}.+==|" + Strings.mistake + @".+\s|" + Strings.canEditSettings + @"\s|" + Strings.criticalError + @"\s|" + Strings.notForStudents + @"\s)");
                     foreach (Match match in regExp.Matches(rtb.Text))
                     {
                         rtb.Select(match.Index, match.Length);
                         rtb.SelectionColor = Color.Red;
                     }
-                    regExp = new Regex(@"Auto:.+\s");
+                    regExp = new Regex(@"AUTO:.+\s");
                     foreach (Match match in regExp.Matches(rtb.Text))
                     {
                         rtb.Select(match.Index, match.Length);
                         rtb.SelectionColor = Color.MediumVioletRed;
                     }
-                    regExp = new Regex(@"(" + Strings.registerHasChanged + @".+\s|" + Strings.microcodeHasChanged + @"\s|" + "=>" + @"\s)");
+                    regExp = new Regex(@"(" + Strings.registerHasChanged + @".+\s|" + "-zmiana->" + @"\s)");
                     foreach (Match match in regExp.Matches(rtb.Text))
                     {
                         rtb.Select(match.Index, match.Length);
@@ -752,7 +758,7 @@ namespace LabZSK.Simulation
                         rtb.Select(match.Index, match.Length);
                         rtb.SelectionColor = Color.Blue;
                     }
-                    regExp = new Regex(@"(={8}.+=|Makro\s|" + Strings.micro + @"\s)");
+                    regExp = new Regex(@"(={8}.+=|"+ Strings.macro + @"\s|" + Strings.micro + @"\s)");
                     foreach (Match match in regExp.Matches(rtb.Text))
                     {
                         rtb.Select(match.Index, match.Length);
@@ -806,6 +812,8 @@ namespace LabZSK.Simulation
         {
             if (mnemo == "END")
                 addTextToLog((tact.PadLeft(8, ' ') + " | ") + mnemo.PadLeft(4, ' ') + " : (" + Strings.cycle + " " + currnetCycle + ") " + description + " (" + DateTime.Now.ToString("HH:mm.ss") + ")\n");
+            else if (mnemo == "TINT")
+                addTextToLog((tact.PadLeft(8, ' ') + " | ") + mnemo.PadLeft(4, ' ') + " : " + description + "(INT ?= 0)\n");
             else
                 addTextToLog((tact.PadLeft(8, ' ') + " | ") + mnemo.PadLeft(4, ' ') + " : " + description + "\n");
             string text;
@@ -907,6 +915,8 @@ namespace LabZSK.Simulation
                 else
                     panel_Sim_Control.BackgroundImage = tmp;
             }
+            else
+                panel_Sim_Control.BackgroundImage = tmp;
         }
         private void SimView_KeyDown(object sender, KeyEventArgs e)
         {
@@ -1139,6 +1149,7 @@ namespace LabZSK.Simulation
                     closeLogToolStripMenuItem.Enabled = false;
                     button_Show_Log.Visible = false;
                     timer1.Enabled = false;
+                    canSimulate = true;
                 }
             }
             else
@@ -1217,11 +1228,49 @@ namespace LabZSK.Simulation
 
             base.WndProc(ref m);
         }
-
         private void timer1_Tick(object sender, EventArgs e)
         {
             TimeSpan diff = DateTime.Now - simTime;
-            label1.Text = string.Format("{0:00}:{1:00}.{2:00}", diff.Hours, diff.Minutes, diff.Seconds);
+            TimeSpan now = simTime.TimeOfDay;
+            richTextBox1.Text = string.Format("{0:00}:{1:00}.{2:00}", now.Hours, now.Minutes, now.Seconds) +" + "+string.Format("{0:00}:{1:00}.{2:00}", diff.Hours, diff.Minutes, diff.Seconds);
+            
+            Regex regExp = new Regex(@"\+");
+            foreach (Match match in regExp.Matches(richTextBox1.Text))
+            {
+                richTextBox1.Select(match.Index, match.Length);
+                richTextBox1.SelectionColor = Color.Red;
+            }
+            richTextBox1.SelectAll();
+            richTextBox1.SelectionAlignment = HorizontalAlignment.Right;
+            richTextBox1.Select(0, 0);
+        }
+
+        private void richTextBox1_SelectionChanged(object sender, EventArgs e)
+        {
+            //e.Handled = true;
+            //richTextBox1.SelectionLength = 0;
+        }
+
+        private void richTextBox1_Enter(object sender, EventArgs e)
+        {
+            richTextBox1.Parent.Focus();
+        }
+
+        public class TransparentPanel : Panel
+        {
+            protected override CreateParams CreateParams
+            {
+                get
+                {
+                    CreateParams cp = base.CreateParams;
+                    cp.ExStyle |= 0x00000020; // WS_EX_TRANSPARENT
+                    return cp;
+                }
+            }
+            protected override void OnPaintBackground(PaintEventArgs e)
+            {
+                //base.OnPaintBackground(e);
+            }
         }
 
         private void drukujToolStripMenuItem1_Click(object sender, EventArgs e)

@@ -149,6 +149,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Simulation\TransparentPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Simulation\TransparentPanel.Designer.cs">
+      <DependentUpon>TransparentPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="StaticClasses\CRC.cs" />
     <Compile Include="Simulation\Drawings.cs" />
     <Compile Include="Other\ErrorMessage.cs">

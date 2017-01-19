@@ -44,14 +44,13 @@ namespace LabZSK.Simulation
                 isTestPositive = true;
             else if (microOpMnemo == "TINT")
             {
+                addTextToLog("INT = ".PadLeft(18, ' ') + flags["INT"].innerValue + "\n");
                 if (flags["INT"].innerValue == 0)
                     isTestPositive = true;
                 else
                 {
                     otherValue = true;
                     flags["INT"].setInnerValue(0);
-                    //addTextToLog("\t\tINT = " + 0);
-                    //czy tak test TINT?
                     registers["RAP"].setActualValue(255);
                     registers["RAP"].setNeedCheck(out registerToCheck);
                     button_OK.Visible = true;
@@ -138,9 +137,9 @@ namespace LabZSK.Simulation
                         isTestPositive = true;
                 }
             }
-            else if (microOpMnemo == "TXRO")//zmienić nazwę na TRI0
+            else if (microOpMnemo == "TXRO")
             {
-                if (registers["RI"].innerValue == 0)
+                if (flags["XRO"].innerValue == 0)
                     isTestPositive = true;
             }
             else if (microOpMnemo == "TAP")
@@ -893,13 +892,22 @@ namespace LabZSK.Simulation
                 }
             }
             if (DEVMODE)
-                addTextToLog("\nAuto: " + DEVREGISTER + " ?= " + DEVVALUE + "\n");
+            {
+                if (DEVADDCYCLE)
+                {
+                    addTextToLog("\nAUTO: " + "CYKLE+>" + " ?= " + DEVCYCLE+"+"+ DEVINCCYCLE + "\n");
+                }
+                else
+                {
+                    addTextToLog("\nAUTO: " + DEVREGISTER + " ?= " + DEVVALUE + "\n");
+                }
+            }
             else
             {
                 if (inMicroMode)
                     addTextToLog(Strings.micro + "\n");
                 else
-                    addTextToLog("Makro\n");
+                    addTextToLog(Strings.macro + "\n");
             }
             dataGridView_Info.Rows[3].Cells[1].Value = (++currnetCycle);
             simulateCPU();
@@ -941,7 +949,17 @@ namespace LabZSK.Simulation
                 exeTest();
             else if (currentTact == 7 && !isTestPositive)
             {
-                testAndSet("RAPS", (short)(registers["RAPS"].innerValue + 1));
+                var value = registers["RAPS"].innerValue;
+                if (value == 255)
+                {
+                    testAndSet("RAPS", 255);
+                    addTextToLog("".PadLeft(11, ' ') + "RAPS = 255, STOP - " + Strings.criticalError + " " + "\n");
+                    canSimulate = false;
+                }
+                else
+                {
+                    testAndSet("RAPS", (short)(registers["RAPS"].innerValue + 1));
+                }
                 Grid_PM.CurrentCell = Grid_PM[11, registers["RAPS"].innerValue];
                 button_OK.Visible = true;
                     EnDisableButtons();

@@ -91,33 +91,38 @@ namespace LabZSK.Memory
         /// <param name="fileName">String representing path to file</param>
         public void SaveTable(string fileName)
         {
-            using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Create)))
+            try
             {
-                bw.Write(Grid_Mem.Columns.Count);
-                bw.Write(Grid_Mem.Rows.Count);
-                foreach (DataGridViewRow row in Grid_Mem.Rows)
+                using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Create)))
                 {
-                    for (int j = 0; j < Grid_Mem.Columns.Count; ++j)
+                    bw.Write(Grid_Mem.Columns.Count);
+                    bw.Write(Grid_Mem.Rows.Count);
+                    foreach (DataGridViewRow row in Grid_Mem.Rows)
                     {
-                        var val = row.Cells[j].Value;
-                        bw.Write(true);
-                        if (j == 3 && val.ToString() == "")
-                            bw.Write("0");
-                        else
-                            bw.Write(val.ToString());
+                        for (int j = 0; j < Grid_Mem.Columns.Count; ++j)
+                        {
+                            var val = row.Cells[j].Value;
+                            bw.Write(true);
+                            if (j == 3 && val.ToString() == "")
+                                bw.Write("0");
+                            else
+                                bw.Write(val.ToString());
+                        }
                     }
                 }
+                uint crc = CRC.ComputePAOChecksum(File.ReadAllBytes(fileName));
+                using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Append)))
+                {
+                    bw.Write(crc);
+                }
+                for (int i = 0; i < 256; ++i)
+                {
+                    List_Memory[i] = new MemoryRecord(i, (string)Grid_Mem.Rows[i].Cells[1].Value, (string)Grid_Mem.Rows[i].Cells[2].Value,
+                        Convert.ToInt16(Grid_Mem.Rows[i].Cells[3].Value));
+                }
             }
-            uint crc = CRC.ComputePAOChecksum(File.ReadAllBytes(fileName));
-            using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Append)))
-            {
-                bw.Write(crc);
-            }
-            for (int i = 0; i < 256; ++i)
-            {
-                List_Memory[i] = new MemoryRecord(i, (string)Grid_Mem.Rows[i].Cells[1].Value, (string)Grid_Mem.Rows[i].Cells[2].Value,
-                    Convert.ToInt16(Grid_Mem.Rows[i].Cells[3].Value));
-            }
+            catch { MessageBox.Show("Nie można uzyskać dostępu do tego pliku"); }
+            
         }
         /// <summary>
         /// Load memoryrecords from file

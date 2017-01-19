@@ -790,7 +790,7 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RI = 0.
+        ///   Looks up a localized string similar to XRO = 0.
         /// </summary>
         internal static string TXRO {
             get {

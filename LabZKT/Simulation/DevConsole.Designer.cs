@@ -42,6 +42,7 @@
             this.registerName.FormattingEnabled = true;
             this.registerName.Items.AddRange(new object[] {
             "L. Cykli",
+            "Cykle+>",
             "LK",
             "A",
             "MQ",
@@ -107,7 +108,7 @@
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "DevConsole";
-            this.Text = "DevConsole";
+            this.Text = "Tryb automatyczny";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DevConsole_FormClosing);
             this.Load += new System.EventHandler(this.DevConsole_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DevConsole_KeyDown);

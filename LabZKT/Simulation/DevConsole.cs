@@ -25,8 +25,17 @@ namespace LabZSK.Simulation
             if (!viewRef.isRunning)
             {
                 viewRef.DEVMODE = true;
+                viewRef.DEVADDCYCLE = false;
                 viewRef.DEVREGISTER = registerName.Text;
                 viewRef.DEVVALUE = Convert.ToInt16(registerValue.Value);
+                if (registerName.SelectedIndex == 1)
+                {
+                    viewRef.DEVCYCLE = viewRef.currnetCycle;
+                    viewRef.DEVINCCYCLE = Convert.ToInt16(registerValue.Value);
+                    viewRef.DEVVALUE = viewRef.currnetCycle + Convert.ToInt16(registerValue.Value);
+                    viewRef.DEVADDCYCLE = true;
+                    viewRef.DEVREGISTER = "L. Cykli";
+                }
                 viewRef.button_Makro_Click(this, new EventArgs());
             }
         }

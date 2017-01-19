@@ -361,7 +361,7 @@
     <value>RI &lt;= 0</value>
   </data>
   <data name="TXRO" xml:space="preserve">
-    <value>RI = 0</value>
+    <value>XRO = 0</value>
   </data>
   <data name="TXS" xml:space="preserve">
     <value>RI &gt;= 0</value>

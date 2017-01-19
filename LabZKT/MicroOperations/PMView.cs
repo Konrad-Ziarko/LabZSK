@@ -118,34 +118,39 @@ namespace LabZSK.MicroOperations
         /// <param name="fileName">String representing path to file</param>
         public void SaveTable(string fileName)
         {
-            using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Create)))
+            try
             {
-                bw.Write(Grid_PM.Columns.Count);
-                bw.Write(Grid_PM.Rows.Count);
-                foreach (DataGridViewRow row in Grid_PM.Rows)
+                using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Create)))
                 {
-                    for (int j = 0; j < Grid_PM.Columns.Count; ++j)
+                    bw.Write(Grid_PM.Columns.Count);
+                    bw.Write(Grid_PM.Rows.Count);
+                    foreach (DataGridViewRow row in Grid_PM.Rows)
                     {
-                        var val = row.Cells[j].Value;
-                        bw.Write(true);
-                        bw.Write(val.ToString());
+                        for (int j = 0; j < Grid_PM.Columns.Count; ++j)
+                        {
+                            var val = row.Cells[j].Value;
+                            bw.Write(true);
+                            bw.Write(val.ToString());
+                        }
                     }
                 }
+                uint crc = CRC.ComputePMChecksum(File.ReadAllBytes(fileName));
+                using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Append)))
+                {
+                    bw.Write(crc);
+                }
+                for (int i = 0; i < 256; ++i)
+                {
+                    List_MicroOps[i] = new MicroOperation(i, Grid_PM[1, i].Value.ToString(), Grid_PM[2, i].Value.ToString(),
+                        Grid_PM[3, i].Value.ToString(), Grid_PM[4, i].Value.ToString(),
+                        Grid_PM[5, i].Value.ToString(), Grid_PM[6, i].Value.ToString(),
+                        Grid_PM[7, i].Value.ToString(), Grid_PM[8, i].Value.ToString(),
+                        Grid_PM[9, i].Value.ToString(), Grid_PM[10, i].Value.ToString(),
+                        Grid_PM[11, i].Value.ToString());
+                }
             }
-            uint crc = CRC.ComputePMChecksum(File.ReadAllBytes(fileName));
-            using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Append)))
-            {
-                bw.Write(crc);
-            }
-            for (int i = 0; i < 256; ++i)
-            {
-                List_MicroOps[i] = new MicroOperation(i, Grid_PM[1, i].Value.ToString(), Grid_PM[2, i].Value.ToString(),
-                    Grid_PM[3, i].Value.ToString(), Grid_PM[4, i].Value.ToString(),
-                    Grid_PM[5, i].Value.ToString(), Grid_PM[6, i].Value.ToString(),
-                    Grid_PM[7, i].Value.ToString(), Grid_PM[8, i].Value.ToString(),
-                    Grid_PM[9, i].Value.ToString(), Grid_PM[10, i].Value.ToString(),
-                    Grid_PM[11, i].Value.ToString());
-            }
+            catch { MessageBox.Show("Nie można uzyskać dostępu do tego pliku"); }
+            
         }
         /// <summary>
         /// Load microoperations from file
@@ -442,7 +447,10 @@ namespace LabZSK.MicroOperations
             {
                 if (dragBoxFromMouseDown != Rectangle.Empty && !dragBoxFromMouseDown.Contains(e.X, e.Y))
                 {
-                    DragDropEffects dropEffect = Grid_PM.DoDragDrop(valueFromMouseDown, DragDropEffects.Copy);
+                    try {
+                        DragDropEffects dropEffect = Grid_PM.DoDragDrop(valueFromMouseDown, DragDropEffects.Copy);
+                    }
+                    catch { }
                 }
             }
         }
@@ -562,7 +570,7 @@ namespace LabZSK.MicroOperations
                 tmp += "".PadRight(9, ' ');
             bool addToPrint = true;
             tmp += row.getColumnName(idx).PadRight(8, ' ');
-            tmp += "___" + row.getColumn(idx).PadRight(8, ' ');
+            //tmp += "___" + row.getColumn(idx).PadRight(8, ' ');
             tmp += "___" + Translator.GetMicroOpExtendedDescription(row.getColumn(idx)).PadRight(8, ' ') + "\r\n";
             return addToPrint;
         }

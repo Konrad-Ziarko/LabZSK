@@ -305,7 +305,7 @@ You will lose all progress.</value>
     <value>Application started</value>
   </data>
   <data name="micro" xml:space="preserve">
-    <value>Micro</value>
+    <value>MICRO</value>
   </data>
   <data name="logFileName" xml:space="preserve">
     <value>You must create log file</value>
@@ -315,5 +315,8 @@ You will lose all progress.</value>
   </data>
   <data name="saveToolStrip" xml:space="preserve">
     <value>Save...</value>
+  </data>
+  <data name="macro" xml:space="preserve">
+    <value>MACRO</value>
   </data>
 </root>

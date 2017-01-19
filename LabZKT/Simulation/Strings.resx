@@ -305,7 +305,7 @@ Log symulacji zostanie zamknięty.</value>
     <value>Start symulatora</value>
   </data>
   <data name="micro" xml:space="preserve">
-    <value>Mikro</value>
+    <value>MIKRO</value>
   </data>
   <data name="logFileName" xml:space="preserve">
     <value>Konieczne jest utworzenie pliku LOG</value>
@@ -315,5 +315,17 @@ Log symulacji zostanie zamknięty.</value>
   </data>
   <data name="saveToolStrip" xml:space="preserve">
     <value>Zapisz...</value>
+  </data>
+  <data name="criticalError" xml:space="preserve">
+    <value>BŁĄD KRYTYCZNY PROCESORA</value>
+  </data>
+  <data name="macro" xml:space="preserve">
+    <value>MAKRO</value>
+  </data>
+  <data name="devCycle" xml:space="preserve">
+    <value>L. Cykli</value>
+  </data>
+  <data name="devIncCycle" xml:space="preserve">
+    <value>Cykle+&gt;</value>
   </data>
 </root>

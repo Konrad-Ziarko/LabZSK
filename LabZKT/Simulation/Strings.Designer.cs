@@ -206,6 +206,15 @@ namespace LabZSK.Simulation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BŁĄD KRYTYCZNY PROCESORA.
+        /// </summary>
+        internal static string criticalError {
+            get {
+                return ResourceManager.GetString("criticalError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cykl.
         /// </summary>
         internal static string cycle {
@@ -238,6 +247,24 @@ namespace LabZSK.Simulation {
         internal static string devConsoleToolStrip {
             get {
                 return ResourceManager.GetString("devConsoleToolStrip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to L. Cykli.
+        /// </summary>
+        internal static string devCycle {
+            get {
+                return ResourceManager.GetString("devCycle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cykle+&gt;.
+        /// </summary>
+        internal static string devIncCycle {
+            get {
+                return ResourceManager.GetString("devIncCycle", resourceCulture);
             }
         }
         
@@ -377,6 +404,15 @@ namespace LabZSK.Simulation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MAKRO.
+        /// </summary>
+        internal static string macro {
+            get {
+                return ResourceManager.GetString("macro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ocena.
         /// </summary>
         internal static string mark {
@@ -395,7 +431,7 @@ namespace LabZSK.Simulation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mikro.
+        ///   Looks up a localized string similar to MIKRO.
         /// </summary>
         internal static string micro {
             get {
