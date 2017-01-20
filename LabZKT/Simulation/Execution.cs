@@ -1,4 +1,5 @@
-﻿using LabZSK.Memory;
+﻿using LabZSK.Controls;
+using LabZSK.Memory;
 using LabZSK.Properties;
 using LabZSK.StaticClasses;
 using System;
@@ -757,22 +758,29 @@ namespace LabZSK.Simulation
                 microOpMnemo = Grid_PM[7, raps].Value.ToString();
                 if (microOpMnemo == "RRC")
                 {
-                    Grid_Mem.Rows[registers["RAP"].innerValue].Selected = true;
-                    Grid_Mem.FirstDisplayedScrollingRowIndex = registers["RAP"].innerValue;
-                    Grid_Mem.CurrentCell = Grid_Mem.Rows[registers["RAP"].innerValue].Cells[0];
-                    Grid_Mem_SelectionChanged(this, new EventArgs());
-                    try
-                    {
-                        testAndSet("RBP", List_Memory[registers["RAP"].innerValue].getInt16Value());
-                    }
-                    catch
+                    if(registers["RAP"].innerValue > 255)
                     {
                         testAndSet("RBP", 0);
                     }
-                    flags["MAV"].setInnerValue(0);
-                    //addTextToLog("\t\tMAV = " + 0 + "\n");
-                    flags["IA"].setInnerValue(1);
-                    //addTextToLog("\t\tIA = " + 1 + "\n");
+                    else
+                    {
+                        Grid_Mem.Rows[registers["RAP"].innerValue].Selected = true;
+                        Grid_Mem.FirstDisplayedScrollingRowIndex = registers["RAP"].innerValue;
+                        Grid_Mem.CurrentCell = Grid_Mem.Rows[registers["RAP"].innerValue].Cells[0];
+                        Grid_Mem_SelectionChanged(this, new EventArgs());
+                        try
+                        {
+                            testAndSet("RBP", List_Memory[registers["RAP"].innerValue].getInt16Value());
+                        }
+                        catch
+                        {
+                            testAndSet("RBP", 0);
+                        }
+                        flags["MAV"].setInnerValue(0);
+                        //addTextToLog("\t\tMAV = " + 0 + "\n");
+                        flags["IA"].setInnerValue(1);
+                        //addTextToLog("\t\tIA = " + 1 + "\n");
+                    }
                 }
                 else if (microOpMnemo == "MUL")
                 {
@@ -824,6 +832,7 @@ namespace LabZSK.Simulation
                     {
                         leftValue = Convert.ToInt16(tmp.Substring(9, 7), 2);
                     }
+                    addTextToLog(("C2".PadLeft(8, ' ') + " | ") + microOpMnemo.PadLeft(4, ' ') + " : " + Translator.GetMicroOpDescription(microOpMnemo) + "\n");
                     testAndSet("L", leftValue);
                     validateRegister();
                     testAndSet("R", rightValue);
@@ -949,12 +958,14 @@ namespace LabZSK.Simulation
                 exeTest();
             else if (currentTact == 7 && !isTestPositive)
             {
+                bool halt = false;
                 var value = registers["RAPS"].innerValue;
                 if (value == 255)
                 {
                     testAndSet("RAPS", 255);
-                    addTextToLog("".PadLeft(11, ' ') + "RAPS = 255, STOP - " + Strings.criticalError + " " + "\n");
+                    //addTextToLog("".PadLeft(11, ' ') + "RAPS = 255, STOP - " + Strings.criticalError + " " + "\n");
                     canSimulate = false;
+                    halt = true;
                 }
                 else
                 {
@@ -969,7 +980,24 @@ namespace LabZSK.Simulation
                     EnDisableButtons();
                 currentTact = 0;
                 dataGridView_Info.Rows[2].Cells[1].Value = currentTact;
-                if (!DEVMODE)
+                if (DEVEND)
+                {
+                    DEVEND = false;
+                    DEVMODE = false;
+                    DEVREGISTER = null;
+                    DEVVALUE = 0;
+                }
+                if (halt)
+                {
+                    addTextToLog("".PadLeft(11, ' ') + "RAPS = 255, STOP - " + Strings.criticalError + " " + "\n");
+                    canSimulate = false;
+                    DEVMODE = false;
+                    stopSim();
+                    buttonOKClicked = false;
+                    //registers["RAPS"].setInnerValue(0);
+                    return;
+                }
+                else if (!DEVMODE)
                 {
                     stopSim();
                     buttonOKClicked = false;
@@ -1196,6 +1224,7 @@ namespace LabZSK.Simulation
         internal void stopSim()
         {
             button_Show_Log.Visible = true;
+            richTextBox_Log.Text = "";
             richTextBox_Log.Clear();
             isRunning = false;
             inMicroMode = false;

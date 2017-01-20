@@ -78,6 +78,7 @@ namespace LabZSK.Simulation
         private MemoryRecord selectedInstruction;
         #endregion
         #region DEV vars
+        internal bool DEVEND = false;
         internal bool DEVMODE = false;
         internal int DEVVALUE;
         internal string DEVREGISTER;
@@ -814,6 +815,8 @@ namespace LabZSK.Simulation
                 addTextToLog((tact.PadLeft(8, ' ') + " | ") + mnemo.PadLeft(4, ' ') + " : (" + Strings.cycle + " " + currnetCycle + ") " + description + " (" + DateTime.Now.ToString("HH:mm.ss") + ")\n");
             else if (mnemo == "TINT")
                 addTextToLog((tact.PadLeft(8, ' ') + " | ") + mnemo.PadLeft(4, ' ') + " : " + description + "(INT ?= 0)\n");
+            else if (mnemo == "CEA")
+                ;
             else
                 addTextToLog((tact.PadLeft(8, ' ') + " | ") + mnemo.PadLeft(4, ' ') + " : " + description + "\n");
             string text;
@@ -821,19 +824,20 @@ namespace LabZSK.Simulation
                 text = tact.PadRight(5, ' ');
             else
                 text = '\n' + tact.PadRight(5, ' ');
-            int start = richTextBox_Log.TextLength;
-            richTextBox_Log.AppendText(text);
-            int end = richTextBox_Log.TextLength;
-            richTextBox_Log.Select(start, end - start);
-            richTextBox_Log.SelectionColor = Color.Red;
-            richTextBox_Log.Select(end, 0);
-            start = richTextBox_Log.TextLength;
-            richTextBox_Log.AppendText(mnemo.PadRight(6, ' ') + description);
-            end = richTextBox_Log.TextLength;
-            richTextBox_Log.Select(start, end - start);
-            richTextBox_Log.SelectionColor = Color.Black;
-            richTextBox_Log.Select(end, 0);
-            richTextBox_Log.ScrollToCaret();
+                int start = richTextBox_Log.TextLength;
+                richTextBox_Log.AppendText(text);
+                int end = richTextBox_Log.TextLength;
+                richTextBox_Log.Select(start, end - start);
+                richTextBox_Log.SelectionColor = Color.Red;
+                richTextBox_Log.Select(end, 0);
+                start = richTextBox_Log.TextLength;
+                richTextBox_Log.AppendText(mnemo.PadRight(6, ' ') + description);
+                end = richTextBox_Log.TextLength;
+                richTextBox_Log.Select(start, end - start);
+                richTextBox_Log.SelectionColor = Color.Black;
+                richTextBox_Log.Select(end, 0);
+                richTextBox_Log.ScrollToCaret();
+            
         }
         #endregion
         #region FormActions
@@ -841,9 +845,7 @@ namespace LabZSK.Simulation
         {
             if (DEVMODE)
             {
-                DEVMODE = false;
-                DEVREGISTER = null;
-                DEVVALUE = 0;
+                DEVEND = true;
             }
 
             if (e.KeyChar == (char)Keys.Enter && !inEditMode)
@@ -1232,17 +1234,17 @@ namespace LabZSK.Simulation
         {
             TimeSpan diff = DateTime.Now - simTime;
             TimeSpan now = simTime.TimeOfDay;
-            richTextBox1.Text = string.Format("{0:00}:{1:00}.{2:00}", now.Hours, now.Minutes, now.Seconds) +" + "+string.Format("{0:00}:{1:00}.{2:00}", diff.Hours, diff.Minutes, diff.Seconds);
+                richTextBox1.Text = string.Format("{0:00}:{1:00}", now.Hours, now.Minutes) + " + " + string.Format("{0:00}:{1:00}.{2:00}", diff.Hours, diff.Minutes, diff.Seconds);
+                Regex regExp = new Regex(@"\+");
+                foreach (Match match in regExp.Matches(richTextBox1.Text))
+                {
+                    richTextBox1.Select(match.Index, richTextBox1.Text.Length);
+                    richTextBox1.SelectionColor = Color.DarkMagenta;
+                }
+                richTextBox1.SelectAll();
+                richTextBox1.SelectionAlignment = HorizontalAlignment.Right;
+                richTextBox1.Select(0, 0);
             
-            Regex regExp = new Regex(@"\+");
-            foreach (Match match in regExp.Matches(richTextBox1.Text))
-            {
-                richTextBox1.Select(match.Index, match.Length);
-                richTextBox1.SelectionColor = Color.Red;
-            }
-            richTextBox1.SelectAll();
-            richTextBox1.SelectionAlignment = HorizontalAlignment.Right;
-            richTextBox1.Select(0, 0);
         }
 
         private void richTextBox1_SelectionChanged(object sender, EventArgs e)

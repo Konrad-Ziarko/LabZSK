@@ -1,4 +1,6 @@
-﻿namespace LabZSK.Simulation
+﻿using LabZSK.Controls;
+
+namespace LabZSK.Simulation
 {
     partial class SimView
     {
@@ -48,8 +50,7 @@
             this.Hex = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.panel_Decode_PO = new System.Windows.Forms.Panel();
-            this.transparentPanel1 = new LabZSK.Simulation.TransparentPanel();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.richTextBox1 = new FastRichBox();
             this.cellDescription = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenu_Main = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,9 +106,10 @@
             this.dataGridView_Info = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.richTextBox_Log = new System.Windows.Forms.RichTextBox();
+            this.richTextBox_Log = new FastRichBox();
             this.open_File_Dialog = new System.Windows.Forms.OpenFileDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.transparentPanel1 = new LabZSK.Simulation.TransparentPanel();
             this.panel_PO.SuspendLayout();
             this.panel_View_PO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid_Mem)).BeginInit();
@@ -260,13 +262,6 @@
             this.panel_Decode_PO.Name = "panel_Decode_PO";
             this.panel_Decode_PO.Size = new System.Drawing.Size(270, 138);
             this.panel_Decode_PO.TabIndex = 1;
-            // 
-            // transparentPanel1
-            // 
-            this.transparentPanel1.Location = new System.Drawing.Point(76, 82);
-            this.transparentPanel1.Name = "transparentPanel1";
-            this.transparentPanel1.Size = new System.Drawing.Size(194, 56);
-            this.transparentPanel1.TabIndex = 3;
             // 
             // richTextBox1
             // 
@@ -949,6 +944,13 @@
             // 
             this.timer1.Interval = 800;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // transparentPanel1
+            // 
+            this.transparentPanel1.Location = new System.Drawing.Point(76, 82);
+            this.transparentPanel1.Name = "transparentPanel1";
+            this.transparentPanel1.Size = new System.Drawing.Size(194, 56);
+            this.transparentPanel1.TabIndex = 3;
             // 
             // SimView
             // 

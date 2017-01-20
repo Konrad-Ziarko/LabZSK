@@ -64,11 +64,11 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(11, 9);
+            this.label1.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.Location = new System.Drawing.Point(2, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(571, 53);
+            this.label1.Size = new System.Drawing.Size(580, 62);
             this.label1.TabIndex = 1;
             this.label1.Text = "Instytut Teleinformatyki i Automatyki\r\nWydział Cybernetyki";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -77,7 +77,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.Location = new System.Drawing.Point(2, 289);
+            this.label2.Location = new System.Drawing.Point(11, 307);
             this.label2.Margin = new System.Windows.Forms.Padding(2);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(312, 19);
@@ -99,12 +99,12 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label3.Location = new System.Drawing.Point(2, 318);
+            this.label3.Location = new System.Drawing.Point(11, 336);
             this.label3.Margin = new System.Windows.Forms.Padding(2);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(246, 19);
+            this.label3.Size = new System.Drawing.Size(293, 19);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Kierownik: dr inż. Witold Żorski";
+            this.label3.Text = "Kierownik pracy: dr inż. Witold Żorski";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
@@ -112,7 +112,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label4.Location = new System.Drawing.Point(2, 347);
+            this.label4.Location = new System.Drawing.Point(11, 365);
             this.label4.Margin = new System.Windows.Forms.Padding(2);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(259, 19);
@@ -139,7 +139,7 @@
             // label5
             // 
             this.label5.Font = new System.Drawing.Font("Arial", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label5.Location = new System.Drawing.Point(2, 260);
+            this.label5.Location = new System.Drawing.Point(11, 278);
             this.label5.Margin = new System.Windows.Forms.Padding(2);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(277, 25);

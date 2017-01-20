@@ -233,7 +233,7 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kierownik: dr inż. Witold Żorski.
+        ///   Looks up a localized string similar to Kierownik pracy: dr inż. Witold Żorski.
         /// </summary>
         internal static string promoterName {
             get {
