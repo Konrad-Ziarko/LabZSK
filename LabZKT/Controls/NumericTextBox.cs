@@ -34,12 +34,24 @@ namespace LabZSK.Controls
             if (registerName == "BUS")
             {
                 Controls.Add(new Label()
-                { Height = 1, Dock = DockStyle.Bottom, BackColor = Color.Black });
+                { Height = 1, Dock = DockStyle.Bottom, BackColor = Color.Red });
+                Controls.Add(new Label()
+                { Height = 1, Dock = DockStyle.Top, BackColor = Color.Red });
+                Controls.Add(new Label()
+                { Width = 1, Dock = DockStyle.Left, BackColor = Color.Red });
+                Controls.Add(new Label()
+                { Width = 1, Dock = DockStyle.Right, BackColor = Color.Red });
             }
             else if (registerName == "RAPS")
             {
                 Controls.Add(new Label()
-                { Height = 1, Dock = DockStyle.Bottom, BackColor = Color.Black });
+                { Height = 2, Dock = DockStyle.Bottom, BackColor = Color.DarkMagenta });
+                Controls.Add(new Label()
+                { Height = 2, Dock = DockStyle.Top, BackColor = Color.DarkMagenta });
+                Controls.Add(new Label()
+                { Width = 2, Dock = DockStyle.Left, BackColor = Color.DarkMagenta });
+                Controls.Add(new Label()
+                { Width = 2, Dock = DockStyle.Right, BackColor = Color.DarkMagenta });
             }
         }
         protected override void OnKeyPress(KeyPressEventArgs e)

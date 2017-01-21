@@ -24,18 +24,12 @@ namespace LabZSK.Other
         private void Options_Load(object sender, EventArgs e)
         {
             comboBox1.SelectedIndex = Settings.Default.Skin;
+            label5.ForeColor = System.Drawing.Color.Blue;
             ignore = true;
-            r1.Value = Settings.Default.R1;
-            g1.Value = Settings.Default.G1;
-            b1.Value = Settings.Default.B1;
+            txt1.Text = "#" + Settings.Default.R1.ToString("X").PadLeft(2, '0') + Settings.Default.G1.ToString("X").PadLeft(2, '0') + Settings.Default.B1.ToString("X").PadLeft(2, '0');
+            txt2.Text = "#" + Settings.Default.R2.ToString("X").PadLeft(2, '0') + Settings.Default.G2.ToString("X").PadLeft(2, '0') + Settings.Default.B2.ToString("X").PadLeft(2, '0');
+            txt3.Text = "#" + Settings.Default.R3.ToString("X").PadLeft(2, '0') + Settings.Default.G3.ToString("X").PadLeft(2, '0') + Settings.Default.B3.ToString("X").PadLeft(2, '0');
 
-            r2.Value = Settings.Default.R2;
-            g2.Value = Settings.Default.G2;
-            b3.Value = Settings.Default.B2;
-
-            r3.Value = Settings.Default.R3;
-            g3.Value = Settings.Default.G3;
-            b3.Value = Settings.Default.B3;
             ignore = false;
             comboBox2.SelectedIndex = Settings.Default.CultureIdx;
             numericUpDown1.Value = Settings.Default.Delay;
@@ -78,81 +72,41 @@ namespace LabZSK.Other
                 case 0:
                     Settings.Default.Skin = 0;
                     ignore = true;
-                    r1.Value = 27;
-                    g1.Value = 96;
-                    b1.Value = 51;
-
-                    r2.Value = 133;
-                    g2.Value = 198;
-                    b2.Value = 72;
-
-                    r3.Value = 249;
-                    g3.Value = 66;
-                    b3.Value = 239;
+                    txt1.Text = "#1B6033";
+                    txt2.Text = "#85C648";
+                    txt3.Text = "#F942EF";
                     ignore = false;
                     break;
                 case 1:
                     Settings.Default.Skin = 1;
                     ignore = true;
-                    r1.Value = 31;
-                    g1.Value = 18;
-                    b1.Value = 158;
-
-                    r2.Value = 2;
-                    g2.Value = 112;
-                    b2.Value = 223;
-
-                    r3.Value = 249;
-                    g3.Value = 239;
-                    b3.Value = 66;
+                    txt1.Text = "#1F129E";
+                    txt2.Text = "#0270DF";
+                    txt3.Text = "#F9EF42";
                     ignore = false;
                     break;
                 case 2:
                     Settings.Default.Skin = 2;
                     ignore = true;
-                    r1.Value = 177;
-                    g1.Value = 1;
-                    b1.Value = 5;
-
-                    r2.Value = 254;
-                    g2.Value = 65;
-                    b2.Value = 69;
-
-                    r3.Value = 5;
-                    g3.Value = 254;
-                    b3.Value = 177;
+                    txt1.Text = "#B10105";
+                    txt2.Text = "#FE4145";
+                    txt3.Text = "#05FEB1";
                     ignore = false;
                     break;
                 case 3:
                     Settings.Default.Skin = 3;
                     ignore = true;
-                    r1.Value = 5;
-                    g1.Value = 5;
-                    b1.Value = 5;
-
-                    r2.Value = 120;
-                    g2.Value = 120;
-                    b2.Value = 120;
-
-                    r3.Value = 239;
-                    g3.Value = 254;
-                    b3.Value = 245;
+                    txt1.Text = "#050505";
+                    txt2.Text = "#787878";
+                    txt3.Text = "#EFFEF5";
                     ignore = false;
                     break;
                 case 4:
                     Settings.Default.Skin = 4;
                     ignore = true;
-                    r1.Value = Settings.Default.R1;
-                    g1.Value = Settings.Default.G1;
-                    b1.Value = Settings.Default.B1;
-
-                    r2.Value = Settings.Default.R2;
-                    g2.Value = Settings.Default.G2;
-                    b2.Value = Settings.Default.B2;
-
-                    r3.Value = Settings.Default.R3;
-                    g3.Value = Settings.Default.G3;
-                    b3.Value = Settings.Default.B3;
+                    txt1.Text = "#" + Settings.Default.R1.ToString("X").PadLeft(2, '0') + Settings.Default.G1.ToString("X").PadLeft(2, '0') + Settings.Default.B1.ToString("X").PadLeft(2, '0');
+                    txt2.Text = "#" + Settings.Default.R2.ToString("X").PadLeft(2, '0') + Settings.Default.G2.ToString("X").PadLeft(2, '0') + Settings.Default.B2.ToString("X").PadLeft(2, '0');
+                    txt3.Text = "#" + Settings.Default.R3.ToString("X").PadLeft(2, '0') + Settings.Default.G3.ToString("X").PadLeft(2, '0') + Settings.Default.B3.ToString("X").PadLeft(2, '0');
                     ignore = false;
                     break;
             }
@@ -324,16 +278,6 @@ namespace LabZSK.Other
 
         private void getSkinData()
         {
-            Settings.Default.R1 = Convert.ToInt32(r1.Value);
-            Settings.Default.R2 = Convert.ToInt32(r2.Value);
-            Settings.Default.B1 = Convert.ToInt32(b1.Value);
-            Settings.Default.B2 = Convert.ToInt32(b2.Value);
-            Settings.Default.G2 = Convert.ToInt32(g2.Value);
-            Settings.Default.R3 = Convert.ToInt32(r3.Value);
-            Settings.Default.B3 = Convert.ToInt32(b3.Value);
-            Settings.Default.G3 = Convert.ToInt32(g3.Value);
-            Settings.Default.G1 = Convert.ToInt32(g1.Value);
-
             Settings.Default.Skin = 4;
             if (comboBox1.SelectedIndex != 4)
                 comboBox1.SelectedIndex = 4;
@@ -401,6 +345,115 @@ namespace LabZSK.Other
                 label5.ForeColor = System.Drawing.Color.Blue;
                 label5.Text = "TRYB STUDENT";
             }
+        }
+
+        private void txt1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txt2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txt3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        public string HexToColor(string hexString, ref int r, ref int g, ref int b, out bool valid)
+        {
+            valid = true;
+            int cr = r, cg = g, cb = b;
+            if ((hexString.StartsWith("#")) && (hexString.Length == 7))
+            {
+                try
+                {
+                    cr = Convert.ToInt32(hexString.Substring(1, 2), 16);
+                    try
+                    {
+                        cg = Convert.ToInt32(hexString.Substring(3, 2), 16);
+                        try
+                        {
+                            cb = Convert.ToInt32(hexString.Substring(5, 2), 16);
+                        }
+                        catch { valid = false; }
+                    }
+                    catch { valid = false; }
+                }
+                catch { valid = false; }
+            }
+            else if (hexString.Length == 6)
+            {
+                try
+                {
+                    cr = Convert.ToInt32(hexString.Substring(0, 2), 16);
+                    try
+                    {
+                        cg = Convert.ToInt32(hexString.Substring(2, 2), 16);
+                        try
+                        {
+                            cb = Convert.ToInt32(hexString.Substring(4, 2), 16);
+                        }
+                        catch { valid = false; }
+                    }
+                    catch { valid = false; }
+                }
+                catch { valid = false; }
+            }
+            if (valid)
+            {
+                r = cr;
+                g = cg;
+                b = cb;
+            }
+            return "#" + r.ToString("X").PadLeft(2, '0') + g.ToString("X").PadLeft(2, '0') + b.ToString("X").PadLeft(2, '0');
+        }
+
+        private void txt1_Leave(object sender, EventArgs e)
+        {
+            int r = Settings.Default.R1, g = Settings.Default.G1, b = Settings.Default.B1;
+            bool valid;
+            txt1.Text = HexToColor(txt1.Text, ref r, ref g, ref b, out valid);
+            if (valid)
+            {
+                Settings.Default.R1 = r;
+                Settings.Default.G1 = g;
+                Settings.Default.B1 = b;
+            }
+            if (!ignore)
+                getSkinData();
+        }
+
+        private void txt2_Leave(object sender, EventArgs e)
+        {
+            int r = Settings.Default.R2, g = Settings.Default.G2, b = Settings.Default.B2;
+            bool valid;
+            txt2.Text = HexToColor(txt2.Text, ref r, ref g, ref b, out valid);
+            if (valid)
+            {
+                Settings.Default.R2 = r;
+                Settings.Default.G2 = g;
+                Settings.Default.B2 = b;
+            }
+            if (!ignore)
+                getSkinData();
+        }
+
+        private void txt3_Leave(object sender, EventArgs e)
+        {
+            int r = Settings.Default.R3, g = Settings.Default.G3, b = Settings.Default.B3;
+            bool valid;
+            txt3.Text = HexToColor(txt3.Text, ref r, ref g, ref b, out valid);
+            if (valid)
+            {
+                Settings.Default.R3 = r;
+                Settings.Default.G3 = g;
+                Settings.Default.B3 = b;
+            }
+            if (!ignore)
+                getSkinData();
         }
     }
 }

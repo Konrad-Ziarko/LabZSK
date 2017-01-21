@@ -54,33 +54,18 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.r1 = new System.Windows.Forms.NumericUpDown();
-            this.g1 = new System.Windows.Forms.NumericUpDown();
-            this.b1 = new System.Windows.Forms.NumericUpDown();
-            this.b2 = new System.Windows.Forms.NumericUpDown();
-            this.g2 = new System.Windows.Forms.NumericUpDown();
-            this.r2 = new System.Windows.Forms.NumericUpDown();
-            this.b3 = new System.Windows.Forms.NumericUpDown();
-            this.g3 = new System.Windows.Forms.NumericUpDown();
-            this.r3 = new System.Windows.Forms.NumericUpDown();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.txt1 = new System.Windows.Forms.TextBox();
+            this.txt2 = new System.Windows.Forms.TextBox();
+            this.txt3 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.r1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.g1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.b1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.b2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.g2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.r2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.b3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.g3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.r3)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -88,7 +73,6 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.checkBox4);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.numericUpDown2);
@@ -108,9 +92,9 @@
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.groupBox1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.groupBox1.ForeColor = System.Drawing.Color.DarkMagenta;
-            this.groupBox1.Location = new System.Drawing.Point(13, 13);
+            this.groupBox1.Location = new System.Drawing.Point(13, 17);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(687, 161);
+            this.groupBox1.Size = new System.Drawing.Size(564, 161);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Ustawienia admina:";
@@ -134,7 +118,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label4.Location = new System.Drawing.Point(635, 68);
+            this.label4.Location = new System.Drawing.Point(512, 68);
             this.label4.Margin = new System.Windows.Forms.Padding(9);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(40, 18);
@@ -290,7 +274,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label2.Location = new System.Drawing.Point(377, 68);
+            this.label2.Location = new System.Drawing.Point(254, 68);
             this.label2.Margin = new System.Windows.Forms.Padding(9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(161, 18);
@@ -306,7 +290,7 @@
             0,
             0,
             0});
-            this.numericUpDown1.Location = new System.Drawing.Point(541, 66);
+            this.numericUpDown1.Location = new System.Drawing.Point(418, 66);
             this.numericUpDown1.Margin = new System.Windows.Forms.Padding(9);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             1000,
@@ -324,7 +308,7 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label9.Location = new System.Drawing.Point(591, 32);
+            this.label9.Location = new System.Drawing.Point(468, 32);
             this.label9.Margin = new System.Windows.Forms.Padding(9);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(57, 18);
@@ -337,7 +321,7 @@
             this.checkBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox3.AutoSize = true;
             this.checkBox3.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.checkBox3.Location = new System.Drawing.Point(643, 31);
+            this.checkBox3.Location = new System.Drawing.Point(520, 31);
             this.checkBox3.Margin = new System.Windows.Forms.Padding(9);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -352,7 +336,7 @@
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label6.Location = new System.Drawing.Point(336, 273);
+            this.label6.Location = new System.Drawing.Point(278, 273);
             this.label6.Margin = new System.Windows.Forms.Padding(9, 9, 9, 3);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(44, 18);
@@ -369,7 +353,7 @@
             this.comboBox2.Items.AddRange(new object[] {
             "pl-PL",
             "en-US"});
-            this.comboBox2.Location = new System.Drawing.Point(297, 297);
+            this.comboBox2.Location = new System.Drawing.Point(239, 297);
             this.comboBox2.Margin = new System.Windows.Forms.Padding(9, 3, 9, 9);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(121, 26);
@@ -410,7 +394,7 @@
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button1.Location = new System.Drawing.Point(532, 283);
+            this.button1.Location = new System.Drawing.Point(409, 283);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(168, 40);
             this.button1.TabIndex = 1;
@@ -430,193 +414,13 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // r1
-            // 
-            this.r1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.r1.Location = new System.Drawing.Point(219, 214);
-            this.r1.Margin = new System.Windows.Forms.Padding(15, 3, 6, 9);
-            this.r1.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.r1.Name = "r1";
-            this.r1.Size = new System.Drawing.Size(46, 26);
-            this.r1.TabIndex = 19;
-            this.r1.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.r1.ValueChanged += new System.EventHandler(this.r1_ValueChanged);
-            // 
-            // g1
-            // 
-            this.g1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.g1.Location = new System.Drawing.Point(262, 214);
-            this.g1.Margin = new System.Windows.Forms.Padding(6, 3, 6, 9);
-            this.g1.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.g1.Name = "g1";
-            this.g1.Size = new System.Drawing.Size(46, 26);
-            this.g1.TabIndex = 20;
-            this.g1.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.g1.ValueChanged += new System.EventHandler(this.g1_ValueChanged);
-            // 
-            // b1
-            // 
-            this.b1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.b1.Location = new System.Drawing.Point(309, 214);
-            this.b1.Margin = new System.Windows.Forms.Padding(6, 3, 6, 9);
-            this.b1.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.b1.Name = "b1";
-            this.b1.Size = new System.Drawing.Size(46, 26);
-            this.b1.TabIndex = 21;
-            this.b1.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.b1.ValueChanged += new System.EventHandler(this.b1_ValueChanged);
-            // 
-            // b2
-            // 
-            this.b2.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.b2.Location = new System.Drawing.Point(458, 214);
-            this.b2.Margin = new System.Windows.Forms.Padding(6, 3, 6, 9);
-            this.b2.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.b2.Name = "b2";
-            this.b2.Size = new System.Drawing.Size(46, 26);
-            this.b2.TabIndex = 24;
-            this.b2.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.b2.ValueChanged += new System.EventHandler(this.b2_ValueChanged);
-            // 
-            // g2
-            // 
-            this.g2.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.g2.Location = new System.Drawing.Point(411, 214);
-            this.g2.Margin = new System.Windows.Forms.Padding(6, 3, 6, 9);
-            this.g2.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.g2.Name = "g2";
-            this.g2.Size = new System.Drawing.Size(46, 26);
-            this.g2.TabIndex = 23;
-            this.g2.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.g2.ValueChanged += new System.EventHandler(this.g2_ValueChanged);
-            // 
-            // r2
-            // 
-            this.r2.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.r2.Location = new System.Drawing.Point(367, 214);
-            this.r2.Margin = new System.Windows.Forms.Padding(6, 3, 6, 9);
-            this.r2.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.r2.Name = "r2";
-            this.r2.Size = new System.Drawing.Size(46, 26);
-            this.r2.TabIndex = 22;
-            this.r2.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.r2.ValueChanged += new System.EventHandler(this.r2_ValueChanged);
-            // 
-            // b3
-            // 
-            this.b3.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.b3.Location = new System.Drawing.Point(607, 214);
-            this.b3.Margin = new System.Windows.Forms.Padding(6, 3, 6, 9);
-            this.b3.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.b3.Name = "b3";
-            this.b3.Size = new System.Drawing.Size(46, 26);
-            this.b3.TabIndex = 27;
-            this.b3.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.b3.ValueChanged += new System.EventHandler(this.b3_ValueChanged);
-            // 
-            // g3
-            // 
-            this.g3.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.g3.Location = new System.Drawing.Point(560, 214);
-            this.g3.Margin = new System.Windows.Forms.Padding(6, 3, 6, 9);
-            this.g3.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.g3.Name = "g3";
-            this.g3.Size = new System.Drawing.Size(46, 26);
-            this.g3.TabIndex = 26;
-            this.g3.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.g3.ValueChanged += new System.EventHandler(this.g3_ValueChanged);
-            // 
-            // r3
-            // 
-            this.r3.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.r3.Location = new System.Drawing.Point(516, 214);
-            this.r3.Margin = new System.Windows.Forms.Padding(6, 3, 6, 9);
-            this.r3.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.r3.Name = "r3";
-            this.r3.Size = new System.Drawing.Size(46, 26);
-            this.r3.TabIndex = 25;
-            this.r3.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.r3.ValueChanged += new System.EventHandler(this.r3_ValueChanged);
-            // 
             // label10
             // 
             this.label10.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label10.Location = new System.Drawing.Point(218, 190);
+            this.label10.Location = new System.Drawing.Point(223, 190);
             this.label10.Margin = new System.Windows.Forms.Padding(9, 9, 9, 3);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(137, 18);
+            this.label10.Size = new System.Drawing.Size(75, 18);
             this.label10.TabIndex = 28;
             this.label10.Text = "Tło";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -624,10 +428,10 @@
             // label11
             // 
             this.label11.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label11.Location = new System.Drawing.Point(367, 190);
+            this.label11.Location = new System.Drawing.Point(316, 190);
             this.label11.Margin = new System.Windows.Forms.Padding(9, 9, 9, 3);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(137, 18);
+            this.label11.Size = new System.Drawing.Size(75, 18);
             this.label11.TabIndex = 29;
             this.label11.Text = "Magistrala";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -635,10 +439,10 @@
             // label12
             // 
             this.label12.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label12.Location = new System.Drawing.Point(516, 190);
+            this.label12.Location = new System.Drawing.Point(412, 190);
             this.label12.Margin = new System.Windows.Forms.Padding(9, 9, 9, 3);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(137, 18);
+            this.label12.Size = new System.Drawing.Size(75, 18);
             this.label12.TabIndex = 30;
             this.label12.Text = "Nazwy";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -649,7 +453,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label5.Location = new System.Drawing.Point(573, 1);
+            this.label5.Location = new System.Drawing.Point(460, -2);
             this.label5.Margin = new System.Windows.Forms.Padding(9, 9, 18, 9);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(117, 18);
@@ -657,23 +461,48 @@
             this.label5.Text = "TRYB STUDENT";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // txt1
+            // 
+            this.txt1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.txt1.Location = new System.Drawing.Point(226, 214);
+            this.txt1.Name = "txt1";
+            this.txt1.Size = new System.Drawing.Size(65, 26);
+            this.txt1.TabIndex = 31;
+            this.txt1.TextChanged += new System.EventHandler(this.txt1_TextChanged);
+            this.txt1.Leave += new System.EventHandler(this.txt1_Leave);
+            // 
+            // txt2
+            // 
+            this.txt2.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.txt2.Location = new System.Drawing.Point(319, 214);
+            this.txt2.Name = "txt2";
+            this.txt2.Size = new System.Drawing.Size(65, 26);
+            this.txt2.TabIndex = 32;
+            this.txt2.TextChanged += new System.EventHandler(this.txt2_TextChanged);
+            this.txt2.Leave += new System.EventHandler(this.txt2_Leave);
+            // 
+            // txt3
+            // 
+            this.txt3.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.txt3.Location = new System.Drawing.Point(415, 214);
+            this.txt3.Name = "txt3";
+            this.txt3.Size = new System.Drawing.Size(65, 26);
+            this.txt3.TabIndex = 33;
+            this.txt3.TextChanged += new System.EventHandler(this.txt3_TextChanged);
+            this.txt3.Leave += new System.EventHandler(this.txt3_Leave);
+            // 
             // Options
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(712, 341);
+            this.ClientSize = new System.Drawing.Size(589, 341);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.txt3);
+            this.Controls.Add(this.txt2);
+            this.Controls.Add(this.txt1);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.b3);
-            this.Controls.Add(this.g3);
-            this.Controls.Add(this.r3);
-            this.Controls.Add(this.b2);
-            this.Controls.Add(this.g2);
-            this.Controls.Add(this.r2);
-            this.Controls.Add(this.b1);
-            this.Controls.Add(this.g1);
-            this.Controls.Add(this.r1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.button1);
@@ -683,9 +512,9 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(728, 380);
+            this.MaximumSize = new System.Drawing.Size(605, 380);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(728, 380);
+            this.MinimumSize = new System.Drawing.Size(605, 380);
             this.Name = "Options";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Options";
@@ -697,15 +526,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.r1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.g1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.b1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.b2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.g2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.r2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.b3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.g3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.r3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -732,15 +552,6 @@
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.NumericUpDown r1;
-        private System.Windows.Forms.NumericUpDown g1;
-        private System.Windows.Forms.NumericUpDown b1;
-        private System.Windows.Forms.NumericUpDown b2;
-        private System.Windows.Forms.NumericUpDown g2;
-        private System.Windows.Forms.NumericUpDown r2;
-        private System.Windows.Forms.NumericUpDown b3;
-        private System.Windows.Forms.NumericUpDown g3;
-        private System.Windows.Forms.NumericUpDown r3;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
@@ -748,5 +559,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txt1;
+        private System.Windows.Forms.TextBox txt2;
+        private System.Windows.Forms.TextBox txt3;
     }
 }

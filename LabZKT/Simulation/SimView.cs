@@ -103,6 +103,16 @@ namespace LabZSK.Simulation
             foreach (var sig in flags)
                 sig.Value.Parent = panel_Sim_Control;
             RBPS.Parent = panel_Sim_Control;
+            RBPS.Controls.Add(new Label()
+            { Height = 2, Dock = DockStyle.Bottom, BackColor = Color.DarkMagenta });
+            RBPS.Controls.Add(new Label()
+            { Height = 2, Dock = DockStyle.Top, BackColor = Color.DarkMagenta });
+            RBPS.Controls.Add(new Label()
+            { Width = 2, Dock = DockStyle.Left, BackColor = Color.DarkMagenta });
+            RBPS.Controls.Add(new Label()
+            { Width = 2, Dock = DockStyle.Right, BackColor = Color.DarkMagenta });
+
+
             draw = new Drawings(ref registers, ref flags, ref RBPS);
             draw.addControlToDrawOn(panel_Sim_Control);
             LoadLists();
