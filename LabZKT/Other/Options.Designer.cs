@@ -652,9 +652,9 @@
             this.label5.Location = new System.Drawing.Point(573, 1);
             this.label5.Margin = new System.Windows.Forms.Padding(9, 9, 18, 9);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(93, 18);
+            this.label5.Size = new System.Drawing.Size(117, 18);
             this.label5.TabIndex = 21;
-            this.label5.Text = "Tryb student";
+            this.label5.Text = "TRYB STUDENT";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // Options
