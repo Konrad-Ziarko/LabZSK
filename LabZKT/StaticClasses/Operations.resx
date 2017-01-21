@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ADS" xml:space="preserve">
+  <data name="ADD" xml:space="preserve">
     <value>ALU = LALU + RALU</value>
   </data>
   <data name="ALA" xml:space="preserve">
@@ -268,7 +268,7 @@
     <value>ALU = 1</value>
   </data>
   <data name="OPC" xml:space="preserve">
-    <value>OP lub AOP+32 -&gt; RAPS</value>
+    <value>OP albo AOP+32 -&gt; RAPS</value>
   </data>
   <data name="OR" xml:space="preserve">
     <value>ALU = LALU OR RALU</value>
@@ -324,7 +324,7 @@
   <data name="SRBP" xml:space="preserve">
     <value>BUS -&gt; RBP</value>
   </data>
-  <data name="SUS" xml:space="preserve">
+  <data name="SUB" xml:space="preserve">
     <value>ALU = LALU - RALU</value>
   </data>
   <data name="SXRO" xml:space="preserve">

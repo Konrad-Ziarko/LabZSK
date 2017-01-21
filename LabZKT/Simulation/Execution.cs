@@ -503,7 +503,7 @@ namespace LabZSK.Simulation
                 Grid_PM.CurrentCell = Grid_PM[10, raps];
                 microOpMnemo = Grid_PM[10, raps].Value.ToString();
                 isOverflow = false;
-                if (microOpMnemo == "ADS")
+                if (microOpMnemo == "ADD")
                 {
                     try
                     {
@@ -518,7 +518,7 @@ namespace LabZSK.Simulation
                     }
                     testAndSet("ALU", (short)(registers["LALU"].innerValue + registers["RALU"].innerValue));
                 }
-                else if (microOpMnemo == "SUS")
+                else if (microOpMnemo == "SUB")
                 {
                     try
                     {

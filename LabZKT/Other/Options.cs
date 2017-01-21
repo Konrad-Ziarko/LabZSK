@@ -40,6 +40,7 @@ namespace LabZSK.Other
             groupBox1.Enabled = Settings.Default.CanEditOptions;
             checkBox1.Checked = Settings.Default.IsDevConsole;
             checkBox4.Checked = Settings.Default.CanEditOptions;
+            checkBox3.Checked = Settings.Default.isServerVisible;
             setAllStrings();
         }
         internal void setAllStrings()
@@ -108,9 +109,12 @@ namespace LabZSK.Other
                     txt2.Text = "#" + Settings.Default.R2.ToString("X").PadLeft(2, '0') + Settings.Default.G2.ToString("X").PadLeft(2, '0') + Settings.Default.B2.ToString("X").PadLeft(2, '0');
                     txt3.Text = "#" + Settings.Default.R3.ToString("X").PadLeft(2, '0') + Settings.Default.G3.ToString("X").PadLeft(2, '0') + Settings.Default.B3.ToString("X").PadLeft(2, '0');
                     ignore = false;
+                   
                     break;
             }
-            Settings.Default.Save();
+            t1chk();
+            t2chk();
+            t3chk();
             if (!suppressReload)
             ACallUpdate();
             suppressReload = false;
@@ -279,57 +283,13 @@ namespace LabZSK.Other
         private void getSkinData()
         {
             Settings.Default.Skin = 4;
+            Settings.Default.Save();
             if (comboBox1.SelectedIndex != 4)
                 comboBox1.SelectedIndex = 4;
             if (!suppressReload)
             ACallUpdate();
             suppressReload = false;
 
-        }
-        private void r1_ValueChanged(object sender, EventArgs e)
-        {
-            if (!ignore)
-                getSkinData();
-        }
-        private void g1_ValueChanged(object sender, EventArgs e)
-        {
-            if (!ignore)
-                getSkinData();
-        }
-        private void b1_ValueChanged(object sender, EventArgs e)
-        {
-            if (!ignore)
-                getSkinData();
-        }
-        private void r2_ValueChanged(object sender, EventArgs e)
-        {
-            if (!ignore)
-                getSkinData();
-        }
-        private void g2_ValueChanged(object sender, EventArgs e)
-        {
-            if (!ignore)
-                getSkinData();
-        }
-        private void b2_ValueChanged(object sender, EventArgs e)
-        {
-            if (!ignore)
-                getSkinData();
-        }
-        private void r3_ValueChanged(object sender, EventArgs e)
-        {
-            if (!ignore)
-                getSkinData();
-        }
-        private void g3_ValueChanged(object sender, EventArgs e)
-        {
-            if (!ignore)
-                getSkinData();
-        }
-        private void b3_ValueChanged(object sender, EventArgs e)
-        {
-            if (!ignore)
-                getSkinData();
         }
 
         private void checkBox4_CheckedChanged(object sender, EventArgs e)
@@ -411,7 +371,7 @@ namespace LabZSK.Other
             return "#" + r.ToString("X").PadLeft(2, '0') + g.ToString("X").PadLeft(2, '0') + b.ToString("X").PadLeft(2, '0');
         }
 
-        private void txt1_Leave(object sender, EventArgs e)
+        private void t1chk()
         {
             int r = Settings.Default.R1, g = Settings.Default.G1, b = Settings.Default.B1;
             bool valid;
@@ -422,11 +382,8 @@ namespace LabZSK.Other
                 Settings.Default.G1 = g;
                 Settings.Default.B1 = b;
             }
-            if (!ignore)
-                getSkinData();
         }
-
-        private void txt2_Leave(object sender, EventArgs e)
+        private void t2chk()
         {
             int r = Settings.Default.R2, g = Settings.Default.G2, b = Settings.Default.B2;
             bool valid;
@@ -437,11 +394,8 @@ namespace LabZSK.Other
                 Settings.Default.G2 = g;
                 Settings.Default.B2 = b;
             }
-            if (!ignore)
-                getSkinData();
         }
-
-        private void txt3_Leave(object sender, EventArgs e)
+        private void t3chk()
         {
             int r = Settings.Default.R3, g = Settings.Default.G3, b = Settings.Default.B3;
             bool valid;
@@ -452,8 +406,29 @@ namespace LabZSK.Other
                 Settings.Default.G3 = g;
                 Settings.Default.B3 = b;
             }
-            if (!ignore)
-                getSkinData();
+        }
+        private void txt1_Leave(object sender, EventArgs e)
+        {
+            t1chk();
+            t2chk();
+            t3chk();
+            getSkinData();
+        }
+
+        private void txt2_Leave(object sender, EventArgs e)
+        {
+            t1chk();
+            t2chk();
+            t3chk();
+            getSkinData();
+        }
+
+        private void txt3_Leave(object sender, EventArgs e)
+        {
+            t1chk();
+            t2chk();
+            t3chk();
+            getSkinData();
         }
     }
 }

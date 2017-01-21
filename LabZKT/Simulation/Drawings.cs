@@ -57,6 +57,7 @@ namespace LabZSK.Simulation
                     break;
             }
             controlToDrawOn.BackgroundImage = skin;
+            registers["BUS"].setCustomeBackColor(Color.FromArgb(255, Settings.Default.R2, Settings.Default.G2, Settings.Default.B2));
         }
 
         private Bitmap drawSkin(Color backgroundColor, Color busColor, Color textColor)

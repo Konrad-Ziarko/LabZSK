@@ -63,9 +63,9 @@ namespace LabZSK.StaticClasses {
         /// <summary>
         ///   Looks up a localized string similar to ALU = LALU + RALU.
         /// </summary>
-        internal static string ADS {
+        internal static string ADD {
             get {
-                return ResourceManager.GetString("ADS", resourceCulture);
+                return ResourceManager.GetString("ADD", resourceCulture);
             }
         }
         
@@ -511,7 +511,7 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OP lub AOP+32 -&gt; RAPS.
+        ///   Looks up a localized string similar to OP albo AOP+32 -&gt; RAPS.
         /// </summary>
         internal static string OPC {
             get {
@@ -684,9 +684,9 @@ namespace LabZSK.StaticClasses {
         /// <summary>
         ///   Looks up a localized string similar to ALU = LALU - RALU.
         /// </summary>
-        internal static string SUS {
+        internal static string SUB {
             get {
-                return ResourceManager.GetString("SUS", resourceCulture);
+                return ResourceManager.GetString("SUB", resourceCulture);
             }
         }
         

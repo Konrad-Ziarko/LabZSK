@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LabZSK.Properties;
+using System;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -33,25 +34,11 @@ namespace LabZSK.Controls
             Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
             if (registerName == "BUS")
             {
-                Controls.Add(new Label()
-                { Height = 1, Dock = DockStyle.Bottom, BackColor = Color.Red });
-                Controls.Add(new Label()
-                { Height = 1, Dock = DockStyle.Top, BackColor = Color.Red });
-                Controls.Add(new Label()
-                { Width = 1, Dock = DockStyle.Left, BackColor = Color.Red });
-                Controls.Add(new Label()
-                { Width = 1, Dock = DockStyle.Right, BackColor = Color.Red });
+                //customeBackColor = Color.FromArgb(255, Settings.Default.R2, Settings.Default.G2, Settings.Default.B2);
             }
-            else if (registerName == "RAPS")
+            if (registerName == "RAPS")
             {
-                Controls.Add(new Label()
-                { Height = 2, Dock = DockStyle.Bottom, BackColor = Color.DarkMagenta });
-                Controls.Add(new Label()
-                { Height = 2, Dock = DockStyle.Top, BackColor = Color.DarkMagenta });
-                Controls.Add(new Label()
-                { Width = 2, Dock = DockStyle.Left, BackColor = Color.DarkMagenta });
-                Controls.Add(new Label()
-                { Width = 2, Dock = DockStyle.Right, BackColor = Color.DarkMagenta });
+                customeBackColor = Color.LightSlateGray;
             }
         }
         protected override void OnKeyPress(KeyPressEventArgs e)
@@ -203,8 +190,10 @@ namespace LabZSK.Controls
         protected override void OnEnabledChanged(EventArgs e)
         {
             base.OnEnabledChanged(e);
-            if (!Enabled)
-                BackColor = customeBackColor;
+            
+                if (!Enabled)
+                    BackColor = customeBackColor;
+            
         }
 
         #region Drag&Drop
@@ -281,6 +270,10 @@ namespace LabZSK.Controls
         {
             needCheck = false;
             ReadOnly = true;
+            if (registerName == "BUS")
+            {
+                customeBackColor = Color.FromArgb(255, Settings.Default.R2, Settings.Default.G2, Settings.Default.B2);
+            }
             BackColor = customeBackColor;
             ForeColor = customeForeColor;
             clampValue();
@@ -314,6 +307,10 @@ namespace LabZSK.Controls
             BackColor = customeBackColor = colorBack;
             this.ForeColor = customeForeColor = colorFore;
         }
+        public void setCustomeBackColor(Color colorBack)
+        {
+            BackColor = customeBackColor = colorBack;
+        }
         private void clampValue()
         {
             if (registerName == "LK")
@@ -327,6 +324,11 @@ namespace LabZSK.Controls
                 valueWhichShouldBeMovedToRegister &= 255;
             }
             else if (registerName == "RAP")
+            {
+                innerValue &= 255;
+                valueWhichShouldBeMovedToRegister &= 255;
+            }
+            else if (registerName == "SUMA")
             {
                 innerValue &= 255;
                 valueWhichShouldBeMovedToRegister &= 255;

@@ -318,8 +318,8 @@ namespace LabZSK.MicroOperations
         private void init_ALU()
         {
             groupBox1.Text = Text = "ALU";
-            radioButton2.Text = Translator.GetMicroOpExtendedDescription("ADS");
-            radioButton3.Text = Translator.GetMicroOpExtendedDescription("SUS");
+            radioButton2.Text = Translator.GetMicroOpExtendedDescription("ADD");
+            radioButton3.Text = Translator.GetMicroOpExtendedDescription("SUB");
             radioButton4.Text = Translator.GetMicroOpExtendedDescription("CMX");
             radioButton5.Text = Translator.GetMicroOpExtendedDescription("CMA");
             radioButton6.Text = Translator.GetMicroOpExtendedDescription("OR");

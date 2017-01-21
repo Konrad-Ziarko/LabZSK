@@ -63,9 +63,9 @@ namespace LabZSK.StaticClasses {
         /// <summary>
         ///   Looks up a localized string similar to Dodawanie.
         /// </summary>
-        internal static string ADS {
+        internal static string ADD {
             get {
-                return ResourceManager.GetString("ADS", resourceCulture);
+                return ResourceManager.GetString("ADD", resourceCulture);
             }
         }
         
@@ -241,6 +241,15 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Iloczyn logiczny A i komórki.
+        /// </summary>
+        internal static string LAND {
+            get {
+                return ResourceManager.GetString("LAND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Przesunięcie cykliczne A w lewo.
         /// </summary>
         internal static string LCA {
@@ -318,15 +327,6 @@ namespace LabZSK.StaticClasses {
         internal static string LOR {
             get {
                 return ResourceManager.GetString("LOR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Iloczyn logiczny A i komórki.
-        /// </summary>
-        internal static string LPR {
-            get {
-                return ResourceManager.GetString("LPR", resourceCulture);
             }
         }
         
@@ -441,9 +441,9 @@ namespace LabZSK.StaticClasses {
         /// <summary>
         ///   Looks up a localized string similar to Odejmowanie.
         /// </summary>
-        internal static string SUS {
+        internal static string SUB {
             get {
-                return ResourceManager.GetString("SUS", resourceCulture);
+                return ResourceManager.GetString("SUB", resourceCulture);
             }
         }
         

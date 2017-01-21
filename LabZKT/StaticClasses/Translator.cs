@@ -20,9 +20,9 @@ namespace LabZSK.StaticClasses
         /// <summary>
         /// String array of simple operations mnemonics
         /// </summary>
-        private static string[] DecodeSimpleTable = new string[32] {"", "ADS", "SUS", "MUL", "DIV", "STQ", "STA", "STX",
+        private static string[] DecodeSimpleTable = new string[32] {"", "ADD", "SUB", "MUL", "DIV", "STQ", "STA", "STX",
             "LDA", "LDX", "STC", "TXA", "TMQ", "ADX", "SIO", "LIO", "UNB", "BAO", "BXP", "BXZ", "BXN", "TLD", "BAP",
-            "BAZ", "BAN", "LOR", "LPR", "LNG", "EOR", "SRJ", "BDN", "NOP"};
+            "BAZ", "BAN", "LOR", "LAND", "LNG", "EOR", "SRJ", "BDN", "NOP"};
         /// <summary>
         /// Dictionary holding binary value of simple and complex operations
         /// </summary>
@@ -30,18 +30,18 @@ namespace LabZSK.StaticClasses
             {"CMA","0001" }, {"ALA","0010" } ,{"ARA","0011" }, {"LRQ","0100" }, {"LLQ","0101" }, {"LLA","0110" },
             {"LRA","0111" }, {"LCA","1000" }, {"LAI","1001" }, {"LXI","1010" }, {"INX","1011" }, {"DEX","1100" },
             {"CND","1101" }, {"ENI","1110" }, {"LDS","1111" },
-            {"ADS","00001" }, {"SUS","00010" }, {"MUL","00011" }, {"DIV","00100" }, {"STQ","00101" }, {"STA","00110" },
+            {"ADD","00001" }, {"SUB","00010" }, {"MUL","00011" }, {"DIV","00100" }, {"STQ","00101" }, {"STA","00110" },
             {"STX","00111" }, {"LDA","01000" }, {"LDX","01001" }, {"STC","01010" }, {"TXA","01011" }, {"TMQ","01100" },
             {"ADX","01101" }, {"SIO","01110" }, {"LIO","01111" }, {"UNB","10000" }, {"BAO","10001" }, {"BXP","10010" },
             {"BXZ","10011" }, {"BXN","10100" }, {"TLD","10101" }, {"BAP","10110" }, {"BAZ","10111" }, {"BAN","11000" },
-            {"LOR","11001" }, {"LPR","11010" }, {"LNG","11011" }, {"EOR","11100" }, {"SRJ","11101" }, {"BDN","11110" },
+            {"LOR","11001" }, {"LAND","11010" }, {"LNG","11011" }, {"EOR","11100" }, {"SRJ","11101" }, {"BDN","11110" },
             {"NOP","11111" }
         };
 
         /// <summary>
         /// Dictionary of description for microoperations
         /// </summary>
-        private static Dictionary<string, string> MicroOpDescriptions = new Dictionary<string, string>() {
+        internal static Dictionary<string, string> MicroOpDescriptions = new Dictionary<string, string>() {
             {"IXRE", "RI -> LALU" },{"ILK", "BUS -> LK" },{"IRAP", "BUS -> RAP" },{"IRAE","SUMA -> RAE" },
             {"IALU", "A -> LALU"},{"ILR","BUS -> LR" },{"IX","BUS -> X" },{"IBE","BUS -> RALU" },
             {"IRI","BUS -> RI" },{"IBI","BUS -> RAE" },{"IA","BUS -> A" },{"IMQ","BUS -> MQ" },
@@ -54,7 +54,7 @@ namespace LabZSK.StaticClasses
             {"DRI","RI = RI-1"},{"RA","A = 0"},{"RMQ","MQ = 0"},{"AQ15","NOT A0 -> MQ15"},
             {"RINT","INT = 0"},{"TAS","A >= 0"},{"TXS","RI >= 0"},{"TQ15","MQ15 = 0"},
             {"TAO","OFF = 0"},{"TXP","RI <= 0"},{"TXRO","RI = 0"},
-            {"TAP","A <= 0"},{"TAZ","A = 0"},{"ADS","ALU = LALU + RALU"},{"SUS","ALU = LALU - RALU"},
+            {"TAP","A <= 0"},{"TAZ","A = 0"},{"ADD","ALU = LALU + RALU"},{"SUB","ALU = LALU - RALU"},
             {"CMX","ALU = (NOT RALU)+1"},{"CMA","ALU = (NOT LALU)+1"},{"OR","ALU = LALU OR RALU"},{"AND","ALU = LALU AND RALU"},
             {"EOR","ALU = LALU XOR RALU"},{"NOTL","ALU = NOT LALU"},{"NOTR","ALU = NOT RALU"},{"L","ALU = LALU"},
             {"R","ALU = RALU"},{"INCL","ALU = LALU + 1"},{"INCR","ALU = RALU + 1"},{"DECL","ALU = LALU - 1"},
@@ -106,7 +106,7 @@ namespace LabZSK.StaticClasses
         };
         private static Dictionary<string, long> instCodeALU = new Dictionary<string, long>()
         {
-            {"", 0 },{"ADS", 0x1 },{"SUS", 0x2 },{"CMX", 0x3 },{"CMA", 0x4 },{"OR", 0x5 },{"AND", 0x6 },{"EOR", 0x7 },
+            {"", 0 },{"ADD", 0x1 },{"SUB", 0x2 },{"CMX", 0x3 },{"CMA", 0x4 },{"OR", 0x5 },{"AND", 0x6 },{"EOR", 0x7 },
             {"NOTL", 0x8 },{"NOTR", 0x9 },{"L", 0xA },{"R", 0xB },{"INCL", 0xC },{"INCR", 0xD },{"DECL", 0xE },
             {"DECR", 0xF },{"ONE", 0x10 },{"ZERO", 0x11 }
         };
@@ -119,11 +119,20 @@ namespace LabZSK.StaticClasses
         /// <returns>Selected row micro op. RBPS value</returns>
         public static long GetRbpsValue(DataGridViewRow row)
         {
-            long rbps = (instCodeS1[row.Cells[1].Value.ToString()] << 45) + (instCodeD1[row.Cells[2].Value.ToString()] << 43)
+            long rbps;
+            try
+            {
+                rbps = (instCodeS1[row.Cells[1].Value.ToString()] << 45) + (instCodeD1[row.Cells[2].Value.ToString()] << 43)
                 + (instCodeS2[row.Cells[3].Value.ToString()] << 39) + (instCodeD2[row.Cells[4].Value.ToString()] << 35)
                 + (instCodeS3[row.Cells[5].Value.ToString()] << 32) + (instCodeD3[row.Cells[6].Value.ToString()] << 28)
                 + (instCodeC1[row.Cells[7].Value.ToString()] << 25) + (instCodeC2[row.Cells[8].Value.ToString()] << 21)
                 + (instCodeTest[row.Cells[9].Value.ToString()] << 16) + (instCodeALU[row.Cells[10].Value.ToString()] << 8);
+            }
+            catch
+            {
+                rbps = 0;
+            }
+            
 
                 return rbps;
         }

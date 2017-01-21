@@ -182,6 +182,10 @@ namespace LabZSK.MicroOperations
                                         if (j > 0)
                                             if (Grid_PM[j, i].Value.ToString() != lastString)
                                             {
+                                                if (lastString == "ADS")
+                                                    lastString = "ADD";
+                                                else if (lastString == "SUS")
+                                                    lastString = "SUB";
                                                 Grid_PM[j, i].Value = lastString;
                                                 AUpdateData(i, j, Grid_PM[j, i].Value.ToString());
                                             }

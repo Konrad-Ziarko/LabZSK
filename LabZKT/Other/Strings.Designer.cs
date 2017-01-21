@@ -133,7 +133,7 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ustawienia admina.
+        ///   Looks up a localized string similar to Ustawienia administratora.
         /// </summary>
         internal static string groupBoxName {
             get {

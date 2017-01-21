@@ -373,8 +373,8 @@
             this.comboBox_Simple.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.comboBox_Simple.FormattingEnabled = true;
             this.comboBox_Simple.Items.AddRange(new object[] {
-            "ADS - Dodawanie",
-            "SUS - Odejmowanie",
+            "ADD - Dodawanie",
+            "SUB - Odejmowanie",
             "MUL - Mnożenie",
             "DIV - Dzielenie",
             "STQ - Zapamiętaj rejestr MQ",
@@ -398,7 +398,7 @@
             "BAZ - Skocz jeśli A = 0",
             "BAN - Skocz jeśli A < 0",
             "LOR - Suma logiczna A i komórki",
-            "LPR - Iloczyn logiczny A i komórki",
+            "LAND - Iloczyn logiczny A i komórki",
             "LNG - Negacja logiczna A",
             "EOR - Różnica symetryczna A i komórki",
             "SRJ - Skok ze śladem",

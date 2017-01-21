@@ -97,13 +97,13 @@
             this.groupBox1.Size = new System.Drawing.Size(564, 161);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Ustawienia admina:";
+            this.groupBox1.Text = "Ustawienia administratora";
             // 
             // checkBox4
             // 
             this.checkBox4.AutoSize = true;
             this.checkBox4.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.checkBox4.Location = new System.Drawing.Point(140, 0);
+            this.checkBox4.Location = new System.Drawing.Point(180, 1);
             this.checkBox4.Margin = new System.Windows.Forms.Padding(9);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(32, 22);
@@ -127,7 +127,7 @@
             // 
             // numericUpDown2
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(402, 111);
+            this.numericUpDown2.Location = new System.Drawing.Point(412, 111);
             this.numericUpDown2.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
             this.numericUpDown2.Minimum = new decimal(new int[] {
             3,
@@ -146,7 +146,7 @@
             // 
             // numericUpDown3
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(296, 111);
+            this.numericUpDown3.Location = new System.Drawing.Point(301, 111);
             this.numericUpDown3.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
             this.numericUpDown3.Maximum = new decimal(new int[] {
             99,
@@ -200,9 +200,9 @@
             this.label13.Location = new System.Drawing.Point(155, 113);
             this.label13.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(339, 18);
+            this.label13.Size = new System.Drawing.Size(349, 18);
             this.label13.TabIndex = 17;
-            this.label13.Text = "5 <            <= 4 <          <= 3 <            <= 2";
+            this.label13.Text = "5 <            <= 4 <            <= 3 <            <= 2";
             // 
             // label8
             // 
@@ -220,10 +220,9 @@
             // 
             this.checkBox2.AutoSize = true;
             this.checkBox2.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.checkBox2.Location = new System.Drawing.Point(177, 31);
+            this.checkBox2.Location = new System.Drawing.Point(180, 31);
             this.checkBox2.Margin = new System.Windows.Forms.Padding(9);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.checkBox2.Size = new System.Drawing.Size(32, 22);
             this.checkBox2.TabIndex = 15;
             this.checkBox2.Text = " ";
@@ -258,10 +257,9 @@
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.checkBox1.Location = new System.Drawing.Point(177, 69);
+            this.checkBox1.Location = new System.Drawing.Point(180, 69);
             this.checkBox1.Margin = new System.Windows.Forms.Padding(9);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.checkBox1.Size = new System.Drawing.Size(32, 22);
             this.checkBox1.TabIndex = 3;
             this.checkBox1.Text = " ";
@@ -417,7 +415,7 @@
             // label10
             // 
             this.label10.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label10.Location = new System.Drawing.Point(223, 190);
+            this.label10.Location = new System.Drawing.Point(226, 190);
             this.label10.Margin = new System.Windows.Forms.Padding(9, 9, 9, 3);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(75, 18);
@@ -428,7 +426,7 @@
             // label11
             // 
             this.label11.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label11.Location = new System.Drawing.Point(316, 190);
+            this.label11.Location = new System.Drawing.Point(319, 190);
             this.label11.Margin = new System.Windows.Forms.Padding(9, 9, 9, 3);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(75, 18);
@@ -439,7 +437,7 @@
             // label12
             // 
             this.label12.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label12.Location = new System.Drawing.Point(412, 190);
+            this.label12.Location = new System.Drawing.Point(415, 190);
             this.label12.Margin = new System.Windows.Forms.Padding(9, 9, 9, 3);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(75, 18);
@@ -466,7 +464,7 @@
             this.txt1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txt1.Location = new System.Drawing.Point(226, 214);
             this.txt1.Name = "txt1";
-            this.txt1.Size = new System.Drawing.Size(65, 26);
+            this.txt1.Size = new System.Drawing.Size(75, 26);
             this.txt1.TabIndex = 31;
             this.txt1.TextChanged += new System.EventHandler(this.txt1_TextChanged);
             this.txt1.Leave += new System.EventHandler(this.txt1_Leave);
@@ -476,7 +474,7 @@
             this.txt2.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txt2.Location = new System.Drawing.Point(319, 214);
             this.txt2.Name = "txt2";
-            this.txt2.Size = new System.Drawing.Size(65, 26);
+            this.txt2.Size = new System.Drawing.Size(75, 26);
             this.txt2.TabIndex = 32;
             this.txt2.TextChanged += new System.EventHandler(this.txt2_TextChanged);
             this.txt2.Leave += new System.EventHandler(this.txt2_Leave);
@@ -486,7 +484,7 @@
             this.txt3.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txt3.Location = new System.Drawing.Point(415, 214);
             this.txt3.Name = "txt3";
-            this.txt3.Size = new System.Drawing.Size(65, 26);
+            this.txt3.Size = new System.Drawing.Size(75, 26);
             this.txt3.TabIndex = 33;
             this.txt3.TextChanged += new System.EventHandler(this.txt3_TextChanged);
             this.txt3.Leave += new System.EventHandler(this.txt3_Leave);
@@ -512,7 +510,6 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(605, 380);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(605, 380);
             this.Name = "Options";

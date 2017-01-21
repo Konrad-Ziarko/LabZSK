@@ -198,8 +198,8 @@ namespace LabZSK.Memory
         private void button_Choice_Simple_Click(object sender, EventArgs e)
         {
             StringCollection sc = new StringCollection();
-            sc.Add("ADS - " + Translator.GetInsrtuctionDescription("ADS"));
-            sc.Add("SUS - " + Translator.GetInsrtuctionDescription("SUS"));
+            sc.Add("ADD - " + Translator.GetInsrtuctionDescription("ADD"));
+            sc.Add("SUB - " + Translator.GetInsrtuctionDescription("SUB"));
             sc.Add("MUL - " + Translator.GetInsrtuctionDescription("MUL"));
             sc.Add("DIV - " + Translator.GetInsrtuctionDescription("DIV"));
             sc.Add("STQ - " + Translator.GetInsrtuctionDescription("STQ"));
@@ -223,7 +223,7 @@ namespace LabZSK.Memory
             sc.Add("BAZ - " + Translator.GetInsrtuctionDescription("BAZ"));
             sc.Add("BAN - " + Translator.GetInsrtuctionDescription("BAN"));
             sc.Add("LOR - " + Translator.GetInsrtuctionDescription("LOR"));
-            sc.Add("LPR - " + Translator.GetInsrtuctionDescription("LPR"));
+            sc.Add("LAND - " + Translator.GetInsrtuctionDescription("LAND"));
             sc.Add("LNG - " + Translator.GetInsrtuctionDescription("LNG"));
             sc.Add("EOR - " + Translator.GetInsrtuctionDescription("EOR"));
             sc.Add("SRJ - " + Translator.GetInsrtuctionDescription("SRJ"));

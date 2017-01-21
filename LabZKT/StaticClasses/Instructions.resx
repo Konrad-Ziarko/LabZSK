@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ADS" xml:space="preserve">
+  <data name="ADD" xml:space="preserve">
     <value>Dodawanie</value>
   </data>
   <data name="ADX" xml:space="preserve">
@@ -204,7 +204,7 @@
   <data name="LOR" xml:space="preserve">
     <value>Suma logiczna A i komórki</value>
   </data>
-  <data name="LPR" xml:space="preserve">
+  <data name="LAND" xml:space="preserve">
     <value>Iloczyn logiczny A i komórki</value>
   </data>
   <data name="LRA" xml:space="preserve">
@@ -243,7 +243,7 @@
   <data name="STX" xml:space="preserve">
     <value>Zapamiętaj modyfikator RI</value>
   </data>
-  <data name="SUS" xml:space="preserve">
+  <data name="SUB" xml:space="preserve">
     <value>Odejmowanie</value>
   </data>
   <data name="TLD" xml:space="preserve">
