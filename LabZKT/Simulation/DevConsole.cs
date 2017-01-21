@@ -27,8 +27,9 @@ namespace LabZSK.Simulation
                 viewRef.DEVMODE = true;
                 viewRef.DEVADDCYCLE = false;
                 viewRef.DEVREGISTER = registerName.Text;
-                viewRef.DEVVALUE = Convert.ToInt16(registerValue.Value);
-                if (registerName.SelectedIndex == 1)
+                validateValue();
+                viewRef.DEVVALUE = (int)registerValue.Value;
+                if (registerName.SelectedIndex == 0)
                 {
                     viewRef.DEVCYCLE = viewRef.currnetCycle;
                     viewRef.DEVINCCYCLE = Convert.ToInt16(registerValue.Value);
@@ -37,6 +38,36 @@ namespace LabZSK.Simulation
                     viewRef.DEVREGISTER = "L. Cykli";
                 }
                 viewRef.button_Makro_Click(this, new EventArgs());
+            }
+        }
+
+        private void validateValue()
+        {
+            string txt = registerName.SelectedItem.ToString();
+            if (txt == "RAPS" || txt == "RAP" || txt == "L" || txt == "R" || txt == "SUMA")
+            {
+                registerValue.Value %= 255;
+                viewRef.DEVVALUE = Convert.ToInt16(registerValue.Value);
+            }
+            else if (txt == "LK")
+            {
+                registerValue.Value %= 127;
+                viewRef.DEVVALUE = Convert.ToInt16(registerValue.Value);
+            }
+            else if (txt == "LK")
+            {
+                registerValue.Value %= 127;
+                viewRef.DEVVALUE = Convert.ToInt16(registerValue.Value);
+            }
+            else if (txt == "Cykle+>")
+            {
+                registerValue.Value %= 201;
+                viewRef.DEVVALUE = Convert.ToInt32(registerValue.Value);
+            }
+            else
+            {
+                registerValue.Value %= 0xFFFF;
+                viewRef.DEVVALUE = Convert.ToInt16(registerValue.Value);
             }
         }
 

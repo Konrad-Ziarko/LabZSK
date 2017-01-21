@@ -15,10 +15,10 @@
       <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="SecondMark" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">6</Value>
+      <Value Profile="(Default)">4</Value>
     </Setting>
     <Setting Name="ThirdMark" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">10</Value>
+      <Value Profile="(Default)">6</Value>
     </Setting>
     <Setting Name="Culture" Type="System.String" Scope="User">
       <Value Profile="(Default)">pl-PL</Value>

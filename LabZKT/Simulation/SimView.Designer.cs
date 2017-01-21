@@ -50,7 +50,6 @@ namespace LabZSK.Simulation
             this.Hex = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.panel_Decode_PO = new System.Windows.Forms.Panel();
-            this.richTextBox1 = new FastRichBox();
             this.cellDescription = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenu_Main = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,10 +105,11 @@ namespace LabZSK.Simulation
             this.dataGridView_Info = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.richTextBox_Log = new FastRichBox();
             this.open_File_Dialog = new System.Windows.Forms.OpenFileDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.richTextBox_Log = new LabZSK.Controls.FastRichBox();
             this.transparentPanel1 = new LabZSK.Simulation.TransparentPanel();
+            this.richTextBox1 = new LabZSK.Controls.FastRichBox();
             this.panel_PO.SuspendLayout();
             this.panel_View_PO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid_Mem)).BeginInit();
@@ -262,26 +262,6 @@ namespace LabZSK.Simulation
             this.panel_Decode_PO.Name = "panel_Decode_PO";
             this.panel_Decode_PO.Size = new System.Drawing.Size(270, 138);
             this.panel_Decode_PO.TabIndex = 1;
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.richTextBox1.DetectUrls = false;
-            this.richTextBox1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.richTextBox1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.richTextBox1.Location = new System.Drawing.Point(76, 114);
-            this.richTextBox1.Multiline = false;
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.richTextBox1.Size = new System.Drawing.Size(191, 24);
-            this.richTextBox1.TabIndex = 2;
-            this.richTextBox1.Text = "";
-            this.richTextBox1.WordWrap = false;
-            this.richTextBox1.SelectionChanged += new System.EventHandler(this.richTextBox1_SelectionChanged);
-            this.richTextBox1.Enter += new System.EventHandler(this.richTextBox1_Enter);
             // 
             // cellDescription
             // 
@@ -926,6 +906,11 @@ namespace LabZSK.Simulation
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 800;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // richTextBox_Log
             // 
             this.richTextBox_Log.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -940,17 +925,32 @@ namespace LabZSK.Simulation
             this.richTextBox_Log.TabIndex = 0;
             this.richTextBox_Log.Text = "";
             // 
-            // timer1
-            // 
-            this.timer1.Interval = 800;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // transparentPanel1
             // 
             this.transparentPanel1.Location = new System.Drawing.Point(76, 82);
             this.transparentPanel1.Name = "transparentPanel1";
             this.transparentPanel1.Size = new System.Drawing.Size(194, 56);
             this.transparentPanel1.TabIndex = 3;
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.richTextBox1.DetectUrls = false;
+            this.richTextBox1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.richTextBox1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.richTextBox1.Location = new System.Drawing.Point(76, 114);
+            this.richTextBox1.Multiline = false;
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
+            this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.richTextBox1.Size = new System.Drawing.Size(191, 24);
+            this.richTextBox1.TabIndex = 2;
+            this.richTextBox1.Text = "";
+            this.richTextBox1.WordWrap = false;
+            this.richTextBox1.SelectionChanged += new System.EventHandler(this.richTextBox1_SelectionChanged);
+            this.richTextBox1.Enter += new System.EventHandler(this.richTextBox1_Enter);
             // 
             // SimView
             // 
@@ -1019,7 +1019,6 @@ namespace LabZSK.Simulation
         private System.Windows.Forms.Panel panel_User_Info;
         private System.Windows.Forms.Panel panel_Sim_Control;
         private System.Windows.Forms.DataGridView dataGridView_Info;
-        private System.Windows.Forms.RichTextBox richTextBox_Log;
         private System.Windows.Forms.Panel panel_Control;
         private System.Windows.Forms.Button button_OK;
         private System.Windows.Forms.Button button_Next_Tact;
@@ -1066,7 +1065,8 @@ namespace LabZSK.Simulation
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.RichTextBox richTextBox1;
         private Simulation.TransparentPanel transparentPanel1;
+        private FastRichBox richTextBox_Log;
+        private FastRichBox richTextBox1;
     }
 }

@@ -45,6 +45,7 @@ namespace LabZSK.Other
             checkBox2.Checked = Settings.Default.CanCloseLog;
             groupBox1.Enabled = Settings.Default.CanEditOptions;
             checkBox1.Checked = Settings.Default.IsDevConsole;
+            checkBox4.Checked = Settings.Default.CanEditOptions;
             setAllStrings();
         }
         internal void setAllStrings()
@@ -174,7 +175,7 @@ namespace LabZSK.Other
         private void button1_Click(object sender, EventArgs e)
         {
             SaveFileDialog save_File_Dialog = new SaveFileDialog();
-            save_File_Dialog.Filter = "Plik konfiguracyjny|*.mnie|Wszystko|*.*";
+            save_File_Dialog.Filter = "Plik konfiguracyjny|*.cfg|Wszystko|*.*";
             save_File_Dialog.Title = "Zapisz konfigurację";
             if (Directory.Exists(_environmentPath))
                 save_File_Dialog.InitialDirectory = _environmentPath;
@@ -204,7 +205,7 @@ namespace LabZSK.Other
         {
             //odczyt konfiguracji
             OpenFileDialog open_File_Dialog = new OpenFileDialog();
-            open_File_Dialog.Filter = "To czego szukasz|*.mnie|Wszystko|*.*";
+            open_File_Dialog.Filter = "Plik konfiguracyjny|*.cfg|Wszystko|*.*";
             open_File_Dialog.Title = "Wczytaj konfigurację";
             if (Directory.Exists(_environmentPath + @"\PO\"))
                 open_File_Dialog.InitialDirectory = _environmentPath;
@@ -240,6 +241,7 @@ namespace LabZSK.Other
                     checkBox2.Checked = Settings.Default.CanCloseLog;
                     groupBox1.Enabled = Settings.Default.CanEditOptions;
                     checkBox1.Checked = Settings.Default.IsDevConsole;
+                    checkBox4.Checked = Settings.Default.CanEditOptions;
                 }
                 catch
                 {
@@ -384,6 +386,21 @@ namespace LabZSK.Other
         {
             if (!ignore)
                 getSkinData();
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.CanEditOptions = checkBox4.Checked ;
+            if (checkBox4.Checked)
+            {
+                label5.ForeColor = System.Drawing.Color.Red;
+                label5.Text = "TRYB ADMIN";
+            }
+            else 
+            {
+                label5.ForeColor = System.Drawing.Color.Blue;
+                label5.Text = "TRYB STUDENT";
+            }
         }
     }
 }

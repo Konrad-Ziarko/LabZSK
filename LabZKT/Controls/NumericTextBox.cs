@@ -31,6 +31,16 @@ namespace LabZSK.Controls
             Location = loc;
             BackColor = Color.White;
             Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            if (registerName == "BUS")
+            {
+                Controls.Add(new Label()
+                { Height = 1, Dock = DockStyle.Bottom, BackColor = Color.Black });
+            }
+            else if (registerName == "RAPS")
+            {
+                Controls.Add(new Label()
+                { Height = 1, Dock = DockStyle.Bottom, BackColor = Color.Black });
+            }
         }
         protected override void OnKeyPress(KeyPressEventArgs e)
         {

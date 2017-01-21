@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="autoModeLatencyLabel" xml:space="preserve">
-    <value>Opóźnienie trybu auto(ms):</value>
+    <value>Opóźnienie trybu auto :</value>
   </data>
   <data name="devConsoleLabel" xml:space="preserve">
-    <value>Konsola deweloperska</value>
+    <value>Konsola deweloperska:</value>
   </data>
   <data name="gradingScaleLabel" xml:space="preserve">
-    <value>Progi ocen:</value>
+    <value>Progi dla ocen:</value>
   </data>
   <data name="languageLabel" xml:space="preserve">
-    <value>Język:</value>
+    <value>Język</value>
   </data>
   <data name="loadConfigButton" xml:space="preserve">
     <value>Wczytaj konfigurację</value>
@@ -194,10 +194,10 @@ Wydział Cybernetyki</value>
     <value>Port</value>
   </data>
   <data name="serverTitle" xml:space="preserve">
-    <value>Serwer</value>
+    <value>Serwer:</value>
   </data>
   <data name="logClosing" xml:space="preserve">
-    <value>Zamykanie logu</value>
+    <value>Zamykanie logu:</value>
   </data>
   <data name="theOtherGuy" xml:space="preserve">
     <value>Konsultant: mgr inż. Artur Miktus</value>

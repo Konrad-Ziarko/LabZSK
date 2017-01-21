@@ -16,6 +16,7 @@ namespace LabZSK.Simulation
 {
     partial class SimView
     {
+        private bool halt;
         private bool getRRRegisterOP(out short a)
         {
             string tmp = Convert.ToString(registers["RR"].innerValue, 2).PadLeft(16, '0');
@@ -832,7 +833,7 @@ namespace LabZSK.Simulation
                     {
                         leftValue = Convert.ToInt16(tmp.Substring(9, 7), 2);
                     }
-                    addTextToLog(("C2".PadLeft(8, ' ') + " | ") + microOpMnemo.PadLeft(4, ' ') + " : " + Translator.GetMicroOpDescription(microOpMnemo) + "\n");
+                    AddToLogAndMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
                     testAndSet("L", leftValue);
                     validateRegister();
                     testAndSet("R", rightValue);
@@ -845,7 +846,7 @@ namespace LabZSK.Simulation
                     }
                 }
                 cells[8, 1] = false;
-                AddToLogAndMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+                //AddToLogAndMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             button_OK.Visible = true;
             EnDisableButtons();
@@ -895,6 +896,15 @@ namespace LabZSK.Simulation
                     addTextToLog(Strings.startingSimulation + "\n" + DateTime.Now.ToString("HH:mm.ss").PadLeft(20, ' ') + "\n" + Strings.registersContent + "\n");
                     foreach (var reg in registers.Values)
                         addTextToLog(reg.registerName.PadRight(6, ' ') + " = " + reg.Text + "\n");
+                    addTextToLog("\n");
+                    int iter = 0;
+                    foreach (var flg in flags.Values)
+                    {
+                        addTextToLog(flg.flagName.PadRight(4, ' ') + " = " + flg.innerValue + " ");
+                        iter++;
+                        if (iter == 3)
+                            addTextToLog("\n");
+                    }
                     addTextToLog("\n");
                     timer1.Enabled = true;
                     simTime = DateTime.Now;
@@ -958,7 +968,7 @@ namespace LabZSK.Simulation
                 exeTest();
             else if (currentTact == 7 && !isTestPositive)
             {
-                bool halt = false;
+                halt = false;
                 var value = registers["RAPS"].innerValue;
                 if (value == 255)
                 {
@@ -980,46 +990,7 @@ namespace LabZSK.Simulation
                     EnDisableButtons();
                 currentTact = 0;
                 dataGridView_Info.Rows[2].Cells[1].Value = currentTact;
-                if (DEVEND)
-                {
-                    DEVEND = false;
-                    DEVMODE = false;
-                    DEVREGISTER = null;
-                    DEVVALUE = 0;
-                }
-                if (halt)
-                {
-                    addTextToLog("".PadLeft(11, ' ') + "RAPS = 255, STOP - " + Strings.criticalError + " " + "\n");
-                    canSimulate = false;
-                    DEVMODE = false;
-                    stopSim();
-                    buttonOKClicked = false;
-                    //registers["RAPS"].setInnerValue(0);
-                    return;
-                }
-                else if (!DEVMODE)
-                {
-                    stopSim();
-                    buttonOKClicked = false;
-                }
-                else if (DEVMODE && DEVREGISTER != "L. Cykli" && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
-                {
-                    DEVMODE = false;
-                    //registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
-                    stopSim();
-                    buttonOKClicked = false;
-                }
-                else if (DEVMODE && currnetCycle == DEVVALUE && DEVREGISTER == "L. Cykli")
-                {
-                    DEVMODE = false;
-                    //registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
-                    stopSim();
-                    buttonOKClicked = false;
-                }
-                else if (DEVMODE)
-                {
-                    prepareSimulation(false);
-                }
+                endingCycle();
             }
             else if (currentTact == 8)
             {
@@ -1027,58 +998,59 @@ namespace LabZSK.Simulation
                 registers["RALU"].setInnerAndExpectedValue(0);
                 currentTact = 0;
                 dataGridView_Info.Rows[2].Cells[1].Value = currentTact;
-                if (!DEVMODE)
-                {
-                    stopSim();
-                    buttonOKClicked = false;
-                }
-                else if (DEVMODE && currnetCycle == DEVVALUE && DEVREGISTER == "L. Cykli")
-                {
-                    DEVMODE = false;
-                    //registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
-                    stopSim();
-                    buttonOKClicked = false;
-                }
-                else if (DEVMODE && DEVREGISTER != "L. Cykli" && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
-                {
-                    DEVMODE = false;
-                    //registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
-                    stopSim();
-                    buttonOKClicked = false;
-                }
-                else if (DEVMODE)
-                {
-                    prepareSimulation(false);
-                }
+                endingCycle();
             }
             else if (currentTact == 9)
             {
                 currentTact = 0;
                 dataGridView_Info.Rows[2].Cells[1].Value = currentTact;
-                if (!DEVMODE)
-                {
-                    stopSim();
-                    buttonOKClicked = false;
-                }
-                else if (DEVMODE && DEVREGISTER != "L. Cykli" && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
-                {
-                    DEVMODE = false;
-                    //registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
-                    stopSim();
-                    buttonOKClicked = false;
-                }
-                else if (DEVMODE && currnetCycle == DEVVALUE && DEVREGISTER == "L. Cykli")
-                {
-                    DEVMODE = false;
-                    //registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
-                    stopSim();
-                    buttonOKClicked = false;
-                }
-                else if (DEVMODE)
-                {
-                    prepareSimulation(false);
-                }
+                endingCycle();
             }
+        }
+        private void endingCycle()
+        {
+            if (DEVEND)
+            {
+                DEVEND = false;
+                DEVMODE = false;
+                DEVREGISTER = null;
+                DEVVALUE = 0;
+            }
+            if (halt)
+            {
+                addTextToLog("".PadLeft(11, ' ') + "RAPS = 255, STOP - " + Strings.criticalError + " " + "\n");
+                canSimulate = false;
+                DEVMODE = false;
+                stopSim();
+                buttonOKClicked = false;
+                //registers["RAPS"].setInnerValue(0);
+                return;
+            }
+            else if (!DEVMODE)
+            {
+                stopSim();
+                buttonOKClicked = false;
+            }
+            else if (DEVMODE && DEVREGISTER != "L. Cykli" && registers[DEVREGISTER].valueWhichShouldBeMovedToRegister == DEVVALUE)
+            {
+                DEVMODE = false;
+                //registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                stopSim();
+                buttonOKClicked = false;
+            }
+            else if (DEVMODE && currnetCycle == DEVVALUE && DEVREGISTER == "L. Cykli")
+            {
+                DEVMODE = false;
+                //registers[registerToCheck].setInnerValue(registers[registerToCheck].valueWhichShouldBeMovedToRegister);
+                stopSim();
+                buttonOKClicked = false;
+            }
+            else if (DEVMODE)
+            {
+                prepareSimulation(false);
+            }
+            if (!DEVMODE)
+                panel_Control.Visible = true;
         }
         private void instructionFetch()
         {
@@ -1220,6 +1192,8 @@ namespace LabZSK.Simulation
                     cells[i, j] = true;
             foreach (var reg in registers)
                 reg.Value.setActualValue(reg.Value.innerValue);
+            if (DEVMODE)
+                panel_Control.Visible = false;
         }
         internal void stopSim()
         {

@@ -180,7 +180,7 @@ namespace LabZSK.Simulation
 
             try
             {
-                string encryptedString = File.ReadAllText(_environmentPath + "\\NieUsuwaj.mnie");
+                string encryptedString = File.ReadAllText(_environmentPath + "\\LabZSK.cfg");
                 string newAppSettings = StaticClasses.Encryptor.Decrypt(encryptedString);
 
                 string[] tmp = newAppSettings.Split(new[] { "<?>" }, StringSplitOptions.RemoveEmptyEntries);
@@ -246,7 +246,7 @@ namespace LabZSK.Simulation
                     string encryptedstring = Encryptor.Encrypt(currentAppSettings);
                     try
                     {
-                        File.WriteAllText(_environmentPath + "\\NieUsuwaj.mnie", encryptedstring);
+                        File.WriteAllText(_environmentPath + "\\LabZSK.cfg", encryptedstring);
                     }
                     catch { }
                 }
@@ -815,8 +815,6 @@ namespace LabZSK.Simulation
                 addTextToLog((tact.PadLeft(8, ' ') + " | ") + mnemo.PadLeft(4, ' ') + " : (" + Strings.cycle + " " + currnetCycle + ") " + description + " (" + DateTime.Now.ToString("HH:mm.ss") + ")\n");
             else if (mnemo == "TINT")
                 addTextToLog((tact.PadLeft(8, ' ') + " | ") + mnemo.PadLeft(4, ' ') + " : " + description + "(INT ?= 0)\n");
-            else if (mnemo == "CEA")
-                ;
             else
                 addTextToLog((tact.PadLeft(8, ' ') + " | ") + mnemo.PadLeft(4, ' ') + " : " + description + "\n");
             string text;

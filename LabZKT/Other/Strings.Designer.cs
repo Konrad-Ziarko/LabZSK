@@ -79,7 +79,7 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Opóźnienie trybu auto(ms):.
+        ///   Looks up a localized string similar to Opóźnienie trybu auto :.
         /// </summary>
         internal static string autoModeLatencyLabel {
             get {
@@ -106,7 +106,7 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Konsola deweloperska.
+        ///   Looks up a localized string similar to Konsola deweloperska:.
         /// </summary>
         internal static string devConsoleLabel {
             get {
@@ -115,7 +115,7 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Progi ocen:.
+        ///   Looks up a localized string similar to Progi dla ocen:.
         /// </summary>
         internal static string gradingScaleLabel {
             get {
@@ -161,7 +161,7 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Język:.
+        ///   Looks up a localized string similar to Język.
         /// </summary>
         internal static string languageLabel {
             get {
@@ -188,7 +188,7 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Zamykanie logu.
+        ///   Looks up a localized string similar to Zamykanie logu:.
         /// </summary>
         internal static string logClosing {
             get {
@@ -251,7 +251,7 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Serwer.
+        ///   Looks up a localized string similar to Serwer:.
         /// </summary>
         internal static string serverTitle {
             get {
