@@ -15,7 +15,6 @@ namespace LabZSK.Other
         private bool suppressReload = true;
         private string _environmentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK";
         internal event Action ACallUpdate;
-        private bool ignore = false;
         public Options()
         {
             InitializeComponent();
@@ -23,14 +22,18 @@ namespace LabZSK.Other
 
         private void Options_Load(object sender, EventArgs e)
         {
+            //
+            label16.Visible = txt5.Visible = false;
+            //
             comboBox1.SelectedIndex = Settings.Default.Skin;
             label5.ForeColor = System.Drawing.Color.Blue;
-            ignore = true;
             txt1.Text = "#" + Settings.Default.R1.ToString("X").PadLeft(2, '0') + Settings.Default.G1.ToString("X").PadLeft(2, '0') + Settings.Default.B1.ToString("X").PadLeft(2, '0');
             txt2.Text = "#" + Settings.Default.R2.ToString("X").PadLeft(2, '0') + Settings.Default.G2.ToString("X").PadLeft(2, '0') + Settings.Default.B2.ToString("X").PadLeft(2, '0');
             txt3.Text = "#" + Settings.Default.R3.ToString("X").PadLeft(2, '0') + Settings.Default.G3.ToString("X").PadLeft(2, '0') + Settings.Default.B3.ToString("X").PadLeft(2, '0');
 
-            ignore = false;
+            txt4.Text = "#" + Settings.Default.RPS.ToString("X").PadLeft(2, '0') + Settings.Default.GPS.ToString("X").PadLeft(2, '0') + Settings.Default.BPS.ToString("X").PadLeft(2, '0');
+            txt5.Text = "#" + Settings.Default.RPAO.ToString("X").PadLeft(2, '0') + Settings.Default.GPAO.ToString("X").PadLeft(2, '0') + Settings.Default.BPAO.ToString("X").PadLeft(2, '0');
+
             comboBox2.SelectedIndex = Settings.Default.CultureIdx;
             numericUpDown1.Value = Settings.Default.Delay;
             numericUpDown4.Value = Settings.Default.FirstMark;
@@ -72,43 +75,33 @@ namespace LabZSK.Other
             {
                 case 0:
                     Settings.Default.Skin = 0;
-                    ignore = true;
                     txt1.Text = "#1B6033";
                     txt2.Text = "#85C648";
                     txt3.Text = "#F942EF";
-                    ignore = false;
                     break;
                 case 1:
                     Settings.Default.Skin = 1;
-                    ignore = true;
                     txt1.Text = "#1F129E";
                     txt2.Text = "#0270DF";
                     txt3.Text = "#F9EF42";
-                    ignore = false;
                     break;
                 case 2:
                     Settings.Default.Skin = 2;
-                    ignore = true;
                     txt1.Text = "#B10105";
                     txt2.Text = "#FE4145";
                     txt3.Text = "#05FEB1";
-                    ignore = false;
                     break;
                 case 3:
                     Settings.Default.Skin = 3;
-                    ignore = true;
                     txt1.Text = "#050505";
                     txt2.Text = "#787878";
                     txt3.Text = "#EFFEF5";
-                    ignore = false;
                     break;
                 case 4:
                     Settings.Default.Skin = 4;
-                    ignore = true;
                     txt1.Text = "#" + Settings.Default.R1.ToString("X").PadLeft(2, '0') + Settings.Default.G1.ToString("X").PadLeft(2, '0') + Settings.Default.B1.ToString("X").PadLeft(2, '0');
                     txt2.Text = "#" + Settings.Default.R2.ToString("X").PadLeft(2, '0') + Settings.Default.G2.ToString("X").PadLeft(2, '0') + Settings.Default.B2.ToString("X").PadLeft(2, '0');
                     txt3.Text = "#" + Settings.Default.R3.ToString("X").PadLeft(2, '0') + Settings.Default.G3.ToString("X").PadLeft(2, '0') + Settings.Default.B3.ToString("X").PadLeft(2, '0');
-                    ignore = false;
                    
                     break;
             }
@@ -307,21 +300,6 @@ namespace LabZSK.Other
             }
         }
 
-        private void txt1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txt2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txt3_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         public string HexToColor(string hexString, ref int r, ref int g, ref int b, out bool valid)
         {
             valid = true;
@@ -428,6 +406,34 @@ namespace LabZSK.Other
             t1chk();
             t2chk();
             t3chk();
+            getSkinData();
+        }
+
+        private void txt4_Leave(object sender, EventArgs e)
+        {
+            int r = Settings.Default.RPS, g = Settings.Default.GPS, b = Settings.Default.BPS;
+            bool valid;
+            txt4.Text = HexToColor(txt4.Text, ref r, ref g, ref b, out valid);
+            if (valid)
+            {
+                Settings.Default.RPS = r;
+                Settings.Default.GPS = g;
+                Settings.Default.BPS = b;
+            }
+            getSkinData();
+        }
+
+        private void txt5_Leave(object sender, EventArgs e)
+        {
+            int r = Settings.Default.RPAO, g = Settings.Default.GPAO, b = Settings.Default.BPAO;
+            bool valid;
+            txt5.Text = HexToColor(txt5.Text, ref r, ref g, ref b, out valid);
+            if (valid)
+            {
+                Settings.Default.RPAO = r;
+                Settings.Default.GPAO = g;
+                Settings.Default.BPAO = b;
+            }
             getSkinData();
         }
     }

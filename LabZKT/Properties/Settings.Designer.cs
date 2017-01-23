@@ -310,5 +310,77 @@ namespace LabZSK.Properties {
                 this["SimTimer"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("170")]
+        public int RPS {
+            get {
+                return ((int)(this["RPS"]));
+            }
+            set {
+                this["RPS"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("170")]
+        public int GPS {
+            get {
+                return ((int)(this["GPS"]));
+            }
+            set {
+                this["GPS"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("170")]
+        public int BPS {
+            get {
+                return ((int)(this["BPS"]));
+            }
+            set {
+                this["BPS"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public int RPAO {
+            get {
+                return ((int)(this["RPAO"]));
+            }
+            set {
+                this["RPAO"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public int GPAO {
+            get {
+                return ((int)(this["GPAO"]));
+            }
+            set {
+                this["GPAO"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public int BPAO {
+            get {
+                return ((int)(this["BPAO"]));
+            }
+            set {
+                this["BPAO"] = value;
+            }
+        }
     }
 }

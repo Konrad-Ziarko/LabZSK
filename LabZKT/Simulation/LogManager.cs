@@ -87,10 +87,11 @@ namespace LabZSK.Simulation
                 FileInfo fileInfo = new FileInfo(LogFile);
                 int len = 0;
                 //zapis logu do RAM'u
+                
                 byte[] lineIndex = Translator.GetBytes("#!#" + currentLogLine++ + "#!#", out len);
-                inMemoryLog.Write(lineIndex, 0, len);
+                //inMemoryLog.Write(lineIndex, 0, len);
                 byte[] bytes = Translator.GetBytes(v, out len);
-                inMemoryLog.Write(bytes, 0, len);
+                //inMemoryLog.Write(bytes, 0, len);
 
 
                 if (checkLogIntegrity(LogFile))
@@ -121,7 +122,10 @@ namespace LabZSK.Simulation
                     MessageBox.Show(Strings.logModified);
             }
         }
-
+        public void closeLog()
+        {
+            LogFile = string.Empty;
+        }
         /// <summary>
         /// Get array of bytes from this stream
         /// </summary>

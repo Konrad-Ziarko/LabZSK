@@ -96,6 +96,7 @@
             this.buttonStart.Text = "Start";
             this.buttonStart.UseVisualStyleBackColor = true;
             this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+            this.buttonStart.MouseEnter += new System.EventHandler(this.buttonStart_MouseEnter);
             // 
             // DevConsole
             // 

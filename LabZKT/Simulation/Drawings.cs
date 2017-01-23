@@ -57,7 +57,15 @@ namespace LabZSK.Simulation
                     break;
             }
             controlToDrawOn.BackgroundImage = skin;
+            /*
+            foreach(var reg in registers)
+                if (reg.Value.registerName != "BUS")
+                reg.Value.setBackColor();
+            foreach (var flg in flags)
+                flg.Value.BackColor = Color.FromArgb(255, Settings.Default.RPAO, Settings.Default.GPAO, Settings.Default.BPAO);*/
             registers["BUS"].setCustomeBackColor(Color.FromArgb(255, Settings.Default.R2, Settings.Default.G2, Settings.Default.B2));
+            registers["RAPS"].setCustomeBackColor(Color.FromArgb(255, Settings.Default.RPS, Settings.Default.GPS, Settings.Default.BPS));
+            RBPS.BackColor = Color.FromArgb(255, Settings.Default.RPS, Settings.Default.GPS, Settings.Default.BPS);
         }
 
         private Bitmap drawSkin(Color backgroundColor, Color busColor, Color textColor)

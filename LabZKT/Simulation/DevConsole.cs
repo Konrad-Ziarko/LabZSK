@@ -32,8 +32,8 @@ namespace LabZSK.Simulation
                 if (registerName.SelectedIndex == 0)
                 {
                     viewRef.DEVCYCLE = viewRef.currnetCycle;
-                    viewRef.DEVINCCYCLE = Convert.ToInt16(registerValue.Value);
-                    viewRef.DEVVALUE = viewRef.currnetCycle + Convert.ToInt16(registerValue.Value);
+                    viewRef.DEVINCCYCLE = Convert.ToInt32(registerValue.Value);
+                    viewRef.DEVVALUE = viewRef.currnetCycle + Convert.ToInt32(registerValue.Value);
                     viewRef.DEVADDCYCLE = true;
                     viewRef.DEVREGISTER = "L. Cykli";
                 }
@@ -61,7 +61,11 @@ namespace LabZSK.Simulation
             }
             else if (txt == "Cykle+>")
             {
-                registerValue.Value %= 201;
+                if (registerValue.Value < 0)
+                {
+                    registerValue.Value *= -1;
+                }
+                //registerValue.Value %= 251;
                 viewRef.DEVVALUE = Convert.ToInt32(registerValue.Value);
             }
             else
@@ -86,6 +90,11 @@ namespace LabZSK.Simulation
         {
             if (e.KeyCode == Keys.Escape)
                 this.Hide();
+        }
+
+        private void buttonStart_MouseEnter(object sender, EventArgs e)
+        {
+            validateValue();
         }
     }
 }

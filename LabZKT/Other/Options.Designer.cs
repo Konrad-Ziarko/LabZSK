@@ -61,6 +61,11 @@
             this.txt1 = new System.Windows.Forms.TextBox();
             this.txt2 = new System.Windows.Forms.TextBox();
             this.txt3 = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txt4 = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txt5 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
@@ -415,7 +420,7 @@
             // label10
             // 
             this.label10.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label10.Location = new System.Drawing.Point(226, 190);
+            this.label10.Location = new System.Drawing.Point(219, 190);
             this.label10.Margin = new System.Windows.Forms.Padding(9, 9, 9, 3);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(75, 18);
@@ -426,7 +431,7 @@
             // label11
             // 
             this.label11.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label11.Location = new System.Drawing.Point(319, 190);
+            this.label11.Location = new System.Drawing.Point(308, 190);
             this.label11.Margin = new System.Windows.Forms.Padding(9, 9, 9, 3);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(75, 18);
@@ -437,7 +442,7 @@
             // label12
             // 
             this.label12.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label12.Location = new System.Drawing.Point(415, 190);
+            this.label12.Location = new System.Drawing.Point(402, 190);
             this.label12.Margin = new System.Windows.Forms.Padding(9, 9, 9, 3);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(75, 18);
@@ -462,38 +467,90 @@
             // txt1
             // 
             this.txt1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.txt1.Location = new System.Drawing.Point(226, 214);
+            this.txt1.Location = new System.Drawing.Point(219, 214);
             this.txt1.Name = "txt1";
             this.txt1.Size = new System.Drawing.Size(75, 26);
             this.txt1.TabIndex = 31;
-            this.txt1.TextChanged += new System.EventHandler(this.txt1_TextChanged);
             this.txt1.Leave += new System.EventHandler(this.txt1_Leave);
             // 
             // txt2
             // 
             this.txt2.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.txt2.Location = new System.Drawing.Point(319, 214);
+            this.txt2.Location = new System.Drawing.Point(308, 214);
             this.txt2.Name = "txt2";
             this.txt2.Size = new System.Drawing.Size(75, 26);
             this.txt2.TabIndex = 32;
-            this.txt2.TextChanged += new System.EventHandler(this.txt2_TextChanged);
             this.txt2.Leave += new System.EventHandler(this.txt2_Leave);
             // 
             // txt3
             // 
             this.txt3.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.txt3.Location = new System.Drawing.Point(415, 214);
+            this.txt3.Location = new System.Drawing.Point(402, 214);
             this.txt3.Name = "txt3";
             this.txt3.Size = new System.Drawing.Size(75, 26);
             this.txt3.TabIndex = 33;
-            this.txt3.TextChanged += new System.EventHandler(this.txt3_TextChanged);
             this.txt3.Leave += new System.EventHandler(this.txt3_Leave);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label14.Location = new System.Drawing.Point(492, 190);
+            this.label14.Margin = new System.Windows.Forms.Padding(9);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(82, 18);
+            this.label14.TabIndex = 34;
+            this.label14.Text = "RBPS/RAPS";
+            // 
+            // txt4
+            // 
+            this.txt4.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.txt4.Location = new System.Drawing.Point(495, 214);
+            this.txt4.Name = "txt4";
+            this.txt4.Size = new System.Drawing.Size(75, 26);
+            this.txt4.TabIndex = 35;
+            this.txt4.Leave += new System.EventHandler(this.txt4_Leave);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label15.Location = new System.Drawing.Point(223, 274);
+            this.label15.Margin = new System.Windows.Forms.Padding(9);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(0, 18);
+            this.label15.TabIndex = 36;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label16.Location = new System.Drawing.Point(226, 274);
+            this.label16.Margin = new System.Windows.Forms.Padding(9);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(76, 18);
+            this.label16.TabIndex = 37;
+            this.label16.Text = "Pozostałe:";
+            // 
+            // txt5
+            // 
+            this.txt5.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.txt5.Location = new System.Drawing.Point(319, 271);
+            this.txt5.Name = "txt5";
+            this.txt5.Size = new System.Drawing.Size(75, 26);
+            this.txt5.TabIndex = 38;
+            this.txt5.Leave += new System.EventHandler(this.txt5_Leave);
             // 
             // Options
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(589, 341);
+            this.Controls.Add(this.txt5);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.txt4);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txt3);
             this.Controls.Add(this.txt2);
@@ -510,6 +567,7 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(605, 380);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(605, 380);
             this.Name = "Options";
@@ -559,5 +617,10 @@
         private System.Windows.Forms.TextBox txt1;
         private System.Windows.Forms.TextBox txt2;
         private System.Windows.Forms.TextBox txt3;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox txt4;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox txt5;
     }
 }

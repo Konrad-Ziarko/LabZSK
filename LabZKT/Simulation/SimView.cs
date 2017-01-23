@@ -92,6 +92,7 @@ namespace LabZSK.Simulation
         private FormWindowState previousWindowState;
         private FormWindowState currentWindowState;
         #endregion
+
         public SimView(string filename)
         {
             InitializeComponent();
@@ -103,7 +104,7 @@ namespace LabZSK.Simulation
             foreach (var sig in flags)
                 sig.Value.Parent = panel_Sim_Control;
             RBPS.Parent = panel_Sim_Control;
-            RBPS.BackColor = Color.LightSlateGray;
+            RBPS.BackColor = Color.FromArgb(255, Settings.Default.RPS, Settings.Default.GPS, Settings.Default.BPS);
 
             draw = new Drawings(ref registers, ref flags, ref RBPS);
             draw.addControlToDrawOn(panel_Sim_Control);
@@ -674,6 +675,7 @@ namespace LabZSK.Simulation
             logManager.clearInMemoryLog();
             logManager.closeConnection();
             logFile = string.Empty;
+            logManager.closeLog();
         }
         public void initLogInformation()
         {
@@ -1218,6 +1220,11 @@ namespace LabZSK.Simulation
         {
             SimView_ResizeEnd(this, new EventArgs());
         }
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
+
+        [DllImport("User32.dll")]
+        private static extern IntPtr GetWindowDC(IntPtr hWnd);
         protected override void WndProc(ref Message m)
         {
             const int WM_SYSCOMMAND = 0x0112;

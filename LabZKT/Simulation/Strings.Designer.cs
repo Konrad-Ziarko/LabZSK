@@ -629,7 +629,7 @@ namespace LabZSK.Simulation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Komputer LabZSK.
+        ///   Looks up a localized string similar to Komputer LabZSK - sterowanie mikroprogramowe.
         /// </summary>
         internal static string SimulationTitle {
             get {

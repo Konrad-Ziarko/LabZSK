@@ -16,6 +16,7 @@ namespace LabZSK.Simulation
 {
     partial class SimView
     {
+        int klmonp = 0;
         private bool halt;
         private bool getRRRegisterOP(out short a)
         {
@@ -1009,6 +1010,12 @@ namespace LabZSK.Simulation
         }
         private void endingCycle()
         {
+            klmonp++;
+            if (klmonp == 50)
+            {
+
+            }
+            richTextBox_Log.Clear();
             if (DEVEND)
             {
                 DEVEND = false;

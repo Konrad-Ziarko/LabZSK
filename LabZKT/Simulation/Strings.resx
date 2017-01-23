@@ -251,7 +251,7 @@ Log symulacji zostanie zamknięty.</value>
     <value>======Stop  symulacji======</value>
   </data>
   <data name="SimulationTitle" xml:space="preserve">
-    <value>Komputer LabZSK</value>
+    <value>Komputer LabZSK - sterowanie mikroprogramowe</value>
   </data>
   <data name="simulationToolStrip" xml:space="preserve">
     <value>Symulacja</value>

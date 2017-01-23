@@ -34,11 +34,15 @@ namespace LabZSK.Controls
             Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
             if (registerName == "BUS")
             {
-                //customeBackColor = Color.FromArgb(255, Settings.Default.R2, Settings.Default.G2, Settings.Default.B2);
+                customeBackColor = Color.FromArgb(255, Settings.Default.R2, Settings.Default.G2, Settings.Default.B2);
             }
-            if (registerName == "RAPS")
+            else if (registerName == "RAPS")
             {
-                customeBackColor = Color.LightSlateGray;
+                customeBackColor = Color.FromArgb(255, Settings.Default.RPS, Settings.Default.GPS, Settings.Default.BPS);
+            }
+            else
+            {
+                //customeBackColor = Color.FromArgb(255, Settings.Default.RPAO, Settings.Default.GPAO, Settings.Default.BPAO);
             }
         }
         protected override void OnKeyPress(KeyPressEventArgs e)
@@ -110,6 +114,23 @@ namespace LabZSK.Controls
             else
                 e.Handled = true;
         }
+
+        internal void setBackColor()
+        {
+            if (registerName == "BUS")
+            {
+                BackColor = customeBackColor = Color.FromArgb(255, Settings.Default.R2, Settings.Default.G2, Settings.Default.B2);
+            }
+            if (registerName == "RAPS")
+            {
+                BackColor = customeBackColor = Color.FromArgb(255, Settings.Default.RPS, Settings.Default.GPS, Settings.Default.BPS);
+            }
+            else
+            {
+                BackColor = customeBackColor = Color.FromArgb(255, Settings.Default.RPAO, Settings.Default.GPAO, Settings.Default.BPAO);
+            }
+        }
+
         protected override void OnLostFocus(EventArgs e)
         {
             base.OnLostFocus(e);
