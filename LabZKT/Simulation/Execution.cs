@@ -16,7 +16,6 @@ namespace LabZSK.Simulation
 {
     partial class SimView
     {
-        int klmonp = 0;
         private bool halt;
         private bool getRRRegisterOP(out short a)
         {
@@ -127,7 +126,8 @@ namespace LabZSK.Simulation
             else if (microOpMnemo == "TXZ")
             {
                 short tmp = registers["RR"].innerValue;
-                string rr = tmp.ToString().PadLeft(16, '0');
+                string r = Convert.ToString(tmp, 2);
+                string rr = r.PadLeft(16, '0');
                 string op = rr.Substring(0, 5);
                 if (op == "10101")//TLD
                 {
@@ -183,39 +183,7 @@ namespace LabZSK.Simulation
         }
         private void exeTact7()
         {
-            if (cells[8, 7])
-            {
-                Grid_PM.CurrentCell = Grid_PM[8, raps];
-                microOpMnemo = Grid_PM[8, raps].Value.ToString();
-                if (microOpMnemo == "RA")
-                {
-                    testAndSet("A", 0);
-                }
-                else if (microOpMnemo == "RMQ")
-                {
-                    testAndSet("MQ", 0);
-                }
-                else if (microOpMnemo == "RINT")
-                {
-                    flags["INT"].setInnerValue(0);
-                    flagToCheck = "INT";
-                }
-                else if (microOpMnemo == "ENI")
-                {
-                    flags["INT"].setInnerValue(1);
-                    flagToCheck = "INT";
-                }
-                else if (microOpMnemo == "OPC")
-                {
-                    short a;
-                    bool isIndirect = getRRRegisterOP(out a);
-                    testAndSet("RAPS", a);
-                    currentTact = 8;
-                }
-                cells[8, 7] = false;
-                AddToLogAndMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
-            }
-            else if (cells[5, 7])
+            if (cells[5, 7])
             {
                 Grid_PM.CurrentCell = Grid_PM[5, raps];
                 microOpMnemo = Grid_PM[5, raps].Value.ToString();
@@ -344,7 +312,33 @@ namespace LabZSK.Simulation
                     AUpdateForm(registers["RAP"].innerValue, mr.value, mr.hex.ToUpper(), 1);
                 }
             }
-            button_OK.Visible = true;
+            else if(cells[8, 7])
+            {
+                Grid_PM.CurrentCell = Grid_PM[8, raps];
+                microOpMnemo = Grid_PM[8, raps].Value.ToString();
+
+                if (microOpMnemo == "RINT")
+                {
+                    flags["INT"].setInnerValue(0);
+                    flagToCheck = "INT";
+                }
+                else if (microOpMnemo == "ENI")
+                {
+                    flags["INT"].setInnerValue(1);
+                    flagToCheck = "INT";
+                }
+                else if (microOpMnemo == "OPC")
+                {
+                    short a;
+                    bool isIndirect = getRRRegisterOP(out a);
+                    testAndSet("RAPS", a);
+                    currentTact = 8;
+                }
+                cells[8, 7] = false;
+                AddToLogAndMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
+            }
+            
+                button_OK.Visible = true;
             EnDisableButtons();
             if (registerToCheck != "")
                 registers[registerToCheck].Focus();
@@ -480,6 +474,14 @@ namespace LabZSK.Simulation
                         testAndSet("MQ", (short)(registers["MQ"].innerValue & 0xFFFE));
                     else
                         testAndSet("MQ", (short)(registers["MQ"].innerValue | 0x0001));
+                }
+                else if (microOpMnemo == "RA")
+                {
+                    testAndSet("A", 0);
+                }
+                else if (microOpMnemo == "RMQ")
+                {
+                    testAndSet("MQ", 0);
                 }
                 cells[8, 6] = false;
                 AddToLogAndMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
@@ -717,40 +719,42 @@ namespace LabZSK.Simulation
                 }
                 else if (microOpMnemo == "LRQ")
                 {
-                    A >>= 1;
+                    A = ((ushort)A >> 1);
+                    //A >>= 1;
                     testAndSet("A", (short)(A));
                     validateRegister();
                     if (LastBit)
                     {
-                        short MQ = (short)(registers["MQ"].innerValue >> 1);
+                        short MQ = (short)((ushort)registers["MQ"].innerValue >> 1);
                         MQ = (short)(MQ | 0x8000);
                         testAndSet("MQ", MQ);
                     }
                     else
-                        testAndSet("MQ", (short)(registers["MQ"].innerValue >> 1));
+                        testAndSet("MQ", (short)((ushort)registers["MQ"].innerValue >> 1));
                 }
                 else if (microOpMnemo == "LLQ")
                 {
-                    A <<= 1;
+                    A = ((ushort)A << 1);
+                    //A <<= 1;
                     SignBit = (registers["MQ"].innerValue & 0x8000) == 0x8000 ? true : false;
                     if (SignBit)
-                        testAndSet("A", (short)(A + 1));
+                        testAndSet("A", (short)((ushort)A + 1));
                     else
-                        testAndSet("A", (short)(A));
+                        testAndSet("A", (short)((ushort)A));
 
                     validateRegister();
                     testAndSet("MQ", (short)(registers["MQ"].innerValue << 1));
                 }
                 else if (microOpMnemo == "LLA")
-                    testAndSet("A", (short)(A << 1));
+                    testAndSet("A", (short)((ushort)A << 1));
                 else if (microOpMnemo == "LRA")
-                    testAndSet("A", (short)(A >> 1));
+                    testAndSet("A", (short)((ushort)A >> 1));
                 else if (microOpMnemo == "LCA")
                 {
                     if (SignBit)
-                        testAndSet("A", (short)((A << 1) + 1));
+                        testAndSet("A", (short)(((ushort)A << 1) + 1));
                     else
-                        testAndSet("A", (short)(A << 1));
+                        testAndSet("A", (short)((ushort)A << 1));
                 }
                 cells[4, 1] = false;
             }
@@ -901,10 +905,12 @@ namespace LabZSK.Simulation
                     int iter = 0;
                     foreach (var flg in flags.Values)
                     {
-                        addTextToLog(flg.flagName.PadRight(4, ' ') + " = " + flg.innerValue + " ");
+                        addTextToLog(flg.flagName.PadLeft(5, ' ') + " = " + flg.innerValue );
                         iter++;
-                        if (iter == 3)
+                        if (iter % 3 == 0)
                             addTextToLog("\n");
+                        else
+                            addTextToLog(", ");
                     }
                     addTextToLog("\n");
                     timer1.Enabled = true;
@@ -1010,11 +1016,6 @@ namespace LabZSK.Simulation
         }
         private void endingCycle()
         {
-            klmonp++;
-            if (klmonp == 50)
-            {
-
-            }
             richTextBox_Log.Clear();
             if (DEVEND)
             {
@@ -1028,6 +1029,7 @@ namespace LabZSK.Simulation
                 addTextToLog("".PadLeft(11, ' ') + "RAPS = 255, STOP - " + Strings.criticalError + " " + "\n");
                 canSimulate = false;
                 DEVMODE = false;
+                panel_Control.Visible = true;
                 stopSim();
                 buttonOKClicked = false;
                 //registers["RAPS"].setInnerValue(0);
@@ -1083,7 +1085,7 @@ namespace LabZSK.Simulation
                     na = 0;
                 }
             long rbps = Translator.GetRbpsValue(Grid_PM.Rows[raps]) + na;
-            RBPS.Text = rbps.ToString("X").PadLeft(12, '0');
+            RBPS.Text = rbps.ToString("X").PadLeft(12, '0')+"h";
 
             addTextToLog("===============" + raps + "================\n" + Strings.tact + "0: RBPS=" + RBPS.Text + "\n");
             for (int i = 1; i < 11; i++)

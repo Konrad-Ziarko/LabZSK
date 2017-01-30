@@ -808,7 +808,7 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BXZ i RI &lt;&gt; 0 || TLD i RI = 0.
+        ///   Looks up a localized string similar to BXZ i RI != 0 || TLD i RI = 0.
         /// </summary>
         internal static string TXZ {
             get {

@@ -215,6 +215,11 @@ namespace LabZSK.Simulation
             controlToDrawOn.Visible = true;
             if (registers["SUMA"].Visible)
             {
+                registers["RAE"].Visible = true;
+                var loc = registers["RAE"].Location;
+                loc.Y = registers["SUMA"].Location.Y;
+                registers["RAE"].Location = loc;
+
                 path.Reset();
                 path.StartFigure();
                 p2 = registers["RR"].Location;
@@ -282,9 +287,11 @@ namespace LabZSK.Simulation
                 p2 = registers["SUMA"].Location;
                 p1.X = p2.X += registers["SUMA"].Size.Width / 2;
                 p2.Y += registers["SUMA"].Size.Height / 2;
-                p3.Y = p1.Y = controlToDrawOn.Size.Height - (int)pen.Width;
+                p3.Y = p1.Y = registers["SUMA"].Location.Y + registers["SUMA"].Size.Height - (int)(pen.Width/2)-1;
+                //p3.Y = p1.Y = controlToDrawOn.Size.Height - (int)pen.Width;
+                //
                 path.AddLine(p2, p1);
-                p3.X = controlToDrawOn.Size.Width;
+                p3.X = registers["RAE"].Location.X;
                 path.AddLine(p1, p3);
                 g.DrawPath(pen, path);
             }
@@ -310,7 +317,9 @@ namespace LabZSK.Simulation
                 g.DrawString(flg.flagName, fnt, sb, flg.Location.X + flg.Width / 2 - g.MeasureString(flg.flagName, fnt).Width / 2, flg.Location.Y - 18);
             foreach (var reg in registers.Values)
                 if (reg.Visible)
-                    if (reg.registerName == "L" || reg.registerName == "R" || reg.registerName == "ALU" || reg.registerName == "SUMA")
+                    if (reg.registerName == "L" || reg.registerName == "R")
+                        g.DrawString(reg.registerName, fnt, sb, reg.Location.X + reg.Width * 4 / 5 - g.MeasureString(reg.registerName, fnt).Width / 2, reg.Location.Y - 18);
+                    else if (reg.registerName == "ALU" || reg.registerName == "SUMA")
                         g.DrawString(reg.registerName, fnt, sb, reg.Location.X + reg.Width / 2 - g.MeasureString(reg.registerName, fnt).Width / 2, reg.Location.Y - 18);
                     else
                         g.DrawString(reg.registerName, fnt, sb, reg.Location.X, reg.Location.Y - 18);

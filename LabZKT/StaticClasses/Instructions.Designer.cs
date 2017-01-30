@@ -448,7 +448,7 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Skocz jeśli RI&gt; 0 i RI = RI - 1.
+        ///   Looks up a localized string similar to RI = RI - 1 i Skocz jeśli RI &gt; 0.
         /// </summary>
         internal static string TLD {
             get {

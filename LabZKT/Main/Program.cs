@@ -36,7 +36,7 @@ namespace LabZSK
             }
             else
             {
-                MessageBox.Show(Strings.appAlreadyRunning, "LabZSK", MessageBoxButtons.OK);
+                //MessageBox.Show(Strings.appAlreadyRunning, "LabZSK", MessageBoxButtons.OK);
             }
         }
     }

@@ -671,6 +671,20 @@ namespace LabZSK.Memory
         private void MemView_Shown(object sender, EventArgs e)
         {
             Grid_PO_SelectionChanged(sender, e);
+
+        }
+        internal void changeSelectedPAO(int val)
+        {
+            Grid_Mem.Rows[val].Selected = true;
+            Grid_Mem.FirstDisplayedScrollingRowIndex = val;
+            Grid_Mem.CurrentCell = Grid_Mem.Rows[val].Cells[0];
+            Grid_PO_SelectionChanged(this, new EventArgs());
+        }
+        internal void showMe(int val)
+        {
+            this.Show();
+            this.BringToFront();
+            changeSelectedPAO(val);
         }
     }
 }

@@ -228,6 +228,7 @@ namespace LabZSK.MicroOperations
         }
         private void grid_PM_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            Grid_PM.EndEdit();
             if (Grid_PM.CurrentCell.ColumnIndex > 0)
             {
                 NewMicroOperation();
@@ -236,7 +237,7 @@ namespace LabZSK.MicroOperations
         private void NewMicroOperation()
         {
             string newMicroInstruction = "";
-            string currentRadioButtonText = (string)Grid_PM.CurrentCell.Value;
+            string currentRadioButtonText = Convert.ToString(Grid_PM.CurrentCell.Value);
             string currentMicroInstruction = currentRadioButtonText.Split()[0];
 
             
@@ -362,6 +363,10 @@ namespace LabZSK.MicroOperations
             {
                 string valueInCell = e.Data.GetData(typeof(string)) as string;
                 var hitTestInfo = Grid_PM.HitTest(clientPoint.X, clientPoint.Y);
+                if(valueInCell == null)
+                {
+                    valueInCell = Grid_PM[hitTestInfo.ColumnIndex, hitTestInfo.RowIndex].Value.ToString();
+                }
                 if (hitTestInfo.ColumnIndex > 0 && hitTestInfo.RowIndex != -1 && hitTestInfo.ColumnIndex == idxDragColumn)
                 {
                     if (Grid_PM[7, hitTestInfo.RowIndex].Value.ToString() == "SHT" && hitTestInfo.ColumnIndex == 7 && valueInCell == "")
@@ -578,16 +583,20 @@ namespace LabZSK.MicroOperations
             tmp += "___" + Translator.GetMicroOpExtendedDescription(row.getColumn(idx)).PadRight(8, ' ') + "\r\n";
             return addToPrint;
         }
-
         private void Grid_PM_CellLeave(object sender, DataGridViewCellEventArgs e)
         {
 
         }
-
         private void Grid_PM_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            Grid_PM[e.ColumnIndex, e.RowIndex].Value = 255 & Convert.ToInt32(Grid_PM[e.ColumnIndex, e.RowIndex].Value);
-            AUpdateData(e.RowIndex, e.ColumnIndex, Grid_PM[e.ColumnIndex, e.RowIndex].Value.ToString());
+            try
+            {
+                Grid_PM[e.ColumnIndex, e.RowIndex].Value = (255 & Convert.ToInt32(Grid_PM[e.ColumnIndex, e.RowIndex].Value)).ToString();
+                if ((255 & Convert.ToInt32(Grid_PM[e.ColumnIndex, e.RowIndex].Value)) == 0)
+                    Grid_PM[e.ColumnIndex, e.RowIndex].Value = "";
+                AUpdateData(e.RowIndex, e.ColumnIndex, Grid_PM[e.ColumnIndex, e.RowIndex].Value.ToString());
+            }
+            catch { Grid_PM[e.ColumnIndex, e.RowIndex].Value = ""; }
         }
     }
 }

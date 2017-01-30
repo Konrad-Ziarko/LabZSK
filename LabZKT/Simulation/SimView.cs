@@ -59,6 +59,7 @@ namespace LabZSK.Simulation
         #region Simulation Vars
         private bool canSimulate = true;
         private DateTime simTime;
+        private TimeSpan appStart = DateTime.Now.TimeOfDay;
         internal bool isRunning = false;
         private bool isTestPositive = false;
         private bool isOverflow = false;
@@ -96,6 +97,10 @@ namespace LabZSK.Simulation
         public SimView(string filename)
         {
             InitializeComponent();
+            richTextBox1.Text = string.Format("UT{0:00}:{1:00}", appStart.Hours, appStart.Minutes);
+            var loc = richTextBox1.Location;
+            loc.X = 203;
+            richTextBox1.Location = loc;
             initLists();
             initFlags();
             initRegisterTextBoxes();
@@ -177,10 +182,6 @@ namespace LabZSK.Simulation
             Settings.Default.CanEditOptions = false;
             Settings.Default.CanCloseLog = false;
             Settings.Default.IsDevConsole = false;
-            Settings.Default.FirstMark = 2;
-            Settings.Default.SecondMark = 6;
-            Settings.Default.ThirdMark = 10;
-
             try
             {
                 string encryptedString = File.ReadAllText(_environmentPath + "\\LabZSK.cfg");
@@ -313,7 +314,7 @@ namespace LabZSK.Simulation
             RBPS.Enabled = false;
             RBPS.Size = new Size(130, 1);
             RBPS.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
-            RBPS.Text = "000000000000";
+            RBPS.Text = "000000000000h";
         }
         private void LoadLists()
         {
@@ -362,9 +363,9 @@ namespace LabZSK.Simulation
 
             var loc = RBPS.Location;
             loc.X = horizontalGap + (horizontalGap - 130) / 2;
-            loc.Y = verticalGap * 4 + (verticalGap - 27) / 2;
+            loc.Y = verticalGap * 4 + (verticalGap - 27) / 4;
             RBPS.Location = loc;
-            locY = verticalGap * 4 + (verticalGap - 27) / 2;
+            locY = loc.Y;
             registers["RAPS"].SetXY(horizontalGap * 2 + (horizontalGap - 130) / 2, locY);
             registers["RAE"].SetXY(horizontalGap * 3 + (horizontalGap - 130) / 2, locY);
 
@@ -372,7 +373,7 @@ namespace LabZSK.Simulation
             registers["L"].SetXY(horizontalGap + (horizontalGap - 130) * 3 / 2, locY);
             registers["R"].SetXY(horizontalGap * 2 + (horizontalGap - 130) * 3 / 2, locY);
             registers["SUMA"].SetXY((registers["R"].Location.X - registers["L"].Location.X + 130) / 2
-                - 65 + registers["L"].Location.X, locY + (verticalGap - 27) * 3 / 4);
+                - 65 + registers["L"].Location.X, locY + (verticalGap - 27) * 5 / 6);
         }
         private void initUserInfoArea()
         {
@@ -463,6 +464,8 @@ namespace LabZSK.Simulation
         {
             foreach (var reg in registers)
                 reg.Value.Enabled = !reg.Value.Enabled;
+            if (registers["SUMA"].Visible)
+                registers["RAE"].BackColor = Color.FromArgb(255, 170, 170, 170);
         }
         private void waitForButton()
         {
@@ -633,6 +636,7 @@ namespace LabZSK.Simulation
         }
         public void ALeaveEditMode()
         {
+            registers["LK"].setInnerAndExpectedValue((short)(registers["LK"].innerValue & 127));
             foreach (var oldReg in oldRegs)
             {
                 if (registers[oldReg.Key].innerValue != oldReg.Value)
@@ -981,7 +985,7 @@ namespace LabZSK.Simulation
         {
             int idxRow = Grid_Mem.CurrentCell.RowIndex;
             int idxCol = Grid_Mem.CurrentCell.ColumnIndex;
-
+            memView.changeSelectedPAO(idxRow);
             selectedInstruction = List_Memory[idxRow];
             string instructionMnemo = "";
             cellDescription.Text = "PAO[" + idxRow + "]";
@@ -1067,8 +1071,9 @@ namespace LabZSK.Simulation
         }
         private void edytujpaoToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            memView.Show();
-            memView.BringToFront();
+            //memView.Show();
+            memView.showMe(Grid_Mem.SelectedRows[0].Index);
+            
         }
         private void wczytajpaoToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -1239,9 +1244,12 @@ namespace LabZSK.Simulation
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
+            var loc = richTextBox1.Location;
+            loc.X = 15; loc.Y = 117;
+            richTextBox1.Location = loc;
             TimeSpan diff = DateTime.Now - simTime;
             TimeSpan now = simTime.TimeOfDay;
-                richTextBox1.Text = string.Format("{0:00}:{1:00}", now.Hours, now.Minutes) + " + " + string.Format("{0:00}:{1:00}.{2:00}", diff.Hours, diff.Minutes, diff.Seconds);
+                richTextBox1.Text = string.Format("UT{0:00}:{1:00}", appStart.Hours, appStart.Minutes) + " > " + string.Format("{0:00}:{1:00}", now.Hours, now.Minutes) + " + " + string.Format("{0:00}:{1:00}.{2:00}", diff.Hours, diff.Minutes, diff.Seconds);
                 Regex regExp = new Regex(@"\+");
                 foreach (Match match in regExp.Matches(richTextBox1.Text))
                 {

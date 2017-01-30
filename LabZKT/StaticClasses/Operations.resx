@@ -367,7 +367,7 @@
     <value>RI &gt;= 0</value>
   </data>
   <data name="TXZ" xml:space="preserve">
-    <value>BXZ i RI &lt;&gt; 0 || TLD i RI = 0</value>
+    <value>BXZ i RI != 0 || TLD i RI = 0</value>
   </data>
   <data name="UNB" xml:space="preserve">
     <value>Zawsze pozytywny</value>

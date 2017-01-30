@@ -709,7 +709,7 @@ namespace LabZSK.Simulation
             this.panel_Sim.Margin = new System.Windows.Forms.Padding(2);
             this.panel_Sim.MaximumSize = new System.Drawing.Size(0, 650);
             this.panel_Sim.Name = "panel_Sim";
-            this.panel_Sim.Size = new System.Drawing.Size(572, 400);
+            this.panel_Sim.Size = new System.Drawing.Size(0, 400);
             this.panel_Sim.TabIndex = 1;
             // 
             // panel_Sim_Control
@@ -765,7 +765,7 @@ namespace LabZSK.Simulation
             this.panel_Control.Controls.Add(this.button_Next_Tact);
             this.panel_Control.Controls.Add(this.label_Status);
             this.panel_Control.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel_Control.Location = new System.Drawing.Point(281, 0);
+            this.panel_Control.Location = new System.Drawing.Point(292, 0);
             this.panel_Control.Margin = new System.Windows.Forms.Padding(2);
             this.panel_Control.Name = "panel_Control";
             this.panel_Control.Size = new System.Drawing.Size(158, 102);
@@ -877,7 +877,7 @@ namespace LabZSK.Simulation
             dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView_Info.DefaultCellStyle = dataGridViewCellStyle10;
             this.dataGridView_Info.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dataGridView_Info.Location = new System.Drawing.Point(439, 0);
+            this.dataGridView_Info.Location = new System.Drawing.Point(450, 0);
             this.dataGridView_Info.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView_Info.MultiSelect = false;
             this.dataGridView_Info.Name = "dataGridView_Info";
@@ -885,7 +885,7 @@ namespace LabZSK.Simulation
             this.dataGridView_Info.RowHeadersVisible = false;
             this.dataGridView_Info.RowTemplate.Height = 25;
             this.dataGridView_Info.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dataGridView_Info.Size = new System.Drawing.Size(133, 102);
+            this.dataGridView_Info.Size = new System.Drawing.Size(122, 102);
             this.dataGridView_Info.TabIndex = 1;
             // 
             // Column1
@@ -927,9 +927,9 @@ namespace LabZSK.Simulation
             // 
             // transparentPanel1
             // 
-            this.transparentPanel1.Location = new System.Drawing.Point(76, 108);
+            this.transparentPanel1.Location = new System.Drawing.Point(14, 108);
             this.transparentPanel1.Name = "transparentPanel1";
-            this.transparentPanel1.Size = new System.Drawing.Size(194, 33);
+            this.transparentPanel1.Size = new System.Drawing.Size(256, 33);
             this.transparentPanel1.TabIndex = 3;
             // 
             // richTextBox1
@@ -940,12 +940,12 @@ namespace LabZSK.Simulation
             this.richTextBox1.DetectUrls = false;
             this.richTextBox1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.richTextBox1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.richTextBox1.Location = new System.Drawing.Point(76, 117);
+            this.richTextBox1.Location = new System.Drawing.Point(14, 117);
             this.richTextBox1.Multiline = false;
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
             this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.richTextBox1.Size = new System.Drawing.Size(191, 24);
+            this.richTextBox1.Size = new System.Drawing.Size(253, 24);
             this.richTextBox1.TabIndex = 2;
             this.richTextBox1.Text = "";
             this.richTextBox1.WordWrap = false;

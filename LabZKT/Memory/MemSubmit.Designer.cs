@@ -393,7 +393,7 @@
             "BXP - Skocz jeśli RI > 0",
             "BXZ - Skocz jeśli RI = 0",
             "BXN - Skocz jeśli RI < 0",
-            "TLD - Skocz jeśli RI > 0 i RI=RI-1",
+            "TLD - RI=RI-1 i Skocz jeśli RI > 0",
             "BAP - Skocz jeśli A > 0",
             "BAZ - Skocz jeśli A = 0",
             "BAN - Skocz jeśli A < 0",

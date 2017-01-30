@@ -247,7 +247,7 @@
     <value>Odejmowanie</value>
   </data>
   <data name="TLD" xml:space="preserve">
-    <value>Skocz jeśli RI&gt; 0 i RI = RI - 1</value>
+    <value>RI = RI - 1 i Skocz jeśli RI &gt; 0</value>
   </data>
   <data name="TMQ" xml:space="preserve">
     <value>Prześlij MQ do A</value>

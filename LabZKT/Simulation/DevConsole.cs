@@ -46,17 +46,26 @@ namespace LabZSK.Simulation
             string txt = registerName.SelectedItem.ToString();
             if (txt == "RAPS" || txt == "RAP" || txt == "L" || txt == "R" || txt == "SUMA")
             {
-                registerValue.Value %= 255;
+                if (registerValue.Value < 0)
+                {
+                    registerValue.Value *= -1;
+                }
+                if (registerValue.Value > 255)
+                {
+                    registerValue.Value = 255;
+                }
                 viewRef.DEVVALUE = Convert.ToInt16(registerValue.Value);
             }
             else if (txt == "LK")
             {
-                registerValue.Value %= 127;
-                viewRef.DEVVALUE = Convert.ToInt16(registerValue.Value);
-            }
-            else if (txt == "LK")
-            {
-                registerValue.Value %= 127;
+                if (registerValue.Value < 0)
+                {
+                    registerValue.Value *= -1;
+                }
+                if (registerValue.Value > 127)
+                {
+                    registerValue.Value = 127;
+                }
                 viewRef.DEVVALUE = Convert.ToInt16(registerValue.Value);
             }
             else if (txt == "Cykle+>")
@@ -65,7 +74,10 @@ namespace LabZSK.Simulation
                 {
                     registerValue.Value *= -1;
                 }
-                //registerValue.Value %= 251;
+                if (registerValue.Value > 250)
+                {
+                    registerValue.Value = 250;
+                }
                 viewRef.DEVVALUE = Convert.ToInt32(registerValue.Value);
             }
             else

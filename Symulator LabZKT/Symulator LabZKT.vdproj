@@ -315,8 +315,8 @@
         {
             "{5EB83D71-FA18-4901-BE56-DE22E13CC478}:_09A7C9E6B2FB4A5F8EAEC95CCC5FDBE7"
             {
-            "Name" = "8:Pamięć operacyjna"
-            "Description" = "8:Pamięć operacyjna"
+            "Name" = "8:Pamięć LabZSK"
+            "Description" = "8:Pamięć LabZSK"
             "Extensions" = "8:.po;.pm"
             "MIME" = "8:LABZKT"
             "Icon" = "8:_50C0B056F74C4201BFDD77F381BF3F5A"
@@ -389,15 +389,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:LabZSK"
-        "ProductCode" = "8:{05788218-3499-40D2-88C9-CBDD697F7C6C}"
-        "PackageCode" = "8:{CF901EF6-B0F0-4C9E-A449-6AA20FEB2217}"
+        "ProductCode" = "8:{26E10795-BE94-4592-BCCA-E393114FC344}"
+        "PackageCode" = "8:{328D3B01-2338-4446-A9DD-CEACA5733B54}"
         "UpgradeCode" = "8:{C6C943D1-2C34-4EBC-BEDF-3480841123A4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.2.0"
+        "ProductVersion" = "8:1.2.1"
         "Manufacturer" = "8:Ziarko Konrad Tomasz"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1007,7 +1007,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0F20B511CE494E2A8C58DE4686235A32"
             {
-            "SourcePath" = "8:..\\Deinstalator\\obj\\Debug\\Deinstalator.dll"
+            "SourcePath" = "8:..\\Deinstalator\\obj\\Release\\Deinstalator.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B7ACF3CF31B944A39FE28535DB0ED715"
@@ -1035,7 +1035,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_543EBA849B5040BBB927F025BA614495"
             {
-            "SourcePath" = "8:..\\LabZKT\\obj\\Debug\\LabZSK.exe"
+            "SourcePath" = "8:..\\LabZKT\\obj\\Release\\LabZSK.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B7ACF3CF31B944A39FE28535DB0ED715"
