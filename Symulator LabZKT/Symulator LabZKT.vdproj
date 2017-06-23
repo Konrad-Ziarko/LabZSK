@@ -51,12 +51,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E293EAB2D1054E57A7EA151CAFF9E07E"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_543EBA849B5040BBB927F025BA614495"
         "MsmSig" = "8:_UNDEFINED"
@@ -290,26 +284,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E293EAB2D1054E57A7EA151CAFF9E07E"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Google Drive\\logo\\KTZLogoL.bmp"
-            "TargetName" = "8:KTZLogoL.bmp"
-            "Tag" = "8:"
-            "Folder" = "8:_B7ACF3CF31B944A39FE28535DB0ED715"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
         }
         "FileType"
         {
@@ -390,7 +364,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:LabZSK"
         "ProductCode" = "8:{26E10795-BE94-4592-BCCA-E393114FC344}"
-        "PackageCode" = "8:{328D3B01-2338-4446-A9DD-CEACA5733B54}"
+        "PackageCode" = "8:{943298FA-4CAB-4A1C-BBD5-719F3E9F482C}"
         "UpgradeCode" = "8:{C6C943D1-2C34-4EBC-BEDF-3480841123A4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -398,7 +372,7 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.2.1"
-        "Manufacturer" = "8:Ziarko Konrad Tomasz"
+        "Manufacturer" = "8:Wojskowa Akademia Techniczna"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:Symulator LabZSK"
@@ -823,42 +797,6 @@
             "Attributes" = "3:1"
                 "Dialogs"
                 {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_27BC538C3214434FBB2FF35B1F857D2A"
-                    {
-                    "Sequence" = "3:110"
-                    "DisplayName" = "8:Splash"
-                    "UseDynamicProperties" = "11:TRUE"
-                    "IsDependency" = "11:FALSE"
-                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminSplashDlg.wid"
-                        "Properties"
-                        {
-                            "SplashBitmap"
-                            {
-                            "Name" = "8:SplashBitmap"
-                            "DisplayName" = "8:#1013"
-                            "Description" = "8:#1113"
-                            "Type" = "3:8"
-                            "ContextData" = "8:Bitmap"
-                            "Attributes" = "3:0"
-                            "Setting" = "3:2"
-                            "Value" = "8:_E293EAB2D1054E57A7EA151CAFF9E07E"
-                            "UsePlugInResources" = "11:TRUE"
-                            }
-                            "Sunken"
-                            {
-                            "Name" = "8:Sunken"
-                            "DisplayName" = "8:#1007"
-                            "Description" = "8:#1107"
-                            "Type" = "3:5"
-                            "ContextData" = "8:4;True=4;False=0"
-                            "Attributes" = "3:0"
-                            "Setting" = "3:0"
-                            "Value" = "3:4"
-                            "DefaultValue" = "3:4"
-                            "UsePlugInResources" = "11:TRUE"
-                            }
-                        }
-                    }
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_38737FE29CE44EA580876AF66B289BF6"
                     {
                     "Sequence" = "3:200"

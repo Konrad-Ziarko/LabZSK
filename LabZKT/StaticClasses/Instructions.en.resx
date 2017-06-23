@@ -118,144 +118,144 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ADD" xml:space="preserve">
-    <value />
+    <value>Additon</value>
   </data>
   <data name="ADX" xml:space="preserve">
-    <value />
+    <value>Add to RI</value>
   </data>
   <data name="ALA" xml:space="preserve">
-    <value />
+    <value>Arithmetic left shift A</value>
   </data>
   <data name="ARA" xml:space="preserve">
-    <value />
+    <value>Arithmetic right shift A</value>
   </data>
   <data name="BAN" xml:space="preserve">
-    <value />
+    <value>Jump if A &lt; 0</value>
   </data>
   <data name="BAO" xml:space="preserve">
-    <value />
+    <value>Jum if overflow A</value>
   </data>
   <data name="BAP" xml:space="preserve">
-    <value />
+    <value>Jump if A &gt; 0</value>
   </data>
   <data name="BAZ" xml:space="preserve">
-    <value />
+    <value>Jump if A = 0</value>
   </data>
   <data name="BDN" xml:space="preserve">
-    <value />
+    <value>Jump if device not avaliable</value>
   </data>
   <data name="BXN" xml:space="preserve">
-    <value />
+    <value>Jump if RI &lt; 0</value>
   </data>
   <data name="BXP" xml:space="preserve">
-    <value />
+    <value>Jump if RI &gt; 0</value>
   </data>
   <data name="BXZ" xml:space="preserve">
-    <value />
+    <value>Jump if RI = 0</value>
   </data>
   <data name="CMA" xml:space="preserve">
-    <value />
+    <value>Two's complement A</value>
   </data>
   <data name="CND" xml:space="preserve">
-    <value />
+    <value>Connect device</value>
   </data>
   <data name="DEX" xml:space="preserve">
-    <value />
+    <value>Decrease RI</value>
   </data>
   <data name="DIV" xml:space="preserve">
-    <value />
+    <value>Divide</value>
   </data>
   <data name="ENI" xml:space="preserve">
-    <value />
+    <value>Enable interrupts</value>
   </data>
   <data name="EOR" xml:space="preserve">
-    <value />
+    <value>Exclusive OR A and cell</value>
   </data>
   <data name="INX" xml:space="preserve">
-    <value />
+    <value>Increase RI</value>
   </data>
   <data name="LAI" xml:space="preserve">
-    <value />
+    <value>Load A immediately</value>
   </data>
   <data name="LCA" xml:space="preserve">
-    <value />
+    <value>Cyclic left shift A</value>
   </data>
   <data name="LDA" xml:space="preserve">
-    <value />
+    <value>Load A</value>
   </data>
   <data name="LDS" xml:space="preserve">
-    <value />
+    <value>Provide status</value>
   </data>
   <data name="LDX" xml:space="preserve">
-    <value />
+    <value>Load RI</value>
   </data>
   <data name="LIO" xml:space="preserve">
-    <value />
+    <value>Load IO word counter</value>
   </data>
   <data name="LLA" xml:space="preserve">
-    <value />
+    <value>Logic left shift A</value>
   </data>
   <data name="LLQ" xml:space="preserve">
-    <value />
+    <value>Logic left shift A||MQ</value>
   </data>
   <data name="LNG" xml:space="preserve">
-    <value />
+    <value>Logic negation A</value>
   </data>
   <data name="LOR" xml:space="preserve">
-    <value />
+    <value>Logic OR A and cell</value>
   </data>
   <data name="LAND" xml:space="preserve">
-    <value />
+    <value>Logical AND A and cell</value>
   </data>
   <data name="LRA" xml:space="preserve">
-    <value />
+    <value>Logic right shift A</value>
   </data>
   <data name="LRQ" xml:space="preserve">
-    <value />
+    <value>Logic right shift A||MQ</value>
   </data>
   <data name="LXI" xml:space="preserve">
-    <value />
+    <value>Load RI immediately</value>
   </data>
   <data name="MUL" xml:space="preserve">
-    <value />
+    <value>Multiplication</value>
   </data>
   <data name="NOP" xml:space="preserve">
-    <value />
+    <value>No operation</value>
   </data>
   <data name="SIO" xml:space="preserve">
-    <value />
+    <value>Start IO operation</value>
   </data>
   <data name="SRJ" xml:space="preserve">
-    <value />
+    <value>Jump with a trace</value>
   </data>
   <data name="STA" xml:space="preserve">
-    <value />
+    <value>Save A</value>
   </data>
   <data name="STC" xml:space="preserve">
-    <value />
+    <value>Save LR</value>
   </data>
   <data name="STP" xml:space="preserve">
-    <value />
+    <value>Stop</value>
   </data>
   <data name="STQ" xml:space="preserve">
-    <value />
+    <value>Save MQ</value>
   </data>
   <data name="STX" xml:space="preserve">
-    <value />
+    <value>Save RI</value>
   </data>
   <data name="SUB" xml:space="preserve">
-    <value />
+    <value>Subtraction</value>
   </data>
   <data name="TLD" xml:space="preserve">
-    <value />
+    <value>RI = RI - 1; Jump if RI &gt; 0</value>
   </data>
   <data name="TMQ" xml:space="preserve">
-    <value />
+    <value>Send MQ to A</value>
   </data>
   <data name="TXA" xml:space="preserve">
-    <value />
+    <value>Send RI to A</value>
   </data>
   <data name="UNB" xml:space="preserve">
-    <value />
+    <value>Unconditional branch</value>
   </data>
 </root>

@@ -205,4 +205,22 @@ Wydział Cybernetyki</value>
   <data name="themeComboBox5" xml:space="preserve">
     <value>Własna</value>
   </data>
+  <data name="background" xml:space="preserve">
+    <value>Tło</value>
+  </data>
+  <data name="bus" xml:space="preserve">
+    <value>Magistrala</value>
+  </data>
+  <data name="names" xml:space="preserve">
+    <value>Nazwy</value>
+  </data>
+  <data name="adminMode" xml:space="preserve">
+    <value>TRYB ADMIN</value>
+  </data>
+  <data name="server" xml:space="preserve">
+    <value>Serwer</value>
+  </data>
+  <data name="studentMode" xml:space="preserve">
+    <value>TRYB STUDENT</value>
+  </data>
 </root>

@@ -10,7 +10,10 @@ namespace LabZSK.Other
     public partial class Server : Form
     {
         internal static string name="", lastName = "", group = "", ipAddress = "", remotePort = "", password = "";
-
+        private bool canTryConnect = false;
+        private bool ipIsGood = false;
+        private bool portIsGood = false;
+        private bool isConnected;
         private void button2_Click(object sender, EventArgs e)
         {
             Close();
@@ -22,11 +25,34 @@ namespace LabZSK.Other
             if (!regExp.IsMatch(textBox_IP.Text))
             {
                 textBox_IP.BackColor = System.Drawing.Color.Red;
+                ipIsGood = false;
             }
             else
+            {
                 textBox_IP.BackColor = System.Drawing.SystemColors.Window;
+                ipIsGood = true;
+            }
+            validate();
         }
-
+        private void validate()
+        {
+            if (ipIsGood && portIsGood)
+                canTryConnect = true;
+            else
+                canTryConnect = false;
+            if (isConnected)
+            {
+                button1.Enabled = false;
+            }
+            else if (!isConnected && canTryConnect)
+            {
+                button1.Enabled = true;
+            }
+            else if (!isConnected && !canTryConnect)
+            {
+                button1.Enabled = false;
+            }
+        }
         private void textBox_Port_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             try
@@ -34,10 +60,14 @@ namespace LabZSK.Other
                 if (Convert.ToUInt16(textBox_Port.Text) < 1024)
                     throw new Exception();
                 textBox_Port.BackColor = System.Drawing.SystemColors.Window;
+                portIsGood = true;
             }
-            catch {
+            catch
+            {
                 textBox_Port.BackColor = System.Drawing.Color.Red;
+                portIsGood = false;
             }
+            validate();
         }
 
         internal bool connect = false;
@@ -45,7 +75,10 @@ namespace LabZSK.Other
         {
             InitializeComponent();
             setAllStrings();
-            button1.Enabled = !isConnected;
+            this.isConnected = isConnected;
+            validate();
+            
+
             AcceptButton = button1;
             CancelButton = button2;
 
@@ -81,19 +114,19 @@ namespace LabZSK.Other
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            name = textBox_Name.Text;
-            lastName = textBox_LastName.Text;
-            group = textBox_Group.Text;
-            ipAddress = textBox_IP.Text;
-            remotePort = textBox_Port.Text;
-            password = textBox_Pass.Text;
-            connect = true;
-            Close();
+            if (canTryConnect)
+            {
+                name = textBox_Name.Text;
+                lastName = textBox_LastName.Text;
+                group = textBox_Group.Text;
+                ipAddress = textBox_IP.Text;
+                remotePort = textBox_Port.Text;
+                password = textBox_Pass.Text;
+                connect = true;
+                Close();
+            }
+            else
+                MessageBox.Show("Wprowadzono nieprawidłowe dane!");
         }
-
-        
-
-        
-
     }
 }

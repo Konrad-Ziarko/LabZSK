@@ -1,15 +1,8 @@
-﻿using LabZSK.Controls;
-using LabZSK.Memory;
-using LabZSK.Properties;
+﻿using LabZSK.Memory;
 using LabZSK.StaticClasses;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LabZSK.Simulation
@@ -878,12 +871,13 @@ namespace LabZSK.Simulation
         }
         #endregion
         #region StartSim
-        public void prepareSimulation(bool b)
+        public void prepareSimulation(bool b, out bool back)
         {
+            back = false;
             inMicroMode = b;
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.InitialDirectory = _environmentPath;
-            while (logFile == "")
+            if (logFile == "")
             {
                 dialog.Filter = Strings.simLog + "|*.log|" + Strings.all + "|*.*";
                 dialog.Title = Strings.createLog;
@@ -916,6 +910,11 @@ namespace LabZSK.Simulation
                     timer1.Enabled = true;
                     simTime = DateTime.Now;
                 }
+            }
+            if(logFile == "")
+            {
+                back = true;
+                return;
             }
             if (DEVMODE)
             {
@@ -1056,7 +1055,8 @@ namespace LabZSK.Simulation
             }
             else if (DEVMODE)
             {
-                prepareSimulation(false);
+                bool b;
+                prepareSimulation(false, out b);
             }
             if (!DEVMODE)
                 panel_Control.Visible = true;

@@ -420,10 +420,10 @@
             // label10
             // 
             this.label10.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label10.Location = new System.Drawing.Point(219, 190);
+            this.label10.Location = new System.Drawing.Point(210, 190);
             this.label10.Margin = new System.Windows.Forms.Padding(9, 9, 9, 3);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(75, 18);
+            this.label10.Size = new System.Drawing.Size(88, 18);
             this.label10.TabIndex = 28;
             this.label10.Text = "Tło";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -467,9 +467,9 @@
             // txt1
             // 
             this.txt1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.txt1.Location = new System.Drawing.Point(219, 214);
+            this.txt1.Location = new System.Drawing.Point(212, 214);
             this.txt1.Name = "txt1";
-            this.txt1.Size = new System.Drawing.Size(75, 26);
+            this.txt1.Size = new System.Drawing.Size(82, 26);
             this.txt1.TabIndex = 31;
             this.txt1.Leave += new System.EventHandler(this.txt1_Leave);
             // 

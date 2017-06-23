@@ -134,6 +134,7 @@
             this.Grid_Mem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Grid_PO_KeyDown);
             this.Grid_Mem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Grid_PO_MouseDown);
             this.Grid_Mem.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Grid_PO_MouseMove);
+            this.Grid_Mem.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Grid_Mem_PreviewKeyDown);
             // 
             // Adres
             // 

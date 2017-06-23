@@ -331,7 +331,7 @@ namespace LabZSK.StaticClasses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Przesunięcie lgoczine A w prawo.
+        ///   Looks up a localized string similar to Przesunięcie logiczne A w prawo.
         /// </summary>
         internal static string LRA {
             get {

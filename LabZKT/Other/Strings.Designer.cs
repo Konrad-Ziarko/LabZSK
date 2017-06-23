@@ -61,6 +61,15 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TRYB ADMIN.
+        /// </summary>
+        internal static string adminMode {
+            get {
+                return ResourceManager.GetString("adminMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Autor programu: Konrad Tomasz Ziarko.
         /// </summary>
         internal static string authorName {
@@ -84,6 +93,24 @@ namespace LabZSK.Other {
         internal static string autoModeLatencyLabel {
             get {
                 return ResourceManager.GetString("autoModeLatencyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tło.
+        /// </summary>
+        internal static string background {
+            get {
+                return ResourceManager.GetString("background", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Magistrala.
+        /// </summary>
+        internal static string bus {
+            get {
+                return ResourceManager.GetString("bus", resourceCulture);
             }
         }
         
@@ -206,6 +233,15 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nazwy.
+        /// </summary>
+        internal static string names {
+            get {
+                return ResourceManager.GetString("names", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Opcje.
         /// </summary>
         internal static string OptionsTitle {
@@ -251,11 +287,29 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Serwer.
+        /// </summary>
+        internal static string server {
+            get {
+                return ResourceManager.GetString("server", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Serwer:.
         /// </summary>
         internal static string serverTitle {
             get {
                 return ResourceManager.GetString("serverTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TRYB STUDENT.
+        /// </summary>
+        internal static string studentMode {
+            get {
+                return ResourceManager.GetString("studentMode", resourceCulture);
             }
         }
         

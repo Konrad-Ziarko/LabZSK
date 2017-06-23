@@ -226,7 +226,8 @@ namespace LabZSK.Simulation
                 e.Cancel = true;
             else
             {
-                DialogResult dr = MessageBox.Show(Strings.areYouSureExit, Strings.areYouSureExitTitle, MessageBoxButtons.YesNo);
+                DialogResult dr = MessageBox.Show(new Form() { TopMost = true }, Strings.areYouSureExit, Strings.areYouSureExitTitle, MessageBoxButtons.YesNo);
+                //DialogResult dr = MessageBox.Show(Strings.areYouSureExit, Strings.areYouSureExitTitle, MessageBoxButtons.YesNo) ;
                 if (dr == DialogResult.Yes)
                 {
                     if (Settings.Default.simStart > DateTime.Now)
@@ -455,8 +456,10 @@ namespace LabZSK.Simulation
             Grid_Mem[1, row].Value = List_Memory[row].value;
             Grid_Mem[2, row].Value = List_Memory[row].hex;
             Grid_Mem.ClearSelection();
-            if (Grid_Mem.CurrentCell != null)
-                Grid_Mem.CurrentCell.Selected = true;
+            Grid_Mem.CurrentCell = Grid_Mem.Rows[row].Cells[1];
+            Grid_Mem.Rows[row].Selected = true;
+            //Grid_Mem.FirstDisplayedScrollingRowIndex = row;
+            
         }
         #endregion
         #region Buttons
@@ -484,34 +487,68 @@ namespace LabZSK.Simulation
         internal void button_Makro_Click(object sender, EventArgs e)
         {
             if(canSimulate)
-            if (!isRunning)
-            {
-                toolStripMenu_Edit.Enabled = false;
-                toolStripMenu_Exit.Enabled = false;
-                button_Makro.Visible = false;
-                button_Micro.Visible = false;
-                toolStripMenu_Clear.Enabled = false;
-                label_Status.Text = Strings.startMode;
-                label_Status.ForeColor = Color.Red;
-                button_Show_Log.Visible = false;
-                prepareSimulation(false);
-            }
+                if (!isRunning)
+                {
+                    bool back = false;
+                    toolStripMenu_Edit.Enabled = false;
+                    toolStripMenu_Exit.Enabled = false;
+                    button_Makro.Visible = false;
+                    button_Micro.Visible = false;
+                    toolStripMenu_Clear.Enabled = false;
+                    label_Status.Text = Strings.startMode;
+                    label_Status.ForeColor = Color.Red;
+                    button_Show_Log.Visible = false;
+                    prepareSimulation(false, out back);
+                    if (back)
+                    {
+                        richTextBox_Log.Text = "";
+                        richTextBox_Log.Clear();
+                        isRunning = false;
+                        inMicroMode = false;
+                        toolStripMenu_Edit.Enabled = true;
+                        toolStripMenu_Exit.Enabled = true;
+                        button_Makro.Visible = true;
+                        button_Micro.Visible = true;
+                        button_Next_Tact.Visible = false;
+                        toolStripMenu_Clear.Enabled = true;
+                        label_Status.Text = Strings.stopMode;
+                        label_Status.ForeColor = Color.Green;
+                        closeLogToolStripMenuItem.Enabled = true;
+                    }
+                }
         }
         private void button_Micro_Click(object sender, EventArgs e)
         {
             if(canSimulate)
-            if (!isRunning)
-            {
-                toolStripMenu_Edit.Enabled = false;
-                toolStripMenu_Exit.Enabled = false;
-                button_Makro.Visible = false;
-                button_Micro.Visible = false;
-                toolStripMenu_Clear.Enabled = false;
-                label_Status.Text = Strings.startMode;
-                label_Status.ForeColor = Color.Red;
-                button_Show_Log.Visible = false;
-                prepareSimulation(true);
-            }
+                if (!isRunning)
+                {
+                    bool back = false;
+                    toolStripMenu_Edit.Enabled = false;
+                    toolStripMenu_Exit.Enabled = false;
+                    button_Makro.Visible = false;
+                    button_Micro.Visible = false;
+                    toolStripMenu_Clear.Enabled = false;
+                    label_Status.Text = Strings.stopMode;
+                    label_Status.ForeColor = Color.Red;
+                    button_Show_Log.Visible = false;
+                    prepareSimulation(true, out back);
+                    if (back)
+                    {
+                        richTextBox_Log.Text = "";
+                        richTextBox_Log.Clear();
+                        isRunning = false;
+                        inMicroMode = false;
+                        toolStripMenu_Edit.Enabled = true;
+                        toolStripMenu_Exit.Enabled = true;
+                        button_Makro.Visible = true;
+                        button_Micro.Visible = true;
+                        button_Next_Tact.Visible = false;
+                        toolStripMenu_Clear.Enabled = true;
+                        label_Status.Text = Strings.stopMode;
+                        label_Status.ForeColor = Color.Green;
+                        closeLogToolStripMenuItem.Enabled = true;
+                    }
+                }
         }
         private void button_Next_Tact_Click(object sender, EventArgs e)
         {

@@ -58,10 +58,27 @@ namespace LabZSK.Other
             label7.Text = Strings.devConsoleLabel;
             label8.Text = Strings.logClosing;
 
+            label9.Text = Strings.server;
+            label10.Text = Strings.background;
+            label11.Text = Strings.bus;
+            label12.Text = Strings.names;
+
             button1.Text = Strings.saveConfigButton;
             button2.Text = Strings.loadConfigButton;
 
             groupBox1.Text = Strings.groupBoxName;
+
+
+            if (checkBox4.Checked)
+            {
+                label5.ForeColor = System.Drawing.Color.Red;
+                label5.Text = Strings.adminMode;
+            }
+            else
+            {
+                label5.ForeColor = System.Drawing.Color.Blue;
+                label5.Text = Strings.studentMode;
+            }
 
             comboBox1.Items.Clear();
             comboBox1.Items.AddRange(new object[] { Strings.themeComboBox1, Strings.themeComboBox2, Strings.themeComboBox3, Strings.themeComboBox4, Strings.themeComboBox5 });
@@ -291,12 +308,12 @@ namespace LabZSK.Other
             if (checkBox4.Checked)
             {
                 label5.ForeColor = System.Drawing.Color.Red;
-                label5.Text = "TRYB ADMIN";
+                label5.Text = Strings.adminMode;
             }
             else 
             {
                 label5.ForeColor = System.Drawing.Color.Blue;
-                label5.Text = "TRYB STUDENT";
+                label5.Text = Strings.studentMode;
             }
         }
 

@@ -208,7 +208,7 @@
     <value>Iloczyn logiczny A i komórki</value>
   </data>
   <data name="LRA" xml:space="preserve">
-    <value>Przesunięcie lgoczine A w prawo</value>
+    <value>Przesunięcie logiczne A w prawo</value>
   </data>
   <data name="LRQ" xml:space="preserve">
     <value>Przesunięcie logiczne A || MQ w prawo</value>

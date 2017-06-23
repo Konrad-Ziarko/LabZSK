@@ -479,6 +479,12 @@ namespace LabZSK.Memory
         static extern int MapVirtualKey(uint uCode, uint uMapType);
         private void Grid_PO_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Enter)
+            {
+                Grid_Mem.ReadOnly = true;
+                Grid_Mem.EndEdit();
+                e.Handled = true;
+            }
             if (!e.Control)
             {
                 if (e.KeyCode == Keys.Delete)
@@ -496,8 +502,7 @@ namespace LabZSK.Memory
                         Grid_Mem.CurrentCell.Value = "";
                     Grid_Mem.BeginEdit(false);
                 }
-                else if (e.KeyCode == Keys.Enter)
-                    Grid_Mem.EndEdit();
+                
             }
             else if (e.KeyCode == Keys.C)
             {
@@ -539,18 +544,17 @@ namespace LabZSK.Memory
         {
             Grid_Mem.ReadOnly = true;
             decimal tmp;
-
             try
             {
-                if (decimal.TryParse(Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Value.ToString(), out tmp))
+                if (decimal.TryParse(Grid_Mem.Rows[e.RowIndex].Cells[1].Value.ToString(), out tmp))
                 {
-                    tmp = Convert.ToInt16(Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Value.ToString(), 10);
-                    string bin = Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Value.ToString(), 10), 2).PadLeft(16, '0');
-                    string hex = Convert.ToInt16(Grid_Mem.Rows[Grid_Mem.CurrentCell.RowIndex].Cells[1].Value.ToString(), 10).ToString("X").PadLeft(4, '0');
-                    AUpdateForm(Grid_Mem.CurrentCell.RowIndex, bin, hex, 1);
-                    Grid_Mem[2, Grid_Mem.CurrentCell.RowIndex].Value = hex;
-                    Grid_Mem[1, Grid_Mem.CurrentCell.RowIndex].Value = bin;
-                    Grid_Mem[3, Grid_Mem.CurrentCell.RowIndex].Value = 1;
+                    tmp = Convert.ToInt16(Grid_Mem.Rows[e.RowIndex].Cells[1].Value.ToString(), 10);
+                    string bin = Convert.ToString(Convert.ToInt16(Grid_Mem.Rows[e.RowIndex].Cells[1].Value.ToString(), 10), 2).PadLeft(16, '0');
+                    string hex = Convert.ToInt16(Grid_Mem.Rows[e.RowIndex].Cells[1].Value.ToString(), 10).ToString("X").PadLeft(4, '0');
+                    AUpdateForm(e.RowIndex, bin, hex, 1);
+                    Grid_Mem[2, e.RowIndex].Value = hex;
+                    Grid_Mem[1, e.RowIndex].Value = bin;
+                    Grid_Mem[3, e.RowIndex].Value = 1;
                 }
                 else
                 {
@@ -562,10 +566,10 @@ namespace LabZSK.Memory
                         tmp = Convert.ToInt16(txt, 16);
                         string bin = Convert.ToString(Convert.ToInt16(tmp), 2).PadLeft(16, '0');
                         string hex = Convert.ToInt16(tmp).ToString("X").PadLeft(4, '0');
-                        AUpdateForm(Grid_Mem.CurrentCell.RowIndex, bin, hex, 1);
-                        Grid_Mem[2, Grid_Mem.CurrentCell.RowIndex].Value = hex;
-                        Grid_Mem[1, Grid_Mem.CurrentCell.RowIndex].Value = bin;
-                        Grid_Mem[3, Grid_Mem.CurrentCell.RowIndex].Value = List_Memory[Grid_Mem.CurrentCell.RowIndex].typ;
+                        AUpdateForm(e.RowIndex, bin, hex, 1);
+                        Grid_Mem[2, e.RowIndex].Value = hex;
+                        Grid_Mem[1, e.RowIndex].Value = bin;
+                        Grid_Mem[3, e.RowIndex].Value = List_Memory[e.RowIndex].typ;
                     }
                     catch
                     {
@@ -575,9 +579,9 @@ namespace LabZSK.Memory
             }
             catch
             {
-                Grid_Mem[1, Grid_Mem.CurrentCell.RowIndex].Value = List_Memory[Grid_Mem.CurrentCell.RowIndex].value;
-                Grid_Mem[2, Grid_Mem.CurrentCell.RowIndex].Value = List_Memory[Grid_Mem.CurrentCell.RowIndex].hex;
-                Grid_Mem[3, Grid_Mem.CurrentCell.RowIndex].Value = List_Memory[Grid_Mem.CurrentCell.RowIndex].typ;
+                Grid_Mem[1, e.RowIndex].Value = List_Memory[e.RowIndex].value;
+                Grid_Mem[2, e.RowIndex].Value = List_Memory[e.RowIndex].hex;
+                Grid_Mem[3, e.RowIndex].Value = List_Memory[e.RowIndex].typ;
             }
 
         }
@@ -676,8 +680,8 @@ namespace LabZSK.Memory
         internal void changeSelectedPAO(int val)
         {
             Grid_Mem.Rows[val].Selected = true;
-            Grid_Mem.FirstDisplayedScrollingRowIndex = val;
-            Grid_Mem.CurrentCell = Grid_Mem.Rows[val].Cells[0];
+            //Grid_Mem.FirstDisplayedScrollingRowIndex = val;
+            Grid_Mem.CurrentCell = Grid_Mem.Rows[val].Cells[1];
             Grid_PO_SelectionChanged(this, new EventArgs());
         }
         internal void showMe(int val)
@@ -685,6 +689,11 @@ namespace LabZSK.Memory
             this.Show();
             this.BringToFront();
             changeSelectedPAO(val);
+        }
+
+        private void Grid_Mem_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+
         }
     }
 }
