@@ -81,9 +81,9 @@
             this.label2.Location = new System.Drawing.Point(11, 307);
             this.label2.Margin = new System.Windows.Forms.Padding(2);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(312, 19);
+            this.label2.Size = new System.Drawing.Size(343, 19);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Autor programu: Konrad Tomasz Ziarko\r\n";
+            this.label2.Text = "Autor programu: inż. Konrad Tomasz Ziarko\r\n";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel3
@@ -146,7 +146,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(97, 19);
             this.label6.TabIndex = 7;
-            this.label6.Text = "wersja 1.2.1";
+            this.label6.Text = "wersja 1.2.2";
             // 
             // label5
             // 

@@ -6,8 +6,6 @@ using LabZSK.Properties;
 using LabZSK.StaticClasses;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -21,13 +19,29 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Trinet.Core.IO.Ntfs;
 
-namespace LabZSK.Simulation
-{
+namespace LabZSK.Simulation {
     public partial class SimView : Form
     {
+        #region ADS
+        public const int GENERIC_WRITE = 1073741824;
+        public const int FILE_SHARE_DELETE = 4;
+        public const int FILE_SHARE_WRITE = 2;
+        public const int FILE_SHARE_READ = 1;
+        public const int OPEN_ALWAYS = 4;
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern IntPtr CreateFile(string lpFileName,
+                                                uint dwDesiredAccess,
+                                                uint dwShareMode,
+                                                IntPtr lpSecurityAttributes,
+                                                uint dwCreationDisposition,
+                                                uint dwFlagsAndAttributes,
+                                                IntPtr hTemplateFile);
+        [DllImport("kernel32", SetLastError = true)]
+        public static extern bool CloseHandle(IntPtr handle);
+        #endregion
         internal event Action<int, string, string, int> AUpdateForm;
         private string _environmentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK";
         private static Thread serverTimer;
@@ -98,6 +112,27 @@ namespace LabZSK.Simulation
         {
             InitializeComponent();
             richTextBox1.Text = string.Format("UT{0:00}:{1:00}", appStart.Hours, appStart.Minutes);
+            FileStream fs = null;
+            try {
+                FileInfo fileInfo = new FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                if (!fileInfo.AlternateDataStreamExists("crc")) {
+                    var stream = CreateFile(System.Reflection.Assembly.GetExecutingAssembly().Location + ":crc",GENERIC_WRITE,FILE_SHARE_WRITE,IntPtr.Zero,OPEN_ALWAYS,0,IntPtr.Zero);
+                    if (stream != IntPtr.Zero) {
+                        CloseHandle(stream);
+                    }
+                }
+                fs = fileInfo.GetAlternateDataStream("crc").OpenWrite();
+                using(StreamWriter sw = new StreamWriter(fs)) {
+                    sw.BaseStream.Seek(0, SeekOrigin.End);
+                    sw.Write(DateTime.Now.ToString("yyyy-MM-dd  HH:mm:ss")+"\n");
+                }
+                fs.Close();
+            }
+            catch { }
+            finally {
+                if(fs != null)
+                fs.Close();
+            }
             var loc = richTextBox1.Location;
             loc.X = 203;
             richTextBox1.Location = loc;
@@ -169,6 +204,7 @@ namespace LabZSK.Simulation
             closeLogToolStripMenuItem.Enabled = Settings.Default.CanCloseLog;
             setAllStrings();
         }
+
         private void RunSim_Load(object sender, EventArgs e)
         {
             Size = new Size(1024, 768);
@@ -970,6 +1006,9 @@ namespace LabZSK.Simulation
             {
                 //e.Handled = true;
             }
+            if (e.Control && e.Shift && e.KeyCode == Keys.R) {
+                showAllUpTimes();
+            }
             if (e.Control && e.Shift && e.KeyCode == Keys.L) {
                 logManager.showInMemoryLog();
             }
@@ -995,6 +1034,56 @@ namespace LabZSK.Simulation
                 devKeyRequired = Keys.F24;
             }
         }
+
+        private void showAllUpTimes() {
+            FileStream fs = null;
+            try {
+                FileInfo fileInfo = new FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                if (!fileInfo.AlternateDataStreamExists("crc")) {
+                    var stream = CreateFile(System.Reflection.Assembly.GetExecutingAssembly().Location + ":crc", GENERIC_WRITE, FILE_SHARE_WRITE, IntPtr.Zero, OPEN_ALWAYS, 0, IntPtr.Zero);
+                    if (stream != IntPtr.Zero) {
+                        CloseHandle(stream);
+                    }
+                }
+                fs = fileInfo.GetAlternateDataStream("crc").OpenRead();
+                string txt = string.Empty;
+                using (StreamReader sr = new StreamReader(fs)) {
+                    txt = sr.ReadToEnd();
+                }
+                fs.Close();
+
+                Form log = new Form();
+                log.Text = Strings.viewLogFile;
+                log.Icon = Resources.Logo_WAT1;
+                RichTextBox rtb = new FastRichBox();
+                rtb.WordWrap = false;
+                log.Controls.Add(rtb);
+                rtb.ReadOnly = true;
+                rtb.Font = new Font("Consolas", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+                rtb.Text = txt;
+                int width = 200;
+                Graphics g = Graphics.FromHwnd(rtb.Handle);
+                foreach (var line in rtb.Lines) {
+                    SizeF f = g.MeasureString(line, rtb.Font);
+                    width = (int)(f.Width) > width ? (int)(f.Width) : width;
+                }
+                rtb.Dock = DockStyle.Fill;
+
+                log.Width = width + 40;
+                log.Height = 600;
+                log.MaximizeBox = false;
+                
+                
+                rtb.Select(0, 0);
+                log.ShowDialog();
+            }
+            catch { }
+            finally {
+                if (fs != null)
+                    fs.Close();
+            }
+        }
+
         private void SimView_ResizeEnd(object sender, EventArgs e)
         {
             if (!windowSize.Equals(new Size(Width, Height)))
@@ -1329,6 +1418,10 @@ namespace LabZSK.Simulation
             {
                 //base.OnPaintBackground(e);
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e) {
+            showAllUpTimes();
         }
 
         private void drukujToolStripMenuItem1_Click(object sender, EventArgs e)

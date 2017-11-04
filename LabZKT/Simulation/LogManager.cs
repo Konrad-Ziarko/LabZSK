@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -17,7 +18,7 @@ namespace LabZSK.Simulation
     /// Class for logs creation and management
     /// </summary>
     public class LogManager
-    { 
+    {
         public static ConnectedClient _TcpClient;//jak zamykanie logu to przerywanie polaczenia
         private MemoryStream inMemoryLog = new MemoryStream();
         private FileSystemWatcher watcher;

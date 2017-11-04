@@ -3,6 +3,7 @@ using LabZSK.Simulation;
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
@@ -20,6 +21,8 @@ namespace LabZSK
         {
             if (/*singleton.WaitOne(TimeSpan.Zero, true)*/ true)
             {
+                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Console.Out.Write(Settings.Default.RunIdx);
@@ -37,6 +40,14 @@ namespace LabZSK
             else
             {
                 //MessageBox.Show(Strings.appAlreadyRunning, "LabZSK", MessageBoxButtons.OK);
+            }
+        }
+
+        static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args) {
+            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("LabZSK.Ntfs.dll")) {
+                byte[] assemblyData = new byte[stream.Length];
+                stream.Read(assemblyData, 0, assemblyData.Length);
+                return Assembly.Load(assemblyData);
             }
         }
     }

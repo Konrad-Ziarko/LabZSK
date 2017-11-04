@@ -107,6 +107,7 @@ namespace LabZSK.Simulation
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.open_File_Dialog = new System.Windows.Forms.OpenFileDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label1 = new System.Windows.Forms.Label();
             this.richTextBox_Log = new LabZSK.Controls.FastRichBox();
             this.transparentPanel1 = new LabZSK.Simulation.TransparentPanel();
             this.richTextBox1 = new LabZSK.Controls.FastRichBox();
@@ -141,6 +142,7 @@ namespace LabZSK.Simulation
             // panel_View_PO
             // 
             this.panel_View_PO.AutoScroll = true;
+            this.panel_View_PO.Controls.Add(this.label1);
             this.panel_View_PO.Controls.Add(this.Grid_Mem);
             this.panel_View_PO.Controls.Add(this.menuStrip2);
             this.panel_View_PO.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -911,6 +913,16 @@ namespace LabZSK.Simulation
             this.timer1.Interval = 800;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(246, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(21, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "KZ";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
             // richTextBox_Log
             // 
             this.richTextBox_Log.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -1068,5 +1080,6 @@ namespace LabZSK.Simulation
         private Simulation.TransparentPanel transparentPanel1;
         private FastRichBox richTextBox_Log;
         private FastRichBox richTextBox1;
+        private System.Windows.Forms.Label label1;
     }
 }

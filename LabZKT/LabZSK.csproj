@@ -91,6 +91,10 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Trinet.Core.IO.Ntfs, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0aeaaa20a328a46c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Trinet.Core.IO.Ntfs.4.0.0\lib\net35\Trinet.Core.IO.Ntfs.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -318,6 +322,7 @@
     </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
     <None Include="Properties\DataSources\MemoryRecord.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -346,6 +351,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Logo_WAT.ico" />
+    <EmbeddedResource Include="Ntfs.dll" />
     <None Include="Resources\splash2.png" />
     <None Include="Resources\pc.ico" />
     <None Include="Resources\splash.png" />
