@@ -1,9 +1,13 @@
-﻿using LabZSK.StaticClasses;
+﻿using LabZSK.Controls;
+using LabZSK.Properties;
+using LabZSK.StaticClasses;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -86,13 +90,12 @@ namespace LabZSK.Simulation
                     isConnected = false;
                 FileInfo fileInfo = new FileInfo(LogFile);
                 int len = 0;
+
                 //zapis logu do RAM'u
-                
                 byte[] lineIndex = Translator.GetBytes("#!#" + currentLogLine++ + "#!#", out len);
                 //inMemoryLog.Write(lineIndex, 0, len);
                 byte[] bytes = Translator.GetBytes(v, out len);
-                //inMemoryLog.Write(bytes, 0, len);
-
+                inMemoryLog.Write(bytes, 0, len);
 
                 if (checkLogIntegrity(LogFile))
                 {
@@ -186,7 +189,60 @@ namespace LabZSK.Simulation
             int len = Convert.ToInt32(inMemoryLog.Length);
             inMemoryLog.Seek(0, SeekOrigin.Begin);
             inMemoryLog.Read(arr, 0, len);
-            MessageBox.Show(Encoding.Unicode.GetString(arr));
+
+            //MessageBox.Show(Encoding.Unicode.GetString(arr));
+
+            Form log = new Form();
+            log.Text = Strings.viewLogFile;
+            log.Icon = Resources.Logo_WAT1;
+            RichTextBox rtb = new FastRichBox();
+            rtb.WordWrap = false;
+            log.Controls.Add(rtb);
+            rtb.ReadOnly = true;
+            rtb.Font = new Font("Consolas", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            rtb.Text = Encoding.Unicode.GetString(arr);
+            //log.AutoSize = true;
+            //log.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            int width = 200;
+            Graphics g = Graphics.FromHwnd(rtb.Handle);
+            foreach (var line in rtb.Lines) {
+                SizeF f = g.MeasureString(line, rtb.Font);
+                width = (int)(f.Width) > width ? (int)(f.Width) : width;
+            }
+            rtb.Dock = DockStyle.Fill;
+
+            log.Width = width + 40;
+            log.Height = 600;
+            log.MaximizeBox = false;
+            //log.SizeGripStyle = SizeGripStyle.Hide;
+
+            Regex regExp = new Regex(@"(={2}.+==|" + Strings.mistake + @".+\s|" + Strings.canEditSettings + @"\s|" + Strings.criticalError + @"\s|" + Strings.notForStudents + @"\s)");
+            foreach (Match match in regExp.Matches(rtb.Text)) {
+                rtb.Select(match.Index, match.Length);
+                rtb.SelectionColor = Color.Red;
+            }
+            regExp = new Regex(@"AUTO:.+\s");
+            foreach (Match match in regExp.Matches(rtb.Text)) {
+                rtb.Select(match.Index, match.Length);
+                rtb.SelectionColor = Color.MediumVioletRed;
+            }
+            regExp = new Regex(@"(" + Strings.registerHasChanged + @".+\s|" + "-zmiana->" + @"\s)");
+            foreach (Match match in regExp.Matches(rtb.Text)) {
+                rtb.Select(match.Index, match.Length);
+                rtb.SelectionColor = Color.OrangeRed;
+            }
+            regExp = new Regex(@"(={6}.+=|" + @".+CEA.+\s|" + @".+RRC.+\s|" + @".+CWC.+\s|" + @".+IWC.+\s|" + @".+END.+\s+)");
+            foreach (Match match in regExp.Matches(rtb.Text)) {
+                rtb.Select(match.Index, match.Length);
+                rtb.SelectionColor = Color.Blue;
+            }
+            regExp = new Regex(@"(={8}.+=|" + Strings.macro + @"\s|" + Strings.micro + @"\s)");
+            foreach (Match match in regExp.Matches(rtb.Text)) {
+                rtb.Select(match.Index, match.Length);
+                rtb.SelectionColor = Color.Green;
+            }
+            rtb.Select(0, 0);
+            log.ShowDialog();
         }
 
         public void addTcpClient(string name, string lastName, string group, string ipAddress, string remotePort, string password)

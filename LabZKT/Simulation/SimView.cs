@@ -741,7 +741,8 @@ namespace LabZSK.Simulation
                 addTextToLog(Strings.logClosingAllowed + "\n");
             if (Settings.Default.CanEditOptions)
                 addTextToLog(Strings.canEditSettings + "\n");
-            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["ApplicationForStudents"]))
+            if (Settings.Default.IsDevConsole || Settings.Default.CanEditOptions)
+            //if (!Convert.ToBoolean(ConfigurationManager.AppSettings["ApplicationForStudents"]))
                 addTextToLog(Strings.notForStudents + "\n");
         }
         internal void AShowCurrentLog()
@@ -968,6 +969,9 @@ namespace LabZSK.Simulation
             if (e.Alt && e.KeyCode == Keys.None)
             {
                 //e.Handled = true;
+            }
+            if (e.Control && e.Shift && e.KeyCode == Keys.L) {
+                logManager.showInMemoryLog();
             }
             if (e.Control && e.Shift && e.KeyCode == Keys.A)
             {
