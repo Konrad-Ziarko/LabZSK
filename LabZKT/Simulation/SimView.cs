@@ -46,7 +46,6 @@ namespace LabZSK.Simulation {
         private string _environmentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LabZSK";
         private static Thread serverTimer;
         internal static int appLostFocusCounter = 0;
-        private Keys devKeyRequired;
         //private bool isDebuggerPresent;
         //private MemoryRecord lastRecordFromRRC;//pamietaj aby nullowac po zerowaniu rejestrow albo nowej symulacji, to delete?
         #region Lists and Dictionary
@@ -112,30 +111,10 @@ namespace LabZSK.Simulation {
         {
             InitializeComponent();
             richTextBox1.Text = string.Format("UT{0:00}:{1:00}", appStart.Hours, appStart.Minutes);
-            FileStream fs = null;
-            try {
-                FileInfo fileInfo = new FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                if (!fileInfo.AlternateDataStreamExists("crc")) {
-                    var stream = CreateFile(System.Reflection.Assembly.GetExecutingAssembly().Location + ":crc",GENERIC_WRITE,FILE_SHARE_WRITE,IntPtr.Zero,OPEN_ALWAYS,0,IntPtr.Zero);
-                    if (stream != IntPtr.Zero) {
-                        CloseHandle(stream);
-                    }
-                }
-                fs = fileInfo.GetAlternateDataStream("crc").OpenWrite();
-                using(StreamWriter sw = new StreamWriter(fs)) {
-                    sw.BaseStream.Seek(0, SeekOrigin.End);
-                    sw.Write(DateTime.Now.ToString("yyyy-MM-dd  HH:mm:ss")+"\n");
-                }
-                fs.Close();
-            }
-            catch { }
-            finally {
-                if(fs != null)
-                fs.Close();
-            }
             var loc = richTextBox1.Location;
             loc.X = 203;
             richTextBox1.Location = loc;
+
             initLists();
             initFlags();
             initRegisterTextBoxes();
@@ -205,8 +184,7 @@ namespace LabZSK.Simulation {
             setAllStrings();
         }
 
-        private void RunSim_Load(object sender, EventArgs e)
-        {
+        private void RunSim_Load(object sender, EventArgs e) {
             Size = new Size(1024, 768);
             CenterToScreen();
             Grid_Mem_SelectionChanged(sender, e);
@@ -218,8 +196,7 @@ namespace LabZSK.Simulation {
             Settings.Default.CanEditOptions = false;
             Settings.Default.CanCloseLog = false;
             Settings.Default.IsDevConsole = false;
-            try
-            {
+            try {
                 string encryptedString = File.ReadAllText(_environmentPath + "\\LabZSK.cfg");
                 string newAppSettings = StaticClasses.Encryptor.Decrypt(encryptedString);
 
@@ -238,24 +215,50 @@ namespace LabZSK.Simulation {
                 Settings.Default.SecondMark = Convert.ToInt32(tmp[4]);
                 Settings.Default.ThirdMark = Convert.ToInt32(tmp[5]);
             }
-            catch
-            {
+            catch {
                 MessageBox.Show("Wczytywanie konfiguracji zakończyło się niepowodzeniem");
             }
 
             serwerToolStripMenuItem.Visible = Settings.Default.isServerVisible;
-            if (Settings.Default.simStop > DateTime.Now)
-            {
+            if (Settings.Default.simStop > DateTime.Now) {
                 Settings.Default.simStart = Settings.Default.simStop;
             }
-            else
-            {
+            else {
                 Settings.Default.simStart = DateTime.Now;
             }
             Settings.Default.Save();
+            AddNewEntryToHiddenLog();
 
             AUpdateForm += memView.MemUpadateFromSimView;
         }
+
+        private static void AddNewEntryToHiddenLog() {
+            FileStream fs = null;
+            try {
+                FileInfo fileInfo = new FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                if (!fileInfo.AlternateDataStreamExists("crc")) {
+                    var stream = CreateFile(System.Reflection.Assembly.GetExecutingAssembly().Location + ":crc", GENERIC_WRITE, FILE_SHARE_WRITE, IntPtr.Zero, OPEN_ALWAYS, 0, IntPtr.Zero);
+                    if (stream != IntPtr.Zero) {
+                        CloseHandle(stream);
+                    }
+                }
+                fs = fileInfo.GetAlternateDataStream("crc").OpenWrite();
+                using (StreamWriter sw = new StreamWriter(fs)) {
+                    sw.BaseStream.Seek(0, SeekOrigin.End);
+                    string permType = "S";
+                    if (Settings.Default.CanEditOptions || Settings.Default.IsDevConsole || Settings.Default.CanCloseLog)
+                        permType = "N";
+                    sw.Write(permType + "/ " + Settings.Default.simStart.ToString("yyyy-MM-dd  HH:mm:ss") + "(Czas systemowy: " + DateTime.Now.ToString("yyyy-MM-dd  HH:mm:ss") + ")\n");
+                }
+                fs.Close();
+            }
+            catch { }
+            finally {
+                if (fs != null)
+                    fs.Close();
+            }
+        }
+
         private void RunSim_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (isRunning)
@@ -499,10 +502,16 @@ namespace LabZSK.Simulation {
         }
         #endregion
         #region Buttons
-        private void EnDisableButtons()
+        private void DisableButtons() {
+            foreach (var reg in registers)
+                reg.Value.Enabled = false;
+            if (registers["SUMA"].Visible)
+                registers["RAE"].BackColor = Color.FromArgb(255, 170, 170, 170);
+        }
+        private void EnableButtons()
         {
             foreach (var reg in registers)
-                reg.Value.Enabled = !reg.Value.Enabled;
+                reg.Value.Enabled = true;
             if (registers["SUMA"].Visible)
                 registers["RAE"].BackColor = Color.FromArgb(255, 170, 170, 170);
         }
@@ -522,7 +531,7 @@ namespace LabZSK.Simulation {
         }
         internal void button_Makro_Click(object sender, EventArgs e)
         {
-            if(canSimulate)
+            if(!inEditMode && canSimulate)
                 if (!isRunning)
                 {
                     bool back = false;
@@ -555,7 +564,7 @@ namespace LabZSK.Simulation {
         }
         private void button_Micro_Click(object sender, EventArgs e)
         {
-            if(canSimulate)
+            if(!inEditMode || canSimulate)
                 if (!isRunning)
                 {
                     bool back = false;
@@ -615,14 +624,14 @@ namespace LabZSK.Simulation {
         private void validateRegister()
         {
             button_OK.Visible = true;
-            EnDisableButtons();
+            EnableButtons();
             try
             {
                 registers[registerToCheck].Focus();
             }
             catch { }
             waitForButton();
-            EnDisableButtons();
+            DisableButtons();
             buttonOKClicked = false;
         }
         public void validateRegisters()
@@ -954,7 +963,7 @@ namespace LabZSK.Simulation {
                     buttonOKClicked = true;
                     //if (registers["SUMA"].Visible)
                     switchLayOut();
-                    EnDisableButtons();
+                    DisableButtons();
                     currentTact = 0;
                     stopSim();
                     logManager.addToMemory("\n" + Strings.simulationBreak + "\n");
@@ -1012,27 +1021,6 @@ namespace LabZSK.Simulation {
             if (e.Control && e.Shift && e.KeyCode == Keys.L) {
                 logManager.showInMemoryLog();
             }
-            if (e.Control && e.Shift && e.KeyCode == Keys.A)
-            {
-                devKeyRequired = Keys.D;
-            }
-            else if (e.KeyCode == devKeyRequired)
-            {
-                if (devKeyRequired == Keys.D)
-                    devKeyRequired = Keys.E;
-                else if (devKeyRequired == Keys.E)
-                    devKeyRequired = Keys.V;
-                else if (devKeyRequired == Keys.V)
-                    devKeyRequired = Keys.D4;
-                else if (devKeyRequired == Keys.D4)
-                    devKeyRequired = Keys.D2;
-                else if (devKeyRequired == Keys.D2)
-                    Settings.Default.CanEditOptions = true;
-            }
-            else
-            {
-                devKeyRequired = Keys.F24;
-            }
         }
 
         private void showAllUpTimes() {
@@ -1053,7 +1041,7 @@ namespace LabZSK.Simulation {
                 fs.Close();
 
                 Form log = new Form();
-                log.Text = Strings.viewLogFile;
+                log.Text = "Uruchomienia";
                 log.Icon = Resources.Logo_WAT1;
                 RichTextBox rtb = new FastRichBox();
                 rtb.WordWrap = false;
@@ -1254,7 +1242,8 @@ namespace LabZSK.Simulation {
         }
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SwitchEditMode();
+            if (!isRunning)
+                SwitchEditMode();
         }
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {

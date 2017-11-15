@@ -117,6 +117,7 @@
             this.textBox_Port.Name = "textBox_Port";
             this.textBox_Port.Size = new System.Drawing.Size(144, 27);
             this.textBox_Port.TabIndex = 10;
+            this.textBox_Port.TextChanged += new System.EventHandler(this.textBox_Port_TextChanged);
             this.textBox_Port.Validating += new System.ComponentModel.CancelEventHandler(this.textBox_Port_Validating);
             // 
             // label4

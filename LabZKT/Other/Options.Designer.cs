@@ -91,8 +91,6 @@
             this.groupBox1.Controls.Add(this.checkBox1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.numericUpDown1);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.checkBox3);
             this.groupBox1.Enabled = false;
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.groupBox1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -311,7 +309,7 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label9.Location = new System.Drawing.Point(468, 32);
+            this.label9.Location = new System.Drawing.Point(14, 267);
             this.label9.Margin = new System.Windows.Forms.Padding(9);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(57, 18);
@@ -324,7 +322,7 @@
             this.checkBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox3.AutoSize = true;
             this.checkBox3.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.checkBox3.Location = new System.Drawing.Point(520, 31);
+            this.checkBox3.Location = new System.Drawing.Point(79, 267);
             this.checkBox3.Margin = new System.Windows.Forms.Padding(9);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -339,7 +337,7 @@
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label6.Location = new System.Drawing.Point(278, 273);
+            this.label6.Location = new System.Drawing.Point(278, 293);
             this.label6.Margin = new System.Windows.Forms.Padding(9, 9, 9, 3);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(44, 18);
@@ -356,7 +354,7 @@
             this.comboBox2.Items.AddRange(new object[] {
             "pl-PL",
             "en-US"});
-            this.comboBox2.Location = new System.Drawing.Point(239, 297);
+            this.comboBox2.Location = new System.Drawing.Point(239, 317);
             this.comboBox2.Margin = new System.Windows.Forms.Padding(9, 3, 9, 9);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(121, 26);
@@ -397,7 +395,7 @@
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button1.Location = new System.Drawing.Point(409, 283);
+            this.button1.Location = new System.Drawing.Point(409, 303);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(168, 40);
             this.button1.TabIndex = 1;
@@ -409,7 +407,7 @@
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button2.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button2.Location = new System.Drawing.Point(17, 283);
+            this.button2.Location = new System.Drawing.Point(17, 303);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(168, 40);
             this.button2.TabIndex = 2;
@@ -545,7 +543,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(589, 341);
+            this.ClientSize = new System.Drawing.Size(589, 361);
             this.Controls.Add(this.txt5);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label15);
@@ -559,6 +557,8 @@
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.button2);
+            this.Controls.Add(this.checkBox3);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.comboBox2);
@@ -567,9 +567,9 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(605, 380);
+            this.MaximumSize = new System.Drawing.Size(605, 400);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(605, 380);
+            this.MinimumSize = new System.Drawing.Size(605, 400);
             this.Name = "Options";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Options";

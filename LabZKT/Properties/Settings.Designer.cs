@@ -73,7 +73,7 @@ namespace LabZSK.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("6")]
         public int SecondMark {
             get {
                 return ((int)(this["SecondMark"]));
@@ -85,7 +85,7 @@ namespace LabZSK.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("6")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public int ThirdMark {
             get {
                 return ((int)(this["ThirdMark"]));

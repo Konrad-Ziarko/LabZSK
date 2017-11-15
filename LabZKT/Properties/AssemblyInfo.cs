@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("LabZSK")]
 [assembly: AssemblyDescription("Symulator Komputera Sterowanego Mikroprogramowo LabZSK")]
 [assembly: AssemblyConfiguration("Ziarko Konrad")]
-[assembly: AssemblyCompany("Ziarko Konrad Tomasz - Wojskowa Akademia Techniczna")]
+[assembly: AssemblyCompany("WAT")]
 [assembly: AssemblyProduct("LabZSK")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCopyright("Ziarko Konrad Tomasz Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,8 +32,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2.1.0")]
-[assembly: AssemblyFileVersion("1.2.1.0")]
+[assembly: AssemblyVersion("1.2.3.0")]
+[assembly: AssemblyFileVersion("1.2.3.0")]
 [assembly: InternalsVisibleTo("LabZSK.Tests")]
 [assembly: InternalsVisibleTo("LabZSK.Explorables")]
 

@@ -57,7 +57,7 @@ namespace LabZSK.Other
         {
             try
             {
-                if (Convert.ToUInt16(textBox_Port.Text) < 1024)
+                if (Convert.ToUInt16(textBox_Port.Text) < 1023)
                     throw new Exception();
                 textBox_Port.BackColor = System.Drawing.SystemColors.Window;
                 portIsGood = true;
@@ -68,6 +68,10 @@ namespace LabZSK.Other
                 portIsGood = false;
             }
             validate();
+        }
+
+        private void textBox_Port_TextChanged(object sender, EventArgs e) {
+
         }
 
         internal bool connect = false;

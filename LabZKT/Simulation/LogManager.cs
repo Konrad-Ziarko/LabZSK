@@ -311,6 +311,7 @@ namespace LabZSK.Simulation
                 this.password = password;
                 this.ipAddress = ipAddress;
                 this.remotePort = remotePort;
+
                 sReader = new StreamReader(_client.GetStream(), Encoding.Unicode);
                 sWriter = new StreamWriter(_client.GetStream(), Encoding.Unicode);
                 isConnected = true;

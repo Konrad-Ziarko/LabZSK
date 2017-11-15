@@ -49,12 +49,12 @@ namespace LabZSK.Simulation
                     registers["RAP"].setActualValue(255);
                     registers["RAP"].setNeedCheck(out registerToCheck);
                     button_OK.Visible = true;
-                    EnDisableButtons();
+                    EnableButtons();
                     if (registerToCheck != "")
                         registers[registerToCheck].Focus();
                     waitForButton();
                     buttonOKClicked = false;
-                    EnDisableButtons();
+                    DisableButtons();
                     registers["RAPS"].setActualValue(254);
                 }
             }
@@ -166,12 +166,12 @@ namespace LabZSK.Simulation
             Grid_PM.CurrentCell = Grid_PM[11, registers["RAPS"].innerValue];
 
             button_OK.Visible = true;
-            EnDisableButtons();
+            EnableButtons();
             if (registerToCheck != "")
                 registers[registerToCheck].Focus();
             waitForButton();
             buttonOKClicked = false;
-            EnDisableButtons();
+            DisableButtons();
             currentTact = 9;
         }
         private void exeTact7()
@@ -332,7 +332,7 @@ namespace LabZSK.Simulation
             }
             
                 button_OK.Visible = true;
-            EnDisableButtons();
+            EnableButtons();
             if (registerToCheck != "")
                 registers[registerToCheck].Focus();
             waitForButton();
@@ -342,7 +342,7 @@ namespace LabZSK.Simulation
                 registers["BUS"].setInnerAndExpectedValue(0);
                 resetBus = false;
             }
-            EnDisableButtons();
+            DisableButtons();
         }
         private void exeTact6()
         {
@@ -480,7 +480,7 @@ namespace LabZSK.Simulation
                 AddToLogAndMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             button_OK.Visible = true;
-            EnDisableButtons();
+            EnableButtons();
             if (registerToCheck != "")
                 registers[registerToCheck].Focus();
             waitForButton();
@@ -490,7 +490,7 @@ namespace LabZSK.Simulation
                 resetBus = false;
             }
             buttonOKClicked = false;
-            EnDisableButtons();
+            DisableButtons();
         }
         private void exeTact2()
         {
@@ -616,11 +616,11 @@ namespace LabZSK.Simulation
             }
 
             button_OK.Visible = true;
-            EnDisableButtons();
+            EnableButtons();
             if (registerToCheck != "")
                 registers[registerToCheck].Focus();
             waitForButton();
-            EnDisableButtons();
+            DisableButtons();
             if ((registers["ALU"].valueWhichShouldBeMovedToRegister & 0x8000) == 0x8000)
             {
                 flags["ZNAK"].setInnerValue(1);
@@ -847,11 +847,11 @@ namespace LabZSK.Simulation
                 //AddToLogAndMiniLog("C2", microOpMnemo, Translator.GetMicroOpDescription(microOpMnemo));
             }
             button_OK.Visible = true;
-            EnDisableButtons();
+            EnableButtons();
             if (registerToCheck != "")
                 registers[registerToCheck].Focus();
             waitForButton();
-            EnDisableButtons();
+            DisableButtons();
             if (setXro == 0 || setXro == 1)
             {
                 flags["XRO"].setInnerValue(setXro);
@@ -945,6 +945,7 @@ namespace LabZSK.Simulation
             switchLayOut();
             while (isRunning && currentTact > 0)
                 executeInstruction();
+            DisableButtons();
         }
         private void executeInstruction()
         {
@@ -989,11 +990,11 @@ namespace LabZSK.Simulation
                 }
                 Grid_PM.CurrentCell = Grid_PM[11, registers["RAPS"].innerValue];
                 button_OK.Visible = true;
-                    EnDisableButtons();
+                    EnableButtons();
                 if (registerToCheck != "")
                     registers[registerToCheck].Focus();
                     waitForButton();
-                    EnDisableButtons();
+                    DisableButtons();
                 currentTact = 0;
                 dataGridView_Info.Rows[2].Cells[1].Value = currentTact;
                 endingCycle();
