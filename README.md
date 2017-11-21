@@ -1,2 +1,2 @@
 # LabZSK
-v1.2.2.0
+LabZSK version 1.2.2.0
