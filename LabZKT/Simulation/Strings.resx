@@ -328,4 +328,7 @@ Log symulacji zostanie zamknięty.</value>
   <data name="devIncCycle" xml:space="preserve">
     <value>Cykle+&gt;</value>
   </data>
+  <data name="appVersion" xml:space="preserve">
+    <value>Wersja aplikacji</value>
+  </data>
 </root>

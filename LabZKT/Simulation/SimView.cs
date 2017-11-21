@@ -6,6 +6,7 @@ using LabZSK.Properties;
 using LabZSK.StaticClasses;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -765,6 +766,9 @@ namespace LabZSK.Simulation {
         }
         public void initLogInformation()
         {
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = fvi.FileVersion;
             string ipAddrList = string.Empty;
             foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
                 if (item.NetworkInterfaceType == NetworkInterfaceType.Ethernet && item.OperationalStatus == OperationalStatus.Up)
@@ -781,6 +785,7 @@ namespace LabZSK.Simulation {
                 //Strings.pcInDomain + ": \"" + Environment.UserDomainName + "\"\n" +
                 Strings.machineName + " \"" + Environment.MachineName + "\" \n" +
                 Strings.loggedAs + ": \"" + Environment.UserName + "\"\n" +
+                Strings.appVersion + ": " + version + "\n" +
                 Strings.networkInterfaces + ": " + ipAddrList + "\n\n");
             if (Settings.Default.CanCloseLog)
                 addTextToLog(Strings.logClosingAllowed + "\n");
@@ -1021,6 +1026,24 @@ namespace LabZSK.Simulation {
             if (e.Control && e.Shift && e.KeyCode == Keys.L) {
                 logManager.showInMemoryLog();
             }
+            if(e.Control && e.Shift && e.KeyCode == Keys.V) {
+                checkAppVersion();
+            }
+        }
+
+        private void checkAppVersion() {
+            WebClient client = new WebClient();
+            string downloadString = client.DownloadString("https://github.com/Konrad-Ziarko/LabZSK/tree/master");
+            int index = downloadString.IndexOf("LabZSK version");
+
+            string version = downloadString.Substring(index+15, 7);
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+
+            if (version.Equals(fvi.FileVersion))
+                MessageBox.Show("OK!");
+            else
+                MessageBox.Show(version);
         }
 
         private void showAllUpTimes() {

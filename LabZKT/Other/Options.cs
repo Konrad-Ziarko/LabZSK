@@ -22,7 +22,7 @@ namespace LabZSK.Other
 
         private void Options_Load(object sender, EventArgs e)
         {
-            //
+            //ukryj pola do zmiany koloru RAPS i RBPS
             label16.Visible = txt5.Visible = false;
             //
             comboBox1.SelectedIndex = Settings.Default.Skin;

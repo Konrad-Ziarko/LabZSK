@@ -79,6 +79,15 @@ namespace LabZSK.Simulation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wersja aplikacji.
+        /// </summary>
+        internal static string appVersion {
+            get {
+                return ResourceManager.GetString("appVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Czy chcesz zakończyć pracę z obecnym logiem?.
         /// </summary>
         internal static string areYouSureCloseLog {

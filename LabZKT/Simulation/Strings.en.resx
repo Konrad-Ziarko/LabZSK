@@ -319,4 +319,7 @@ You will lose all progress.</value>
   <data name="macro" xml:space="preserve">
     <value>MACRO</value>
   </data>
+  <data name="appVersion" xml:space="preserve">
+    <value>Application version</value>
+  </data>
 </root>
