@@ -1033,17 +1033,21 @@ namespace LabZSK.Simulation {
 
         private void checkAppVersion() {
             WebClient client = new WebClient();
-            string downloadString = client.DownloadString("https://github.com/Konrad-Ziarko/LabZSK/tree/master");
-            int index = downloadString.IndexOf("LabZSK version");
+            try {
+                string downloadString = client.DownloadString("https://github.com/Konrad-Ziarko/LabZSK/tree/master");
+                int index = downloadString.IndexOf("LabZSK version");
 
-            string version = downloadString.Substring(index+15, 7);
-            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+                string version = downloadString.Substring(index + 15, 7);
+                System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+                FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
 
-            if (version.Equals(fvi.FileVersion))
-                MessageBox.Show("OK!");
-            else
-                MessageBox.Show(version);
+                if (version.Equals(fvi.FileVersion))
+                    MessageBox.Show("OK!");
+                else
+                    MessageBox.Show(version);
+            }
+            catch { MessageBox.Show("Connection error"); }
+            
         }
 
         private void showAllUpTimes() {
