@@ -960,6 +960,7 @@ namespace LabZSK.Simulation {
             else if (e.KeyChar == (char)Keys.Escape && isRunning)
             {
                 //przerwanie pracy
+                /*
                 DialogResult dr = MessageBox.Show(Strings.areYouSureExit, Strings.areYouSureExitTitle, MessageBoxButtons.OKCancel);
                 if (dr == DialogResult.OK)
                 {
@@ -973,6 +974,7 @@ namespace LabZSK.Simulation {
                     stopSim();
                     logManager.addToMemory("\n" + Strings.simulationBreak + "\n");
                 }
+                */
             }
 
         }
@@ -980,6 +982,7 @@ namespace LabZSK.Simulation {
         static extern int MapVirtualKey(uint uCode, uint uMapType);
         private void Grid_Mem_KeyDown(object sender, KeyEventArgs e)
         {
+            /*
             if (char.IsLetterOrDigit((char)e.KeyCode) || e.KeyCode == Keys.OemMinus)
             {
                 Grid_Mem.ReadOnly = false;
@@ -995,6 +998,7 @@ namespace LabZSK.Simulation {
             }
             else if (e.KeyCode == Keys.Enter)
                 Grid_Mem.EndEdit();
+            */
         }
         private void RunSim_SizeChanged(object sender, EventArgs e)
         {
@@ -1032,22 +1036,24 @@ namespace LabZSK.Simulation {
         }
 
         private void checkAppVersion() {
-            WebClient client = new WebClient();
-            try {
-                string downloadString = client.DownloadString("https://github.com/Konrad-Ziarko/LabZSK/tree/master");
-                int index = downloadString.IndexOf("LabZSK version");
+            new Thread(() => {
+                WebClient client = new WebClient();
+                try {
+                    string downloadString = client.DownloadString("https://github.com/Konrad-Ziarko/LabZSK/tree/master");
+                    int index = downloadString.IndexOf("LabZSK version");
 
-                string version = downloadString.Substring(index + 15, 7);
-                System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-                FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+                    string version = downloadString.Substring(index + 15, 7);
+                    System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+                    FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
 
-                if (version.Equals(fvi.FileVersion))
-                    MessageBox.Show("OK!");
-                else
-                    MessageBox.Show(version);
-            }
-            catch { MessageBox.Show("Connection error"); }
-            
+                    if (version.Equals(fvi.FileVersion))
+                        MessageBox.Show("OK!");
+                    else
+                        MessageBox.Show(version);
+                }
+                catch { MessageBox.Show("Connection error"); }
+
+            }).Start();
         }
 
         private void showAllUpTimes() {
