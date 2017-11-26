@@ -428,28 +428,28 @@ namespace LabZSK.Simulation
             // loadpmToolStripMenuItem
             // 
             this.loadpmToolStripMenuItem.Name = "loadpmToolStripMenuItem";
-            this.loadpmToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.loadpmToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadpmToolStripMenuItem.Text = "Wczytaj...";
             this.loadpmToolStripMenuItem.Click += new System.EventHandler(this.wczytajpmToolStripMenuItem_Click);
             // 
             // zapiszToolStripMenuItem
             // 
             this.zapiszToolStripMenuItem.Name = "zapiszToolStripMenuItem";
-            this.zapiszToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.zapiszToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.zapiszToolStripMenuItem.Text = "Zapisz...";
             this.zapiszToolStripMenuItem.Click += new System.EventHandler(this.zapiszToolStripMenuItem_Click);
             // 
             // drukujToolStripMenuItem
             // 
             this.drukujToolStripMenuItem.Name = "drukujToolStripMenuItem";
-            this.drukujToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.drukujToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.drukujToolStripMenuItem.Text = "Drukuj";
             this.drukujToolStripMenuItem.Click += new System.EventHandler(this.drukujToolStripMenuItem_Click);
             // 
             // editpmToolStripMenuItem
             // 
             this.editpmToolStripMenuItem.Name = "editpmToolStripMenuItem";
-            this.editpmToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.editpmToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.editpmToolStripMenuItem.Text = "Edytuj";
             this.editpmToolStripMenuItem.Click += new System.EventHandler(this.edytujpmToolStripMenuItem_Click);
             // 
@@ -463,32 +463,33 @@ namespace LabZSK.Simulation
             this.memToolStripMenuItem.Name = "memToolStripMenuItem";
             this.memToolStripMenuItem.Size = new System.Drawing.Size(119, 20);
             this.memToolStripMenuItem.Text = "Pamięć operacyjna";
+            this.memToolStripMenuItem.Click += new System.EventHandler(this.memToolStripMenuItem_Click);
             // 
             // loadmemToolStripMenuItem
             // 
             this.loadmemToolStripMenuItem.Name = "loadmemToolStripMenuItem";
-            this.loadmemToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.loadmemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadmemToolStripMenuItem.Text = "Wczytaj...";
             this.loadmemToolStripMenuItem.Click += new System.EventHandler(this.wczytajpaoToolStripMenuItem1_Click);
             // 
             // zapiszToolStripMenuItem2
             // 
             this.zapiszToolStripMenuItem2.Name = "zapiszToolStripMenuItem2";
-            this.zapiszToolStripMenuItem2.Size = new System.Drawing.Size(124, 22);
+            this.zapiszToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
             this.zapiszToolStripMenuItem2.Text = "Zapisz...";
             this.zapiszToolStripMenuItem2.Click += new System.EventHandler(this.zapiszToolStripMenuItem2_Click);
             // 
             // drukujToolStripMenuItem1
             // 
             this.drukujToolStripMenuItem1.Name = "drukujToolStripMenuItem1";
-            this.drukujToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+            this.drukujToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.drukujToolStripMenuItem1.Text = "Drukuj";
             this.drukujToolStripMenuItem1.Click += new System.EventHandler(this.drukujToolStripMenuItem1_Click);
             // 
             // editmemToolStripMenuItem
             // 
             this.editmemToolStripMenuItem.Name = "editmemToolStripMenuItem";
-            this.editmemToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.editmemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.editmemToolStripMenuItem.Text = "Edytuj";
             this.editmemToolStripMenuItem.Click += new System.EventHandler(this.edytujpaoToolStripMenuItem1_Click);
             // 

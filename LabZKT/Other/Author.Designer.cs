@@ -171,8 +171,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(600, 458);
-            this.MinimumSize = new System.Drawing.Size(600, 428);
+            this.MaximumSize = new System.Drawing.Size(600, 434);
+            this.MinimumSize = new System.Drawing.Size(600, 434);
             this.Name = "Author";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "O programie LabZSK";

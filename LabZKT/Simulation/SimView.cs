@@ -75,6 +75,9 @@ namespace LabZSK.Simulation {
         private DateTime simTime;
         private TimeSpan appStart = DateTime.Now.TimeOfDay;
         internal bool isRunning = false;
+        public bool IsRunning {
+            get { return isRunning; }
+        }
         private bool isTestPositive = false;
         private bool isOverflow = false;
         private bool buttonOKClicked = false;
@@ -136,10 +139,10 @@ namespace LabZSK.Simulation {
             logManager = LogManager.Instance;
             devConsole = new DevConsole(this);
 
-            pmView = new PMView(ref List_MicroOp);
+            pmView = new PMView(this, ref List_MicroOp);
             pmView.AUpdateData += PmView_AUpdateData;
 
-            memView = new MemView(ref List_Memory);
+            memView = new MemView(this, ref List_Memory);
             memView.AUpdateForm += MemView_AUpdateForm;
 
             string[] split = filename.Split(new[] { "<*>" }, StringSplitOptions.RemoveEmptyEntries);
@@ -1228,11 +1231,15 @@ namespace LabZSK.Simulation {
         }
         private void wczytajpaoToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            memView.button_Load_Table_Click(this, new EventArgs());
+            if (!isRunning) {
+                memView.button_Load_Table_Click(this, new EventArgs());
+            }
         }
         private void wczytajpmToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            pmView.button_Load_Table_Click(this, new EventArgs());
+            if (!isRunning) {
+                pmView.button_Load_Table_Click(this, new EventArgs());
+            }
         }
         private void konsolaDevToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1444,6 +1451,10 @@ namespace LabZSK.Simulation {
 
         private void label1_Click(object sender, EventArgs e) {
             showAllUpTimes();
+        }
+
+        private void memToolStripMenuItem_Click(object sender, EventArgs e) {
+
         }
 
         private void drukujToolStripMenuItem1_Click(object sender, EventArgs e)

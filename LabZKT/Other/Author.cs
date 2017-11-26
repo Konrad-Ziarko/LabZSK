@@ -4,23 +4,19 @@ using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace LabZSK.Other
-{
+namespace LabZSK.Other {
     /// <summary>
     /// Windows form for credentials
     /// </summary>
-    public partial class Author : Form
-    {
+    public partial class Author : Form {
         /// <summary>
         /// Initialize instance of this form
         /// </summary>
-        public Author()
-        {
+        public Author() {
             InitializeComponent();
             setAllStrings();
         }
-        internal void setAllStrings()
-        {
+        internal void setAllStrings() {
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
 
             this.Text = Strings.AuthorTitle;
@@ -30,23 +26,19 @@ namespace LabZSK.Other
             label4.Text = Strings.theOtherGuy;
 
         }
-        private void timer1_Tick(object sender, EventArgs e)
-        {
+        private void timer1_Tick(object sender, EventArgs e) {
 
         }
 
-        private void panel2_Click(object sender, EventArgs e)
-        {
+        private void panel2_Click(object sender, EventArgs e) {
 
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
+        private void label3_Click(object sender, EventArgs e) {
 
         }
 
-        private void Author_Load(object sender, EventArgs e)
-        {
+        private void Author_Load(object sender, EventArgs e) {
         }
     }
 }
