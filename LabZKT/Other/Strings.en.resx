@@ -223,4 +223,7 @@ Instytut Teleinformatyki i Automatyki</value>
   <data name="studentMode" xml:space="preserve">
     <value>STUDENT MODE</value>
   </data>
+  <data name="areYouSure" xml:space="preserve">
+    <value>Are you sure, you want to reset all settings?</value>
+  </data>
 </root>

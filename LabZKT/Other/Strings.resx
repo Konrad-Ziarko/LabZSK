@@ -223,4 +223,7 @@ Wydział Cybernetyki</value>
   <data name="studentMode" xml:space="preserve">
     <value>TRYB STUDENT</value>
   </data>
+  <data name="areYouSure" xml:space="preserve">
+    <value>Czy jesteś pewien, że chesz zresetować wszystkie ustawienia?</value>
+  </data>
 </root>

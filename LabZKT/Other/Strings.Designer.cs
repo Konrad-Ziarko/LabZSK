@@ -70,6 +70,15 @@ namespace LabZSK.Other {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Czy jesteś pewien, że chesz zresetować wszystkie ustawienia?.
+        /// </summary>
+        internal static string areYouSure {
+            get {
+                return ResourceManager.GetString("areYouSure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Autor programu: inż. Konrad Tomasz Ziarko.
         /// </summary>
         internal static string authorName {

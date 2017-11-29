@@ -17,7 +17,7 @@ namespace LabZSK.Other {
             InitializeComponent();
         }
 
-        private void Options_Load(object sender, EventArgs e) {
+        private void loadGUI() {
             //ukryj pola do zmiany koloru RAPS i RBPS
             label16.Visible = txt5.Visible = false;
             //
@@ -41,6 +41,10 @@ namespace LabZSK.Other {
             checkBox4.Checked = Settings.Default.CanEditOptions;
             checkBox3.Checked = Settings.Default.isServerVisible;
             setAllStrings();
+        }
+
+        private void Options_Load(object sender, EventArgs e) {
+            loadGUI();
         }
         internal void setAllStrings() {
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Culture);
@@ -394,6 +398,15 @@ namespace LabZSK.Other {
                 Settings.Default.BPAO = b;
             }
             getSkinData();
+        }
+
+        private void button3_Click(object sender, EventArgs e) {
+            var result = MessageBox.Show(Strings.areYouSure, "LabZSK", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes) {
+                Settings.Default.Reset();
+                Settings.Default.Save();
+                loadGUI();
+            }
         }
     }
 }
