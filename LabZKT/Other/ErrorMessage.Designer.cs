@@ -33,18 +33,18 @@
             // 
             // ErrorMessage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::LabZSK.Properties.Resources.maxresdefault;
-            this.ClientSize = new System.Drawing.Size(1918, 1040);
+            this.ClientSize = new System.Drawing.Size(1438, 845);
             this.ControlBox = false;
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(1918, 1040);
+            this.MinimumSize = new System.Drawing.Size(1438, 845);
             this.Name = "ErrorMessage";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

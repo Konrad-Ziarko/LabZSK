@@ -19,7 +19,7 @@ namespace LabZSK
         [STAThread]
         static void Main(string[] args)
         {
-            if (/*singleton.WaitOne(TimeSpan.Zero, true)*/ true)
+            if (singleton.WaitOne(TimeSpan.Zero, true))
             {
                 AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
@@ -39,7 +39,7 @@ namespace LabZSK
             }
             else
             {
-                //MessageBox.Show(Strings.appAlreadyRunning, "LabZSK", MessageBoxButtons.OK);
+                MessageBox.Show(Strings.appAlreadyRunning, "LabZSK", MessageBoxButtons.OK);
             }
         }
 

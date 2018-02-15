@@ -114,6 +114,7 @@ namespace LabZSK.Simulation {
         public SimView(string filename)
         {
             InitializeComponent();
+
             richTextBox1.Text = string.Format("UT{0:00}:{1:00}", appStart.Hours, appStart.Minutes);
             var loc = richTextBox1.Location;
             loc.X = 203;

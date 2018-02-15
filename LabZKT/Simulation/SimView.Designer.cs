@@ -51,8 +51,6 @@ namespace LabZSK.Simulation
             this.Hex = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.panel_Decode_PO = new System.Windows.Forms.Panel();
-            this.transparentPanel1 = new LabZSK.Simulation.TransparentPanel();
-            this.richTextBox1 = new LabZSK.Controls.FastRichBox();
             this.cellDescription = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenu_Main = new System.Windows.Forms.ToolStripMenuItem();
@@ -108,9 +106,11 @@ namespace LabZSK.Simulation
             this.dataGridView_Info = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.richTextBox_Log = new LabZSK.Controls.FastRichBox();
             this.open_File_Dialog = new System.Windows.Forms.OpenFileDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.richTextBox_Log = new LabZSK.Controls.FastRichBox();
+            this.transparentPanel1 = new LabZSK.Simulation.TransparentPanel();
+            this.richTextBox1 = new LabZSK.Controls.FastRichBox();
             this.panel_PO.SuspendLayout();
             this.panel_View_PO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid_Mem)).BeginInit();
@@ -275,33 +275,6 @@ namespace LabZSK.Simulation
             this.panel_Decode_PO.Size = new System.Drawing.Size(270, 138);
             this.panel_Decode_PO.TabIndex = 1;
             // 
-            // transparentPanel1
-            // 
-            this.transparentPanel1.Location = new System.Drawing.Point(14, 108);
-            this.transparentPanel1.Name = "transparentPanel1";
-            this.transparentPanel1.Size = new System.Drawing.Size(256, 33);
-            this.transparentPanel1.TabIndex = 3;
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.richTextBox1.DetectUrls = false;
-            this.richTextBox1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.richTextBox1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.richTextBox1.Location = new System.Drawing.Point(14, 117);
-            this.richTextBox1.Multiline = false;
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.richTextBox1.Size = new System.Drawing.Size(253, 24);
-            this.richTextBox1.TabIndex = 2;
-            this.richTextBox1.Text = "";
-            this.richTextBox1.WordWrap = false;
-            this.richTextBox1.SelectionChanged += new System.EventHandler(this.richTextBox1_SelectionChanged);
-            this.richTextBox1.Enter += new System.EventHandler(this.richTextBox1_Enter);
-            // 
             // cellDescription
             // 
             this.cellDescription.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -428,28 +401,28 @@ namespace LabZSK.Simulation
             // loadpmToolStripMenuItem
             // 
             this.loadpmToolStripMenuItem.Name = "loadpmToolStripMenuItem";
-            this.loadpmToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadpmToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.loadpmToolStripMenuItem.Text = "Wczytaj...";
             this.loadpmToolStripMenuItem.Click += new System.EventHandler(this.wczytajpmToolStripMenuItem_Click);
             // 
             // zapiszToolStripMenuItem
             // 
             this.zapiszToolStripMenuItem.Name = "zapiszToolStripMenuItem";
-            this.zapiszToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zapiszToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.zapiszToolStripMenuItem.Text = "Zapisz...";
             this.zapiszToolStripMenuItem.Click += new System.EventHandler(this.zapiszToolStripMenuItem_Click);
             // 
             // drukujToolStripMenuItem
             // 
             this.drukujToolStripMenuItem.Name = "drukujToolStripMenuItem";
-            this.drukujToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.drukujToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.drukujToolStripMenuItem.Text = "Drukuj";
             this.drukujToolStripMenuItem.Click += new System.EventHandler(this.drukujToolStripMenuItem_Click);
             // 
             // editpmToolStripMenuItem
             // 
             this.editpmToolStripMenuItem.Name = "editpmToolStripMenuItem";
-            this.editpmToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editpmToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.editpmToolStripMenuItem.Text = "Edytuj";
             this.editpmToolStripMenuItem.Click += new System.EventHandler(this.edytujpmToolStripMenuItem_Click);
             // 
@@ -946,6 +919,11 @@ namespace LabZSK.Simulation
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 800;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // richTextBox_Log
             // 
             this.richTextBox_Log.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -960,15 +938,38 @@ namespace LabZSK.Simulation
             this.richTextBox_Log.TabIndex = 0;
             this.richTextBox_Log.Text = "";
             // 
-            // timer1
+            // transparentPanel1
             // 
-            this.timer1.Interval = 800;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.transparentPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.transparentPanel1.Location = new System.Drawing.Point(14, 105);
+            this.transparentPanel1.Name = "transparentPanel1";
+            this.transparentPanel1.Size = new System.Drawing.Size(256, 33);
+            this.transparentPanel1.TabIndex = 3;
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.richTextBox1.DetectUrls = false;
+            this.richTextBox1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.richTextBox1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.richTextBox1.Location = new System.Drawing.Point(14, 117);
+            this.richTextBox1.Multiline = false;
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
+            this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.richTextBox1.Size = new System.Drawing.Size(253, 24);
+            this.richTextBox1.TabIndex = 2;
+            this.richTextBox1.Text = "";
+            this.richTextBox1.WordWrap = false;
+            this.richTextBox1.SelectionChanged += new System.EventHandler(this.richTextBox1_SelectionChanged);
+            this.richTextBox1.Enter += new System.EventHandler(this.richTextBox1_Enter);
             // 
             // SimView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(934, 661);
             this.Controls.Add(this.panel_Left);
